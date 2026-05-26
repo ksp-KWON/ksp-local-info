@@ -61,7 +61,7 @@ export default async function Home() {
               const month = monthMatch ? monthMatch[1] : "";
 
               return (
-                <Link href={"/detail/" + item.id} key={item.id} className="block group">
+                <Link href="/blog" key={item.id} className="block group">
                   <div className="h-full p-6 bg-white border-2 border-sky-300 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                     
                     {/* 상단 장식 바 */}
@@ -110,7 +110,7 @@ export default async function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {data.benefits.map((item) => (
-              <Link href={"/detail/" + item.id} key={item.id} className="block group">
+              <Link href="/blog" key={item.id} className="block group">
                 <div className="h-full p-6 bg-white border-2 border-blue-500 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                   
                   {/* 상단 장식 바 */}

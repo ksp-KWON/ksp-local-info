@@ -27,7 +27,15 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <header className="border-b border-gray-200 bg-white">
+          <nav className="max-w-4xl mx-auto px-4 py-4 flex gap-6">
+            <a href="/" className="text-gray-600 hover:text-sky-600 font-medium">홈</a>
+            <a href="/blog" className="text-gray-600 hover:text-sky-600 font-medium">블로그</a>
+          </nav>
+        </header>
+        {children}
+      </body>
     </html>
   );
 }
