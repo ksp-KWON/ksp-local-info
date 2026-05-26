@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
+import AdBanner from '@/components/AdBanner';
 
 // 데이터 타입 정의
 interface LocalEvent {
@@ -31,8 +32,82 @@ async function getLocalData(): Promise<LocalData> {
 export default async function Home() {
   const data = await getLocalData();
 
+  // 1. Event 스키마 빌드 (행사용)
+  const eventSchemas = data.events.map(item => {
+    const todayYear = new Date().getFullYear();
+    
+    const parseDateText = (dateText: string) => {
+      const match = dateText.match(/(\d+)월\s*(\d+)일/);
+      if (match) {
+        const month = match[1].padStart(2, '0');
+        const day = match[2].padStart(2, '0');
+        return `${todayYear}-${month}-${day}`;
+      }
+      return dateText;
+    };
+
+    const isoStart = parseDateText(item.startDate);
+    const isoEnd = parseDateText(item.endDate);
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": item.title,
+      "description": item.summary,
+      "startDate": isoStart,
+      "endDate": isoEnd,
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": item.location,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "성남시",
+          "addressRegion": "경기도",
+          "addressCountry": "KR"
+        }
+      }
+    };
+  });
+
+  // 2. GovernmentService 스키마 빌드 (혜택용)
+  const benefitSchemas = data.benefits.map(item => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "GovernmentService",
+      "name": item.title,
+      "description": item.summary,
+      "serviceAudience": {
+        "@type": "Audience",
+        "audienceType": item.target
+      },
+      "provider": {
+        "@type": "GovernmentOrganization",
+        "name": item.location || "지자체"
+      }
+    };
+  });
+
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900">
+      {/* Event 구조화 데이터 삽입 */}
+      {eventSchemas.map((schema, index) => (
+        <script
+          key={`event-schema-${index}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+
+      {/* GovernmentService 구조화 데이터 삽입 */}
+      {benefitSchemas.map((schema, index) => (
+        <script
+          key={`benefit-schema-${index}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       
       {/* 1. 상단 큰 배너 (하늘색 배경 유지) */}
       <div className="bg-sky-100 py-16 px-4 text-center">
@@ -47,14 +122,13 @@ export default async function Home() {
       <main className="max-w-4xl mx-auto px-4 py-12">
         
         {/* 2. 행사/축제 섹션 (카드 형태로 변경, 파란색 계열) */}
-        <section className="mb-16">
+        <section className="mb-12">
           <div className="border-b-2 border-gray-900 pb-3 mb-6">
             <h2 className="text-2xl font-bold text-gray-900">이번 달 주요 행사</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {data.events.map((item) => {
-              // 날짜 텍스트 파싱
               const dayMatch = item.startDate.match(/(\d+)일/);
               const day = dayMatch ? dayMatch[1] : item.startDate.substring(0,2);
               const monthMatch = item.startDate.match(/(\d+)월/);
@@ -64,17 +138,14 @@ export default async function Home() {
                 <Link href="/blog" key={item.id} className="block group">
                   <div className="h-full p-6 bg-white border-2 border-sky-300 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                     
-                    {/* 상단 장식 바 */}
                     <div className="absolute top-0 left-0 w-full h-1 bg-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     
                     <div className="flex items-start gap-4 mb-4">
-                      {/* 큰 날짜 영역 (카드 내부에 배치) */}
                       <div className="w-16 flex-shrink-0 text-center bg-sky-50 rounded-lg py-2 border border-sky-100">
                         <span className="block text-xs font-bold text-sky-600 mb-0.5">{month}월</span>
                         <span className="block text-2xl font-extrabold text-sky-900">{day}</span>
                       </div>
                       
-                      {/* 제목 영역 */}
                       <div className="pt-1">
                         <h3 className="text-lg font-bold text-gray-900 leading-snug group-hover:text-sky-600 transition-colors">
                           {item.title}
@@ -86,7 +157,6 @@ export default async function Home() {
                       {item.summary}
                     </p>
                     
-                    {/* 하단 요약 정보 */}
                     <div className="mt-auto flex items-center justify-between text-sm text-gray-500 pt-3 border-t border-gray-100">
                       <span className="flex items-center">
                         <span className="mr-1">📍</span> {item.location}
@@ -102,8 +172,11 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* 행사 섹션과 혜택 섹션 사이 애드센스 광고 */}
+        <AdBanner slot="home-middle-ad" />
+
         {/* 3. 지원금/혜택 섹션 (파란색 테마로 통일) */}
-        <section>
+        <section className="mt-12">
           <div className="border-b-2 border-gray-900 pb-3 mb-6">
             <h2 className="text-2xl font-bold text-gray-900">놓치면 아쉬운 혜택</h2>
           </div>
@@ -113,10 +186,8 @@ export default async function Home() {
               <Link href="/blog" key={item.id} className="block group">
                 <div className="h-full p-6 bg-white border-2 border-blue-500 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                   
-                  {/* 상단 장식 바 */}
                   <div className="absolute top-0 left-0 w-full h-1 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                  {/* 상단: 제목 */}
                   <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:underline decoration-blue-500 underline-offset-4">
                     {item.title}
                   </h3>
@@ -125,7 +196,6 @@ export default async function Home() {
                     {item.summary}
                   </p>
                   
-                  {/* 대상자 눈에 띄게 강조 (파란색 테마) */}
                   <div className="mt-auto bg-blue-50 border border-blue-100 rounded-lg p-3">
                     <span className="block text-xs font-bold text-blue-600 mb-1">지원 대상</span>
                     <span className="block text-sm font-bold text-gray-900">{item.target}</span>
