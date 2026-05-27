@@ -10,6 +10,16 @@ import path from 'path';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
 
+/**
+ * 마크다운 파서가 한국어 특수문자(「」) 또는 기호(~, (, ))를 만나
+ * **볼드** 를 인식 못하는 문제를 해결하기 위해,
+ * ReactMarkdown 파싱 전에 직접 **텍스트** → <strong>텍스트</strong> 로 변환한다.
+ */
+function preprocessMarkdown(content: string): string {
+  // **...** 패턴을 <strong>...</strong> HTML 태그로 미리 변환 (한 줄 내 lazy 매칭)
+  return content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
   return posts.map((post) => ({
@@ -114,6 +124,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     ]
   };
 
+  // **볼드** 패턴을 미리 <strong>으로 변환
+  const processedContent = preprocessMarkdown(post.content);
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       {/* JSON-LD 삽입 */}
@@ -142,7 +155,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </div>
         </div>
 
-        {/* 마크다운 본문 영역 - remarkGfm + rehypeRaw로 볼드/이탤릭 완전 지원 */}
+        {/* 마크다운 본문 영역 - **볼드** 전처리 후 rehype-raw로 HTML 통과 */}
         <div className="prose prose-indigo max-w-none
           prose-headings:font-extrabold prose-headings:text-slate-800
           prose-p:text-slate-700 prose-p:leading-relaxed prose-p:my-4
@@ -155,19 +168,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw]}
             components={{
-              // 취소선(~~텍스트~~)을 일반 텍스트처럼 보이게 처리
+              // del(취소선) 태그는 일반 텍스트로 표시
               del: ({ children }) => <span>{children}</span>,
-              // hr(---) 구분선을 깔끔하게 스타일링
-              hr: () => (
-                <hr className="my-8 border-0 border-t border-slate-200" />
-              ),
-              // strong(**텍스트**) 볼드체 명시적 강제 적용
-              strong: ({ children }) => (
-                <strong className="font-bold text-slate-900">{children}</strong>
-              ),
+              // hr 구분선 깔끔한 스타일
+              hr: () => <hr className="my-8 border-0 border-t border-slate-200" />,
             }}
           >
-            {post.content}
+            {processedContent}
           </ReactMarkdown>
         </div>
 
