@@ -2,72 +2,72 @@
   "events": [
     {
       "id": "e1",
-      "title": "성남시 봄꽃 축제",
+      "title": "도시가 극장, 자연이 무대",
       "category": "행사",
-      "startDate": "4월 5일",
-      "endDate": "4월 13일",
-      "location": "중앙공원",
-      "target": "누구나",
-      "summary": "아름다운 봄꽃과 함께하는 다채로운 문화 공연 및 체험 부스 운영",
-      "link": "#"
+      "startDate": "5월 9일",
+      "endDate": "6월 7일",
+      "location": "의정부예술의전당 일원",
+      "target": "시민 누구나 (무료 관람)",
+      "summary": "의정부 곳곳의 자연 공간에서 펼쳐지는 다채로운 장르의 거리 예술 공연 및 문화 예술 체험 프로그램",
+      "link": "https://www.uac.or.kr"
     },
     {
       "id": "e2",
-      "title": "판교 청년 창업 박람회",
+      "title": "의정부 ㄱ콘서트 (북콘서트)",
       "category": "행사",
-      "startDate": "4월 19일",
-      "endDate": "4월 20일",
-      "location": "판교 테크노밸리",
-      "target": "예비 창업자 및 청년",
-      "summary": "스타트업 투자 상담, 선배 창업가 멘토링, 채용 박람회 진행",
-      "link": "#"
+      "startDate": "5월 30일",
+      "endDate": "5월 30일",
+      "location": "의정부 아트캠프",
+      "target": "시민 누구나 (선착순 접수)",
+      "summary": "음악이 흐르는 아늑한 북토크 공연으로 책과 음악이 함께 어우러지는 힐링 콘서트",
+      "link": "https://www.uac.or.kr"
     },
     {
       "id": "e3",
-      "title": "성남시 어린이날 큰잔치",
+      "title": "뮤지컬 콘서트 The magic 팬텀&퀸",
       "category": "행사",
-      "startDate": "5월 5일",
-      "endDate": "5월 5일",
-      "location": "성남종합운동장",
-      "target": "어린이 및 가족",
-      "summary": "어린이 놀이기구 무료 운영, 마술쇼, 버블쇼 등 다채로운 프로그램",
-      "link": "#"
+      "startDate": "6월 20일",
+      "endDate": "6월 20일",
+      "location": "의정부예술의전당 대극장",
+      "target": "8세 이상 관람가",
+      "summary": "팬텀싱어와 뮤지컬 퀸들이 선사하는 화려하고 마법 같은 뮤지컬 및 크로스오버 콘서트",
+      "link": "https://www.uac.or.kr"
     }
   ],
   "benefits": [
     {
-      "id": "465790",
-      "title": "유아학비 (누리과정) 지원",
-      "category": "혜택",
-      "startDate": "2023-10-27",
-      "endDate": "상시",
-      "location": "온라인 (복지로) 및 읍면동 주민센터",
-      "target": "국공립 및 사립유치원에 다니는 3~5세 유아 (저소득층 추가 지원)",
-      "summary": "유치원에 다니는 3~5세 아동에게 유아학비, 방과후과정비 등 지원",
-      "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/000000465790"
-    },
-    {
       "id": "b1",
-      "title": "성남시 청년 월세 지원금",
+      "title": "의정부시 가족돌봄수당",
       "category": "혜택",
-      "startDate": "상시",
-      "endDate": "예산 소진 시까지",
-      "location": "온라인 신청",
-      "target": "만 19~34세",
-      "summary": "월 최대 20만원, 최대 12개월간 월세 지원",
-      "link": "#"
+      "startDate": "2026-06-01",
+      "endDate": "상시",
+      "location": "온라인 (경기민원24)",
+      "target": "생후 24~36개월 아동을 둔 맞벌이 등 소득 150% 이하 가구",
+      "summary": "조부모나 친인척이 아동을 돌봐줄 경우 아동 수에 따라 월 30만원에서 최대 60만원의 돌봄수당 지급",
+      "link": "https://gg24.gg.go.kr"
     },
     {
       "id": "b2",
-      "title": "경기도 출산지원금",
+      "title": "의정부시 긴급복지지원",
       "category": "혜택",
       "startDate": "상시",
       "endDate": "상시",
-      "location": "관할 주민센터",
-      "target": "경기도 내 출산 가정",
-      "summary": "첫째 아이 100만원, 둘째 아이 150만원 지원",
-      "link": "#"
+      "location": "관할 동 행정복지센터 방문",
+      "target": "실직 등으로 갑작스러운 위기에 처한 중위소득 75% 이하 가구",
+      "summary": "생계유지가 어려운 가구에게 4인 가구 기준 월 최대 약 199만원의 생계비 긴급 지원",
+      "link": "https://www.ui4u.go.kr"
+    },
+    {
+      "id": "b3",
+      "title": "의정부시 출산장려금 및 첫만남이용권",
+      "category": "혜택",
+      "startDate": "상시",
+      "endDate": "상시",
+      "location": "관할 동 행정복지센터 또는 복지로 홈페이지",
+      "target": "의정부시 내 출생 아동이 있는 출산 가정",
+      "summary": "정부 첫만남이용권(첫째 200만, 둘째 이상 300만)과 의정부시 출산장려금(첫째 30만, 둘째 이상 100만) 동시 지급",
+      "link": "https://www.bokjiro.go.kr"
     }
   ],
-  "lastUpdated": "2026-05-26"
+  "lastUpdated": "2026-05-27"
 }
