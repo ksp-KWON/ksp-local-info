@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
 import AdBanner from '@/components/AdBanner';
+import { getSortedPostsData, Post } from '@/lib/posts';
 
 // 데이터 타입 정의
 interface LocalEvent {
@@ -22,6 +23,29 @@ interface LocalData {
   lastUpdated: string;
 }
 
+// 블로그 글과 공공데이터 항목 매칭용 헬퍼 함수
+function findMatchingPostSlug(itemTitle: string, posts: Post[]): string | null {
+  // 1. 제목이 완전히 일치하거나 서로 포함관계인지 확인
+  const exactMatch = posts.find(
+    (p) => p.title === itemTitle || p.title.includes(itemTitle) || itemTitle.includes(p.title)
+  );
+  if (exactMatch) return exactMatch.slug;
+
+  // 2. 핵심 명사 단어 매칭 (조사나 너무 일반적인 단어 제외)
+  const keywords = itemTitle
+    .split(/[\s()]+/)
+    .filter((w) => w.length > 1 && !['지원', '지원금', '안내', '축제', '성남시', '경기도'].includes(w));
+  
+  if (keywords.length > 0) {
+    const keywordMatch = posts.find((p) =>
+      keywords.some((kw) => p.title.includes(kw) || p.content.includes(kw))
+    );
+    if (keywordMatch) return keywordMatch.slug;
+  }
+
+  return null;
+}
+
 // 서버 컴포넌트에서 데이터 읽어오기
 async function getLocalData(): Promise<LocalData> {
   const filePath = path.join(process.cwd(), 'public/data/local-info.json');
@@ -31,6 +55,7 @@ async function getLocalData(): Promise<LocalData> {
 
 export default async function Home() {
   const data = await getLocalData();
+  const posts = getSortedPostsData();
 
   // 1. Event 스키마 빌드 (행사용)
   const eventSchemas = data.events.map(item => {
@@ -134,8 +159,20 @@ export default async function Home() {
               const monthMatch = item.startDate.match(/(\d+)월/);
               const month = monthMatch ? monthMatch[1] : "";
 
+              const matchedSlug = findMatchingPostSlug(item.title, posts);
+              const href = matchedSlug 
+                ? `/blog/${matchedSlug}` 
+                : (item.link && item.link !== '#' ? item.link : '/blog');
+              const isExternal = href.startsWith('http');
+
               return (
-                <Link href="/blog" key={item.id} className="block group">
+                <Link 
+                  href={href} 
+                  key={item.id} 
+                  className="block group"
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                >
                   <div className="h-full p-6 bg-white border-2 border-sky-300 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                     
                     <div className="absolute top-0 left-0 w-full h-1 bg-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -182,31 +219,45 @@ export default async function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {data.benefits.map((item) => (
-              <Link href="/blog" key={item.id} className="block group">
-                <div className="h-full p-6 bg-white border-2 border-blue-500 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-                  
-                  <div className="absolute top-0 left-0 w-full h-1 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            {data.benefits.map((item) => {
+              const matchedSlug = findMatchingPostSlug(item.title, posts);
+              const href = matchedSlug 
+                ? `/blog/${matchedSlug}` 
+                : (item.link && item.link !== '#' ? item.link : '/blog');
+              const isExternal = href.startsWith('http');
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:underline decoration-blue-500 underline-offset-4">
-                    {item.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 text-sm mb-5 line-clamp-2">
-                    {item.summary}
-                  </p>
-                  
-                  <div className="mt-auto bg-blue-50 border border-blue-100 rounded-lg p-3">
-                    <span className="block text-xs font-bold text-blue-600 mb-1">지원 대상</span>
-                    <span className="block text-sm font-bold text-gray-900">{item.target}</span>
-                  </div>
+              return (
+                <Link 
+                  href={href} 
+                  key={item.id} 
+                  className="block group"
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                >
+                  <div className="h-full p-6 bg-white border-2 border-blue-500 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+                    
+                    <div className="absolute top-0 left-0 w-full h-1 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                  <div className="mt-4 text-right text-xs text-gray-400 font-medium">
-                    기한: {item.endDate}
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:underline decoration-blue-500 underline-offset-4">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-gray-600 text-sm mb-5 line-clamp-2">
+                      {item.summary}
+                    </p>
+                    
+                    <div className="mt-auto bg-blue-50 border border-blue-100 rounded-lg p-3">
+                      <span className="block text-xs font-bold text-blue-600 mb-1">지원 대상</span>
+                      <span className="block text-sm font-bold text-gray-900">{item.target}</span>
+                    </div>
+
+                    <div className="mt-4 text-right text-xs text-gray-400 font-medium">
+                      기한: {item.endDate}
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </section>
 
