@@ -3,6 +3,7 @@
     {
       "id": "e1",
       "title": "도시가 극장, 자연이 무대",
+      "slug": "2026-05-27-uijeongbu-city-theater",
       "category": "행사",
       "startDate": "5월 9일",
       "endDate": "6월 7일",
@@ -14,6 +15,7 @@
     {
       "id": "e2",
       "title": "의정부 ㄱ콘서트 (북콘서트)",
+      "slug": "2026-05-27-uijeongbu-book-concert",
       "category": "행사",
       "startDate": "5월 30일",
       "endDate": "5월 30일",
@@ -25,6 +27,7 @@
     {
       "id": "e3",
       "title": "뮤지컬 콘서트 The magic 팬텀&퀸",
+      "slug": "2026-05-27-uijeongbu-phantom-queen",
       "category": "행사",
       "startDate": "6월 20일",
       "endDate": "6월 20일",
@@ -36,6 +39,7 @@
     {
       "id": "e4",
       "title": "의정부 행복로 금요 힐링 버스킹",
+      "slug": "",
       "category": "행사",
       "startDate": "6월 5일",
       "endDate": "7월 31일",
@@ -49,6 +53,7 @@
     {
       "id": "b1",
       "title": "의정부시 가족돌봄수당",
+      "slug": "2026-05-27-uijeongbu-family-care",
       "category": "혜택",
       "startDate": "2026-06-01",
       "endDate": "상시",
@@ -60,6 +65,7 @@
     {
       "id": "b2",
       "title": "의정부시 긴급복지지원",
+      "slug": "2026-05-27-uijeongbu-emergency-welfare",
       "category": "혜택",
       "startDate": "상시",
       "endDate": "상시",
@@ -71,6 +77,7 @@
     {
       "id": "b3",
       "title": "의정부시 출산장려금 및 첫만남이용권",
+      "slug": "2026-05-27-UijeongbuBirthBenefit",
       "category": "혜택",
       "startDate": "상시",
       "endDate": "상시",
@@ -82,6 +89,7 @@
     {
       "id": "b4",
       "title": "의정부 청년 자격증 응시료 지원",
+      "slug": "",
       "category": "혜택",
       "startDate": "상시",
       "endDate": "상시",

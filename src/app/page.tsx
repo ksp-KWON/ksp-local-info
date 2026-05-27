@@ -24,22 +24,24 @@ interface LocalData {
 }
 
 // 블로그 글과 공공데이터 항목 매칭용 헬퍼 함수
-function findMatchingPostSlug(itemTitle: string, posts: Post[]): string | null {
-  const exactMatch = posts.find(
-    (p) => p.title === itemTitle || p.title.includes(itemTitle) || itemTitle.includes(p.title)
-  );
-  if (exactMatch) return exactMatch.slug;
-
-  const keywords = itemTitle
-    .split(/[\s()]+/)
-    .filter((w) => w.length > 1 && !['지원', '지원금', '안내', '축제', '성남시', '경기도'].includes(w));
-  
-  if (keywords.length > 0) {
-    const keywordMatch = posts.find((p) =>
-      keywords.some((kw) => p.title.includes(kw) || p.content.includes(kw))
-    );
-    if (keywordMatch) return keywordMatch.slug;
+function findMatchingPostSlug(item: { title: string; slug?: string }, posts: Post[]): string | null {
+  // 1. JSON에 명시적으로 slug가 정의되어 있는 경우 우선 사용
+  if (item.slug) {
+    // 실제 해당 slug를 가진 포스트가 존재하는지 검증
+    const exists = posts.some((p) => p.slug === item.slug);
+    if (exists) return item.slug;
   }
+
+  // 2. 정확히 일치하거나 포함되는 제목 찾기 (대소문자 무시 및 괄호 공백 제거 정규화 비교)
+  const normalize = (str: string) => str.replace(/\s+/g, '').toLowerCase();
+  const normalizedTitle = normalize(item.title);
+  
+  const exactMatch = posts.find((p) => {
+    const normalizedPostTitle = normalize(p.title);
+    return normalizedPostTitle.includes(normalizedTitle) || normalizedTitle.includes(normalizedPostTitle);
+  });
+
+  if (exactMatch) return exactMatch.slug;
 
   return null;
 }
@@ -162,7 +164,7 @@ export default async function Home() {
               const monthMatch = item.startDate.match(/(\d+)월/);
               const month = monthMatch ? monthMatch[1] : "";
 
-              const matchedSlug = findMatchingPostSlug(item.title, posts);
+              const matchedSlug = findMatchingPostSlug(item, posts);
               const href = matchedSlug 
                 ? `/blog/${matchedSlug}` 
                 : (item.link && item.link !== '#' ? item.link : '/blog');
@@ -224,7 +226,7 @@ export default async function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {data.benefits.map((item) => {
-              const matchedSlug = findMatchingPostSlug(item.title, posts);
+              const matchedSlug = findMatchingPostSlug(item, posts);
               const href = matchedSlug 
                 ? `/blog/${matchedSlug}` 
                 : (item.link && item.link !== '#' ? item.link : '/blog');
