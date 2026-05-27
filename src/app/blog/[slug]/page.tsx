@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: `${post.title} | 성남시 생활 정보`,
+    title: `${post.title} | 의정부시 생활 정보`,
     description: post.summary || `${post.title}에 관한 상세 정보입니다.`,
     openGraph: {
       title: post.title,
@@ -71,11 +71,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     "dateModified": post.date,
     "author": {
       "@type": "Organization",
-      "name": "성남시 생활 정보"
+      "name": "의정부시 생활 정보"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "성남시 생활 정보",
+      "name": "의정부시 생활 정보",
       "logo": {
         "@type": "ImageObject",
         "url": "https://ksp-local-info-edg.pages.dev/favicon.ico"

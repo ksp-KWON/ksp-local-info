@@ -23,10 +23,10 @@ async function main() {
 
     // 필터링
     let filtered = items.filter(item => 
-      (item.서비스명 && item.서비스명.includes('성남')) ||
-      (item.서비스목적요약 && item.서비스목적요약.includes('성남')) ||
-      (item.지원대상 && item.지원대상.includes('성남')) ||
-      (item.소관기관명 && item.소관기관명.includes('성남'))
+      (item.서비스명 && item.서비스명.includes('의정부')) ||
+      (item.서비스목적요약 && item.서비스목적요약.includes('의정부')) ||
+      (item.지원대상 && item.지원대상.includes('의정부')) ||
+      (item.소관기관명 && item.소관기관명.includes('의정부'))
     );
 
     if (filtered.length === 0) {

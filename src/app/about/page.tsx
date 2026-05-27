@@ -22,14 +22,14 @@ export default function AboutPage() {
         <section className="mb-8">
           <h2 className="text-xl font-semibold mb-3 text-gray-800">1. 서비스 운영 목적</h2>
           <p className="text-gray-600 leading-relaxed">
-            본 사이트는 성남시 및 경기도 지역 주민들이 실생활에서 유용하게 활용할 수 있는 다양한 <strong>지역 행사, 복지 혜택, 그리고 정부 지원금 정보</strong>를 신속하고 편리하게 확인하실 수 있도록 돕기 위해 운영되고 있습니다.
+            본 사이트는 의정부시 및 경기도 지역 주민들이 실생활에서 유용하게 활용할 수 있는 다양한 <strong>지역 행사, 복지 혜택, 그리고 정부 지원금 정보</strong>를 신속하고 편리하게 확인하실 수 있도록 돕기 위해 운영되고 있습니다.
           </p>
         </section>
 
         <section className="mb-8">
           <h2 className="text-xl font-semibold mb-3 text-gray-800">2. 공공데이터 기반 정보 제공 및 출처</h2>
           <p className="text-gray-600 leading-relaxed">
-            본 사이트의 지역 정보 데이터는 대한민국 정부 공공데이터포털(data.go.kr)의 공공서비스 목록 API 데이터를 수집하여 활용하고 있습니다. 수집된 정보는 성남 및 경기도 행정구역 기준으로 가공 및 필터링을 거쳐 제공됩니다.
+            본 사이트의 지역 정보 데이터는 대한민국 정부 공공데이터포털(data.go.kr)의 공공서비스 목록 API 데이터를 수집하여 활용하고 있습니다. 수집된 정보는 의정부 및 경기도 행정구역 기준으로 가공 및 필터링을 거쳐 제공됩니다.
           </p>
         </section>
 

@@ -88,7 +88,7 @@ export default async function Home() {
         "name": item.location,
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "성남시",
+          "addressLocality": "의정부시",
           "addressRegion": "경기도",
           "addressCountry": "KR"
         }
@@ -140,7 +140,7 @@ export default async function Home() {
           우리 동네 소식통
         </h1>
         <p className="text-sky-700 text-lg md:text-xl font-medium">
-          성남시의 유용한 행사와 혜택을 깔끔하게 모았습니다
+          의정부시의 유용한 행사와 혜택을 깔끔하게 모았습니다
         </p>
       </div>
 
