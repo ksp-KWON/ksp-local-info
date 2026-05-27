@@ -84,9 +84,19 @@ category: 정보
 tags: [태그1, 태그2, 태그3]
 ---
 
-(본문: 800자 이상, 친근한 블로그 톤, 추천 이유 3가지 포함, 신청 방법 안내)
+(본문 내용)
 
-마지막 줄에 FILENAME: ${today}-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.`;
+마지막 줄에 FILENAME: ${today}-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.
+
+작성 가이드라인:
+1. 분량: 500자 이상 작성해줘.
+2. 서식 및 스타일: 가독성이 뛰어난 전문 블로그 정보성 글 스타일(tistory 보상스쿨 스타일)을 적용해줘.
+   - frontmatter 안의 title은 HTML 태그나 콜론(:)이 포함되지 않은 순수한 일반 텍스트 문장으로만 작성해줘 (YAML 에러 방지).
+   - 대제목은 '## 1. 제목', 중제목은 '### 제목' 형식을 사용해줘.
+   - 글 초반 도입부에 인사말과 함께 중요한 문장이나 단어에 보라색 색상(<span style="color: #8a3db6;"><b>강조단어</b></span>)을 입혀줘.
+   - 본문 중 중요한 핵심 소주제, 핵심 결론, 긍정적인 중요 사실 등에는 파란색 색상(<span style="color: #006dd7;"><b>강조단어</b></span>)을 입혀줘.
+   - 핵심 수치, 주의사항, 면책조건이나 경고 등에는 빨간색 색상(<span style="color: #ee2323;"><b>강조단어</b></span>)을 입혀줘.
+   - 주요 내용은 글머리 기호(들여쓰기 목록)를 활용해 소문단으로 가독성 높게 구분 정리해줘.`;
 
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
     
