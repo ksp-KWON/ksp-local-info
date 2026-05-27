@@ -1,6 +1,7 @@
 import { getPostData, getSortedPostsData } from '@/lib/posts';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -141,9 +142,31 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </div>
         </div>
 
-        {/* 마크다운 본문 영역 스타일 가이드 적용 */}
-        <div className="prose prose-indigo max-w-none text-slate-700 leading-relaxed prose-headings:font-extrabold prose-headings:text-slate-800 prose-p:my-4 prose-li:my-1">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {/* 마크다운 본문 영역 - remarkGfm + rehypeRaw로 볼드/이탤릭 완전 지원 */}
+        <div className="prose prose-indigo max-w-none
+          prose-headings:font-extrabold prose-headings:text-slate-800
+          prose-p:text-slate-700 prose-p:leading-relaxed prose-p:my-4
+          prose-li:text-slate-700 prose-li:my-1
+          prose-strong:text-slate-900 prose-strong:font-bold
+          prose-hr:border-slate-200 prose-hr:my-8
+          prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline
+        ">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw]}
+            components={{
+              // 취소선(~~텍스트~~)을 일반 텍스트처럼 보이게 처리
+              del: ({ children }) => <span>{children}</span>,
+              // hr(---) 구분선을 깔끔하게 스타일링
+              hr: () => (
+                <hr className="my-8 border-0 border-t border-slate-200" />
+              ),
+              // strong(**텍스트**) 볼드체 명시적 강제 적용
+              strong: ({ children }) => (
+                <strong className="font-bold text-slate-900">{children}</strong>
+              ),
+            }}
+          >
             {post.content}
           </ReactMarkdown>
         </div>
