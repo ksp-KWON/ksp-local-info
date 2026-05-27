@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "의정부시 생활 정보 | 행사·혜택·지원금 안내",
@@ -45,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <head>
         <script
@@ -60,12 +49,18 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="min-h-full flex flex-col">
-        <header className="border-b border-gray-200 bg-white">
+      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 selection:bg-indigo-500 selection:text-white">
+        <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs">
           <nav className="max-w-4xl mx-auto px-4 py-4 flex gap-6">
-            <a href="/" className="text-gray-600 hover:text-sky-600 font-medium">홈</a>
-            <a href="/blog" className="text-gray-600 hover:text-sky-600 font-medium">블로그</a>
-            <a href="/about" className="text-gray-600 hover:text-sky-600 font-medium">소개</a>
+            <a href="/" className="text-slate-600 hover:text-indigo-600 font-bold transition-colors flex items-center gap-1">
+              <span>🏠</span> 홈
+            </a>
+            <a href="/blog" className="text-slate-600 hover:text-indigo-600 font-bold transition-colors flex items-center gap-1">
+              <span>📝</span> 블로그
+            </a>
+            <a href="/about" className="text-slate-600 hover:text-indigo-600 font-bold transition-colors flex items-center gap-1">
+              <span>ℹ️</span> 소개
+            </a>
           </nav>
         </header>
         {children}

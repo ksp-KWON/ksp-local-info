@@ -114,7 +114,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-3xl mx-auto px-4 py-16">
       {/* JSON-LD 삽입 */}
       <script
         type="application/ld+json"
@@ -126,30 +126,39 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       />
 
       <div className="mb-8">
-        <Link href="/blog" className="text-sky-600 hover:underline">← 목록으로 돌아가기</Link>
+        <Link href="/blog" className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+          <span>←</span> 목록으로 돌아가기
+        </Link>
       </div>
-      <article className="prose prose-sky lg:prose-lg max-w-none">
-        <h1>{post.title}</h1>
-        <div className="text-gray-500 mb-8 flex flex-wrap gap-x-4">
-          <span>작성일: {post.date}</span>
-          {post.category && <span>| 분류: {post.category}</span>}
-          <span>| 최종 업데이트: {post.date}</span>
-        </div>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {post.content}
-        </ReactMarkdown>
 
-        <hr className="my-8" />
+      <article className="bg-white border border-slate-200/80 rounded-3xl p-6 md:p-10 shadow-xs">
+        <div className="border-b border-slate-100 pb-6 mb-8">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 leading-tight mb-4">{post.title}</h1>
+          <div className="text-slate-400 text-xs font-semibold flex flex-wrap gap-x-4 gap-y-1">
+            <span>📅 작성일: {post.date}</span>
+            {post.category && <span>📂 분류: {post.category}</span>}
+            <span>🔄 최종 업데이트: {post.date}</span>
+          </div>
+        </div>
+
+        {/* 마크다운 본문 영역 스타일 가이드 적용 */}
+        <div className="prose prose-indigo max-w-none text-slate-700 leading-relaxed prose-headings:font-extrabold prose-headings:text-slate-800 prose-p:my-4 prose-li:my-1">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {post.content}
+          </ReactMarkdown>
+        </div>
+
+        <hr className="my-10 border-slate-100" />
 
         {/* E-E-A-T 원문 출처 링크 영역 */}
         {sourceLink && (
-          <div className="mb-4 bg-sky-50 border border-sky-100 rounded-lg p-4">
-            <span className="font-semibold text-gray-700 block mb-1">🔗 원문 출처</span>
+          <div className="mb-6 bg-indigo-50/50 border border-indigo-100/60 rounded-2xl p-5">
+            <span className="font-bold text-slate-700 block mb-2">🔗 공식 원문 출처</span>
             <a 
               href={sourceLink} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-sky-600 hover:underline break-all"
+              className="text-indigo-600 hover:text-indigo-800 font-semibold underline break-all text-sm"
             >
               {sourceLink}
             </a>
@@ -157,12 +166,17 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         )}
 
         {/* AI 작성 안내 문구 */}
-        <div className="bg-gray-50 border border-gray-100 rounded-lg p-4 text-sm text-gray-600 mb-8">
-          💡 이 글은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline">data.go.kr</a>)의 정보를 바탕으로 AI가 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.
+        <div className="bg-slate-50 border border-slate-200/60 rounded-2xl p-5 text-xs text-slate-500 leading-relaxed mb-10 flex gap-2">
+          <span>💡</span>
+          <p>
+            이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline font-semibold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
+          </p>
         </div>
 
         {/* 블로그 상세 하단 애드센스 광고 배너 */}
-        <AdBanner slot="blog-bottom-ad" />
+        <div className="my-8">
+          <AdBanner slot="blog-bottom-ad" />
+        </div>
 
         {/* 쿠팡 파트너스 배너 */}
         <CoupangBanner />

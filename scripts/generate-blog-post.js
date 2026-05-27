@@ -19,15 +19,6 @@ async function main() {
 
     const localInfo = JSON.parse(fs.readFileSync(localInfoPath, 'utf8'));
     
-    // 가장 최근에 추가된 항목 (events나 benefits 배열의 0번째가 unshift 방식이므로 가장 최신일 수 있으나,
-    // 사용자가 "마지막 항목(배열의 마지막)을 읽어옴" 이라고 지정했으므로, 
-    // JSON 구조상 events와 benefits 중 어느 것이 더 최근인지는 알 수 없으므로 두 배열 중 아이템이 있는 것을 찾습니다.
-    // 배열의 마지막 항목을 읽어오는 로직을 구현합니다.
-    // 일단 events와 benefits를 합치거나, 각 배열의 마지막 중 더 최신 항목을 선택해야 할 수 있습니다.
-    // 사용자 지시: "public/data/local-info.json에서 마지막 항목(배열의 마지막)을 읽어옴"
-    // 단순하게 events와 benefits 중 데이터가 존재하는 배열의 마지막 요소를 선택하도록 구현하겠습니다.
-    // 보통 혜택이나 행사 중 하나일 텐데, JSON 파일에 마지막으로 저장된 데이터를 확인합니다.
-    // 안전하게 events와 benefits를 뒤에서부터 탐색하여 판단해봅시다.
     let latestItem = null;
     const hasEvents = localInfo.events && localInfo.events.length > 0;
     const hasBenefits = localInfo.benefits && localInfo.benefits.length > 0;
@@ -84,7 +75,13 @@ category: 정보
 tags: [태그1, 태그2, 태그3]
 ---
 
-(본문: 800자 이상, 친근한 블로그 톤, 추천 이유 3가지 포함, 신청 방법 안내)
+(본문 스타일 가이드)
+- 친근하고 정중한 블로그 어조로 작성해줘.
+- 각 주요 단락의 시작이나 혜택/조건을 설명하는 부분에는 어울리는 이모지(예: 📅 일정, 🎁 혜택, 📍 장소, 🎯 대상, 💡 팁, 📌 신청방법 등)를 적재적소에 적극적으로 배치해줘.
+- 800자 이상으로 풍부한 정보를 담아줘.
+- 추천 이유 3가지를 명확히 💡 이 혜택(행사)을 추천하는 3가지 이유! 헤더 아래 작성해줘.
+- 신청 방법과 필요 서류를 알기 쉽게 서술해줘.
+- 가독성이 좋아지도록 중요한 키워드는 **볼드(굵은 글씨)** 처리해줘.
 
 마지막 줄에 FILENAME: ${today}-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.`;
 
@@ -115,7 +112,6 @@ tags: [태그1, 태그2, 태그3]
     }
 
     const filename = filenameMatch[1].trim() + ".md";
-    // 본문 내용에서 FILENAME 라인 제거
     let postContent = aiText.replace(/FILENAME:\s*[^\s\n\r]+/gi, '').trim();
 
     // [3단계] 파일 저장

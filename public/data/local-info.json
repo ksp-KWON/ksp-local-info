@@ -32,6 +32,17 @@
       "target": "8세 이상 관람가",
       "summary": "팬텀싱어와 뮤지컬 퀸들이 선사하는 화려하고 마법 같은 뮤지컬 및 크로스오버 콘서트",
       "link": "https://www.uac.or.kr"
+    },
+    {
+      "id": "e4",
+      "title": "의정부 행복로 금요 힐링 버스킹",
+      "category": "행사",
+      "startDate": "6월 5일",
+      "endDate": "7월 31일",
+      "location": "의정부역 행복로 광장",
+      "target": "시민 누구나 (자유 관람)",
+      "summary": "행복로 광장에서 매주 금요일 밤마다 펼쳐지는 지역 인디 뮤지션들의 낭만적인 야외 라이브 음악 공연",
+      "link": "https://www.uac.or.kr"
     }
   ],
   "benefits": [
@@ -67,6 +78,17 @@
       "target": "의정부시 내 출생 아동이 있는 출산 가정",
       "summary": "정부 첫만남이용권(첫째 200만, 둘째 이상 300만)과 의정부시 출산장려금(첫째 30만, 둘째 이상 100만) 동시 지급",
       "link": "https://www.bokjiro.go.kr"
+    },
+    {
+      "id": "b4",
+      "title": "의정부 청년 자격증 응시료 지원",
+      "category": "혜택",
+      "startDate": "상시",
+      "endDate": "상시",
+      "location": "온라인 (경기도 일자리재단)",
+      "target": "의정부시 거주 만 19세 ~ 39세 미취업 청년",
+      "summary": "어학 및 국가공인 자격증 시험 응시료를 연간 최대 3회, 총 30만 원까지 실비로 현금 환급 지원",
+      "link": "https://apply.jobaba.net"
     }
   ],
   "lastUpdated": "2026-05-27"
