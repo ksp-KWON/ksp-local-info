@@ -4,7 +4,7 @@ import { getSortedPostsData } from '../lib/posts';
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://ksp-local-info.pages.dev'; // Cloudflare Pages 배포 도메인
+  const baseUrl = 'https://ksp-local-info-edg.pages.dev'; // Cloudflare Pages 배포 도메인
 
   // 1. 기본 페이지
   const routes = [

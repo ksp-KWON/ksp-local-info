@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.summary,
       type: 'article',
       publishedTime: post.date,
-      url: `https://ksp-local-info.pages.dev/blog/${slug}`,
+      url: `https://ksp-local-info-edg.pages.dev/blog/${slug}`,
     },
   };
 }
@@ -78,12 +78,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       "name": "성남시 생활 정보",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://ksp-local-info.pages.dev/favicon.ico"
+        "url": "https://ksp-local-info-edg.pages.dev/favicon.ico"
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://ksp-local-info.pages.dev/blog/${slug}`
+      "@id": `https://ksp-local-info-edg.pages.dev/blog/${slug}`
     }
   };
 
@@ -96,19 +96,19 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         "@type": "ListItem",
         "position": 1,
         "name": "홈",
-        "item": "https://ksp-local-info.pages.dev"
+        "item": "https://ksp-local-info-edg.pages.dev"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "블로그",
-        "item": "https://ksp-local-info.pages.dev/blog"
+        "item": "https://ksp-local-info-edg.pages.dev/blog"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": post.title,
-        "item": `https://ksp-local-info.pages.dev/blog/${slug}`
+        "item": `https://ksp-local-info-edg.pages.dev/blog/${slug}`
       }
     ]
   };
