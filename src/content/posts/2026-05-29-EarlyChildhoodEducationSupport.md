@@ -6,72 +6,384 @@ category: 혜택
 tags: [유아학비지원, 누리과정, 유치원비지원, 아동혜택, 복지로, 육아정보]
 ---
 
-안녕하세요! 소중한 우리 아이들의 건강한 성장과 행복한 유치원 생활을 응원하는 수석 개발자 아빠입니다. 🌸
+안녕하세요! 소중한 우리 아이들의 유치원 입학을 축하하며, 유치원비 부담을 확실하게 덜어드릴 수 있는 유용한 정보를 들고 왔습니다. 🌸
 
-아이가 무럭무럭 자라 유치원에 입학할 시기가 되면, 설레는 마음과 함께 매달 들어갈 원비(학비) 걱정이 슬며시 고개를 들기 마련이죠. "혹시 정부에서 지원해 주는 제도는 없을까?", "우리는 맞벌이인데 소득 제한에 걸리지 않을까?" 고민하시는 부모님들이 많으실 텐데요.
+정부24(보조금24)의 공식 안내 페이지를 바탕으로, 복잡하게 분산되어 있는 정보를 한눈에 볼 수 있도록 정부24 스타일의 전용 탭 레이아웃으로 완벽 정리해 보았습니다. 아래 탭 메뉴를 클릭하셔서 필요한 상세 내용을 확인해 보세요!
 
-걱정 마세요! 대한민국 정부에서는 **부모님의 소득 수준과 전혀 무관하게** 대한민국 국적을 가진 만 3세~5세 유아들에게 유치원 학비를 든든히 지원해 주는 **'유아학비 지원제도'**를 운영하고 있습니다. 
+<style>
+  .gov-container {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    color: #334155;
+    margin: 30px 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px -3px rgb(0 0 0 / 0.08);
+    background-color: #ffffff;
+  }
+  .gov-header {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: #ffffff;
+    padding: 28px 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .gov-header-icon {
+    font-size: 2.8rem;
+    background: rgba(255,255,255,0.15);
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+  }
+  .gov-header-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .gov-header-title {
+    margin: 0 !important;
+    font-size: 1.6rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    line-height: 1.2 !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+  .gov-header-subtitle {
+    margin: 6px 0 0 0 !important;
+    font-size: 0.95rem !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500 !important;
+  }
+  
+  /* Tabs Layout */
+  .gov-tabs-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .gov-tabs-nav {
+    display: flex;
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    overflow-x: auto;
+  }
+  
+  .gov-tab-label {
+    flex: 1;
+    min-width: 100px;
+    padding: 16px 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #64748b;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  
+  .gov-tab-label:hover {
+    color: #1e3a8a;
+    background-color: #f1f5f9;
+  }
+  
+  /* Hidden radios for tabs */
+  .gov-tab-input {
+    display: none;
+  }
+  
+  /* Show/hide contents based on checked radio */
+  .gov-tab-content {
+    display: none;
+    padding: 24px;
+    animation: govFadeIn 0.3s ease;
+  }
+  
+  #tab-dest:checked ~ .gov-tabs-nav label[for="tab-dest"],
+  #tab-content:checked ~ .gov-tabs-nav label[for="tab-content"],
+  #tab-apply:checked ~ .gov-tabs-nav label[for="tab-apply"],
+  #tab-info:checked ~ .gov-tabs-nav label[for="tab-info"] {
+    color: #1e3a8a;
+    border-bottom-color: #1e3a8a;
+    background-color: #ffffff;
+  }
+  
+  #tab-dest:checked ~ #content-dest,
+  #tab-content:checked ~ #content-content,
+  #tab-apply:checked ~ #content-apply,
+  #tab-info:checked ~ #content-info {
+    display: block;
+  }
+  
+  @keyframes govFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Content styling */
+  .gov-section-title {
+    font-size: 1.3rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 5px solid #2563eb;
+    padding-left: 12px;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .gov-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .gov-card-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .gov-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .gov-list li {
+    position: relative !important;
+    padding-left: 22px !important;
+    margin-bottom: 10px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    color: #475569 !important;
+    list-style-type: none !important;
+  }
+  
+  .gov-list li::before {
+    content: "•";
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 6px;
+    top: -2px;
+  }
+  
+  /* Highlight blocks */
+  .gov-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 6px;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    margin-right: 6px;
+  }
+  
+  .gov-badge-green {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+  
+  .gov-badge-orange {
+    background-color: #ffedd5;
+    color: #c2410c;
+  }
+  
+  /* Info table style */
+  .gov-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  
+  .gov-table th {
+    background-color: #f1f5f9;
+    color: #334155;
+    font-weight: 700;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .gov-table td {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    text-align: center;
+  }
+  
+  .gov-callout {
+    background-color: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    padding: 18px;
+    border-radius: 0 12px 12px 0;
+    font-size: 0.95rem;
+    margin: 20px 0;
+    line-height: 1.6;
+  }
+  
+  .gov-callout-warning {
+    background-color: #fffbeb;
+    border-left-color: #f59e0b;
+    color: #92400e;
+  }
+  
+  .gov-callout-warning strong {
+    color: #78350f;
+  }
+</style>
 
-정부24(보조금24)의 공식 발표 자료를 바탕으로 지원 금액부터 신청 방법, 주의사항까지 초보 부모님도 단번에 이해하실 수 있도록 아주 쉽게 정리해 드릴게요! 😉
+<div class="gov-container">
+  <!-- Header Section -->
+  <div class="gov-header">
+    <div class="gov-header-icon">👶</div>
+    <div class="gov-header-text">
+      <h2 class="gov-header-title">유아학비 (누리과정) 지원제도</h2>
+      <p class="gov-header-subtitle">유치원에 다니는 만 3~5세 아동의 학비 부담을 완전히 덜어드립니다!</p>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation & Contents Wrapper -->
+  <div class="gov-tabs-wrapper">
+    <!-- Hidden inputs to control tabs -->
+    <input type="radio" class="gov-tab-input" id="tab-dest" name="gov-tab" checked />
+    <input type="radio" class="gov-tab-input" id="tab-content" name="gov-tab" />
+    <input type="radio" class="gov-tab-input" id="tab-apply" name="gov-tab" />
+    <input type="radio" class="gov-tab-input" id="tab-info" name="gov-tab" />
+
+    <!-- Tabs Header List -->
+    <div class="gov-tabs-nav">
+      <label class="gov-tab-label" for="tab-dest">🎯 지원대상</label>
+      <label class="gov-tab-label" for="tab-content">🎁 지원내용</label>
+      <label class="gov-tab-label" for="tab-apply">📅 신청방법</label>
+      <label class="gov-tab-label" for="tab-info">💡 상세정보</label>
+    </div>
+
+    <!-- Tab 1: 지원대상 -->
+    <div class="gov-tab-content" id="content-dest">
+      <h3 class="gov-section-title">누가 지원을 받을 수 있나요?</h3>
+      <div class="gov-card">
+        <div class="gov-card-title">🔍 기본 대상 조건</div>
+        <ul class="gov-list">
+          <li>소득 수준과 무관하게 <strong>누구나 지원 가능</strong>합니다.</li>
+          <li>국·공립 및 사립 유치원에 재원 중인 <strong>만 3세 ~ 만 5세</strong>의 대한민국 국적 아동이 대상입니다.</li>
+          <li>초등학교 취학을 유예하여 유치원에 재학 중인 유아도 <strong>유예 기간인 1년에 한하여 추가 지원</strong> 혜택을 제공합니다.</li>
+        </ul>
+      </div>
+      <div class="gov-callout gov-callout-warning">
+        ⚠️ <strong>제외 대상 안내</strong>: 어린이집 보육료나 가정 양육수당 등 다른 유사 정부 혜택을 동시에 중복으로 수령할 수 없습니다.
+      </div>
+    </div>
+
+    <!-- Tab 2: 지원내용 -->
+    <div class="gov-tab-content" id="content-content">
+      <h3 class="gov-section-title">매달 얼마를 어떻게 지원하나요?</h3>
+      <p>아동이 다니는 유치원의 성격에 따라 지원 금액이 구분되어 지급됩니다.</p>
+      
+      <table class="gov-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>국·공립 유치원</th>
+            <th>사립 유치원</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>교육과정비</strong></td>
+            <td>월 100,000원</td>
+            <td>월 280,000원</td>
+          </tr>
+          <tr>
+            <td><strong>방과후 과정비</strong></td>
+            <td>월 50,000원 (해당자)</td>
+            <td>월 70,000원 (해당자)</td>
+          </tr>
+          <tr>
+            <td><strong>합계 (최대)</strong></td>
+            <td><span class="gov-badge">월 15만 원</span></td>
+            <td><span class="gov-badge gov-badge-orange">월 35만 원</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="gov-card" style="margin-top: 24px;">
+        <div class="gov-card-title">💡 저소득층 자녀 특별 추가 혜택</div>
+        <ul class="gov-list">
+          <li><strong>대상</strong>: 사립유치원에 재원 중인 법정 저소득층(기초생활수급자, 차상위계층, 한부모가정) 유아</li>
+          <li><strong>내용</strong>: 관할 교육청이나 지자체 심사를 통해 일반 사립유치원 지원비 외에 추가 특별 학비 혜택을 받으실 수 있습니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tab 3: 신청방법 -->
+    <div class="gov-tab-content" id="content-apply">
+      <h3 class="gov-section-title">어떻게 편리하게 신청하나요?</h3>
+      
+      <div class="gov-card">
+        <div class="gov-card-title">💻 1. 온라인 신청 (복지로)</div>
+        <ul class="gov-list">
+          <li><strong>신청 주소</strong>: <a href="https://www.bokjiro.go.kr" target="_blank" rel="noopener noreferrer">복지로 공식 누리집</a>에 접속합니다.</li>
+          <li><strong>신청 경로</strong>: 로그인 후 <code>서비스 신청</code> → <code>복지서비스 신청</code> → <code>영유아</code> 코너에서 **'유아학비(유치원)'**를 선택합니다.</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-title">👣 2. 오프라인 신청 (주민센터)</div>
+        <ul class="gov-list">
+          <li><strong>신청 방법</strong>: 아동의 주민등록지 기준 관할 <strong>읍·면·동 주민센터(행정복지센터)</strong>에 신분증을 소지하고 직접 방문 신청합니다.</li>
+        </ul>
+      </div>
+
+      <div class="gov-callout gov-callout-warning">
+        🚨 <strong>매우 중요</strong>: 입학 전에 반드시 **'유아학비'로 서비스 전환(변경) 신청**을 완료해야 합니다. 소급 지원이 절대 되지 않으므로 서둘러 신청하세요!
+      </div>
+    </div>
+
+    <!-- Tab 4: 상세정보 -->
+    <div class="gov-tab-content" id="content-info">
+      <h3 class="gov-section-title">궁금한 점은 어디로 문의하나요?</h3>
+      
+      <div class="gov-card">
+        <div class="gov-card-title">📞 주요 연락망 정보</div>
+        <ul class="gov-list">
+          <li><strong>교육부 에듀콜 상담센터</strong>: ☎️ 1544-0079</li>
+          <li><strong>보건복지부 콜센터</strong>: ☎️ 129</li>
+          <li><strong>국가평생교육진흥원 유아학비콜센터</strong>: ☎️ 1544-0079</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-title">📋 신청 서류 및 필수 발급</div>
+        <ul class="gov-list">
+          <li><strong>필수 카드</strong>: 학부모 명의의 **'국민행복카드(아이행복카드)'**를 통해 학비가 자동 정산 및 지원되므로 사전 발급이 필수적입니다.</li>
+          <li><strong>제출 서류</strong>: 주민센터 직접 방문 시 신청인의 신분증이 필요하며, 대리인 신청 시 위임장 및 관계 증명 서류가 요구됩니다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 ---
 
-### 🎯 1. 나는 지원 대상이 될까요? (누가 받을 수 있나요?)
-
-이 지원 제도는 소득과 재산 기준이 전혀 없습니다! 아래 조건에만 맞으면 누구나 신청해서 혜택을 누릴 수 있어요.
-
-*   **연령 기준**: 국·공립 및 사립 유치원에 다니는 **만 3세 ~ 만 5세** 아동
-*   **국적 조건**: 대한민국 국적을 가진 아동 (일부 다문화 가정 및 예외 아동도 대상에 포함될 수 있어요!)
-*   **예외 지원**: 초등학교 입학 시기를 미룬(취학 유예) 아동도 유예한 1년에 한해 추가로 지원받을 수 있습니다.
-
----
-
-### 🎁 2. 매달 얼마나 지원받을 수 있나요? (지원 혜택 안내)
-
-유치원의 종류(국공립 vs 사립)와 교육 과정에 따라 지원 금액에 차이가 있습니다. 국공립과 사립 유치원 모두 **교육과정비**와 **방과후 과정비**를 합쳐 아래와 같이 매달 현금성 바우처 형태로 지원을 받게 됩니다.
-
-#### 🏫 국공립 유치원 (월 최대 15만 원 지원)
-*   **교육과정 지원금**: 월 **100,000원**
-*   **방과후 과정비**: 월 **50,000원** (해당 과정 신청 시)
-
-#### 🎨 사립 유치원 (월 최대 35만 원 지원)
-*   **교육과정 지원금**: 월 **280,000원**
-*   **방과후 과정비**: 월 **70,000원** (해당 과정 신청 시)
-
-> 💡 **저소득층 추가 지원 꿀팁!**
-> 사립유치원에 다니는 아동 중 법정 저소득층(기초생활수급자, 차상위계층, 한부모 가정 등)인 경우에는 관할 교육청 및 지자체 기준에 따라 추가 학비 지원을 더 받으실 수 있으니 꼭 확인해 보세요!
-
----
-
-### 📅 3. 어떻게 신청하나요? (온라인 & 방문 신청 방법)
-
-유아학비 지원은 자동으로 지급되지 않습니다. **반드시 부모님이 직접 신청**을 해주셔야 혜택이 적용됩니다!
-
-*   **💻 인터넷/모바일로 간편하게 (온라인 신청)**
-    *   **복지로 홈페이지**([www.bokjiro.go.kr](https://www.bokjiro.go.kr)) 또는 모바일 앱에 접속합니다.
-    *   간편인증서나 공동인증서로 로그인을 합니다.
-    *   `서비스 신청` -> `복지서비스 신청` -> `영유아` 코너에서 **'유아학비(유치원)'**를 선택하여 신청서를 제출합니다.
-*   **👣 주민센터 방문 신청**
-    *   아동의 주민등록상 주소지 관할 **읍·면·동 주민센터(행정복지센터)**에 방문합니다.
-    *   신분증을 지참하여 '유아학비 지원 신청서'를 작성한 뒤 제출합니다.
-
----
-
-### ⚠️ [필독] 부모님이 꼭 알아야 할 주의사항 3가지!
-
-이 부분이 가장 중요해요! 사소한 실수로 지원금을 놓치는 일이 없도록 꼼꼼하게 읽어주세요.
-
-1.  **🚨 '보육료'나 '양육수당'을 받고 계셨다면? 반드시 '서비스 변경 신청' 필수!**
-    *   기존에 어린이집을 다녔거나(보육료 지원), 가정 양육(양육수당)을 하던 아동이 유치원으로 처음 입학할 때는 반드시 **'유아학비'로 사전 변경 신청**을 완료해야 합니다.
-    *   **소급 적용 불가**: 신청을 미루다가 뒤늦게 신청하면 지나간 기간에 대한 학비는 돌려받을 수 없습니다. 입학일 전에 미리 변경 신청을 하시는 것이 가장 안전합니다!
-2.  **💳 e-그림카드(아이행복카드/국민행복카드) 발급**
-    *   지원을 받기 위해서는 학부모 본인 명의의 **'국민행복카드(구 아이행복카드)'**가 있어야 합니다. 카드가 없다면 금융기관이나 신청 페이지를 통해 미리 발급받으세요.
-    *   매월 유치원에서 원비를 결제할 때 이 카드로 인증을 함으로써 정부 지원금이 자동으로 정산처리 됩니다.
-3.  **출석 일수 확인하기**
-    *   교육부 지침에 따라 아동의 월별 출석 일수가 기준(통상 월 15일 이상)을 충족해야 해당 월의 지원금 전액이 지급됩니다. 질병이나 경조사로 인한 결석 시 유치원에 관련 서류를 제출하여 출석 인정을 받는 방법을 확인해 두세요.
-
----
-
-유아학비 지원제도는 육아 부담을 덜어주어 우리 아이에게 더 나은 교육 환경을 만들어 주기 위한 필수 혜택입니다. 어렵게 느껴지는 서류 신청이지만 복지로 사이트를 통해 천천히 따라 하시면 10분 만에 마칠 수 있답니다. 
-
-궁금한 사항이 있으시다면 언제든지 든든한 가이드 **정부24 누리집**을 확인하시거나 보건복지부 콜센터(129) 또는 관할 교육청에 문의해 보세요. 소중한 우리 아이들의 새로운 시작을 진심으로 응원합니다! 👶🎈
+어렵고 분산되어 있던 정부의 유아학비 복지 정보를 전용 탭 레이아웃을 통해 정리해 드렸습니다. 입학 시기를 놓치지 말고 서둘러 혜택을 신청하셔서 가계 부담을 가볍게 덜어내시길 바랍니다! 👶💡
