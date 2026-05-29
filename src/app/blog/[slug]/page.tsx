@@ -9,6 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
+import GovTuitionSupport from '@/components/GovTuitionSupport';
 
 /**
  * 마크다운 파서가 한국어 특수문자(「」) 또는 기호(~, (, ))를 만나
@@ -168,6 +169,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw]}
             components={{
+              // Custom div handler to inject GovTuitionSupport React component
+              div: ({ node, ...props }) => {
+                if (props.id === 'gov-tabs-placeholder') {
+                  return <GovTuitionSupport />;
+                }
+                return <div {...props} />;
+              },
               // del(취소선) 태그는 일반 텍스트로 표시
               del: ({ children }) => <span>{children}</span>,
               // hr 구분선 깔끔한 스타일
