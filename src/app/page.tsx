@@ -25,14 +25,11 @@ interface LocalData {
 
 // 블로그 글과 공공데이터 항목 매칭용 헬퍼 함수
 function findMatchingPostSlug(item: { title: string; slug?: string }, posts: Post[]): string | null {
-  // 1. JSON에 명시적으로 slug가 정의되어 있는 경우 우선 사용
   if (item.slug) {
-    // 실제 해당 slug를 가진 포스트가 존재하는지 검증
     const exists = posts.some((p) => p.slug === item.slug);
     if (exists) return item.slug;
   }
 
-  // 2. 정확히 일치하거나 포함되는 제목 찾기 (대소문자 무시 및 괄호 공백 제거 정규화 비교)
   const normalize = (str: string) => str.replace(/\s+/g, '').toLowerCase();
   const normalizedTitle = normalize(item.title);
   
@@ -114,7 +111,7 @@ export default async function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className="w-full pb-8">
       {eventSchemas.map((schema, index) => (
         <script
           key={`event-schema-${index}`}
@@ -131,159 +128,90 @@ export default async function Home() {
         />
       ))}
       
-      {/* 1. 상단 그라데이션 히어로 섹션 */}
-      <div className="relative overflow-hidden bg-linear-to-br from-indigo-900 via-slate-900 to-indigo-950 py-20 px-4 text-center text-white shadow-inner">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(99,102,241,0.15),transparent)] pointer-events-none"></div>
-        <div className="relative max-w-3xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 mb-4 backdrop-blur-xs">
-            📢 우리 동네 정보 알림이
-          </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 bg-linear-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">
-            의정부시 생활 정보통 ✨
-          </h1>
-          <p className="text-slate-300 text-lg md:text-xl font-medium max-w-xl mx-auto leading-relaxed">
-            의정부시 곳곳의 실시간 축제·행사 일정과<br />
-            놓치기 아까운 정부 혜택·지원금을 한눈에 모았습니다.
-          </p>
+      {/* 1. 우리동네 축제·행사 (그리드 커버 스타일) */}
+      <div className="mb-10">
+        <h2 className="bg-[#555] text-white text-[15px] px-5 py-2.5 mx-0 mb-4 font-normal flex items-center">
+          <span className="mr-2 text-xs">▼</span> 우리동네 축제·행사
+        </h2>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-1">
+          {data.events.map((item) => {
+            const matchedSlug = findMatchingPostSlug(item, posts);
+            const href = matchedSlug ? `/blog/${matchedSlug}` : (item.link && item.link !== '#' ? item.link : '/blog');
+            const isExternal = href.startsWith('http');
+
+            return (
+              <Link 
+                href={href} 
+                key={item.id} 
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="group flex bg-white border border-[#555] overflow-hidden hover:border-[#ff5544] transition-all duration-200 h-[120px] shadow-[0_2px_4px_rgba(0,0,0,0.03)]"
+              >
+                {/* 썸네일 대용 아이콘 영역 */}
+                <div className="w-[100px] flex-shrink-0 bg-[#eee] border-r border-[#ccc] group-hover:bg-[#ddd] transition-colors flex items-center justify-center">
+                  <span className="text-3xl grayscale group-hover:grayscale-0 transition-all">🎉</span>
+                </div>
+                {/* 텍스트 영역 */}
+                <div className="flex flex-col p-3 flex-1 justify-between min-w-0">
+                  <div>
+                    <h3 className="text-[15px] text-[#111] font-medium line-clamp-2 leading-snug group-hover:text-[#ff5544] transition-colors">{item.title}</h3>
+                  </div>
+                  <div className="flex justify-between items-end text-[13px] text-[#777]">
+                    <span className="truncate pr-1"><span className="text-xs mr-0.5">📍</span>{item.location}</span>
+                    <span className="flex-shrink-0"><span className="text-xs mr-0.5">🗓</span>{item.startDate.substring(0, 5)}</span>
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
         </div>
       </div>
 
-      <main className="max-w-4xl mx-auto px-4 py-16">
+      {/* 광고 영역 */}
+      <div className="my-10 px-1">
+        <AdBanner slot="home-middle-ad" />
+      </div>
+
+      {/* 2. 유용한 지원금·혜택 (리스트 커버 스타일) */}
+      <div className="mb-10">
+        <h2 className="bg-[#555] text-white text-[15px] px-5 py-2.5 mx-0 mb-4 font-normal flex items-center">
+          <span className="mr-2 text-xs">▼</span> 놓치면 아쉬운 지원금·혜택
+        </h2>
         
-        {/* 2. 행사/축제 섹션 */}
-        <section className="mb-16">
-          <div className="flex items-center gap-2 pb-3 mb-8 border-b border-slate-200">
-            <span className="text-2xl">📅</span>
-            <h2 className="text-2xl font-extrabold text-slate-800 tracking-tight">이번 달 주요 행사</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {data.events.map((item) => {
-              const dayMatch = item.startDate.match(/(\d+)일/);
-              const day = dayMatch ? dayMatch[1] : item.startDate.substring(0,2);
-              const monthMatch = item.startDate.match(/(\d+)월/);
-              const month = monthMatch ? monthMatch[1] : "";
-
-              const matchedSlug = findMatchingPostSlug(item, posts);
-              const href = matchedSlug 
-                ? `/blog/${matchedSlug}` 
-                : (item.link && item.link !== '#' ? item.link : '/blog');
-              const isExternal = href.startsWith('http');
-
-              return (
-                <Link 
-                  href={href} 
-                  key={item.id} 
-                  className="block group"
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                >
-                  <div className="h-full p-6 bg-white border border-slate-200/80 rounded-2xl shadow-xs hover:shadow-md hover:border-indigo-400 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className="w-14 flex-shrink-0 text-center bg-indigo-50 rounded-xl py-2.5 border border-indigo-100/60">
-                          <span className="block text-xs font-bold text-indigo-500 mb-0.5">{month}월</span>
-                          <span className="block text-2xl font-extrabold text-indigo-900">{day}</span>
-                        </div>
-                        <div className="pt-1">
-                          <h3 className="text-lg font-bold text-slate-800 leading-snug group-hover:text-indigo-600 transition-colors">
-                            {item.title}
-                          </h3>
-                        </div>
-                      </div>
-                      
-                      <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-2">
-                        {item.summary}
-                      </p>
-                    </div>
-                    
-                    <div className="flex items-center justify-between text-xs text-slate-400 pt-4 border-t border-slate-100 mt-auto">
-                      <span className="flex items-center font-medium">
-                        <span className="mr-1">📍</span> {item.location}
-                      </span>
-                      <span className="font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
-                        {item.startDate !== item.endDate ? `${item.startDate}~${item.endDate}` : item.startDate}
-                      </span>
-                    </div>
+        <div className="flex flex-col gap-4 px-1">
+          {data.benefits.map((item) => {
+            const matchedSlug = findMatchingPostSlug(item, posts);
+            const href = matchedSlug ? `/blog/${matchedSlug}` : (item.link && item.link !== '#' ? item.link : '/blog');
+            const isExternal = href.startsWith('http');
+            
+            return (
+              <Link 
+                href={href} 
+                key={item.id} 
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="group flex bg-white border border-[#555] overflow-hidden hover:border-[#ff5544] transition-all duration-200 shadow-[0_2px_4px_rgba(0,0,0,0.03)]"
+              >
+                <div className="hidden sm:flex w-[120px] flex-shrink-0 bg-[#f9f9f9] border-r border-[#eee] flex-col items-center justify-center p-2 text-center group-hover:bg-[#f1f1f1] transition-colors">
+                   <span className="text-2xl mb-1 grayscale group-hover:grayscale-0 transition-all">🎁</span>
+                   <span className="text-[11px] text-[#999]">혜택 안내</span>
+                </div>
+                <div className="flex flex-col p-4 flex-1">
+                  <h3 className="text-[16px] text-[#111] font-medium mb-1.5 group-hover:text-[#ff5544] transition-colors leading-snug">{item.title}</h3>
+                  <p className="text-[14px] text-[#888] line-clamp-2 mb-3 leading-relaxed">{item.summary}</p>
+                  
+                  <div className="flex justify-between items-center text-[12px] text-[#777] border-t border-[#f0f0f0] pt-2 mt-auto">
+                    <span className="truncate pr-2">🎯 대상: {item.target}</span>
+                    <span className="flex-shrink-0">마감: {item.endDate}</span>
                   </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* 광고 영역 */}
-        <div className="my-12">
-          <AdBanner slot="home-middle-ad" />
+                </div>
+              </Link>
+            )
+          })}
         </div>
-
-        {/* 3. 지원금/혜택 섹션 */}
-        <section className="mt-16">
-          <div className="flex items-center gap-2 pb-3 mb-8 border-b border-slate-200">
-            <span className="text-2xl">🎁</span>
-            <h2 className="text-2xl font-extrabold text-slate-800 tracking-tight">놓치면 아쉬운 혜택</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {data.benefits.map((item) => {
-              const matchedSlug = findMatchingPostSlug(item, posts);
-              const href = matchedSlug 
-                ? `/blog/${matchedSlug}` 
-                : (item.link && item.link !== '#' ? item.link : '/blog');
-              const isExternal = href.startsWith('http');
-
-              return (
-                <Link 
-                  href={href} 
-                  key={item.id} 
-                  className="block group"
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                >
-                  <div className="h-full p-6 bg-white border border-slate-200/80 rounded-2xl shadow-xs hover:shadow-md hover:border-violet-400 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-violet-600 transition-colors leading-snug">
-                        {item.title}
-                      </h3>
-                      
-                      <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-2">
-                        {item.summary}
-                      </p>
-                    </div>
-                    
-                    <div>
-                      <div className="bg-violet-50/70 border border-violet-100/60 rounded-xl p-3.5 mb-4">
-                        <span className="block text-xs font-bold text-violet-600 mb-1">🎯 지원 대상</span>
-                        <span className="block text-sm font-bold text-slate-700">{item.target}</span>
-                      </div>
-
-                      <div className="flex items-center justify-between text-xs text-slate-400">
-                        <span className="flex items-center">
-                          <span className="mr-1">🏛️</span> {item.location || '의정부시'}
-                        </span>
-                        <span className="font-medium text-slate-500 bg-amber-50 border border-amber-100 text-amber-700 px-2 py-0.5 rounded-md">
-                          기한: {item.endDate}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-
-      </main>
-
-      {/* 4. 하단 푸터 */}
-      <footer className="border-t border-slate-200 bg-white mt-24 py-12 text-center text-sm text-slate-500">
-        <div className="max-w-4xl mx-auto px-4">
-          <p className="mb-2 font-bold text-slate-800 text-base">의정부시 생활 정보통 📢</p>
-          <p className="mb-4">본 정보는 <a href="https://www.data.go.kr" className="underline font-semibold text-indigo-600 hover:text-indigo-800">공공데이터포털</a> 데이터를 바탕으로 가공되어 제공됩니다.</p>
-          <p className="text-xs text-slate-400">최종 업데이트: {data.lastUpdated}</p>
-        </div>
-      </footer>
-
+      </div>
+      
     </div>
   );
 }
