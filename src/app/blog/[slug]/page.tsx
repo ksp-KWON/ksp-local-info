@@ -145,10 +145,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </Link>
       </div>
 
-      <article className="bg-white border border-slate-200/80 rounded-3xl p-6 md:p-10 shadow-xs">
-        <div className="border-b border-slate-100 pb-6 mb-8">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 leading-tight mb-4">{post.title}</h1>
-          <div className="text-slate-400 text-xs font-semibold flex flex-wrap gap-x-4 gap-y-1">
+      <article className="bg-white dark:bg-[#25262b] border border-slate-200/80 dark:border-[#444] rounded-3xl p-6 md:p-10 shadow-xs transition-colors duration-300">
+        <div className="border-b border-slate-100 dark:border-[#333] pb-6 mb-8">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 dark:text-slate-100 leading-tight mb-4">{post.title}</h1>
+          <div className="text-slate-400 dark:text-slate-500 text-xs font-semibold flex flex-wrap gap-x-4 gap-y-1">
             <span>📅 작성일: {post.date}</span>
             {post.category && <span>📂 분류: {post.category}</span>}
             <span>🔄 최종 업데이트: {post.date}</span>
@@ -156,13 +156,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </div>
 
         {/* 마크다운 본문 영역 - **볼드** 전처리 후 rehype-raw로 HTML 통과 */}
-        <div className="prose prose-indigo max-w-none
-          prose-headings:font-extrabold prose-headings:text-slate-800
-          prose-p:text-slate-700 prose-p:leading-relaxed prose-p:my-4
-          prose-li:text-slate-700 prose-li:my-1
-          prose-strong:text-slate-900 prose-strong:font-bold
-          prose-hr:border-slate-200 prose-hr:my-8
-          prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline
+        <div className="prose prose-indigo dark:prose-invert max-w-none
+          prose-headings:font-extrabold prose-headings:text-slate-800 dark:prose-headings:text-slate-200
+          prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:my-4
+          prose-li:text-slate-700 dark:prose-li:text-slate-300 prose-li:my-1
+          prose-strong:text-slate-900 dark:prose-strong:text-slate-100 prose-strong:font-bold
+          prose-hr:border-slate-200 dark:prose-hr:border-slate-700 prose-hr:my-8
+          prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:underline
         ">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -182,8 +182,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
         {/* E-E-A-T 원문 출처 링크 영역 */}
         {sourceLink && (
-          <div className="mb-6 bg-indigo-50/50 border border-indigo-100/60 rounded-2xl p-5">
-            <span className="font-bold text-slate-700 block mb-2">🔗 공식 원문 출처</span>
+          <div className="mb-6 bg-indigo-50/50 dark:bg-indigo-900/20 border border-indigo-100/60 dark:border-indigo-800/30 rounded-2xl p-5">
+            <span className="font-bold text-slate-700 dark:text-slate-300 block mb-2">🔗 공식 원문 출처</span>
             <a 
               href={sourceLink} 
               target="_blank" 
@@ -196,10 +196,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         )}
 
         {/* AI 작성 안내 문구 */}
-        <div className="bg-slate-50 border border-slate-200/60 rounded-2xl p-5 text-xs text-slate-500 leading-relaxed mb-10 flex gap-2">
+        <div className="bg-slate-50 dark:bg-[#1a1b1e] border border-slate-200/60 dark:border-[#444] rounded-2xl p-5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-10 flex gap-2">
           <span>💡</span>
           <p>
-            이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline font-semibold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
+            이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
           </p>
         </div>
 
