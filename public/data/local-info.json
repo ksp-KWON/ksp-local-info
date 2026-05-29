@@ -51,6 +51,18 @@
   ],
   "benefits": [
     {
+      "id": "465790",
+      "title": "유아학비 (누리과정) 지원",
+      "slug": "2026-05-29-EarlyChildhoodEducationSupport",
+      "category": "혜택",
+      "startDate": "2023-10-27",
+      "endDate": "상시",
+      "location": "온라인 (복지로) 및 읍면동 주민센터",
+      "target": "국공립 및 사립유치원에 다니는 3~5세 유아",
+      "summary": "유치원에 다니는 3~5세 아동에게 유아학비, 방과후과정비 등 지원",
+      "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/000000465790"
+    },
+    {
       "id": "b1",
       "title": "의정부시 가족돌봄수당",
       "slug": "2026-05-27-uijeongbu-family-care",
@@ -97,18 +109,6 @@
       "target": "의정부시 거주 만 19세 ~ 39세 미취업 청년",
       "summary": "어학 및 국가공인 자격증 시험 응시료를 연간 최대 3회, 총 30만 원까지 실비로 현금 환급 지원",
       "link": "https://apply.jobaba.net"
-    },
-    {
-      "id": "b5",
-      "title": "유아학비 (누리과정) 지원",
-      "slug": "2026-05-29-EarlyChildhoodEducationSupport",
-      "category": "혜택",
-      "startDate": "상시",
-      "endDate": "상시",
-      "location": "복지로 홈페이지 또는 주민센터",
-      "target": "만 3~5세 누리과정 대상 아동",
-      "summary": "국공립 및 사립 유치원에 재원 중인 만 3~5세 아동의 유치원비(학비)를 매월 최대 35만 원까지 지원",
-      "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/000000465790"
     }
   ],
   "lastUpdated": "2026-05-29"
