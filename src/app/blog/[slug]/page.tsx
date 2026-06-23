@@ -145,14 +145,21 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </Link>
       </div>
 
-      <article className="bg-white dark:bg-[#25262b] border border-slate-200/80 dark:border-[#444] rounded-3xl p-6 md:p-10 shadow-xs transition-colors duration-300">
-        <div className="border-b border-slate-100 dark:border-[#333] pb-6 mb-8">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 dark:text-slate-100 leading-tight mb-4">{post.title}</h1>
+      <article className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 md:p-10 shadow-xs transition-colors duration-300">
+        <div className="border-b border-slate-100 dark:border-slate-800 pb-6 mb-8">
+          <h1 className="text-[22px] sm:text-[26px] lg:text-[28px] leading-[1.35] font-extrabold text-slate-800 dark:text-slate-100 mb-4">{post.title}</h1>
           <div className="text-slate-400 dark:text-slate-500 text-xs font-semibold flex flex-wrap gap-x-4 gap-y-1">
             <span>📅 작성일: {post.date}</span>
             {post.category && <span>📂 분류: {post.category}</span>}
             <span>🔄 최종 업데이트: {post.date}</span>
           </div>
+          
+          {/* 핵심 요약 박스 (디자인 사양 반영) */}
+          {post.summary && (
+            <div className="mt-6 bg-slate-50/80 dark:bg-slate-950/60 p-5 rounded-[20px] border-l-[6px] border-l-blue-500 text-slate-700 dark:text-slate-300 text-sm leading-relaxed font-semibold">
+              📌 핵심 요약 : {post.summary}
+            </div>
+          )}
         </div>
 
         {/* 마크다운 본문 영역 - **볼드** 전처리 후 rehype-raw로 HTML 통과 */}

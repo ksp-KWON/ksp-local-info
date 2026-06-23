@@ -21,3 +21,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* 마크다운 표(Table) 모바일 찌러짐 방지 및 가로 스크롤 적용 */
+.prose table {
+  display: block !important;
+  width: 100% !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+}
+
+.prose th, .prose td {
+  min-width: 120px;
+}
+

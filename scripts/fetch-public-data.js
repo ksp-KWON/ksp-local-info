@@ -1,6 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 
+// ── 환경변수 로드 (.env.local) ──────────────────────────────────────────────
+const envPath = path.join(process.cwd(), '.env.local');
+if (fs.existsSync(envPath)) {
+  fs.readFileSync(envPath, 'utf8').split('\n').forEach(line => {
+    const m = line.match(/^\s*([\w.-]+)\s*=\s*(.*?)?\s*$/);
+    if (m && !process.env[m[1]]) {
+      process.env[m[1]] = (m[2] ?? '').replace(/(^['"]|['"]$)/g, '').trim();
+    }
+  });
+}
+
 async function main() {
   const apiKey = process.env.PUBLIC_DATA_API_KEY;
   const geminiKey = process.env.GEMINI_API_KEY;
