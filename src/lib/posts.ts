@@ -14,16 +14,6 @@ export interface Post {
   content: string;
 }
 
-// 블로그 텍스트 내 콜론(:) 양옆 띄어쓰기 적용 함수 (URL, 시간은 예외 처리)
-function formatColonSpacing(text: string): string {
-  if (!text) return text;
-  return text.replace(/([^\s\d])\s*:\s*([^\s\d/])/g, (match, p1, p2) => {
-    // URL(http://, https://)의 경우 무시
-    if ((p1 === 'p' || p1 === 's') && p2 === '/') return match;
-    return `${p1} : ${p2}`;
-  });
-}
-
 export function getSortedPostsData(): Post[] {
   if (!fs.existsSync(postsDirectory)) {
     return [];
@@ -47,7 +37,7 @@ export function getSortedPostsData(): Post[] {
       summary: matterResult.data.summary || '',
       category: matterResult.data.category || '',
       tags: matterResult.data.tags || [],
-      content: formatColonSpacing(matterResult.content),
+      content: matterResult.content,
     };
   });
 
@@ -79,6 +69,6 @@ export function getPostData(slug: string): Post | null {
     summary: matterResult.data.summary || '',
     category: matterResult.data.category || '',
     tags: matterResult.data.tags || [],
-    content: formatColonSpacing(matterResult.content),
+    content: matterResult.content,
   };
 }

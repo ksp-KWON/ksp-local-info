@@ -74,8 +74,78 @@ export default async function Home() {
   const hospitals = await getMedicalData();
   const posts = getSortedPostsData();
 
+  // 1. 의료기관 구조화 데이터 목록 생성
+  const medicalSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "의정부 주요 의료기관 및 병원 안내",
+    "numberOfItems": hospitals.length,
+    "itemListElement": hospitals.map((hospital, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "item": {
+        "@type": "MedicalBusiness",
+        "name": hospital.name,
+        "telephone": hospital.tel,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": hospital.address,
+          "addressLocality": "의정부시",
+          "addressRegion": "경기도",
+          "addressCountry": "KR"
+        },
+        "description": hospital.notes
+      }
+    }))
+  };
+
+  // 2. 축제 및 행사 구조화 데이터 목록 생성
+  const eventSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "의정부 주요 축제 및 행사 정보",
+    "numberOfItems": data.events.length,
+    "itemListElement": data.events.map((item, idx) => {
+      const start = item.startDate ? (item.startDate.match(/^\d{4}-\d{2}-\d{2}$/) ? item.startDate : new Date().toISOString().split('T')[0]) : new Date().toISOString().split('T')[0];
+      const end = (item.endDate && item.endDate !== '상시' && item.endDate.match(/^\d{4}-\d{2}-\d{2}$/)) ? item.endDate : start;
+      
+      return {
+        "@type": "ListItem",
+        "position": idx + 1,
+        "item": {
+          "@type": "Event",
+          "name": item.title,
+          "startDate": start,
+          "endDate": end,
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "location": {
+            "@type": "Place",
+            "name": item.location,
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "의정부시",
+              "addressRegion": "경기도",
+              "addressCountry": "KR"
+            }
+          },
+          "description": item.summary
+        }
+      };
+    })
+  };
+
   return (
     <div className="w-full pb-8 space-y-10">
+      {/* JSON-LD 구조화 데이터 삽입 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
+      />
       
       {/* 1. 상단 인트로 배너 */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-6 md:p-8 text-white shadow-xs">

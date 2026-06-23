@@ -27,6 +27,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${post.title} | 의정부시 생활 정보`,
     description: post.summary || `${post.title}에 관한 상세 정보입니다.`,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.summary,
