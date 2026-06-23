@@ -136,7 +136,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="w-full pb-10 space-y-12">
+    <div className="w-full pb-16 space-y-16">
       {/* JSON-LD 구조화 데이터 삽입 */}
       <script
         type="application/ld+json"
@@ -147,46 +147,52 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
       />
       
-      {/* 1. 상단 인트로 히어로 배너 (프리미엄 그라데이션 및 글래스모피즘 효과) */}
-      <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700 rounded-3xl p-7 md:p-10 text-white shadow-md relative overflow-hidden border border-white/10">
-        <div className="absolute -right-16 -top-16 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-        <div className="relative z-10">
-          <h2 className="text-2xl md:text-3xl font-extrabold font-title tracking-tight mb-3">의정부 주민 맞춤형 건강·혜택 가이드 🏥</h2>
-          <p className="text-sm md:text-base text-blue-100/90 max-w-2xl leading-relaxed font-light">
+      {/* 1. 상단 인트로 히어로 배너 (토스·애플 스타일 미니멀 플랫 카드) */}
+      <div className="bg-slate-900 dark:bg-slate-950 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-xs border border-slate-800">
+        <div className="absolute right-0 bottom-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="relative z-10 space-y-4">
+          <span className="text-blue-500 font-bold text-xs uppercase tracking-widest font-title">의정부 생활 백서</span>
+          <h2 className="text-3xl md:text-4xl font-black font-title tracking-tight leading-[1.15]">
+            주민 맞춤형 <br className="sm:hidden" />
+            건강·혜택 가이드 🏥
+          </h2>
+          <p className="text-sm md:text-base text-slate-400 max-w-xl leading-relaxed font-light">
             지역 주요 병원 정보, 의료 혜택, 유아 및 청년 지원금부터 동네 문화 행사 소식까지 의정부의 모든 유용한 정보를 편리하게 찾아보세요.
           </p>
-          <div className="mt-6 flex items-center gap-2 text-[11px] text-blue-200 font-medium bg-white/10 backdrop-blur-xs w-fit px-3 py-1 rounded-full border border-white/5">
-            <span>🔄</span> 마지막 업데이트 : {data.lastUpdated || '2026-05-29'}
+          <div className="pt-2">
+            <span className="inline-flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold bg-slate-800/60 w-fit px-3 py-1.5 rounded-full border border-slate-800">
+              🔄 최종 업데이트 : {data.lastUpdated || '2026-05-29'}
+            </span>
           </div>
         </div>
       </div>
 
       {/* 2. 병원 리스트 정보 섹션 */}
-      <div>
-        <h3 className="text-lg font-bold font-title tracking-tight text-slate-800 dark:text-white mb-5 flex items-center gap-2">
-          <span className="text-blue-600">🏥</span> 의정부 주요 의료기관 및 병원 안내
+      <div className="space-y-6">
+        <h3 className="text-xl font-bold font-title tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+          <span className="text-blue-500">🏥</span> 의정부 주요 의료기관 및 병원 안내
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {hospitals.map((hospital) => (
             <div 
               key={hospital.id} 
-              className="bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:border-blue-500/80 dark:hover:border-blue-400/80 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+              className="bg-white dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-850 rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-750 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300"
             >
               <div>
                 <div className="flex justify-between items-start gap-2 mb-3">
-                  <h4 className="font-bold font-title text-[16px] text-slate-800 dark:text-slate-100 leading-snug">{hospital.name}</h4>
+                  <h4 className="font-bold font-title text-[15px] text-slate-800 dark:text-slate-100 leading-snug">{hospital.name}</h4>
                   <span className={`text-[9px] px-2 py-0.5 rounded-full font-semibold flex-shrink-0 ${
                     hospital.treated 
-                      ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-100/50 dark:border-blue-900/20' 
-                      : 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-100/50 dark:border-amber-900/20'
+                      ? 'bg-blue-50/50 dark:bg-blue-950/20 text-blue-500 border border-blue-100/30' 
+                      : 'bg-slate-50 dark:bg-slate-950/40 text-slate-400 dark:text-slate-500 border border-slate-100/30'
                   }`}>
-                    {hospital.treated ? '발행 완료 📝' : '대기 중 ⏳'}
+                    {hospital.treated ? '발행 완료' : '대기 중'}
                   </span>
                 </div>
-                <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed mb-5">{hospital.notes}</p>
+                <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed mb-6 font-light">{hospital.notes}</p>
               </div>
 
-              <div className="border-t border-slate-100 dark:border-slate-800/60 pt-4.5 text-[12px] space-y-2 text-slate-600 dark:text-slate-300">
+              <div className="border-t border-slate-100/80 dark:border-slate-850 pt-4 text-[12px] space-y-1.5 text-slate-600 dark:text-slate-400">
                 <div className="flex items-center gap-2">
                   <span className="text-[11px] text-slate-400">📞</span> 
                   <span className="font-mono font-medium">{hospital.tel}</span>
@@ -210,11 +216,11 @@ export default async function Home() {
       </div>
 
       {/* 3. 우리동네 축제·행사 */}
-      <div>
-        <h3 className="text-lg font-bold font-title tracking-tight text-slate-800 dark:text-white mb-5 flex items-center gap-2">
-          <span className="text-blue-600">🎪</span> 우리동네 주요 축제 및 행사 정보
+      <div className="space-y-6">
+        <h3 className="text-xl font-bold font-title tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+          <span className="text-blue-500">🎪</span> 우리동네 주요 축제 및 행사 정보
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {data.events.map((item) => {
             const matchedSlug = findMatchingPostSlug(item, posts);
             const href = matchedSlug ? `/blog/${matchedSlug}` : (item.link && item.link !== '#' ? item.link : '/blog');
@@ -226,18 +232,18 @@ export default async function Home() {
                 key={item.id} 
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group flex bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 overflow-hidden hover:border-blue-500/80 dark:hover:border-blue-400/80 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 h-[110px] rounded-2xl shadow-xs"
+                className="group flex bg-white dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-850 overflow-hidden hover:border-slate-300 dark:hover:border-slate-750 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 h-[105px] rounded-2xl"
               >
-                <div className="w-[80px] flex-shrink-0 bg-slate-50 dark:bg-slate-950 border-r border-slate-100 dark:border-slate-800 group-hover:bg-blue-50 dark:group-hover:bg-blue-950/20 transition-colors flex items-center justify-center">
-                  <span className="text-2xl grayscale group-hover:grayscale-0 transition-all duration-350">🎉</span>
+                <div className="w-[70px] flex-shrink-0 bg-slate-50/50 dark:bg-slate-950/20 border-r border-slate-100/80 dark:border-slate-850 group-hover:bg-slate-100/40 dark:group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
+                  <span className="text-xl grayscale group-hover:grayscale-0 transition-all duration-300">🎉</span>
                 </div>
                 <div className="flex flex-col p-5 flex-1 justify-between min-w-0">
-                  <h4 className="text-[14px] text-slate-800 dark:text-slate-200 font-bold line-clamp-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors font-title">
+                  <h4 className="text-[14px] text-slate-800 dark:text-slate-200 font-bold line-clamp-2 leading-snug group-hover:text-blue-500 transition-colors font-title">
                     {item.title}
                   </h4>
-                  <div className="flex justify-between items-center text-[11px] text-slate-400 dark:text-slate-500 font-medium">
-                    <span className="truncate pr-2">📍 {item.location}</span>
-                    <span className="flex-shrink-0 font-mono">🗓 {item.startDate.substring(0, 10)}</span>
+                  <div className="flex justify-between items-center text-[11px] text-slate-400 dark:text-slate-500">
+                    <span className="truncate pr-2 font-light">📍 {item.location}</span>
+                    <span className="flex-shrink-0 font-mono font-light">🗓 {item.startDate.substring(0, 10)}</span>
                   </div>
                 </div>
               </Link>
@@ -247,11 +253,11 @@ export default async function Home() {
       </div>
 
       {/* 4. 유용한 지원금·혜택 */}
-      <div>
-        <h3 className="text-lg font-bold font-title tracking-tight text-slate-800 dark:text-white mb-5 flex items-center gap-2">
-          <span className="text-blue-600">🎁</span> 놓치면 아쉬운 복지 지원금 및 혜택
+      <div className="space-y-6">
+        <h3 className="text-xl font-bold font-title tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+          <span className="text-blue-500">🎁</span> 놓치면 아쉬운 복지 지원금 및 혜택
         </h3>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-6">
           {data.benefits.map((item) => {
             const matchedSlug = findMatchingPostSlug(item, posts);
             const href = matchedSlug ? `/blog/${matchedSlug}` : (item.link && item.link !== '#' ? item.link : '/blog');
@@ -263,19 +269,19 @@ export default async function Home() {
                 key={item.id} 
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group flex bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 overflow-hidden hover:border-blue-500/80 dark:hover:border-blue-400/80 hover:shadow-md hover:-translate-y-1 transition-all duration-300 rounded-2xl shadow-xs"
+                className="group flex bg-white dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-850 overflow-hidden hover:border-slate-300 dark:hover:border-slate-750 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 rounded-2xl"
               >
-                <div className="hidden sm:flex w-[100px] flex-shrink-0 bg-slate-50 dark:bg-slate-950 border-r border-slate-100 dark:border-slate-800 flex-col items-center justify-center p-2 text-center group-hover:bg-blue-50 dark:group-hover:bg-blue-950/20 transition-colors">
-                   <span className="text-xl mb-1.5 grayscale group-hover:grayscale-0 transition-all duration-350">💰</span>
-                   <span className="text-[10px] text-slate-400 font-semibold tracking-wider uppercase">복지 혜택</span>
+                <div className="hidden sm:flex w-[90px] flex-shrink-0 bg-slate-50/50 dark:bg-slate-950/20 border-r border-slate-100/80 dark:border-slate-850 flex-col items-center justify-center p-2 text-center group-hover:bg-slate-100/40 dark:group-hover:bg-slate-900/40 transition-colors">
+                   <span className="text-xl mb-1 grayscale group-hover:grayscale-0 transition-all duration-300">💰</span>
+                   <span className="text-[9px] text-slate-400 font-bold tracking-wider uppercase">BENEFIT</span>
                 </div>
                 <div className="flex flex-col p-6 flex-1">
-                  <h4 className="text-[15px] text-slate-800 dark:text-slate-100 font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug font-title">{item.title}</h4>
+                  <h4 className="text-[15px] text-slate-800 dark:text-slate-100 font-bold mb-2 group-hover:text-blue-500 transition-colors leading-snug font-title">{item.title}</h4>
                   <p className="text-[13px] text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed font-light">{item.summary}</p>
                   
-                  <div className="flex justify-between items-center text-[11px] text-slate-400 dark:text-slate-500 border-t border-slate-100/65 dark:border-slate-800/60 pt-3 mt-auto font-medium">
-                    <span className="truncate pr-2">🎯 대상: {item.target}</span>
-                    <span className="flex-shrink-0">⏳ 마감: {item.endDate}</span>
+                  <div className="flex justify-between items-center text-[11px] text-slate-400 dark:text-slate-500 border-t border-slate-100/60 dark:border-slate-850 pt-3.5 mt-auto">
+                    <span className="truncate pr-2 font-light">🎯 대상: {item.target}</span>
+                    <span className="flex-shrink-0 font-light">⏳ 마감: {item.endDate}</span>
                   </div>
                 </div>
               </Link>
