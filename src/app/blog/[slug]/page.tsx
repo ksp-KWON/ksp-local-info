@@ -1,7 +1,6 @@
 import { getPostData, getSortedPostsData } from '@/lib/posts';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -9,16 +8,6 @@ import fs from 'fs';
 import path from 'path';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
-
-/**
- * 마크다운 파서가 한국어 특수문자(「」) 또는 기호(~, (, ))를 만나
- * **볼드** 를 인식 못하는 문제를 해결하기 위해,
- * ReactMarkdown 파싱 전에 직접 **텍스트** → <strong>텍스트</strong> 로 변환한다.
- */
-function preprocessMarkdown(content: string): string {
-  // **...** 패턴을 <strong>...</strong> HTML 태그로 미리 변환 (한 줄 내 lazy 매칭)
-  return content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-}
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -124,9 +113,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     ]
   };
 
-  // **볼드** 패턴을 미리 <strong>으로 변환
-  const processedContent = preprocessMarkdown(post.content);
-
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       {/* JSON-LD 삽입 */}
@@ -173,7 +159,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         ">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
             components={{
               // del(취소선) 태그는 일반 텍스트로 표시
               del: ({ children }) => <span>{children}</span>,
@@ -181,7 +166,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               hr: () => <hr className="my-8 border-0 border-t border-slate-200" />,
             }}
           >
-            {processedContent}
+            {post.content}
           </ReactMarkdown>
         </div>
 
