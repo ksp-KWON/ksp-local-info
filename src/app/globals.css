@@ -11,13 +11,14 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-noto), -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-title: var(--font-outfit), var(--font-noto), -apple-system, sans-serif;
+  --font-title: var(--font-inter), var(--font-noto), -apple-system, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  letter-spacing: -0.03em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

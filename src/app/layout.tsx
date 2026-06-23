@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from 'next/link';
-import { Noto_Sans_KR, Outfit } from "next/font/google";
+import { Noto_Sans_KR, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -29,10 +29,10 @@ const notoSans = Noto_Sans_KR({
   display: "swap",
 });
 
-const outfit = Outfit({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "600", "800"],
-  variable: "--font-outfit",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -67,7 +67,7 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className={`${notoSans.variable} ${outfit.variable} min-h-full flex flex-col bg-[#f5f7fa] dark:bg-[#0f172a] text-slate-700 dark:text-slate-200 transition-colors duration-300`}>
+      <body className={`${notoSans.variable} ${inter.variable} min-h-full flex flex-col bg-[#f5f7fa] dark:bg-[#0f172a] text-slate-700 dark:text-slate-200 transition-colors duration-300`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           
           {/* Header - 높이 60px, sticky, 글래스모피즘, text-slate-800 */}
