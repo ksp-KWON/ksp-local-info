@@ -91,6 +91,13 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-50 transition-colors duration-300 pb-[calc(env(safe-area-inset-bottom,20px)+64px)] lg:pb-0 overflow-x-clip">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          {/* 배경 오로라 블랍(Aurora Blobs) 효과 */}
+          <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+            <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#0090D6]/15 dark:bg-[#0090D6]/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen opacity-70"></div>
+            <div className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-cyan-400/15 dark:bg-cyan-500/15 blur-[100px] mix-blend-multiply dark:mix-blend-screen opacity-70"></div>
+            <div className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-emerald-400/10 dark:bg-emerald-500/10 blur-[120px] mix-blend-multiply dark:mix-blend-screen opacity-60"></div>
+          </div>
+          
           {/* 1. 프리미엄 패밀리룩 App Bar (White/Dark Glassmorphism + Sharp Edges) */}
           <header className="sticky top-0 z-50 w-full h-[64px] border-b border-white/40 dark:border-white/10 bg-white/70 dark:bg-slate-900/60 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] transition-colors">
             <div className="mx-auto flex h-full w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5">
