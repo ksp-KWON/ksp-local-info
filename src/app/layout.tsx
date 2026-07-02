@@ -89,7 +89,7 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="min-h-full flex flex-col bg-gradient-to-br from-[#ffffff] via-[#f8f9fa] to-[#f1f3f4] text-[#202124] dark:from-[#202124] dark:via-[#1c1c1e] dark:to-[#171717] dark:text-[#e8eaed] transition-colors duration-300 pb-[calc(env(safe-area-inset-bottom,20px)+64px)] lg:pb-0 overflow-x-clip">
+      <body className="min-h-full flex flex-col bg-[#f5f7fa] text-[#202124] dark:bg-[#121417] dark:text-[#e8eaed] transition-colors duration-300 pb-[calc(env(safe-area-inset-bottom,20px)+64px)] lg:pb-0 overflow-x-clip">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           
           {/* 1. 프리미엄 패밀리룩 App Bar (White/Dark Glassmorphism + Sharp Edges) */}
