@@ -129,14 +129,14 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       />
 
       <div className="mb-8">
-        <Link href="/blog" className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+        <Link href="/blog" className="inline-flex items-center gap-1.5 text-sm font-bold text-[#5f6368] hover:text-[#0090D6] transition-colors">
           <span>←</span> 목록으로 돌아가기
         </Link>
       </div>
 
-      <article className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 md:p-10 shadow-xs transition-colors duration-300">
+      <article className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/60 dark:border-white/10 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] transition-all duration-300 relative">
         <div className="border-b border-slate-100 dark:border-slate-800 pb-6 mb-8">
-          <h1 className="text-[22px] sm:text-[26px] lg:text-[28px] leading-[1.35] font-extrabold text-slate-800 dark:text-slate-100 mb-4">{post.title}</h1>
+          <h1 className="text-2xl sm:text-3xl lg:text-[32px] leading-[1.35] font-black tracking-tight text-[#202124] dark:text-[#e8eaed] mb-5 break-keep">{post.title}</h1>
           <div className="text-slate-400 dark:text-slate-500 text-xs font-semibold flex flex-wrap gap-x-4 gap-y-1">
             <span>📅 작성일: {post.date}</span>
             {post.category && <span>📂 분류: {post.category}</span>}
@@ -145,7 +145,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           
           {/* 핵심 요약 박스 (디자인 사양 반영) */}
           {post.summary && (
-            <div className="mt-6 bg-slate-50/80 dark:bg-slate-950/60 p-5 rounded-[20px] border-l-[6px] border-l-blue-500 text-slate-700 dark:text-slate-300 text-sm leading-relaxed font-semibold">
+            <div className="mt-6 bg-white/50 dark:bg-black/20 p-5 rounded-2xl border-l-[6px] border-l-[#0090D6] text-[#3c4043] dark:text-[#bdc1c6] text-sm leading-relaxed font-bold shadow-sm backdrop-blur-md">
               📌 핵심 요약 : {post.summary}
             </div>
           )}
@@ -153,12 +153,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
         {/* 마크다운 본문 영역 - **볼드** 전처리 후 rehype-raw로 HTML 통과 */}
         <div className="prose prose-indigo dark:prose-invert max-w-none
-          prose-headings:font-extrabold prose-headings:text-slate-800 dark:prose-headings:text-slate-200
-          prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:my-4
-          prose-li:text-slate-700 dark:prose-li:text-slate-300 prose-li:my-1
-          prose-strong:text-slate-900 dark:prose-strong:text-slate-100 prose-strong:font-bold
+          prose-headings:font-black prose-headings:tracking-tight prose-headings:text-[#202124] dark:prose-headings:text-[#e8eaed] prose-headings:break-keep
+          prose-p:text-[#3c4043] dark:prose-p:text-[#bdc1c6] prose-p:leading-[1.8] prose-p:my-5 prose-p:font-medium prose-p:break-keep
+          prose-li:text-[#3c4043] dark:prose-li:text-[#bdc1c6] prose-li:my-2 prose-li:font-medium prose-li:leading-[1.8]
+          prose-strong:text-[#202124] dark:prose-strong:text-[#e8eaed] prose-strong:font-black
           prose-hr:border-slate-200 dark:prose-hr:border-slate-700 prose-hr:my-8
-          prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:underline
+          prose-a:text-[#0090D6] dark:prose-a:text-[#8ab4f8] prose-a:no-underline hover:prose-a:underline
         ">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -177,13 +177,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
         {/* E-E-A-T 원문 출처 링크 영역 */}
         {sourceLink && (
-          <div className="mb-6 bg-indigo-50/50 dark:bg-indigo-900/20 border border-indigo-100/60 dark:border-indigo-800/30 rounded-2xl p-5">
+          <div className="mb-6 bg-white/60 dark:bg-slate-800/50 backdrop-blur-md border border-white/60 dark:border-white/10 rounded-2xl p-5 shadow-sm">
             <span className="font-bold text-slate-700 dark:text-slate-300 block mb-2">🔗 공식 원문 출처</span>
             <a 
               href={sourceLink} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-indigo-600 hover:text-indigo-800 font-semibold underline break-all text-sm"
+              className="text-[#0090D6] hover:text-blue-700 font-bold underline break-all text-sm"
             >
               {sourceLink}
             </a>
@@ -191,10 +191,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         )}
 
         {/* AI 작성 안내 문구 */}
-        <div className="bg-slate-50 dark:bg-[#1a1b1e] border border-slate-200/60 dark:border-[#444] rounded-2xl p-5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-10 flex gap-2">
+        <div className="bg-white/40 dark:bg-black/20 backdrop-blur-sm border border-white/60 dark:border-white/10 rounded-2xl p-5 text-xs text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed mb-10 flex gap-2 shadow-sm font-medium">
           <span>💡</span>
           <p>
-            이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
+            이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-[#0090D6] dark:text-[#8ab4f8] hover:underline font-bold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
           </p>
         </div>
 
