@@ -156,7 +156,7 @@ export default async function Home() {
 
       {/* 2. 병원 리스트 정보 섹션 */}
       <section className="relative">
-        <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
+        <div className="flex items-center justify-between mb-5 px-4 sm:px-5 py-3 sm:py-3.5 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative z-10 group/header">
           <div className="flex items-center gap-2 border-l-4 border-[#0090D6] pl-2.5 sm:pl-3 text-[#0090D6]">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">🏥</span>
             <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
@@ -211,7 +211,7 @@ export default async function Home() {
 
       {/* 3. 우리동네 축제·행사 */}
       <section className="relative">
-        <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
+        <div className="flex items-center justify-between mb-5 px-4 sm:px-5 py-3 sm:py-3.5 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative z-10 group/header">
           <div className="flex items-center gap-2 border-l-4 border-yellow-500 pl-2.5 sm:pl-3 text-yellow-500">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">🎉</span>
             <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
@@ -266,7 +266,7 @@ export default async function Home() {
 
       {/* 4. 유용한 지원금·혜택 */}
       <section className="relative">
-        <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
+        <div className="flex items-center justify-between mb-5 px-4 sm:px-5 py-3 sm:py-3.5 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative z-10 group/header">
           <div className="flex items-center gap-2 border-l-4 border-emerald-500 pl-2.5 sm:pl-3 text-emerald-500">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">💰</span>
             <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
