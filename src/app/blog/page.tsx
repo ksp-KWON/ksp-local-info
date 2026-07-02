@@ -25,7 +25,7 @@ export default function BlogList() {
         {posts.map((post) => (
           <article
             key={post.slug}
-            className="bg-white dark:bg-[#202124] p-4 sm:p-6 rounded-none sm:rounded-none border border-gray-100 dark:border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-[#0090D6] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+            className="bg-white dark:bg-[#1e1f22] p-4 sm:p-6 rounded-none sm:rounded-none border border-gray-100 dark:border-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:border-[#0090D6] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
           >
             <div>
               <div className="flex flex-wrap items-center gap-3 text-xs mb-3">
@@ -63,7 +63,7 @@ export default function BlogList() {
         ))}
 
         {posts.length === 0 && (
-          <div className="text-center py-16 px-4 sm:p-16 bg-white dark:bg-[#202124] rounded-none sm:rounded-none border border-gray-100 dark:border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)]">
+          <div className="text-center py-16 px-4 sm:p-16 bg-white dark:bg-[#1e1f22] rounded-none sm:rounded-none border border-gray-100 dark:border-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
             <svg className="w-12 h-12 text-[#dadce0] dark:text-[#5f6368] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M3 15h6"></path><path d="M3 19h6"></path><path d="M10 15h8"></path><path d="M10 19h8"></path></svg>
             <p className="text-sm font-bold tracking-wide text-[#5f6368] dark:text-[#9aa0a6]">
               등록된 블로그 포스팅이 존재하지 않습니다.
