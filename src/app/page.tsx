@@ -140,7 +140,7 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }} />
       
       {/* 1. 메인 페이지 인트로 헤더 (보상스쿨 입체 박스 스타일) */}
-      <div className="bg-white dark:bg-[#202124] p-5 sm:p-6 mb-6 rounded-none border border-gray-100 dark:border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] hover:border-[#0090D6] transition-all duration-300 relative overflow-hidden group/headerbox mt-4">
+      <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-5 sm:p-6 mb-6 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] hover:border-[#0090D6] transition-all duration-300 relative overflow-hidden group/headerbox mt-4">
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 border-l-4 border-[#0090D6] pl-2.5 sm:pl-3 mb-3">
           <span className="bg-gradient-to-r from-[#0090D6] to-[#00b4d8] dark:from-[#00b4d8] dark:to-[#90e0ef] bg-clip-text text-transparent">의정부 주민 맞춤형 혜택·의료 포털 🏥</span>
         </h1>
@@ -155,7 +155,7 @@ export default async function Home() {
       </div>
 
       {/* 2. 병원 리스트 정보 섹션 */}
-      <section className="bg-white dark:bg-[#202124] border border-gray-100 dark:border-white/5 rounded-none p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-[#0090D6] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] transition-all duration-300 relative overflow-hidden group/box">
+      <section className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-[#0090D6] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] transition-all duration-300 relative overflow-hidden group/box">
         <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
           <div className="flex items-center gap-2 border-l-4 border-[#0090D6] pl-2.5 sm:pl-3 text-[#0090D6]">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">🏥</span>
@@ -173,7 +173,7 @@ export default async function Home() {
           {hospitals.map((hospital) => (
             <article 
               key={hospital.id} 
-              className="group relative bg-white dark:bg-zinc-800/40 rounded-none overflow-hidden border border-gray-100 dark:border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(0,144,214,0.15)] dark:hover:shadow-[0_12px_40px_rgba(0,144,214,0.3)] hover:border-[#0090D6] transition-all duration-300 flex flex-col justify-between min-h-[160px] p-4 sm:p-5"
+              className="group relative bg-white dark:bg-zinc-800/40 rounded-2xl overflow-hidden border border-white/60 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(0,144,214,0.15)] dark:hover:shadow-[0_12px_40px_rgba(0,144,214,0.3)] hover:border-[#0090D6] transition-all duration-300 flex flex-col justify-between min-h-[160px] p-4 sm:p-5"
             >
               <div>
                 <div className="flex justify-between items-start gap-2 mb-3">
@@ -210,7 +210,7 @@ export default async function Home() {
       </div>
 
       {/* 3. 우리동네 축제·행사 */}
-      <section className="bg-white dark:bg-[#202124] border border-gray-100 dark:border-white/5 rounded-none p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-yellow-500 hover:shadow-[0_16px_50px_rgba(234,179,8,0.2)] transition-all duration-300 relative overflow-hidden group/box">
+      <section className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-yellow-500 hover:shadow-[0_16px_50px_rgba(234,179,8,0.2)] transition-all duration-300 relative overflow-hidden group/box">
         <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
           <div className="flex items-center gap-2 border-l-4 border-yellow-500 pl-2.5 sm:pl-3 text-yellow-500">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">🎉</span>
@@ -235,7 +235,7 @@ export default async function Home() {
                 key={item.id} 
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group relative bg-white dark:bg-zinc-800/40 rounded-none overflow-hidden border border-gray-100 dark:border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(234,179,8,0.15)] dark:hover:shadow-[0_12px_40px_rgba(234,179,8,0.3)] hover:border-yellow-500 transition-all duration-300 flex flex-col min-h-[140px]"
+                className="group relative bg-white dark:bg-zinc-800/40 rounded-2xl overflow-hidden border border-white/60 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(234,179,8,0.15)] dark:hover:shadow-[0_12px_40px_rgba(234,179,8,0.3)] hover:border-yellow-500 transition-all duration-300 flex flex-col min-h-[140px]"
               >
                 <div className="p-4 sm:p-5 flex flex-col justify-between h-full flex-1">
                   <div className="flex items-center justify-between gap-2 mb-3">
@@ -251,7 +251,7 @@ export default async function Home() {
                       {item.title}
                     </h3>
                   </div>
-                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white/5 group-hover:bg-gray-100 dark:group-hover:bg-white/10 group-hover:text-yellow-600 dark:group-hover:text-yellow-400">
+                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-2xl bg-gray-50 dark:bg-white/5 group-hover:bg-gray-100 dark:group-hover:bg-white/10 group-hover:text-yellow-600 dark:group-hover:text-yellow-400">
                     <div className="flex items-center gap-2 truncate">
                       📍 {item.location}
                     </div>
@@ -265,7 +265,7 @@ export default async function Home() {
       </section>
 
       {/* 4. 유용한 지원금·혜택 */}
-      <section className="bg-white dark:bg-[#202124] border border-gray-100 dark:border-white/5 rounded-none p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-emerald-500 hover:shadow-[0_16px_50px_rgba(16,185,129,0.2)] transition-all duration-300 relative overflow-hidden group/box">
+      <section className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-emerald-500 hover:shadow-[0_16px_50px_rgba(16,185,129,0.2)] transition-all duration-300 relative overflow-hidden group/box">
         <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
           <div className="flex items-center gap-2 border-l-4 border-emerald-500 pl-2.5 sm:pl-3 text-emerald-500">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">💰</span>
@@ -290,7 +290,7 @@ export default async function Home() {
                 key={item.id} 
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group relative bg-white dark:bg-zinc-800/40 rounded-none overflow-hidden border border-gray-100 dark:border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.15)] dark:hover:shadow-[0_12px_40px_rgba(16,185,129,0.3)] hover:border-emerald-500 transition-all duration-300 flex flex-col min-h-[160px]"
+                className="group relative bg-white dark:bg-zinc-800/40 rounded-2xl overflow-hidden border border-white/60 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.15)] dark:hover:shadow-[0_12px_40px_rgba(16,185,129,0.3)] hover:border-emerald-500 transition-all duration-300 flex flex-col min-h-[160px]"
               >
                 <div className="p-4 sm:p-5 flex flex-col justify-between h-full flex-1">
                   <div className="flex items-center justify-between gap-2 mb-3">
@@ -309,7 +309,7 @@ export default async function Home() {
                       {item.summary}
                     </p>
                   </div>
-                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white/5 group-hover:bg-gray-100 dark:group-hover:bg-white/10 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-2xl bg-gray-50 dark:bg-white/5 group-hover:bg-gray-100 dark:group-hover:bg-white/10 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
                     <div className="flex items-center gap-2 truncate">
                       🎯 대상: {item.target}
                     </div>
