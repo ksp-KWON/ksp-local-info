@@ -27,7 +27,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
     <div className="space-y-6">
       {/* ⚖️ AI 판례검색센터 바로가기 배너 */}
       <Link href="/precedent-search" className="block group">
-        <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(26,115,232,0.25)] hover:border-[var(--google-blue)] transition-all duration-300 relative overflow-hidden">
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(26,115,232,0.25)] hover:border-[var(--google-blue)] transition-all duration-300 relative overflow-hidden">
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">⚖️</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
@@ -50,7 +50,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
 
       {/* 🏛️ 금감원 소비자보호센터 바로가기 배너 */}
       <Link href="/fss-news" className="block group">
-        <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(239,68,68,0.25)] hover:border-red-500 transition-all duration-300 relative overflow-hidden">
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(239,68,68,0.25)] hover:border-red-500 transition-all duration-300 relative overflow-hidden">
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🏛️</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
@@ -73,7 +73,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
 
       {/* 🚗 교통사고 로컬 안심케어 센터 */}
       <Link href="/traffic-care" className="block group">
-        <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(19,115,51,0.25)] hover:border-[#137333] transition-all duration-300 relative overflow-hidden">
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(19,115,51,0.25)] hover:border-[#137333] transition-all duration-300 relative overflow-hidden">
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🚗</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
@@ -96,7 +96,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
 
       {/* 🧮 보상금·합의금 계산기 */}
       <Link href="/calculator" className="block group">
-        <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(26,115,232,0.25)] hover:border-[var(--google-blue)] transition-all duration-300 relative overflow-hidden">
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(26,115,232,0.25)] hover:border-[var(--google-blue)] transition-all duration-300 relative overflow-hidden">
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🧮</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
@@ -119,7 +119,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
 
       {/* 지역별 의료기관 (계산기 바로 아래로 이동) */}
       <Link href="/regions" className="block group">
-        <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(52,168,83,0.25)] hover:border-[var(--google-green)] transition-all duration-300 relative overflow-hidden">
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(52,168,83,0.25)] hover:border-[var(--google-green)] transition-all duration-300 relative overflow-hidden">
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🗺️</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
@@ -144,7 +144,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
 
       {/* 📂 분야별 전문 보상 가이드 */}
       <Link href="/categories" className="block group">
-        <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(251,188,4,0.3)] hover:border-[var(--google-yellow)] transition-all duration-300 relative overflow-hidden">
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(251,188,4,0.3)] hover:border-[var(--google-yellow)] transition-all duration-300 relative overflow-hidden">
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">📂</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
@@ -167,7 +167,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
 
       {/* 인기 키워드 태그 (layout.tsx 서버에서 전달된 정적 데이터) */}
       {tags.length > 0 && (
-        <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)]">
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 rounded-3xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)]">
           <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] mb-4 flex items-center gap-2 border-l-4 border-[var(--google-red)] pl-2.5">
             <svg className="w-4 h-4 text-[var(--google-red)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />

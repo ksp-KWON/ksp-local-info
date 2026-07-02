@@ -89,7 +89,7 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-50 transition-colors duration-300 pb-[calc(env(safe-area-inset-bottom,20px)+64px)] lg:pb-0 overflow-x-clip">
+      <body className="min-h-full flex flex-col bg-gradient-to-br from-[#f8fafc] via-[#eff6ff] to-[#f0f9ff] text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-zinc-50 transition-colors duration-300 pb-[calc(env(safe-area-inset-bottom,20px)+64px)] lg:pb-0 overflow-x-clip">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {/* 배경 오로라 블랍(Aurora Blobs) 효과 */}
           <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
