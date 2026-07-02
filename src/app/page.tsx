@@ -74,7 +74,7 @@ export default async function Home() {
   const hospitals = await getMedicalData();
   const posts = getSortedPostsData();
 
-  // 1. 의료기관 구조화 데이터 목록 생성
+  // JSON-LD 구조화 데이터
   const medicalSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -99,7 +99,6 @@ export default async function Home() {
     }))
   };
 
-  // 2. 축제 및 행사 구조화 데이터 목록 생성
   const eventSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -108,7 +107,6 @@ export default async function Home() {
     "itemListElement": data.events.map((item, idx) => {
       const start = item.startDate ? (item.startDate.match(/^\d{4}-\d{2}-\d{2}$/) ? item.startDate : new Date().toISOString().split('T')[0]) : new Date().toISOString().split('T')[0];
       const end = (item.endDate && item.endDate !== '상시' && item.endDate.match(/^\d{4}-\d{2}-\d{2}$/)) ? item.endDate : start;
-      
       return {
         "@type": "ListItem",
         "position": idx + 1,
@@ -136,83 +134,75 @@ export default async function Home() {
   };
 
   return (
-    <div className="w-full pb-16 space-y-16">
+    <div className="space-y-8 sm:px-0 pb-16">
       {/* JSON-LD 구조화 데이터 삽입 */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }} />
       
-      {/* 1. 상단 인트로 히어로 배너 (정부24·보조금24 스타일 포근한 연파랑 플랫 안내 보드) */}
-      <div className="bg-blue-50/60 dark:bg-slate-900/40 rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.01)] border border-blue-100/60 dark:border-slate-800/80">
-        <div className="absolute right-0 bottom-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="relative z-10 space-y-4">
-          <span className="text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-widest font-title">정부24 혜택 알리미</span>
-          <h2 className="text-2xl md:text-3xl font-black font-title tracking-tight leading-[1.2] text-slate-850 dark:text-slate-100">
-            의정부 주민 맞춤형 <br className="sm:hidden" />
-            혜택·의료 포털 🏥
-          </h2>
-          <p className="text-sm md:text-base text-slate-600 dark:text-slate-350 max-w-xl leading-relaxed font-light">
-            지역 주요 병원 정보, 의료 혜택, 유아 및 청년 지원금부터 동네 문화 행사 소식까지 정부24의 유용한 생활 밀착 혜택들을 한곳에서 편리하게 찾아보세요.
-          </p>
-          <div className="pt-2">
-            <span className="inline-flex items-center gap-1.5 text-[10px] text-blue-700 dark:text-blue-300 font-semibold bg-blue-100/55 dark:bg-blue-900/20 w-fit px-3 py-1.5 rounded-full border border-blue-200/30 dark:border-blue-900/10">
-              🔄 최종 업데이트 : {data.lastUpdated || '2026-05-29'}
-            </span>
-          </div>
+      {/* 1. 메인 페이지 인트로 헤더 (보상스쿨 입체 박스 스타일) */}
+      <div className="bg-white dark:bg-[#202124] p-5 sm:p-6 mb-6 rounded-none border border-gray-100 dark:border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] hover:border-[#0090D6] transition-all duration-300 relative overflow-hidden group/headerbox mt-4">
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 border-l-4 border-[#0090D6] pl-2.5 sm:pl-3 mb-3">
+          <span className="bg-gradient-to-r from-[#0090D6] to-[#00b4d8] dark:from-[#00b4d8] dark:to-[#90e0ef] bg-clip-text text-transparent">의정부 주민 맞춤형 혜택·의료 포털 🏥</span>
+        </h1>
+        <p className="text-xs sm:text-sm text-[#5f6368] dark:text-[#9aa0a6] break-keep leading-relaxed font-medium">
+          지역 주요 병원 정보, 의료 혜택, 유아 및 청년 지원금부터 동네 문화 행사 소식까지 의정부시의 유용한 생활 밀착 혜택들을 한곳에서 제공합니다.
+        </p>
+        <div className="mt-3">
+          <span className="inline-flex items-center gap-1.5 text-[10px] text-[#0090D6] font-semibold bg-[#0090D6]/10 px-2.5 py-1 rounded-sm border border-[#0090D6]/20">
+            🔄 최종 업데이트 : {data.lastUpdated || '2026-05-29'}
+          </span>
         </div>
       </div>
 
       {/* 2. 병원 리스트 정보 섹션 */}
-      <div className="space-y-6">
-        <h3 className="text-xl font-bold font-title tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <span className="text-blue-500">🏥</span> 의정부 주요 의료기관 및 병원 안내
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="bg-white dark:bg-[#202124] border border-gray-100 dark:border-white/5 rounded-none p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-[#0090D6] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] transition-all duration-300 relative overflow-hidden group/box">
+        <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
+          <div className="flex items-center gap-2 border-l-4 border-[#0090D6] pl-2.5 sm:pl-3 text-[#0090D6]">
+            <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">🏥</span>
+            <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
+              주요 의료기관 및 병원 안내
+            </h2>
+          </div>
+          <Link href="/blog?category=의료" className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-500 hover:text-[#0090D6] transition-colors group/link">
+            전체보기
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </Link>
+        </div>
+        
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {hospitals.map((hospital) => (
-            <div 
+            <article 
               key={hospital.id} 
-              className="bg-white dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-850 rounded-3xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-750 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300"
+              className="group relative bg-white dark:bg-zinc-800/40 rounded-none overflow-hidden border border-gray-100 dark:border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(0,144,214,0.15)] dark:hover:shadow-[0_12px_40px_rgba(0,144,214,0.3)] hover:border-[#0090D6] transition-all duration-300 flex flex-col justify-between min-h-[160px] p-4 sm:p-5"
             >
               <div>
-                {/* 보조금24 스타일 병원 아이콘 박스 */}
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center text-xl mb-4 border border-blue-100/40 dark:border-blue-900/20">
-                  🏥
-                </div>
                 <div className="flex justify-between items-start gap-2 mb-3">
-                  <h4 className="font-bold font-title text-[15px] text-slate-850 dark:text-slate-100 leading-snug">{hospital.name}</h4>
-                  <span className={`text-[9px] px-2 py-0.5 rounded-full font-semibold flex-shrink-0 ${
+                  <h4 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-[#0090D6] transition-colors line-clamp-2 leading-snug break-keep pl-2 border-l-[3px] border-[#0090D6]">
+                    {hospital.name}
+                  </h4>
+                  <span className={`px-2 py-1 text-[10px] font-bold rounded-md border border-transparent ${
                     hospital.treated 
-                      ? 'bg-blue-50/50 dark:bg-blue-950/20 text-blue-500 border border-blue-100/35' 
-                      : 'bg-slate-50 dark:bg-slate-950/40 text-slate-400 dark:text-slate-500 border border-slate-100/35'
+                      ? 'bg-blue-50 text-[#0090D6] dark:bg-[#0090D6]/20 dark:text-[#00b4d8]' 
+                      : 'bg-gray-50 text-gray-500 dark:bg-white/5 dark:text-gray-400'
                   }`}>
-                    {hospital.treated ? '발행 완료' : '대기 중'}
+                    {hospital.treated ? '발행완료' : '대기중'}
                   </span>
                 </div>
-                <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed mb-6 font-light">{hospital.notes}</p>
+                <p className="text-xs sm:text-[13px] text-[#5f6368] dark:text-[#9aa0a6] line-clamp-2 leading-relaxed font-normal break-keep mb-4">
+                  {hospital.notes}
+                </p>
               </div>
-
-              <div className="border-t border-slate-100/80 dark:border-slate-850 pt-4 text-[12px] space-y-1.5 text-slate-650 dark:text-slate-400">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-slate-400">📞</span> 
-                  <span className="font-mono font-medium">{hospital.tel}</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-[11px] text-slate-400">📍</span>
-                  <span className="truncate font-light">{hospital.address}</span>
-                </div>
+              <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] space-y-1.5 border-t border-gray-100 dark:border-white/5 pt-3">
+                <div className="flex items-center gap-2"><span className="text-[11px]">📞</span> {hospital.tel}</div>
+                <div className="flex items-center gap-2"><span className="text-[11px]">📍</span> <span className="truncate">{hospital.address}</span></div>
               </div>
-            </div>
+            </article>
           ))}
           {hospitals.length === 0 && (
-            <p className="text-sm text-slate-400 col-span-3 text-center py-8">등록된 병원 정보가 없습니다.</p>
+            <p className="text-sm text-gray-400 col-span-3 text-center py-8">등록된 병원 정보가 없습니다.</p>
           )}
         </div>
-      </div>
+      </section>
 
       {/* 광고 영역 */}
       <div className="py-2">
@@ -220,84 +210,117 @@ export default async function Home() {
       </div>
 
       {/* 3. 우리동네 축제·행사 */}
-      <div className="space-y-6">
-        <h3 className="text-xl font-bold font-title tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <span className="text-blue-500">🎪</span> 우리동네 주요 축제 및 행사 정보
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <section className="bg-white dark:bg-[#202124] border border-gray-100 dark:border-white/5 rounded-none p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-yellow-500 hover:shadow-[0_16px_50px_rgba(234,179,8,0.2)] transition-all duration-300 relative overflow-hidden group/box">
+        <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
+          <div className="flex items-center gap-2 border-l-4 border-yellow-500 pl-2.5 sm:pl-3 text-yellow-500">
+            <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">🎉</span>
+            <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
+              주요 축제 및 행사 정보
+            </h2>
+          </div>
+          <Link href="/blog?category=행사" className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-500 hover:text-yellow-600 transition-colors group/link">
+            전체보기
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </Link>
+        </div>
+        
+        <div className="grid gap-4 sm:grid-cols-2">
           {data.events.map((item) => {
             const matchedSlug = findMatchingPostSlug(item, posts);
             const href = matchedSlug ? `/blog/${matchedSlug}` : (item.link && item.link !== '#' ? item.link : '/blog');
             const isExternal = href.startsWith('http');
-
             return (
               <Link 
                 href={href} 
                 key={item.id} 
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group flex bg-white dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-850 overflow-hidden hover:border-slate-300 dark:hover:border-slate-750 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 h-[105px] rounded-3xl"
+                className="group relative bg-white dark:bg-zinc-800/40 rounded-none overflow-hidden border border-gray-100 dark:border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(234,179,8,0.15)] dark:hover:shadow-[0_12px_40px_rgba(234,179,8,0.3)] hover:border-yellow-500 transition-all duration-300 flex flex-col min-h-[140px]"
               >
-                {/* 보조금24 스타일 축제 연주황 아이콘 박스 */}
-                <div className="p-4.5 flex-shrink-0 flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/20 flex items-center justify-center text-xl group-hover:bg-amber-100/45 dark:group-hover:bg-amber-900/20 transition-all duration-300 border border-amber-100/40 dark:border-amber-900/20">
-                    🎉
+                <div className="p-4 sm:p-5 flex flex-col justify-between h-full flex-1">
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="px-2.5 py-1 text-[11px] font-bold rounded-md border border-transparent bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400">
+                      {item.category || '행사/축제'}
+                    </span>
+                    <time className="text-[11px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center gap-1 shrink-0">
+                      🗓 {item.startDate.substring(0, 10)}
+                    </time>
                   </div>
-                </div>
-                <div className="flex flex-col p-5 pl-0 flex-1 justify-between min-w-0">
-                  <h4 className="text-[14px] text-slate-800 dark:text-slate-200 font-bold line-clamp-2 leading-snug group-hover:text-blue-500 transition-colors font-title">
-                    {item.title}
-                  </h4>
-                  <div className="flex justify-between items-center text-[11px] text-slate-400 dark:text-slate-500">
-                    <span className="truncate pr-2 font-light">📍 {item.location}</span>
-                    <span className="flex-shrink-0 font-mono font-light">🗓 {item.startDate.substring(0, 10)}</span>
+                  <div className="min-w-0 flex-1 space-y-2">
+                    <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors line-clamp-2 leading-snug break-keep pl-2 border-l-[3px] border-yellow-500">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white/5 group-hover:bg-gray-100 dark:group-hover:bg-white/10 group-hover:text-yellow-600 dark:group-hover:text-yellow-400">
+                    <div className="flex items-center gap-2 truncate">
+                      📍 {item.location}
+                    </div>
+                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                   </div>
                 </div>
               </Link>
             )
           })}
         </div>
-      </div>
+      </section>
 
       {/* 4. 유용한 지원금·혜택 */}
-      <div className="space-y-6">
-        <h3 className="text-xl font-bold font-title tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <span className="text-blue-500">🎁</span> 놓치면 아쉬운 복지 지원금 및 혜택
-        </h3>
-        <div className="flex flex-col gap-6">
+      <section className="bg-white dark:bg-[#202124] border border-gray-100 dark:border-white/5 rounded-none p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-emerald-500 hover:shadow-[0_16px_50px_rgba(16,185,129,0.2)] transition-all duration-300 relative overflow-hidden group/box">
+        <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-100 dark:border-white/5 relative z-10 group/header">
+          <div className="flex items-center gap-2 border-l-4 border-emerald-500 pl-2.5 sm:pl-3 text-emerald-500">
+            <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">💰</span>
+            <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
+              복지 지원금 및 혜택
+            </h2>
+          </div>
+          <Link href="/blog?category=혜택" className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-500 hover:text-emerald-600 transition-colors group/link">
+            전체보기
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </Link>
+        </div>
+        
+        <div className="grid gap-4 sm:grid-cols-2">
           {data.benefits.map((item) => {
             const matchedSlug = findMatchingPostSlug(item, posts);
             const href = matchedSlug ? `/blog/${matchedSlug}` : (item.link && item.link !== '#' ? item.link : '/blog');
             const isExternal = href.startsWith('http');
-            
             return (
               <Link 
                 href={href} 
                 key={item.id} 
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group flex bg-white dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-850 overflow-hidden hover:border-slate-300 dark:hover:border-slate-750 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 rounded-3xl"
+                className="group relative bg-white dark:bg-zinc-800/40 rounded-none overflow-hidden border border-gray-100 dark:border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.15)] dark:hover:shadow-[0_12px_40px_rgba(16,185,129,0.3)] hover:border-emerald-500 transition-all duration-300 flex flex-col min-h-[160px]"
               >
-                {/* 보조금24 스타일 혜택 연초록 아이콘 박스 */}
-                <div className="hidden sm:flex p-5.5 flex-shrink-0 items-center justify-center">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 flex items-center justify-center text-xl group-hover:bg-emerald-100/45 dark:group-hover:bg-emerald-900/20 transition-all duration-300 border border-emerald-100/40 dark:border-emerald-900/20">
-                    💰
+                <div className="p-4 sm:p-5 flex flex-col justify-between h-full flex-1">
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="px-2.5 py-1 text-[11px] font-bold rounded-md border border-transparent bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400">
+                      {item.category || '복지/혜택'}
+                    </span>
+                    <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shrink-0 bg-emerald-50 dark:bg-emerald-900/10 px-2 py-0.5 rounded">
+                      ⏳ 마감: {item.endDate}
+                    </span>
                   </div>
-                </div>
-                <div className="flex flex-col p-6 pl-5 sm:pl-0 flex-1">
-                  <h4 className="text-[15px] text-slate-855 dark:text-slate-100 font-bold mb-2 group-hover:text-blue-500 transition-colors leading-snug font-title">{item.title}</h4>
-                  <p className="text-[13px] text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed font-light">{item.summary}</p>
-                  
-                  <div className="flex justify-between items-center text-[11px] text-slate-400 dark:text-slate-500 border-t border-slate-100/60 dark:border-slate-850 pt-3.5 mt-auto">
-                    <span className="truncate pr-2 font-light">🎯 대상: {item.target}</span>
-                    <span className="flex-shrink-0 font-light">⏳ 마감: {item.endDate}</span>
+                  <div className="min-w-0 flex-1 space-y-2">
+                    <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2 leading-snug break-keep pl-2 border-l-[3px] border-emerald-500">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs sm:text-[13px] text-[#5f6368] dark:text-[#9aa0a6] line-clamp-2 leading-relaxed font-normal break-keep">
+                      {item.summary}
+                    </p>
+                  </div>
+                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white/5 group-hover:bg-gray-100 dark:group-hover:bg-white/10 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+                    <div className="flex items-center gap-2 truncate">
+                      🎯 대상: {item.target}
+                    </div>
+                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                   </div>
                 </div>
               </Link>
             )
           })}
         </div>
-      </div>
+      </section>
       
     </div>
   );
