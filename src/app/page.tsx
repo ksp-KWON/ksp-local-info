@@ -141,7 +141,7 @@ export default async function Home() {
       
       {/* 1. 메인 페이지 인트로 헤더 (보상스쿨 입체 박스 스타일) */}
       <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 sm:p-6 mb-6 rounded-none border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] hover:border-[#0090D6] transition-all duration-300 relative overflow-hidden group/headerbox mt-4">
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 border-l-4 border-[#0090D6] pl-2.5 sm:pl-3 mb-3">
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-3 sm:px-4 py-1.5 sm:py-2 mb-3">
           <span className="bg-gradient-to-r from-[#0090D6] to-[#00b4d8] dark:from-[#00b4d8] dark:to-[#90e0ef] bg-clip-text text-transparent">의정부 주민 맞춤형 혜택·의료 포털 🏥</span>
         </h1>
         <p className="text-xs sm:text-sm text-[#5f6368] dark:text-[#9aa0a6] break-keep leading-relaxed font-medium">
@@ -157,7 +157,7 @@ export default async function Home() {
       {/* 2. 병원 리스트 정보 섹션 */}
       <section className="relative">
         <div className="flex items-center justify-between mb-5 px-4 sm:px-5 py-3 sm:py-3.5 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-none shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative z-10 group/header">
-          <div className="flex items-center gap-2 border-l-4 border-[#0090D6] pl-2.5 sm:pl-3 text-[#0090D6]">
+          <div className="flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-3 sm:px-4 py-1.5 sm:py-2 text-[#0090D6]">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">🏥</span>
             <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
               주요 의료기관 및 병원 안내
@@ -177,7 +177,7 @@ export default async function Home() {
             >
               <div>
                 <div className="flex justify-between items-start gap-2 mb-3">
-                  <h4 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-[#0090D6] transition-colors line-clamp-2 leading-snug break-keep pl-2 border-l-[3px] border-[#0090D6]">
+                  <h4 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-[#0090D6] transition-colors line-clamp-2 leading-snug break-keep bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2 py-1">
                     {hospital.name}
                   </h4>
                   <span className={`px-2 py-1 text-[10px] font-bold rounded-md border border-transparent ${
@@ -212,7 +212,7 @@ export default async function Home() {
       {/* 3. 우리동네 축제·행사 */}
       <section className="relative">
         <div className="flex items-center justify-between mb-5 px-4 sm:px-5 py-3 sm:py-3.5 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-none shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative z-10 group/header">
-          <div className="flex items-center gap-2 border-l-4 border-yellow-500 pl-2.5 sm:pl-3 text-yellow-500">
+          <div className="flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-3 sm:px-4 py-1.5 sm:py-2 text-yellow-500">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">🎉</span>
             <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
               주요 축제 및 행사 정보
@@ -247,7 +247,7 @@ export default async function Home() {
                     </time>
                   </div>
                   <div className="min-w-0 flex-1 space-y-2">
-                    <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors line-clamp-2 leading-snug break-keep pl-2 border-l-[3px] border-yellow-500">
+                    <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors line-clamp-2 leading-snug break-keep bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2 py-1">
                       {item.title}
                     </h3>
                   </div>
@@ -267,7 +267,7 @@ export default async function Home() {
       {/* 4. 유용한 지원금·혜택 */}
       <section className="relative">
         <div className="flex items-center justify-between mb-5 px-4 sm:px-5 py-3 sm:py-3.5 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-none shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative z-10 group/header">
-          <div className="flex items-center gap-2 border-l-4 border-emerald-500 pl-2.5 sm:pl-3 text-emerald-500">
+          <div className="flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-3 sm:px-4 py-1.5 sm:py-2 text-emerald-500">
             <span className="text-xl sm:text-2xl leading-none" aria-hidden="true">💰</span>
             <h2 className="text-lg sm:text-xl font-bold text-[#202124] dark:text-[#e8eaed] tracking-tight">
               복지 지원금 및 혜택
@@ -302,7 +302,7 @@ export default async function Home() {
                     </span>
                   </div>
                   <div className="min-w-0 flex-1 space-y-2">
-                    <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2 leading-snug break-keep pl-2 border-l-[3px] border-emerald-500">
+                    <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2 leading-snug break-keep bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2 py-1">
                       {item.title}
                     </h3>
                     <p className="text-xs sm:text-[13px] text-[#5f6368] dark:text-[#9aa0a6] line-clamp-2 leading-relaxed font-normal break-keep">

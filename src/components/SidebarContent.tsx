@@ -32,7 +32,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">💳</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 border-l-4 border-[var(--google-blue)] pl-2.5">
+              <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2.5 py-1.5">
                 <span className="text-[var(--google-blue)] text-lg leading-none">💳</span>
                 의정부 사랑카드 혜택
               </h3>
@@ -55,7 +55,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🏛️</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 border-l-4 border-red-500 pl-2.5">
+              <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2.5 py-1.5">
                 <span className="text-red-500 text-lg leading-none">🏛️</span>
                 의정부시 주요 민원
               </h3>
@@ -78,7 +78,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🏠</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 border-l-4 border-[#137333] pl-2.5">
+              <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2.5 py-1.5">
                 <span className="text-[#137333] text-lg leading-none">🏠</span>
                 청년·신혼 주거지원
               </h3>
@@ -101,7 +101,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🩺</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 border-l-4 border-[var(--google-yellow)] pl-2.5">
+              <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2.5 py-1.5">
                 <span className="text-[var(--google-yellow)] text-lg leading-none">🩺</span>
                 무료 건강검진 안내
               </h3>
@@ -121,7 +121,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
       {/* 인기 키워드 태그 (layout.tsx 서버에서 전달된 정적 데이터) */}
       {tags.length > 0 && (
         <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-5 rounded-none border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)]">
-          <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] mb-4 flex items-center gap-2 border-l-4 border-[var(--google-red)] pl-2.5">
+          <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] mb-4 flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2.5 py-1.5">
             <svg className="w-4 h-4 text-[var(--google-red)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
               <line x1="7" y1="7" x2="7.01" y2="7" />
