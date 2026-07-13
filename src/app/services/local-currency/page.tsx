@@ -16,6 +16,24 @@ const MOCK_MERCHANTS = [
 export default function LocalCurrencyMapPage() {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [selectedMerchant, setSelectedMerchant] = useState<any>(null);
+  const [merchants, setMerchants] = useState<any[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
+  // 실시간 API 데이터 호출
+  useEffect(() => {
+    fetch('/api/merchants?size=200')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setMerchants(data);
+        }
+        setIsLoadingData(false);
+      })
+      .catch(err => {
+        console.error('Failed to load merchants', err);
+        setIsLoadingData(false);
+      });
+  }, []);
 
   // 의정부역 기본 좌표
   const defaultCenter = { lat: 37.7380, lng: 127.0450 };
@@ -63,7 +81,7 @@ export default function LocalCurrencyMapPage() {
             level={4}
             onClick={() => setSelectedMerchant(null)}
           >
-            {MOCK_MERCHANTS.map((merchant) => (
+            {merchants.map((merchant) => (
               <MapMarker
                 key={merchant.id}
                 position={{ lat: merchant.lat, lng: merchant.lng }}
