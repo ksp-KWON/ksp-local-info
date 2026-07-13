@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Script from 'next/script';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
 
 // 임시 가맹점 데이터 (Mock Data)
 const MOCK_MERCHANTS = [
@@ -14,10 +13,15 @@ const MOCK_MERCHANTS = [
 ];
 
 export default function LocalCurrencyMapPage() {
-  const [mapLoaded, setMapLoaded] = useState(false);
   const [selectedMerchant, setSelectedMerchant] = useState<any>(null);
   const [merchants, setMerchants] = useState<any[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
+
+  // 카카오맵 SDK 로더 (next/script 대신 공식 훅 사용)
+  const [loading, error] = useKakaoLoader({
+    appkey: "c60e479ca3c78009474b746414de3a1b",
+    libraries: ["services", "clusterer"],
+  });
 
   // 실시간 API 데이터 호출 (클라이언트 직접 호출)
   useEffect(() => {
@@ -55,22 +59,6 @@ export default function LocalCurrencyMapPage() {
 
   return (
     <div className="flex flex-col h-[100dvh] bg-gray-50 dark:bg-[#121212]">
-      {/* 1. 카카오맵 스크립트 로드 */}
-      {/* 실제 환경에서는 환경변수로 키를 관리하지만, 정적 배포(GitHub Actions) 누락 방지를 위해 직접 기입 (도메인 제한으로 안전) */}
-      <Script
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=c60e479ca3c78009474b746414de3a1b&libraries=services,clusterer&autoload=false`}
-        strategy="beforeInteractive"
-        onLoad={() => {
-          window.kakao.maps.load(() => {
-            setMapLoaded(true);
-          });
-        }}
-        onError={(e) => {
-          console.error('Kakao Map Script failed to load', e);
-          setMapLoaded(false);
-        }}
-      />
-
       {/* 2. 헤더 바 */}
       <header className="bg-white dark:bg-[#202124] shadow-sm z-10 p-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -87,13 +75,21 @@ export default function LocalCurrencyMapPage() {
 
       {/* 3. 지도 영역 */}
       <main className="flex-1 relative">
-        {!mapLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-[#2d2e30]">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#0090D6]"></div>
+        {loading && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 dark:bg-[#2d2e30]">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#0090D6] mb-4"></div>
+            <p className="text-gray-500 font-bold">지도 데이터를 불러오는 중입니다...</p>
           </div>
         )}
 
-        {mapLoaded && (
+        {error && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 dark:bg-[#2d2e30]">
+            <p className="text-red-500 font-bold mb-2">지도를 불러오지 못했습니다.</p>
+            <p className="text-gray-500 text-sm">브라우저를 새로고침 해보세요.</p>
+          </div>
+        )}
+
+        {!loading && !error && (
           <Map
             center={defaultCenter}
             style={{ width: '100%', height: '100%' }}
