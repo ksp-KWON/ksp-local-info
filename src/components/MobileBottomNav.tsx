@@ -208,13 +208,13 @@ export default function MobileBottomNav() {
           <div className="w-12 h-1.5 bg-gray-200 dark:bg-white/20 rounded-full mx-auto mb-6"></div>
           <h3 className="font-bold text-lg text-[#202124] dark:text-white mb-4">의료·건강</h3>
           
-          <Link href="/blog?category=의료" onClick={closeModals} className="group flex items-center bg-gray-50 dark:bg-[#2d2e30] rounded-2xl p-4 border border-gray-100 dark:border-white/5 hover:border-[var(--google-yellow)] hover:shadow-[0_8px_30px_rgba(251,188,4,0.15)] transition-all duration-300 gap-4">
+          <Link href="/services/health-check" onClick={closeModals} className="group flex items-center bg-gray-50 dark:bg-[#2d2e30] rounded-2xl p-4 border border-gray-100 dark:border-white/5 hover:border-[var(--google-yellow)] hover:shadow-[0_8px_30px_rgba(251,188,4,0.15)] transition-all duration-300 gap-4">
             <div className="w-12 h-12 shrink-0 bg-gray-100 dark:bg-[#3a3b3d] rounded-xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 text-xl">
               🩺
             </div>
             <div className="flex flex-col flex-1">
-              <h2 className="text-[15px] font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-[var(--google-yellow)] transition-colors">주요 의료기관 및 병원</h2>
-              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-[12px] mt-0.5">지정 우수 의료기관 정보</p>
+              <h2 className="text-[15px] font-bold text-[#202124] dark:text-[#e8eaed] group-hover:text-[var(--google-yellow)] transition-colors">무료 건강검진 및 병원</h2>
+              <p className="text-[#5f6368] dark:text-[#9aa0a6] text-[12px] mt-0.5">올해 대상자 조회 및 지정 우수병원</p>
             </div>
             <svg className="w-5 h-5 text-gray-400 group-hover:text-[var(--google-yellow)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path></svg>
           </Link>

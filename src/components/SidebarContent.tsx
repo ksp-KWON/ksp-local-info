@@ -96,7 +96,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
       </Link>
 
       {/* 🩺 동네 무료 건강검진 예약 */}
-      <Link href="/blog?category=의료" className="block group">
+      <Link href="/services/health-check" className="block group">
         <div className="bg-white dark:bg-[#1e1f22]  p-5 rounded-none border border-gray-100 dark:border-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_50px_rgba(251,188,4,0.3)] hover:border-[var(--google-yellow)] transition-all duration-300 relative overflow-hidden">
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🩺</div>
           <div className="relative z-10 space-y-2">
