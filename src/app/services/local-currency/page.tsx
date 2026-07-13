@@ -16,6 +16,18 @@ export default function LocalCurrencyMapPage() {
   const [selectedMerchant, setSelectedMerchant] = useState<any>(null);
   const [merchants, setMerchants] = useState<any[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
+  
+  // 의정부 주요 동네 좌표
+  const neighborhoods = [
+    { name: '의정부역', lat: 37.7380, lng: 127.0450 },
+    { name: '민락동', lat: 37.7454, lng: 127.0984 },
+    { name: '신곡동', lat: 37.7336, lng: 127.0650 },
+    { name: '호원동', lat: 37.7176, lng: 127.0454 },
+    { name: '금오동', lat: 37.7550, lng: 127.0632 },
+    { name: '가능동', lat: 37.7479, lng: 127.0336 },
+  ];
+  
+  const [mapCenter, setMapCenter] = useState(neighborhoods[0]);
 
   // 카카오맵 SDK 로더 (next/script 대신 공식 훅 사용)
   const [loading, error] = useKakaoLoader({
@@ -28,7 +40,7 @@ export default function LocalCurrencyMapPage() {
     const fetchMerchants = async () => {
       try {
         const apiKey = process.env.NEXT_PUBLIC_GG_DATA_API_KEY || 'e11209acd2854031af9d8bec7864eef4';
-        const res = await fetch(`https://openapi.gg.go.kr/RegionMnyFacltStus?KEY=${apiKey}&Type=json&pIndex=1&pSize=200&SIGUN_NM=의정부시`);
+        const res = await fetch(`https://openapi.gg.go.kr/RegionMnyFacltStus?KEY=${apiKey}&Type=json&pIndex=1&pSize=1000&SIGUN_NM=의정부시`);
         const data = await res.json();
         
         if (data.RegionMnyFacltStus && data.RegionMnyFacltStus[1] && data.RegionMnyFacltStus[1].row) {
@@ -54,22 +66,38 @@ export default function LocalCurrencyMapPage() {
     fetchMerchants();
   }, []);
 
-  // 의정부역 기본 좌표
-  const defaultCenter = { lat: 37.7380, lng: 127.0450 };
-
   return (
     <div className="flex flex-col h-[100dvh] bg-gray-50 dark:bg-[#121212]">
       {/* 2. 헤더 바 */}
-      <header className="bg-white dark:bg-[#202124] shadow-sm z-10 p-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button onClick={() => window.history.back()} className="p-2 -ml-2 text-gray-600 dark:text-gray-300">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <span className="text-xl">💳</span> 의정부 사랑카드 가맹점
-          </h1>
+      <header className="bg-white dark:bg-[#202124] shadow-sm z-20 p-4 pb-2 flex flex-col gap-3 relative">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button onClick={() => window.history.back()} className="p-2 -ml-2 text-gray-600 dark:text-gray-300">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <h1 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <span className="text-xl">💳</span> 의정부 사랑카드 가맹점
+            </h1>
+          </div>
+        </div>
+        
+        {/* 동네 선택 스크롤 메뉴 */}
+        <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-2">
+          {neighborhoods.map((nb) => (
+            <button
+              key={nb.name}
+              onClick={() => setMapCenter(nb)}
+              className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-bold border transition-colors ${
+                mapCenter.name === nb.name
+                  ? 'bg-[#0090D6] border-[#0090D6] text-white shadow-md'
+                  : 'bg-white dark:bg-[#2d2e30] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-[#0090D6]'
+              }`}
+            >
+              {nb.name}
+            </button>
+          ))}
         </div>
       </header>
 
@@ -91,7 +119,7 @@ export default function LocalCurrencyMapPage() {
 
         {!loading && !error && (
           <Map
-            center={defaultCenter}
+            center={{ lat: mapCenter.lat, lng: mapCenter.lng }}
             style={{ width: '100%', height: '100%' }}
             level={4}
             onClick={() => setSelectedMerchant(null)}
