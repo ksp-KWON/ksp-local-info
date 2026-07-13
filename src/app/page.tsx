@@ -139,7 +139,7 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }} />
       
-      {/* 1. 메인 페이지 인트로 헤더 (보상스쿨 입체 박스 스타일) */}
+      {/* 1. 메인 페이지 인트로 헤더 (입체 박스 스타일) */}
       <div className="bg-white dark:bg-[#1e1f22]  p-5 sm:p-6 mb-6 rounded-none border border-gray-100 dark:border-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_50px_rgba(0,144,214,0.2)] hover:border-[#0090D6] transition-all duration-300 relative overflow-hidden group/headerbox mt-4">
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-3 sm:px-4 py-1.5 sm:py-2 mb-3">
           <span className="bg-gradient-to-r from-[#0090D6] to-[#00b4d8] dark:from-[#00b4d8] dark:to-[#90e0ef] bg-clip-text text-transparent">의정부 주민 맞춤형 혜택·의료 포털 🏥</span>

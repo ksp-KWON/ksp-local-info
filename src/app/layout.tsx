@@ -126,7 +126,7 @@ export default function RootLayout({
                       <polyline points="9 22 9 12 15 12 15 22"></polyline>
                     </svg>
                   </Link>
-                  <Link href="/blog" className="p-2 sm:p-2.5 rounded-none border border-transparent hover:border-[#0090D6]/30 text-[#3c4043] dark:text-[#e8eaed] hover:bg-gradient-to-br hover:from-blue-50/50 hover:to-cyan-50/50 dark:hover:from-blue-900/20 dark:hover:to-cyan-900/20 hover:text-[#0090D6] dark:hover:text-[#0090D6] hover:shadow-sm transition-all duration-200 flex items-center justify-center group" aria-label="건강 정보 블로그" title="건강 정보 블로그">
+                  <Link href="/blog" className="p-2 sm:p-2.5 rounded-none border border-transparent hover:border-[#0090D6]/30 text-[#3c4043] dark:text-[#e8eaed] hover:bg-gradient-to-br hover:from-blue-50/50 hover:to-cyan-50/50 dark:hover:from-blue-900/20 dark:hover:to-cyan-900/20 hover:text-[#0090D6] dark:hover:text-[#0090D6] hover:shadow-sm transition-all duration-200 flex items-center justify-center group" aria-label="소식 및 행사" title="소식 및 행사">
                     <svg className="w-5 h-5 sm:w-[22px] sm:h-[22px] group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="square" strokeLinejoin="miter">
                       <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path>
                       <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>

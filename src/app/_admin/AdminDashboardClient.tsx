@@ -455,7 +455,7 @@ export default function AdminDashboardClient() {
             ⚙️ 포털 관리자 시스템
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            의정부시 보상·의료 정보 및 전체 블로그 게시글을 손쉽게 실시간으로 관리합니다.
+            의정부시 생활·의료 정보 및 전체 블로그 게시글을 손쉽게 실시간으로 관리합니다.
           </p>
         </div>
         <button
