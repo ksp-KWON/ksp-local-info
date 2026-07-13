@@ -23,7 +23,7 @@ export default function LocalCurrencyMapPage() {
   useEffect(() => {
     const fetchMerchants = async () => {
       try {
-        const apiKey = process.env.NEXT_PUBLIC_GG_DATA_API_KEY || 'dummy';
+        const apiKey = process.env.NEXT_PUBLIC_GG_DATA_API_KEY || 'e11209acd2854031af9d8bec7864eef4';
         const res = await fetch(`https://openapi.gg.go.kr/RegionMnyFacltStus?KEY=${apiKey}&Type=json&pIndex=1&pSize=200&SIGUN_NM=의정부시`);
         const data = await res.json();
         
@@ -56,14 +56,18 @@ export default function LocalCurrencyMapPage() {
   return (
     <div className="flex flex-col h-[100dvh] bg-gray-50 dark:bg-[#121212]">
       {/* 1. 카카오맵 스크립트 로드 */}
-      {/* 실제 환경에서는 환경변수로 키를 관리합니다. 현재는 앱키가 없으므로 에러가 날 수 있습니다. */}
+      {/* 실제 환경에서는 환경변수로 키를 관리하지만, 정적 배포(GitHub Actions) 누락 방지를 위해 직접 기입 (도메인 제한으로 안전) */}
       <Script
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY || 'dummy_key'}&libraries=services,clusterer&autoload=false`}
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=c60e479ca3c78009474b746414de3a1b&libraries=services,clusterer&autoload=false`}
         strategy="beforeInteractive"
         onLoad={() => {
           window.kakao.maps.load(() => {
             setMapLoaded(true);
           });
+        }}
+        onError={(e) => {
+          console.error('Kakao Map Script failed to load', e);
+          setMapLoaded(false);
         }}
       />
 
