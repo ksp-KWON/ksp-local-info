@@ -34,9 +34,9 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2.5 py-1.5">
                 <span className="text-[var(--google-blue)] text-lg leading-none">💳</span>
-                의정부 사랑카드 가맹점 지도
+                사랑카드 가맹점 지도
               </h3>
-              <span className="bg-[#e8f0fe] dark:bg-[#174ea6]/20 text-[var(--google-blue)] dark:text-[#8ab4f8] text-[10px] font-extrabold px-2 py-0.5 rounded-md border border-[#d2e3fc]/30 dark:border-[#174ea6]/30">실시간 서비스</span>
+              <span className="bg-[#e8f0fe] dark:bg-[#174ea6]/20 text-[var(--google-blue)] dark:text-[#8ab4f8] text-[10px] font-extrabold px-2 py-0.5 rounded-md border border-[#d2e3fc]/30 dark:border-[#174ea6]/30">실시간 연동</span>
             </div>
             <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed">의정부시 전역의 지역화폐 결제 가능 매장을 실시간 지도로 한눈에 찾아보세요.</p>
             <div className="mt-3 w-full text-[13px] font-bold text-[#202124] dark:text-[#e8eaed] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white/5 group-hover:bg-[#e8f0fe] dark:group-hover:bg-[#174ea6]/20 group-hover:text-[var(--google-blue)] dark:group-hover:text-[#8ab4f8]">
