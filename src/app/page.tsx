@@ -183,7 +183,7 @@ export default async function Home() {
                   <span className={`px-2 py-1 text-[10px] font-bold rounded-md border border-transparent ${
                     hospital.treated 
                       ? 'bg-blue-50 text-[#0090D6] dark:bg-[#0090D6]/20 dark:text-[#00b4d8]' 
-                      : 'bg-gray-50 text-gray-500 dark:bg-white dark:text-gray-400'
+                      : 'bg-gray-50 text-gray-500 dark:bg-white/5 dark:text-gray-400'
                   }`}>
                     {hospital.treated ? '발행완료' : '대기중'}
                   </span>
@@ -251,7 +251,7 @@ export default async function Home() {
                       {item.title}
                     </h3>
                   </div>
-                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white group-hover:bg-gray-100 dark:group-hover:bg-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400">
+                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white/5 group-hover:bg-gray-100 dark:group-hover:bg-white/10 group-hover:text-yellow-600 dark:group-hover:text-yellow-400">
                     <div className="flex items-center gap-2 truncate">
                       📍 {item.location}
                     </div>
@@ -309,7 +309,7 @@ export default async function Home() {
                       {item.summary}
                     </p>
                   </div>
-                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white group-hover:bg-gray-100 dark:group-hover:bg-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+                  <div className="mt-4 w-full text-[12px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white/5 group-hover:bg-gray-100 dark:group-hover:bg-white/10 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
                     <div className="flex items-center gap-2 truncate">
                       🎯 대상: {item.target}
                     </div>
