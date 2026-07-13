@@ -19,20 +19,35 @@ export default function LocalCurrencyMapPage() {
   const [merchants, setMerchants] = useState<any[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
-  // 실시간 API 데이터 호출
+  // 실시간 API 데이터 호출 (클라이언트 직접 호출)
   useEffect(() => {
-    fetch('/api/merchants?size=200')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setMerchants(data);
+    const fetchMerchants = async () => {
+      try {
+        const apiKey = process.env.NEXT_PUBLIC_GG_DATA_API_KEY || 'dummy';
+        const res = await fetch(`https://openapi.gg.go.kr/RegionMnyFacltStus?KEY=${apiKey}&Type=json&pIndex=1&pSize=200&SIGUN_NM=의정부시`);
+        const data = await res.json();
+        
+        if (data.RegionMnyFacltStus && data.RegionMnyFacltStus[1] && data.RegionMnyFacltStus[1].row) {
+          const rows = data.RegionMnyFacltStus[1].row;
+          const formattedMerchants = rows
+            .filter((row: any) => row.REFINE_WGS84_LAT && row.REFINE_WGS84_LOGT)
+            .map((row: any, index: number) => ({
+              id: `1-${index}`,
+              name: row.CMPNM_NM,
+              category: row.INDUTYPE_NM,
+              lat: Number(row.REFINE_WGS84_LAT),
+              lng: Number(row.REFINE_WGS84_LOGT),
+              address: row.REFINE_ROADNM_ADDR || row.REFINE_LOTNO_ADDR,
+            }));
+          setMerchants(formattedMerchants);
         }
-        setIsLoadingData(false);
-      })
-      .catch(err => {
+      } catch (err) {
         console.error('Failed to load merchants', err);
+      } finally {
         setIsLoadingData(false);
-      });
+      }
+    };
+    fetchMerchants();
   }, []);
 
   // 의정부역 기본 좌표
