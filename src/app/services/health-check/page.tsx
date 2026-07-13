@@ -40,7 +40,7 @@ export default function HealthCheckPage() {
         if (data.Hospital && data.Hospital[1] && data.Hospital[1].row) {
           // 내과가 포함되고 영업중인 곳만 필터링 (건강검진 주력)
           const validHospitals = data.Hospital[1].row.filter((h: any) => 
-            h.BSN_STATE_NM === '영업/정상' && 
+            h.BSN_STATE_NM && h.BSN_STATE_NM.includes('영업') && 
             h.TREAT_SBJECT_CONT && h.TREAT_SBJECT_CONT.includes('내과') &&
             h.REFINE_WGS84_LAT && h.REFINE_WGS84_LOGT
           );
