@@ -26,22 +26,22 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
 
   return (
     <div className="space-y-6">
-      {/* 💳 의정부 사랑카드 안내 */}
-      <Link href="/blog?tag=의정부사랑카드" className="block group">
+      {/* 💳 의정부 사랑카드 실시간 가맹점 지도 */}
+      <Link href="/services/local-currency" className="block group">
         <div className="bg-white dark:bg-[#1e1f22]  p-5 rounded-none border border-gray-100 dark:border-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_50px_rgba(26,115,232,0.25)] hover:border-[var(--google-blue)] transition-all duration-300 relative overflow-hidden">
           <div className="absolute right-[-10px] bottom-[-20px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">💳</div>
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-[#202124] dark:text-[#e8eaed] flex items-center gap-2 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent px-2.5 py-1.5">
                 <span className="text-[var(--google-blue)] text-lg leading-none">💳</span>
-                의정부 사랑카드 혜택
+                의정부 사랑카드 가맹점 지도
               </h3>
-              <span className="bg-[#e8f0fe] dark:bg-[#174ea6]/20 text-[var(--google-blue)] dark:text-[#8ab4f8] text-[10px] font-extrabold px-2 py-0.5 rounded-md border border-[#d2e3fc]/30 dark:border-[#174ea6]/30">인기 혜택</span>
+              <span className="bg-[#e8f0fe] dark:bg-[#174ea6]/20 text-[var(--google-blue)] dark:text-[#8ab4f8] text-[10px] font-extrabold px-2 py-0.5 rounded-md border border-[#d2e3fc]/30 dark:border-[#174ea6]/30">실시간 서비스</span>
             </div>
-            <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed">의정부시 지역화폐 가맹점 조회, 캐시백 인센티브 혜택 및 모바일 신청 방법을 한눈에 확인하세요.</p>
+            <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed">의정부시 전역의 지역화폐 결제 가능 매장을 실시간 지도로 한눈에 찾아보세요.</p>
             <div className="mt-3 w-full text-[13px] font-bold text-[#202124] dark:text-[#e8eaed] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50 dark:bg-white/5 group-hover:bg-[#e8f0fe] dark:group-hover:bg-[#174ea6]/20 group-hover:text-[var(--google-blue)] dark:group-hover:text-[#8ab4f8]">
               <div className="flex items-center gap-2">
-                사랑카드 혜택보기
+                지도 열기
               </div>
               <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </div>
