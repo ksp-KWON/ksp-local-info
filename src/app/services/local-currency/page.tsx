@@ -19,7 +19,7 @@ export default function LocalCurrencyMapPage() {
 
   // 카카오맵 SDK 로더 (next/script 대신 공식 훅 사용)
   const [loading, error] = useKakaoLoader({
-    appkey: "c60e479ca3c78009474b746414de3a1b",
+    appkey: "c60e479ca3c78009474b748414de3a1b",
     libraries: ["services", "clusterer"],
   });
 
