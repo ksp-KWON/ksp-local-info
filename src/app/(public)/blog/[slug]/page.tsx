@@ -203,7 +203,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 href={sourceLink} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-[#1a73e8] hover:text-blue-700 font-bold underline break-all text-[14px]"
+                className="group relative inline-flex items-center justify-center gap-1 px-3 py-1.5 mt-2 bg-blue-600 text-white font-bold text-sm sm:text-base border-2 border-black dark:border-white shadow-marker-yellow hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-marker-yellow transition-all no-underline break-all"
               >
                 {sourceLink}
               </a>
@@ -213,7 +213,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <div className="bg-yellow-50 dark:bg-[#303134] border-2 border-black dark:border-white p-5 text-[13.5px] text-gray-700 dark:text-gray-300 leading-relaxed mb-10 flex gap-3 shadow-marker-pink font-medium">
             <span className="text-lg leading-none">💡</span>
             <p>
-              이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-[#1a73e8] dark:text-[#8ab4f8] hover:underline font-bold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
+              이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="group relative inline-flex items-center justify-center px-2 py-0.5 bg-blue-600 text-white font-bold text-xs sm:text-sm border-2 border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(255,215,0,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[4px_4px_0px_0px_rgba(255,215,0,1)] transition-all mx-1 no-underline">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
             </p>
           </div>
 
