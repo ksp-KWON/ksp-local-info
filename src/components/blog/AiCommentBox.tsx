@@ -60,19 +60,19 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
   };
 
   return (
-    <div className={`bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-none border border-blue-200/50 dark:border-blue-800/30 space-y-2 ${className}`}>
-      <div className="flex items-center gap-1.5 text-xs font-black text-[var(--google-blue)] dark:text-blue-400">
-        <span className="text-sm"><IconBulb className="w-4 h-4" /></span>
-        🤖 에디터 K의 AI 핵심 요약 노트
+    <div className={`bg-white dark:bg-[#303134] p-5 border-2 border-black dark:border-white shadow-marker-blue space-y-3 ${className}`}>
+      <div className="flex items-center gap-1.5 text-lg font-dohyeon text-black dark:text-white">
+        <span className="text-base"><IconBulb className="w-5 h-5" /></span>
+        <span className="highlighter-blue px-1">AI 핵심 요약 노트</span>
       </div>
       
       <div className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-medium pl-1 min-h-[2.5rem]">
         {!hasStarted ? (
           <button
             onClick={fetchComment}
-            className="mt-1 px-5 py-2.5 bg-[var(--google-blue)] dark:bg-blue-600 text-white text-xs font-bold rounded-none shadow-md hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors flex items-center gap-1.5"
+            className="mt-1 px-5 py-2.5 bg-blue-600 dark:bg-blue-500 text-white text-sm font-jua font-normal border-2 border-black dark:border-white shadow-marker-yellow hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-marker-yellow transition-all flex items-center gap-1.5"
           >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
             이 정책의 AI 핵심 요약 및 꿀팁 보기
