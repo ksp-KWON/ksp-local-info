@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
-import { RefreshCw, Ambulance } from 'lucide-react';
+import { RefreshCw, Ambulance, CreditCard } from 'lucide-react';
 import AdBanner from '@/components/AdBanner';
 import { getSortedPostsData } from '@/lib/posts';
 import HomePostList from '@/components/HomePostList';
@@ -45,6 +45,13 @@ export default async function Home() {
           의정부시의 유용한 생활 밀착 혜택과 주요 정책들을 전문가의 시선으로 큐레이션하여 제공합니다.
         </p>
         <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-end gap-4">
+          <NeoButton 
+            href="/services/local-currency" 
+            variant="primary" 
+            icon={<CreditCard className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />}
+          >
+            의정부사랑카드 사용처 지도
+          </NeoButton>
           <NeoButton 
             href="/services/emergency" 
             variant="danger" 
