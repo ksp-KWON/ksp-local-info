@@ -42,13 +42,18 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
         body: JSON.stringify({ sourceText, type })
       });
       
-      if (!res.ok) throw new Error('API 오류');
-      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || `서버 통신 오류 (${res.status})`);
+      }
+
       const data = await res.json();
-      setComment(data.comment || '분석 결과를 가져오지 못했습니다.');
-    } catch (err) {
+      if (data.error) throw new Error(data.error);
+
+      setComment(data.comment || '코멘트를 생성하지 못했습니다.');
+    } catch (err: any) {
       setError(true);
-      setComment('서버 통신 오류로 코멘트를 불러오지 못했습니다.');
+      setComment(err.message || '알 수 없는 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }
