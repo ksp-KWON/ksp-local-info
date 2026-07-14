@@ -1,0 +1,93 @@
+'use client';
+
+import { useState } from 'react';
+
+interface AiCommentBoxProps {
+  sourceText: string;
+  type: 'policy' | 'benefit' | 'event';
+  className?: string;
+}
+
+function IconBulb({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+      <path d="M12 2v1" />
+      <path d="M12 7v1" />
+      <path d="M5.6 5.6l.7.7" />
+      <path d="M18.4 5.6l-.7.7" />
+      <path d="M2 12h1" />
+      <path d="M21 12h1" />
+      <path d="M12 11a5 5 0 1 0-5 5h10a5 5 0 1 0-5-5z" />
+    </svg>
+  );
+}
+
+export default function AiCommentBox({ sourceText, type, className = '' }: AiCommentBoxProps) {
+  const [comment, setComment] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  const fetchComment = async () => {
+    setHasStarted(true);
+    setLoading(true);
+    setError(false);
+    
+    try {
+      const res = await fetch('/api/generate-ai-comment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sourceText, type })
+      });
+      
+      if (!res.ok) throw new Error('API 오류');
+      
+      const data = await res.json();
+      setComment(data.comment || '분석 결과를 가져오지 못했습니다.');
+    } catch (err) {
+      setError(true);
+      setComment('서버 통신 오류로 코멘트를 불러오지 못했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className={`bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-none border border-blue-200/50 dark:border-blue-800/30 space-y-2 ${className}`}>
+      <div className="flex items-center gap-1.5 text-xs font-black text-[var(--google-blue)] dark:text-blue-400">
+        <span className="text-sm"><IconBulb className="w-4 h-4" /></span>
+        🤖 에디터 K의 AI 핵심 요약 노트
+      </div>
+      
+      <div className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-medium pl-1 min-h-[2.5rem]">
+        {!hasStarted ? (
+          <button
+            onClick={fetchComment}
+            className="mt-1 px-5 py-2.5 bg-[var(--google-blue)] dark:bg-blue-600 text-white text-xs font-bold rounded-none shadow-md hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors flex items-center gap-1.5"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            이 정책의 AI 핵심 요약 및 꿀팁 보기
+          </button>
+        ) : loading ? (
+          <div className="flex items-center gap-2 text-[var(--google-blue)] animate-pulse mt-1">
+            <div className="w-3 h-3 border-2 border-[var(--google-blue)] border-t-transparent rounded-full animate-spin" />
+            <span>지원 조건 및 핵심 혜택을 분석 중입니다... (약 2~4초 소요)</span>
+          </div>
+        ) : (
+          <div className="space-y-1.5 mt-1">
+            <p className={`whitespace-pre-wrap ${error ? 'text-red-500' : ''}`}>{comment}</p>
+            {!error && (
+              <p className="text-[10px] text-gray-400 mt-2 block border-t border-gray-200 dark:border-gray-800 pt-2">
+                ※ 본 요약은 공공데이터 원문을 바탕으로 AI(Gemini)가 실시간 분석한 내용입니다. 실제 신청 시 반드시 공식 모집공고를 확인하시기 바랍니다.
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

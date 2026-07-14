@@ -9,6 +9,7 @@ import SmartStickyLayout from "@/components/SmartStickyLayout";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import { getSortedPostsData } from "@/lib/posts";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
 
 const notoSans = Noto_Sans_KR({
   subsets: ["latin"],
@@ -88,6 +89,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-[#f5f7fa] text-[#202124] dark:bg-[#121417] dark:text-[#e8eaed] transition-colors duration-300 pb-[calc(env(safe-area-inset-bottom,20px)+64px)] lg:pb-0 overflow-x-clip">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <ScrollProgressBar />
           
           {/* 1. 프리미엄 패밀리룩 App Bar (White/Dark Glassmorphism + Sharp Edges) */}
           <header className="sticky top-0 z-50 w-full h-[64px] border-b border-white/40 dark:border-white/10 bg-white/70 dark:bg-slate-900/60 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] transition-colors">

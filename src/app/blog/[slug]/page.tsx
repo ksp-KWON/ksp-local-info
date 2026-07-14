@@ -7,6 +7,8 @@ import path from 'path';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import AuthorBioCard from '@/components/blog/AuthorBioCard';
+import AiCommentBox from '@/components/blog/AiCommentBox';
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -184,6 +186,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             )}
           </header>
 
+          <div className="mb-10">
+            <AiCommentBox sourceText={post.content} type="policy" />
+          </div>
+
           <div className="prose prose-indigo dark:prose-invert max-w-none">
             <MarkdownRenderer content={post.content} />
           </div>
@@ -210,6 +216,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-[#1a73e8] dark:text-[#8ab4f8] hover:underline font-bold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
             </p>
           </div>
+
+          <AuthorBioCard />
 
           <div className="my-8">
             <AdBanner slot="blog-bottom-ad" />
