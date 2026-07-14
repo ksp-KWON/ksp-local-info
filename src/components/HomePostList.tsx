@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Coins, PartyPopper, Stethoscope, Lightbulb, Calendar } from 'lucide-react';
 
 type PostData = {
   slug: string;
@@ -13,41 +14,29 @@ type PostData = {
 const getCategoryTheme = (category: string) => {
   if (category === '복지·지원금') {
     return {
-      title: '💰 최신 복지·지원금 소식',
-      headerBg: 'from-emerald-50 to-transparent dark:from-emerald-900/20 dark:to-transparent',
-      titleColor: 'text-emerald-600 dark:text-emerald-400',
-      badge: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400',
-      hoverBorder: 'hover:border-emerald-500 hover:shadow-[0_12px_40px_rgba(16,185,129,0.2)]',
-      hoverText: 'group-hover:text-emerald-600 dark:group-hover:text-emerald-400'
+      title: '최신 복지·지원금 소식',
+      icon: <Coins className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
+      hoverBorder: 'hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]',
     };
   }
   if (category === '행사·축제') {
     return {
-      title: '🎉 우리동네 문화·행사',
-      headerBg: 'from-yellow-50 to-transparent dark:from-yellow-900/20 dark:to-transparent',
-      titleColor: 'text-yellow-600 dark:text-yellow-400',
-      badge: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400',
-      hoverBorder: 'hover:border-yellow-500 hover:shadow-[0_12px_40px_rgba(234,179,8,0.2)]',
-      hoverText: 'group-hover:text-yellow-600 dark:group-hover:text-yellow-400'
+      title: '우리동네 문화·행사',
+      icon: <PartyPopper className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
+      hoverBorder: 'hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]',
     };
   }
   if (category === '건강·의료') {
     return {
-      title: '🏥 건강·의료 생활 정보',
-      headerBg: 'from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent',
-      titleColor: 'text-blue-600 dark:text-blue-400',
-      badge: 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400',
-      hoverBorder: 'hover:border-blue-500 hover:shadow-[0_12px_40px_rgba(59,130,246,0.2)]',
-      hoverText: 'group-hover:text-blue-600 dark:group-hover:text-blue-400'
+      title: '건강·의료 생활 정보',
+      icon: <Stethoscope className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
+      hoverBorder: 'hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]',
     };
   }
   return {
-    title: '💡 꼭 알아야 할 생활 꿀팁',
-    headerBg: 'from-gray-50 to-transparent dark:from-gray-800/20 dark:to-transparent',
-    titleColor: 'text-gray-700 dark:text-gray-300',
-    badge: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400',
-    hoverBorder: 'hover:border-gray-500 hover:shadow-[0_12px_40px_rgba(107,114,128,0.2)]',
-    hoverText: 'group-hover:text-gray-700 dark:group-hover:text-gray-300'
+    title: '꼭 알아야 할 생활 꿀팁',
+    icon: <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
+    hoverBorder: 'hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]',
   };
 };
 
@@ -77,15 +66,16 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
         return (
           <section key={categoryId} className="relative">
             {/* 카테고리 헤더 */}
-            <div className="flex items-center justify-between mb-5 px-4 sm:px-5 py-3 sm:py-3.5 relative z-10">
-              <div className={`flex items-center gap-2 bg-gradient-to-r ${theme.headerBg} px-3 sm:px-4 py-1.5 sm:py-2`}>
-                <h2 className={`text-lg sm:text-xl font-bold tracking-tight ${theme.titleColor}`}>
+            <div className="flex items-center justify-between mb-5 px-4 sm:px-0 py-3 sm:py-3.5 relative z-10 border-b-4 border-black dark:border-white">
+              <div className="flex items-center gap-2 px-1 py-1.5 sm:py-2">
+                {theme.icon}
+                <h2 className="text-lg sm:text-xl font-black tracking-tight text-black dark:text-white">
                   {theme.title}
                 </h2>
               </div>
-              <Link href={`/blog?category=${categoryId}`} className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors group">
+              <Link href={`/blog?category=${categoryId}`} className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-black dark:text-white hover:underline transition-colors group">
                 전체보기
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </Link>
             </div>
             
@@ -95,22 +85,23 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
                 <Link 
                   href={`/blog/${post.slug}`} 
                   key={post.slug}
-                  className={`group relative bg-white dark:bg-[#1e1f22] rounded-none overflow-hidden border border-gray-100 dark:border-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all duration-300 flex flex-col min-h-[160px] ${theme.hoverBorder}`}
+                  className={`group relative bg-white dark:bg-[#121417] border-2 border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all duration-200 flex flex-col min-h-[160px] ${theme.hoverBorder}`}
                 >
                   <div className="p-4 sm:p-5 flex flex-col justify-between h-full flex-1">
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className={`px-2.5 py-1 text-[11px] font-bold rounded-md border border-transparent ${theme.badge}`}>
+                      <span className="px-2 py-1 text-[11px] font-black border-2 border-black dark:border-white text-black dark:text-white uppercase tracking-wider">
                         {post.category}
                       </span>
-                      <time className="text-[11px] font-medium text-[#5f6368] dark:text-[#9aa0a6] flex items-center gap-1 shrink-0">
-                        🗓 {post.date}
+                      <time className="text-[11px] font-black text-black dark:text-white flex items-center gap-1 shrink-0">
+                        <Calendar className="w-3 h-3" strokeWidth={3} />
+                        {post.date}
                       </time>
                     </div>
                     <div className="min-w-0 flex-1 space-y-2">
-                      <h3 className={`text-sm sm:text-[15px] font-bold text-[#202124] dark:text-[#e8eaed] transition-colors line-clamp-2 leading-snug break-keep ${theme.hoverText}`}>
+                      <h3 className="text-sm sm:text-[15px] font-black text-black dark:text-white transition-colors line-clamp-2 leading-snug break-keep group-hover:underline">
                         {post.title}
                       </h3>
-                      <p className="text-xs sm:text-[13px] text-[#5f6368] dark:text-[#9aa0a6] line-clamp-2 leading-relaxed font-normal break-keep">
+                      <p className="text-xs sm:text-[13px] text-gray-700 dark:text-gray-300 font-bold line-clamp-2 leading-relaxed break-keep">
                         {post.summary}
                       </p>
                     </div>
