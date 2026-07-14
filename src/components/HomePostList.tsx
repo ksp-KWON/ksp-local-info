@@ -80,10 +80,10 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
                       </time>
                     </div>
                     <div className="min-w-0 flex-1 space-y-2 mt-2">
-                      <h3 className="text-lg sm:text-xl font-jua font-normal tracking-wide text-black dark:text-white transition-colors line-clamp-2 leading-snug break-keep group-hover:underline">
-                        {post.title}
+                      <h3 className="text-lg sm:text-xl font-dohyeon font-normal tracking-wide text-black dark:text-white transition-colors line-clamp-2 leading-snug break-keep group-hover:underline">
+                        <span className={`highlighter-${theme.color}`}>{post.title}</span>
                       </h3>
-                      <p className="text-xs sm:text-[13px] text-gray-700 dark:text-gray-300 font-bold line-clamp-2 leading-relaxed break-keep">
+                      <p className="text-[13px] sm:text-[14px] font-jua font-normal text-gray-700 dark:text-gray-300 line-clamp-2 leading-relaxed break-keep">
                         {post.summary}
                       </p>
                     </div>

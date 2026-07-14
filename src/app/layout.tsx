@@ -79,7 +79,7 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="min-h-full flex flex-col bg-[#f5f7fa] text-[#202124] dark:bg-[#121417] dark:text-[#e8eaed] transition-colors duration-300 pb-[calc(env(safe-area-inset-bottom,20px)+64px)] lg:pb-0 overflow-x-clip">
+      <body className="min-h-full flex flex-col font-jua bg-[#f5f7fa] text-[#202124] dark:bg-[#121417] dark:text-[#e8eaed] transition-colors duration-300 pb-[calc(env(safe-area-inset-bottom,20px)+64px)] lg:pb-0 overflow-x-clip">
         {children}
       </body>
     </html>
