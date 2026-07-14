@@ -13,7 +13,7 @@ const baseComponents: Components = {
     <h1
       id={id}
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
-      className="text-[28px] sm:text-[32px] font-dohyeon font-normal text-[#202124] dark:text-[#e8eaed] mt-16 mb-8 pb-4 border-b-4 border-[#1a73e8] dark:border-[#8ab4f8] tracking-tight break-keep"
+      className="font-dohyeon font-normal tracking-wide text-black dark:text-white text-[28px] sm:text-[32px] mt-16 mb-8 pb-4 border-b-4 border-black dark:border-white"
     >
       {children}
     </h1>
@@ -22,18 +22,18 @@ const baseComponents: Components = {
     <h2
       id={id}
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
-      className="group flex items-center text-[24px] sm:text-[26px] font-dohyeon font-normal text-[#202124] dark:text-[#e8eaed] mt-14 mb-6 px-4 sm:px-5 py-3.5 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent border-l-[6px] border-[#1a73e8] dark:border-[#8ab4f8] tracking-tight break-keep"
+      className="font-dohyeon font-normal tracking-wide text-black dark:text-white text-[24px] sm:text-[26px] mt-14 mb-6"
     >
-      {children}
+      <span className="highlighter-blue px-1.5">{children}</span>
     </h2>
   ),
   h3: ({ children, id }) => (
     <h3
       id={id}
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
-      className="flex items-center gap-2 text-[20px] sm:text-[22px] font-dohyeon font-normal text-[#3c4043] dark:text-[#e8eaed] mt-10 mb-4 px-1 tracking-tight break-keep"
+      className="flex items-center gap-2 font-dohyeon font-normal tracking-wide text-black dark:text-white text-[20px] sm:text-[22px] mt-10 mb-4"
     >
-      <span className="text-[#1a73e8] dark:text-[#8ab4f8]">■</span>
+      <span className="w-2.5 h-2.5 rounded-full bg-[#fbbc04] border-2 border-black dark:border-white"></span>
       {children}
     </h3>
   ),
@@ -72,10 +72,10 @@ const baseComponents: Components = {
     <strong className="font-bold text-[#1A73E8] dark:text-[#8ab4f8]">{children}</strong>
   ),
   hr: () => (
-    <div className="my-16 flex items-center justify-center gap-4">
-      <div className="w-24 h-px bg-gradient-to-r from-transparent to-gray-300 dark:to-gray-600" />
-      <span className="w-1.5 h-1.5 rounded-full bg-[#d93025]" />
-      <div className="w-24 h-px bg-gradient-to-l from-transparent to-gray-300 dark:to-gray-600" />
+    <div className="my-16 flex items-center justify-center px-8">
+      <div className="w-full max-w-[200px] h-[3px] bg-black dark:bg-white relative">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#ea4335] border-2 border-black dark:border-white rounded-full"></div>
+      </div>
     </div>
   ),
 };
@@ -125,22 +125,22 @@ export const sharedComponents: any = {
     );
   },
   hr1: () => (
-    <div className="my-16 flex items-center justify-center gap-4">
-      <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-      <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-      <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+    <div className="my-16 flex items-center justify-center gap-3">
+      <span className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white"></span>
+      <span className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white"></span>
+      <span className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white"></span>
     </div>
   ),
   hr2: () => (
     <div className="my-16 flex justify-center">
-      <div className="w-24 h-px bg-gray-300 dark:bg-gray-600"></div>
+      <div className="w-32 h-[3px] bg-black dark:bg-white"></div>
     </div>
   ),
   hr3: () => (
-    <div className="my-16 flex items-center justify-center gap-4">
-      <div className="w-24 h-px bg-gradient-to-r from-transparent to-gray-300 dark:to-gray-600" />
-      <span className="w-1.5 h-1.5 rounded-full bg-[#d93025]" />
-      <div className="w-24 h-px bg-gradient-to-l from-transparent to-gray-300 dark:to-gray-600" />
+    <div className="my-16 flex items-center justify-center px-8">
+      <div className="w-full max-w-[200px] h-[3px] bg-black dark:bg-white relative">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#ea4335] border-2 border-black dark:border-white rounded-full"></div>
+      </div>
     </div>
   ),
 };
