@@ -168,13 +168,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       <NeoBox shadowColor="blue" className="!p-0 overflow-hidden relative">
         <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
           
-          <header className="border-b border-gray-200 dark:border-gray-800 pb-8 mb-8 sm:mb-10">
+          <header className="border-b-4 border-black dark:border-white pb-8 mb-8 sm:mb-10">
             <div className="flex flex-wrap items-center gap-3 text-xs mb-5">
               {post.category && (
                 <NeoBadge color="gray">{post.category}</NeoBadge>
               )}
-              <time dateTime={post.date} className="text-[#5f6368] dark:text-[#9aa0a6] font-jua font-normal tracking-wide flex items-center gap-1">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <time dateTime={post.date} className="text-black dark:text-white font-dohyeon font-normal tracking-wide flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 작성일 {post.date}
               </time>
             </div>
@@ -198,7 +198,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <MarkdownRenderer content={post.content} />
           </div>
           
-          <hr className="my-12 border-gray-200 dark:border-gray-800" />
+          <hr className="my-12 border-2 border-black dark:border-white" />
 
           {sourceLink && (
             <NeoBox shadowColor="green" className="mb-6 !bg-gray-50 dark:!bg-[#303134]">
