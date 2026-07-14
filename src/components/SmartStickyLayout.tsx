@@ -29,6 +29,20 @@ export default function SmartStickyLayout({ mainContent, sidebarContent }: Props
     return <>{mainContent}</>;
   }
 
+  // 의정부 사이트는 블로그 중심이 아니라 포털 중심입니다.
+  // 따라서 홈 화면(/)과 서비스 화면(/services/*)은 사이드바 없이 전체 화면(100%)을 사용하도록 변경합니다.
+  const isBlogRoute = pathname === '/blog' || pathname?.startsWith('/blog/');
+
+  if (!isBlogRoute) {
+    return (
+      <div className="mx-auto w-full sm:w-[92vw] xl:w-[85vw] max-w-7xl px-2 sm:px-5 py-6 sm:py-8 flex flex-col items-stretch">
+        <main className="w-full flex-1 min-w-0 transition-all duration-300">
+          {mainContent}
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto w-full sm:w-[92vw] xl:w-[85vw] max-w-7xl px-2 sm:px-5 py-6 sm:py-8 flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
       
