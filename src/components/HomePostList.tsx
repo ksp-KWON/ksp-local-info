@@ -2,6 +2,9 @@
 
 import Link from 'next/link';
 import { Coins, PartyPopper, Stethoscope, Lightbulb, Calendar } from 'lucide-react';
+import NeoBox from '@/components/ui/NeoBox';
+import NeoHeading from '@/components/ui/NeoHeading';
+import NeoBadge from '@/components/ui/NeoBadge';
 
 type PostData = {
   slug: string;
@@ -13,35 +16,15 @@ type PostData = {
 
 const getCategoryTheme = (category: string) => {
   if (category === '복지·지원금') {
-    return {
-      title: '최신 복지·지원금 소식',
-      icon: <Coins className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
-      hoverBorder: 'shadow-marker-green hover:-translate-y-1 hover:-translate-x-1 hover:shadow-marker-green',
-      highlighter: 'highlighter-green',
-    };
+    return { title: '최신 복지·지원금 소식', icon: <Coins className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />, color: 'green' as const };
   }
   if (category === '행사·축제') {
-    return {
-      title: '우리동네 문화·행사',
-      icon: <PartyPopper className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
-      hoverBorder: 'shadow-marker-pink hover:-translate-y-1 hover:-translate-x-1 hover:shadow-marker-pink',
-      highlighter: 'highlighter-pink',
-    };
+    return { title: '우리동네 문화·행사', icon: <PartyPopper className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />, color: 'pink' as const };
   }
   if (category === '건강·의료') {
-    return {
-      title: '건강·의료 생활 정보',
-      icon: <Stethoscope className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
-      hoverBorder: 'shadow-marker-blue hover:-translate-y-1 hover:-translate-x-1 hover:shadow-marker-blue',
-      highlighter: 'highlighter-blue',
-    };
+    return { title: '건강·의료 생활 정보', icon: <Stethoscope className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />, color: 'blue' as const };
   }
-  return {
-    title: '꼭 알아야 할 생활 꿀팁',
-    icon: <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
-    hoverBorder: 'shadow-marker-yellow hover:-translate-y-1 hover:-translate-x-1 hover:shadow-marker-yellow',
-    highlighter: 'highlighter-yellow',
-  };
+  return { title: '꼭 알아야 할 생활 꿀팁', icon: <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />, color: 'yellow' as const };
 };
 
 const CATEGORIES = [
@@ -71,13 +54,10 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
           <section key={categoryId} className="relative">
             {/* 카테고리 헤더 */}
             <div className="flex items-center justify-between mb-5 px-4 sm:px-0 py-3 sm:py-3.5 relative z-10 border-b-4 border-black dark:border-white">
-              <div className="flex items-center gap-2 px-1 py-1.5 sm:py-2">
-                {theme.icon}
-                <h2 className="text-xl sm:text-2xl font-dohyeon font-normal tracking-wide text-black dark:text-white">
-                  <span className={`${theme.highlighter} px-1`}>{theme.title}</span>
-                </h2>
-              </div>
-              <Link href={`/blog?category=${categoryId}`} className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-black dark:text-white hover:underline transition-colors group">
+              <NeoHeading level={2} highlighterColor={theme.color} icon={theme.icon} className="!mb-0">
+                {theme.title}
+              </NeoHeading>
+              <Link href={`/blog?category=${categoryId}`} className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-black dark:text-white hover:underline transition-colors group shrink-0 ml-4">
                 전체보기
                 <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </Link>
@@ -89,13 +69,11 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
                 <Link 
                   href={`/blog/${post.slug}`} 
                   key={post.slug}
-                  className={`group relative bg-white dark:bg-[#121417] border-2 border-black dark:border-white transition-all duration-200 flex flex-col min-h-[160px] ${theme.hoverBorder}`}
+                  className="group flex flex-col min-h-[160px]"
                 >
-                  <div className="p-4 sm:p-5 flex flex-col justify-between h-full flex-1">
+                  <NeoBox shadowColor={theme.color} hoverEffect className="!p-4 sm:!p-5 h-full flex flex-col justify-between">
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="px-2 py-1 text-[11px] font-jua font-normal border-2 border-black dark:border-white text-black dark:text-white uppercase tracking-wider">
-                        {post.category}
-                      </span>
+                      <NeoBadge color="gray">{post.category}</NeoBadge>
                       <time className="text-[11px] font-jua font-normal text-black dark:text-white flex items-center gap-1 shrink-0">
                         <Calendar className="w-3 h-3" strokeWidth={3} />
                         {post.date}
@@ -109,7 +87,7 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
                         {post.summary}
                       </p>
                     </div>
-                  </div>
+                  </NeoBox>
                 </Link>
               ))}
             </div>

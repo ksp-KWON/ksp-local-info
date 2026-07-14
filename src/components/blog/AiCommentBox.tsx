@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import NeoBox from '@/components/ui/NeoBox';
+import NeoHeading from '@/components/ui/NeoHeading';
+import NeoButton from '@/components/ui/NeoButton';
 
 interface AiCommentBoxProps {
   sourceText: string;
@@ -60,23 +63,21 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
   };
 
   return (
-    <div className={`bg-white dark:bg-[#303134] p-5 border-2 border-black dark:border-white shadow-marker-blue space-y-3 ${className}`}>
-      <div className="flex items-center gap-1.5 text-lg font-dohyeon text-black dark:text-white">
-        <span className="text-base"><IconBulb className="w-5 h-5" /></span>
-        <span className="highlighter-blue px-1">AI 핵심 요약 노트</span>
-      </div>
+    <NeoBox shadowColor="blue" className={`!bg-white dark:!bg-[#303134] space-y-3 ${className}`}>
+      <NeoHeading level={3} highlighterColor="blue" icon={<IconBulb className="w-5 h-5" />} className="!mb-0 !text-lg">
+        AI 핵심 요약 노트
+      </NeoHeading>
       
       <div className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-medium pl-1 min-h-[2.5rem]">
         {!hasStarted ? (
-          <button
+          <NeoButton
             onClick={fetchComment}
-            className="mt-1 px-5 py-2.5 bg-blue-600 dark:bg-blue-500 text-white text-sm font-jua font-normal border-2 border-black dark:border-white shadow-marker-yellow hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-marker-yellow transition-all flex items-center gap-1.5"
+            variant="primary"
+            icon={<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>}
+            className="mt-1"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
             이 정책의 AI 핵심 요약 및 꿀팁 보기
-          </button>
+          </NeoButton>
         ) : loading ? (
           <div className="flex items-center gap-2 text-[var(--google-blue)] animate-pulse mt-1">
             <div className="w-3 h-3 border-2 border-[var(--google-blue)] border-t-transparent rounded-full animate-spin" />
@@ -93,6 +94,6 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
           </div>
         )}
       </div>
-    </div>
+    </NeoBox>
   );
 }
