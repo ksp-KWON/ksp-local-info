@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR, Inter, Black_Han_Sans } from "next/font/google";
+import { Noto_Sans_KR, Inter, Jua } from "next/font/google";
 import "./globals.css";
 
 const notoSans = Noto_Sans_KR({
@@ -16,10 +16,10 @@ const inter = Inter({
   display: "swap",
 });
 
-const blackHanSans = Black_Han_Sans({
+const jua = Jua({
   weight: ["400"],
   subsets: ["latin"],
-  variable: "--font-black-han-sans",
+  variable: "--font-jua",
   display: "swap",
 });
 
@@ -56,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${notoSans.variable} ${inter.variable} ${blackHanSans.variable} h-full antialiased overflow-x-hidden`}
+      className={`${notoSans.variable} ${inter.variable} ${jua.variable} h-full antialiased overflow-x-hidden`}
       suppressHydrationWarning
     >
       <head>

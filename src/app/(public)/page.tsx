@@ -35,7 +35,7 @@ export default async function Home() {
       
       {/* 1. 메인 페이지 인트로 헤더 (Neo-brutalism 스타일) */}
       <div className="bg-white dark:bg-[#121417] p-5 sm:p-6 mb-6 border-2 border-black dark:border-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[10px_10px_0px_0px_rgba(255,255,255,1)] transition-all duration-200 mt-4 group">
-        <h1 className="text-xl sm:text-2xl font-black-han font-normal tracking-wide flex items-center gap-2 mb-3">
+        <h1 className="text-2xl sm:text-3xl font-jua font-normal tracking-wide flex items-center gap-2 mb-3">
           <span className="text-black dark:text-white">의정부 주민 맞춤형 혜택·의료 포털</span>
         </h1>
         <p className="text-xs sm:text-sm text-black/80 dark:text-white/80 break-keep leading-relaxed font-bold">
