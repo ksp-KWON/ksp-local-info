@@ -89,21 +89,18 @@ export default function PublicLayout({
         {children}
       </main>
 
-      {/* 4. 구글 표면 색상 푸터 */}
-      <footer className="mt-auto w-full bg-[var(--google-surface-variant)] dark:bg-[#303134] text-[#5f6368] dark:text-[#9aa0a6] border-t border-[var(--google-border)]">
-        <div className="mx-auto flex flex-col md:flex-row h-auto md:h-[70px] w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5 py-5 md:py-0 text-[11px] font-bold gap-3">
+      {/* 4. 네오 브루탈리즘 푸터 */}
+      <footer className="mt-auto w-full bg-white dark:bg-[#121417] text-black dark:text-white border-t-2 sm:border-t-4 border-black dark:border-white">
+        <div className="mx-auto flex flex-col md:flex-row h-auto md:h-[70px] w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5 py-5 md:py-0 text-xs font-bold gap-3">
           <p className="copyright text-center md:text-left flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             © {new Date().getFullYear()} 의정부 건강·생활 정보 포털. All rights reserved.
           </p>
-          <p className="iagree text-center md:text-right flex items-center justify-center flex-wrap gap-2">
-            <Link href="/about" className="hover:text-[#0090D6] cursor-pointer transition-colors">플랫폼 소개</Link>
-            <span className="w-1 h-1 rounded-full bg-[#dadce0] dark:bg-[#5f6368]"></span>
-            <Link href="/terms" className="hover:text-[#0090D6] cursor-pointer transition-colors">이용약관</Link>
-            <span className="w-1 h-1 rounded-full bg-[#dadce0] dark:bg-[#5f6368]"></span>
-            <Link href="/privacy" className="hover:text-[#0090D6] cursor-pointer transition-colors">개인정보처리방침</Link>
-            <span className="w-1 h-1 rounded-full bg-[#dadce0] dark:bg-[#5f6368]"></span>
-            본 포털은 의정부시의 주요 공공서비스 및 혜택 정보를 제공하는 비영리 안내 사이트입니다.
+          <p className="iagree text-center md:text-right flex items-center justify-center flex-wrap gap-3">
+            <Link href="/about" className="hover:underline cursor-pointer transition-all">플랫폼 소개</Link>
+            <span className="w-1.5 h-1.5 bg-black dark:bg-white"></span>
+            <Link href="/terms" className="hover:underline cursor-pointer transition-all">이용약관</Link>
+            <span className="w-1.5 h-1.5 bg-black dark:bg-white"></span>
+            <Link href="/privacy" className="hover:underline cursor-pointer transition-all">개인정보처리방침</Link>
           </p>
         </div>
       </footer>

@@ -41,11 +41,7 @@ export default async function Home() {
         <p className="text-xs sm:text-sm text-black/80 dark:text-white/80 break-keep leading-relaxed font-bold">
           의정부시의 유용한 생활 밀착 혜택과 주요 정책들을 전문가의 시선으로 큐레이션하여 제공합니다.
         </p>
-        <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs text-black dark:text-white font-black bg-white dark:bg-[#121417] px-3 py-1.5 border-2 border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]">
-            <RefreshCw className="w-3.5 h-3.5" strokeWidth={3} />
-            최종 업데이트 : {data.lastUpdated || '2026-05-29'}
-          </span>
+        <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-end gap-4">
           <Link 
             href="/services/emergency" 
             className="group/btn relative inline-flex items-center justify-center gap-1.5 px-5 sm:px-6 py-2.5 sm:py-3 bg-red-600 text-white font-black text-xs sm:text-sm border-2 border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] transition-all"
