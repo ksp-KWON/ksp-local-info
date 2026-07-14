@@ -6,9 +6,6 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   trailingSlash: false,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
 };
 
 export default nextConfig;

@@ -54,7 +54,9 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOpenEditPost = async (post: PostItem) => {
