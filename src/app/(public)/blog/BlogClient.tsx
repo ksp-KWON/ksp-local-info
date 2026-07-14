@@ -66,16 +66,16 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
         </p>
       </NeoBox>
       
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-col gap-4 sm:gap-5">
         {posts.map((post) => (
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
             className="group flex flex-col min-h-[160px]"
           >
-            <NeoBox shadowColor="blue" hoverEffect className="!p-4 sm:!p-5 h-full flex flex-col justify-between">
-              <div>
-                <div className="flex flex-wrap items-center justify-between gap-3 text-xs mb-3">
+            <NeoBox shadowColor="blue" hoverEffect className="!p-4 sm:!p-5 h-full flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-3 text-xs mb-3">
                   <NeoBadge color="gray">
                     {post.category || '정보'}
                   </NeoBadge>
@@ -84,8 +84,8 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
                     {post.date}
                   </time>
                 </div>
-                <div className="min-w-0 flex-1 space-y-2 mt-2">
-                  <h3 className="text-lg sm:text-xl font-dohyeon font-normal tracking-wide text-black dark:text-white transition-colors line-clamp-2 leading-snug break-keep group-hover:underline">
+                <div className="min-w-0 space-y-2 mt-2">
+                  <h3 className="text-lg sm:text-xl font-dohyeon font-normal tracking-wide text-black dark:text-white transition-colors line-clamp-1 leading-snug group-hover:underline">
                     <span className="highlighter-blue">{post.title}</span>
                   </h3>
                   <p className="text-[13px] sm:text-[14px] font-jua font-normal text-gray-700 dark:text-gray-300 line-clamp-2 leading-relaxed break-keep">
@@ -94,8 +94,8 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
                 </div>
               </div>
               
-              <div className="mt-4 pt-4 border-t-2 border-black dark:border-white flex items-center justify-end gap-2">
-                <span className="shrink-0 text-sm font-dohyeon tracking-wide text-black dark:text-white group-hover:underline transition-colors flex items-center gap-1 ml-auto">
+              <div className="sm:shrink-0 mt-2 sm:mt-0 pt-3 sm:pt-0 border-t-2 sm:border-t-0 sm:border-l-2 border-black dark:border-white sm:pl-5 flex items-center justify-end">
+                <span className="text-sm font-dohyeon tracking-wide text-black dark:text-white group-hover:underline transition-colors flex items-center gap-1">
                   자세히 보기
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </span>
