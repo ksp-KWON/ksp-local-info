@@ -355,3 +355,93 @@ body.hide-footer footer {
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ==========================================
+   🎨 컬러 그림자 & 형광펜 유틸리티 (스케치노트 스타일)
+   ========================================== */
+
+/* 마커로 칠한 듯한 색상 그림자 유틸리티 */
+.shadow-marker-blue {
+  box-shadow: 4px 4px 0px 0px rgba(135, 206, 235, 1) !important;
+}
+.dark .shadow-marker-blue {
+  box-shadow: 4px 4px 0px 0px rgba(70, 130, 180, 1) !important;
+}
+.hover\:shadow-marker-blue:hover {
+  box-shadow: 6px 6px 0px 0px rgba(135, 206, 235, 1) !important;
+}
+.dark .hover\:shadow-marker-blue:hover {
+  box-shadow: 6px 6px 0px 0px rgba(70, 130, 180, 1) !important;
+}
+
+.shadow-marker-pink {
+  box-shadow: 4px 4px 0px 0px rgba(255, 182, 193, 1) !important;
+}
+.dark .shadow-marker-pink {
+  box-shadow: 4px 4px 0px 0px rgba(219, 112, 147, 1) !important;
+}
+.hover\:shadow-marker-pink:hover {
+  box-shadow: 6px 6px 0px 0px rgba(255, 182, 193, 1) !important;
+}
+.dark .hover\:shadow-marker-pink:hover {
+  box-shadow: 6px 6px 0px 0px rgba(219, 112, 147, 1) !important;
+}
+
+.shadow-marker-yellow {
+  box-shadow: 4px 4px 0px 0px rgba(255, 215, 0, 1) !important;
+}
+.dark .shadow-marker-yellow {
+  box-shadow: 4px 4px 0px 0px rgba(218, 165, 32, 1) !important;
+}
+.hover\:shadow-marker-yellow:hover {
+  box-shadow: 6px 6px 0px 0px rgba(255, 215, 0, 1) !important;
+}
+.dark .hover\:shadow-marker-yellow:hover {
+  box-shadow: 6px 6px 0px 0px rgba(218, 165, 32, 1) !important;
+}
+
+.shadow-marker-green {
+  box-shadow: 4px 4px 0px 0px rgba(152, 251, 152, 1) !important;
+}
+.dark .shadow-marker-green {
+  box-shadow: 4px 4px 0px 0px rgba(60, 179, 113, 1) !important;
+}
+.hover\:shadow-marker-green:hover {
+  box-shadow: 6px 6px 0px 0px rgba(152, 251, 152, 1) !important;
+}
+.dark .hover\:shadow-marker-green:hover {
+  box-shadow: 6px 6px 0px 0px rgba(60, 179, 113, 1) !important;
+}
+
+/* 📝 텍스트 형광펜 하이라이트 효과 */
+.highlighter-blue {
+  background: linear-gradient(180deg, transparent 50%, rgba(135, 206, 235, 0.6) 50%);
+  display: inline;
+}
+.dark .highlighter-blue {
+  background: linear-gradient(180deg, transparent 50%, rgba(70, 130, 180, 0.6) 50%);
+}
+
+.highlighter-pink {
+  background: linear-gradient(180deg, transparent 50%, rgba(255, 182, 193, 0.6) 50%);
+  display: inline;
+}
+.dark .highlighter-pink {
+  background: linear-gradient(180deg, transparent 50%, rgba(219, 112, 147, 0.6) 50%);
+}
+
+.highlighter-yellow {
+  background: linear-gradient(180deg, transparent 50%, rgba(255, 215, 0, 0.6) 50%);
+  display: inline;
+}
+.dark .highlighter-yellow {
+  background: linear-gradient(180deg, transparent 50%, rgba(218, 165, 32, 0.6) 50%);
+}
+
+.highlighter-green {
+  background: linear-gradient(180deg, transparent 50%, rgba(152, 251, 152, 0.6) 50%);
+  display: inline;
+}
+.dark .highlighter-green {
+  background: linear-gradient(180deg, transparent 50%, rgba(60, 179, 113, 0.6) 50%);
+}

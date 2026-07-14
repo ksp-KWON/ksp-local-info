@@ -16,27 +16,31 @@ const getCategoryTheme = (category: string) => {
     return {
       title: '최신 복지·지원금 소식',
       icon: <Coins className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
-      hoverBorder: 'hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]',
+      hoverBorder: 'shadow-marker-green hover:-translate-y-1 hover:-translate-x-1 hover:shadow-marker-green',
+      highlighter: 'highlighter-green',
     };
   }
   if (category === '행사·축제') {
     return {
       title: '우리동네 문화·행사',
       icon: <PartyPopper className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
-      hoverBorder: 'hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]',
+      hoverBorder: 'shadow-marker-pink hover:-translate-y-1 hover:-translate-x-1 hover:shadow-marker-pink',
+      highlighter: 'highlighter-pink',
     };
   }
   if (category === '건강·의료') {
     return {
       title: '건강·의료 생활 정보',
       icon: <Stethoscope className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
-      hoverBorder: 'hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]',
+      hoverBorder: 'shadow-marker-blue hover:-translate-y-1 hover:-translate-x-1 hover:shadow-marker-blue',
+      highlighter: 'highlighter-blue',
     };
   }
   return {
     title: '꼭 알아야 할 생활 꿀팁',
     icon: <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />,
-    hoverBorder: 'hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]',
+    hoverBorder: 'shadow-marker-yellow hover:-translate-y-1 hover:-translate-x-1 hover:shadow-marker-yellow',
+    highlighter: 'highlighter-yellow',
   };
 };
 
@@ -70,7 +74,7 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
               <div className="flex items-center gap-2 px-1 py-1.5 sm:py-2">
                 {theme.icon}
                 <h2 className="text-xl sm:text-2xl font-jua font-normal tracking-wide text-black dark:text-white">
-                  {theme.title}
+                  <span className={`${theme.highlighter} px-1`}>{theme.title}</span>
                 </h2>
               </div>
               <Link href={`/blog?category=${categoryId}`} className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-black dark:text-white hover:underline transition-colors group">
@@ -85,7 +89,7 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
                 <Link 
                   href={`/blog/${post.slug}`} 
                   key={post.slug}
-                  className={`group relative bg-white dark:bg-[#121417] border-2 border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all duration-200 flex flex-col min-h-[160px] ${theme.hoverBorder}`}
+                  className={`group relative bg-white dark:bg-[#121417] border-2 border-black dark:border-white transition-all duration-200 flex flex-col min-h-[160px] ${theme.hoverBorder}`}
                 >
                   <div className="p-4 sm:p-5 flex flex-col justify-between h-full flex-1">
                     <div className="flex items-center justify-between gap-2 mb-3">
