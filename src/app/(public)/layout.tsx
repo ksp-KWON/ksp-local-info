@@ -1,8 +1,7 @@
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
-import SidebarContent from "@/components/SidebarContent";
 import SearchBar from "@/components/SearchBar";
-import SmartStickyLayout from "@/components/SmartStickyLayout";
+import SubHeader from "@/components/SubHeader";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import { getSortedPostsData } from "@/lib/posts";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -82,11 +81,13 @@ export default function PublicLayout({
         </div>
       </header>
 
-      {/* 3. 티스토리 2단 레이아웃 본문 75% : 사이드바 25% 구조 */}
-      <SmartStickyLayout
-        mainContent={children}
-        sidebarContent={<SidebarContent tags={sortedTags} />}
-      />
+      {/* 2.5 보조 헤더 (사이드바 대체 가로 스크롤 메뉴) */}
+      <SubHeader tags={sortedTags} />
+
+      {/* 3. 본문 단일 컨테이너 구조 (사이드바 제거) */}
+      <main className="mx-auto w-full sm:w-[92vw] xl:w-[85vw] max-w-7xl px-2 sm:px-5 py-6 sm:py-8 flex-1 flex flex-col min-h-[50vh]">
+        {children}
+      </main>
 
       {/* 4. 구글 표면 색상 푸터 */}
       <footer className="mt-auto w-full bg-[var(--google-surface-variant)] dark:bg-[#303134] text-[#5f6368] dark:text-[#9aa0a6] border-t border-[var(--google-border)]">
