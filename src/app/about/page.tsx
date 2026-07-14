@@ -10,7 +10,7 @@ export default function AboutPage() {
       const data = JSON.parse(fs.readFileSync(localInfoPath, 'utf8'));
       lastUpdated = data.lastUpdated || '';
     }
-  } catch (e) {
+  } catch {
     // Ignore errors
   }
 

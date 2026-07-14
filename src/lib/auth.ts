@@ -47,7 +47,7 @@ export function verifySessionToken(token: string): boolean {
     if (payload.expires < Date.now()) return false;
     
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 }

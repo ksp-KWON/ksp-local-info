@@ -59,7 +59,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         sourceLink = matched.link;
       }
     }
-  } catch (e) {
+  } catch {
     // Ignore error
   }
 
@@ -113,6 +113,26 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     ]
   };
 
+  // FAQ 파싱 (Q: 질문 A: 답변 형식)
+  const faqRegex = /Q:\s*([\s\S]*?)\n+A:\s*([\s\S]*?)(?=\n+Q:|$)/gi;
+  const faqMatches = [...post.content.matchAll(faqRegex)];
+  let faqSchema = null;
+
+  if (faqMatches.length > 0) {
+    faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqMatches.map(match => ({
+        "@type": "Question",
+        "name": match[1].trim().replace(/\*\*/g, ''),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": match[2].trim().replace(/\*\*/g, '')
+        }
+      }))
+    };
+  }
+
   return (
     <div className="space-y-8 max-w-4xl mx-auto px-4 py-16">
       <script
@@ -123,6 +143,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       <div className="mb-6">
         <Link href="/blog" className="inline-flex items-center text-sm font-bold text-[#5f6368] hover:text-[var(--google-blue)] transition-colors">

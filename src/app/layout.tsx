@@ -28,9 +28,6 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://ksp-local-info-edg.pages.dev"),
   title: "의정부시 생활 정보 | 행사·혜택·지원금 안내",
   description: "의정부시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     title: "의정부시 생활 정보 | 행사·혜택·지원금 안내",
     description: "의정부시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",

@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
       } else {
         setError(data.message || '비밀번호가 올바르지 않습니다.');
       }
-    } catch (err) {
+    } catch {
       setError('서버 연결 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);

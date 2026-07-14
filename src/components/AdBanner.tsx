@@ -15,7 +15,7 @@ export default function AdBanner({ slot, format = 'auto', responsive = 'true' }:
   useEffect(() => {
     if (isAdsenseEnabled) {
       try {
-        // @ts-ignore
+        // @ts-expect-error Adsense global object is loaded dynamically
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (err) {
         console.error('Adsense initialization failed', err);

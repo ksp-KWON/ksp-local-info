@@ -13,10 +13,20 @@ const neighborhoods = [
   { name: '가능동', lat: 37.7479, lng: 127.0336 },
 ];
 
+interface HealthCheckHospital {
+  BIZPLC_NM: string;
+  REFINE_WGS84_LAT: number;
+  REFINE_WGS84_LOGT: number;
+  REFINE_ROADNM_ADDR?: string;
+  REFINE_LOTNO_ADDR?: string;
+  TREAT_SBJECT_CONT?: string;
+  BSN_STATE_NM?: string;
+}
+
 export default function HealthCheckPage() {
   const [mapCenter, setMapCenter] = useState(neighborhoods[0]);
-  const [selectedHospital, setSelectedHospital] = useState<any>(null);
-  const [hospitals, setHospitals] = useState<any[]>([]);
+  const [selectedHospital, setSelectedHospital] = useState<HealthCheckHospital | null>(null);
+  const [hospitals, setHospitals] = useState<HealthCheckHospital[]>([]);
   
   // 진단기 상태
   const [birthYear, setBirthYear] = useState<string>('');
@@ -39,7 +49,7 @@ export default function HealthCheckPage() {
         
         if (data.Hospital && data.Hospital[1] && data.Hospital[1].row) {
           // 내과가 포함되고 영업중인 곳만 필터링 (건강검진 주력)
-          const validHospitals = data.Hospital[1].row.filter((h: any) => 
+          const validHospitals = data.Hospital[1].row.filter((h: HealthCheckHospital) => 
             h.BSN_STATE_NM && h.BSN_STATE_NM.includes('영업') && 
             h.TREAT_SBJECT_CONT && h.TREAT_SBJECT_CONT.includes('내과') &&
             h.REFINE_WGS84_LAT && h.REFINE_WGS84_LOGT
@@ -63,7 +73,7 @@ export default function HealthCheckPage() {
     const isEvenYear = year % 2 === 0;
     
     // 2026년은 짝수년도이므로 짝수년생이 대상
-    let results = [];
+    const results = [];
     
     if (isEvenYear) {
       results.push("✅ 올해 국가 일반건강검진 무료 대상자입니다! (짝수년도 출생)");

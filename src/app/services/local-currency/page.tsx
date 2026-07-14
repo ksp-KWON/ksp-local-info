@@ -3,19 +3,18 @@
 import { useState, useEffect } from 'react';
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
 
-// 임시 가맹점 데이터 (Mock Data)
-const MOCK_MERCHANTS = [
-  { id: 1, name: '의정부 부대찌개 본점', category: '음식점', lat: 37.7380, lng: 127.0450, address: '의정부시 호국로 1309' },
-  { id: 2, name: '스타벅스 의정부점', category: '카페', lat: 37.7395, lng: 127.0465, address: '의정부시 시민로 80' },
-  { id: 3, name: '싱싱 마트', category: '유통', lat: 37.7370, lng: 127.0435, address: '의정부시 평화로 500' },
-  { id: 4, name: '튼튼 약국', category: '의료', lat: 37.7360, lng: 127.0470, address: '의정부시 평화로 320' },
-  { id: 5, name: '하이 수학학원', category: '학원', lat: 37.7400, lng: 127.0440, address: '의정부시 금오로 23' },
-];
+interface MerchantItem {
+  id: string;
+  name: string;
+  category: string;
+  lat: number;
+  lng: number;
+  address: string;
+}
 
 export default function LocalCurrencyMapPage() {
-  const [selectedMerchant, setSelectedMerchant] = useState<any>(null);
-  const [merchants, setMerchants] = useState<any[]>([]);
-  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [selectedMerchant, setSelectedMerchant] = useState<MerchantItem | null>(null);
+  const [merchants, setMerchants] = useState<MerchantItem[]>([]);
   
   // 의정부 주요 동네 좌표
   const neighborhoods = [
@@ -46,8 +45,8 @@ export default function LocalCurrencyMapPage() {
         if (data.RegionMnyFacltStus && data.RegionMnyFacltStus[1] && data.RegionMnyFacltStus[1].row) {
           const rows = data.RegionMnyFacltStus[1].row;
           const formattedMerchants = rows
-            .filter((row: any) => row.REFINE_WGS84_LAT && row.REFINE_WGS84_LOGT)
-            .map((row: any, index: number) => ({
+            .filter((row: { REFINE_WGS84_LAT: string; REFINE_WGS84_LOGT: string }) => row.REFINE_WGS84_LAT && row.REFINE_WGS84_LOGT)
+            .map((row: { CMPNM_NM: string; INDUTYPE_NM: string; REFINE_WGS84_LAT: string; REFINE_WGS84_LOGT: string; REFINE_ROADNM_ADDR: string; REFINE_LOTNO_ADDR: string }, index: number) => ({
               id: `1-${index}`,
               name: row.CMPNM_NM,
               category: row.INDUTYPE_NM,
@@ -59,8 +58,6 @@ export default function LocalCurrencyMapPage() {
         }
       } catch (err) {
         console.error('Failed to load merchants', err);
-      } finally {
-        setIsLoadingData(false);
       }
     };
     fetchMerchants();

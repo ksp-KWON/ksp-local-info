@@ -99,6 +99,11 @@ export default function AdminDashboardClient() {
 
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
+  const showMsg = (type: 'success' | 'error', text: string) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage(null), 5000);
+  };
+
   // 전체 데이터 조회
   const fetchData = async () => {
     setLoading(true);
@@ -124,7 +129,7 @@ export default function AdminDashboardClient() {
         const postsData = await postsRes.json();
         setPosts(postsData || []);
       }
-    } catch (error) {
+    } catch {
       showMsg('error', '데이터를 불러오는 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
@@ -132,13 +137,10 @@ export default function AdminDashboardClient() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const showMsg = (type: 'success' | 'error', text: string) => {
-    setMessage({ type, text });
-    setTimeout(() => setMessage(null), 5000);
-  };
 
   // 로그아웃
   const handleLogout = async () => {
@@ -148,7 +150,7 @@ export default function AdminDashboardClient() {
         router.push('/admin/login');
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       showMsg('error', '로그아웃 실패');
     }
   };
@@ -186,7 +188,7 @@ export default function AdminDashboardClient() {
 
     if (isAddingHospital) {
       const newItem: HospitalItem = {
-        id: 'h_' + Date.now(),
+        id: 'h_' + crypto.randomUUID(),
         ...hospitalForm
       };
       updated.push(newItem);
@@ -216,7 +218,7 @@ export default function AdminDashboardClient() {
       } else {
         showMsg('error', '저장 오류가 발생했습니다.');
       }
-    } catch (err) {
+    } catch {
       showMsg('error', '서버 통신 실패');
     }
   };
@@ -246,7 +248,7 @@ export default function AdminDashboardClient() {
       } else {
         showMsg('error', data.error || 'AI 포스팅 중 실패 또는 이미 같은 글이 존재합니다.');
       }
-    } catch (err) {
+    } catch {
       showMsg('error', '서버 백그라운드 AI 스크립트 가동 실패');
     } finally {
       setAiGenerating(false);
@@ -295,7 +297,7 @@ export default function AdminDashboardClient() {
 
     if (isAddingItem) {
       const newItem: LocalItem = {
-        id: (itemForm.category === '행사' ? 'e_' : 'b_') + Date.now(),
+        id: (itemForm.category === '행사' ? 'e_' : 'b_') + crypto.randomUUID(),
         ...itemForm
       };
       if (itemForm.category === '행사') {
@@ -331,12 +333,12 @@ export default function AdminDashboardClient() {
       } else {
         showMsg('error', resData.error || '저장 실패');
       }
-    } catch (err) {
+    } catch {
       showMsg('error', '서버 통신 오류');
     }
   };
 
-  const handleDeleteItem = async (id: string, category: string) => {
+  const handleDeleteItem = async (id: string) => {
     if (!confirm('정말로 이 항목을 삭제하시겠습니까?')) return;
 
     const updatedEvents = events.filter(item => item.id !== id);
@@ -353,7 +355,7 @@ export default function AdminDashboardClient() {
         setEvents(updatedEvents);
         setBenefits(updatedBenefits);
       }
-    } catch (err) {
+    } catch {
       showMsg('error', '삭제 처리 실패');
     }
   };
@@ -380,7 +382,7 @@ export default function AdminDashboardClient() {
           content: fullPost.content
         });
       }
-    } catch (error) {
+    } catch {
       showMsg('error', '상세 내용을 불러오지 못했습니다.');
     } finally {
       setLoading(false);
@@ -423,7 +425,7 @@ export default function AdminDashboardClient() {
       } else {
         showMsg('error', resData.error || '포스트 저장 실패');
       }
-    } catch (err) {
+    } catch {
       showMsg('error', '서버 통신 오류');
     }
   };
@@ -441,7 +443,7 @@ export default function AdminDashboardClient() {
       } else {
         showMsg('error', '포스트 삭제 실패');
       }
-    } catch (err) {
+    } catch {
       showMsg('error', '삭제 처리 실패');
     }
   };
@@ -738,7 +740,7 @@ export default function AdminDashboardClient() {
                                   수정
                                 </button>
                                 <button
-                                  onClick={() => handleDeleteItem(item.id, item.category)}
+                                  onClick={() => handleDeleteItem(item.id)}
                                   className="bg-red-50 hover:bg-red-100 dark:bg-red-950/20 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 py-1 px-2 rounded cursor-pointer"
                                 >
                                   삭제

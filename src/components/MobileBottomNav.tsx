@@ -1,13 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 type ModalType = 'none' | 'home' | 'partner' | 'calculator' | 'hospital' | 'consult';
 
 export default function MobileBottomNav() {
-  const pathname = usePathname();
   const [openModal, setOpenModal] = useState<ModalType>('none');
 
   const closeModals = () => setOpenModal('none');
@@ -16,14 +14,11 @@ export default function MobileBottomNav() {
   useEffect(() => {
     if (openModal !== 'none') {
       document.body.style.overflow = 'hidden';
-      document.body.style.touchAction = 'none'; // iOS Safari 대응
     } else {
       document.body.style.overflow = '';
-      document.body.style.touchAction = '';
     }
     return () => {
       document.body.style.overflow = '';
-      document.body.style.touchAction = '';
     };
   }, [openModal]);
 

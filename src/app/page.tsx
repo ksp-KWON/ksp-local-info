@@ -69,6 +69,14 @@ async function getMedicalData(): Promise<Hospital[]> {
   return JSON.parse(fileContents);
 }
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
+
 export default async function Home() {
   const data = await getLocalData();
   const hospitals = await getMedicalData();
@@ -152,6 +160,24 @@ export default async function Home() {
             🔄 최종 업데이트 : {data.lastUpdated || '2026-05-29'}
           </span>
         </div>
+      </div>
+
+      {/* 실시간 긴급의료 퀵링크 */}
+      <div className="flex gap-3 px-4 sm:px-0 mb-8">
+        <Link 
+          href="/services/emergency" 
+          className="flex-1 bg-gradient-to-br from-[#ff4757] to-[#ff6b81] p-4 rounded-2xl shadow-lg shadow-red-500/20 text-white flex flex-col items-center justify-center gap-2 transition-transform hover:-translate-y-1 active:scale-95"
+        >
+          <span className="text-3xl drop-shadow-md">🚨</span>
+          <span className="font-bold text-sm tracking-tight text-center">실시간 응급실<br/>잔여병상 확인</span>
+        </Link>
+        <Link 
+          href="/services/emergency" 
+          className="flex-1 bg-gradient-to-br from-[#2ed573] to-[#7bed9f] p-4 rounded-2xl shadow-lg shadow-emerald-500/20 text-white flex flex-col items-center justify-center gap-2 transition-transform hover:-translate-y-1 active:scale-95"
+        >
+          <span className="text-3xl drop-shadow-md">💊</span>
+          <span className="font-bold text-sm tracking-tight text-center">심야·휴일 약국<br/>영업 확인</span>
+        </Link>
       </div>
 
       {/* 2. 병원 리스트 정보 섹션 */}
