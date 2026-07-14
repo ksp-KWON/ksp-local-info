@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR, Inter, Jua } from "next/font/google";
+import { Noto_Sans_KR, Inter, Jua, Do_Hyeon } from "next/font/google";
 import "./globals.css";
 
 const notoSans = Noto_Sans_KR({
@@ -20,6 +20,13 @@ const jua = Jua({
   weight: ["400"],
   subsets: ["latin"],
   variable: "--font-jua",
+  display: "swap",
+});
+
+const doHyeon = Do_Hyeon({
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-dohyeon",
   display: "swap",
 });
 
@@ -56,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${notoSans.variable} ${inter.variable} ${jua.variable} h-full antialiased overflow-x-hidden`}
+      className={`${notoSans.variable} ${inter.variable} ${jua.variable} ${doHyeon.variable} h-full antialiased overflow-x-hidden`}
       suppressHydrationWarning
     >
       <head>

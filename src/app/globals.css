@@ -306,7 +306,7 @@ body {
 
 /* 마크다운 제목 형광펜 및 폰트 효과 (Neo-brutalism / Sketchnote) */
 .prose h1, .prose h2, .prose h3, .prose h4 {
-  font-family: var(--font-jua), sans-serif !important;
+  font-family: var(--font-dohyeon), sans-serif !important;
   color: var(--foreground) !important;
   font-weight: 400 !important;
   letter-spacing: 0.02em;

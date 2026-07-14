@@ -73,7 +73,7 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
             <div className="flex items-center justify-between mb-5 px-4 sm:px-0 py-3 sm:py-3.5 relative z-10 border-b-4 border-black dark:border-white">
               <div className="flex items-center gap-2 px-1 py-1.5 sm:py-2">
                 {theme.icon}
-                <h2 className="text-xl sm:text-2xl font-jua font-normal tracking-wide text-black dark:text-white">
+                <h2 className="text-xl sm:text-2xl font-dohyeon font-normal tracking-wide text-black dark:text-white">
                   <span className={`${theme.highlighter} px-1`}>{theme.title}</span>
                 </h2>
               </div>
