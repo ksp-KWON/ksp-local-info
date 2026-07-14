@@ -69,7 +69,7 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
             <div className="flex items-center justify-between mb-5 px-4 sm:px-0 py-3 sm:py-3.5 relative z-10 border-b-4 border-black dark:border-white">
               <div className="flex items-center gap-2 px-1 py-1.5 sm:py-2">
                 {theme.icon}
-                <h2 className="text-lg sm:text-xl font-black tracking-tight text-black dark:text-white">
+                <h2 className="text-lg sm:text-xl font-black-han font-normal tracking-wide text-black dark:text-white">
                   {theme.title}
                 </h2>
               </div>
@@ -97,8 +97,8 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
                         {post.date}
                       </time>
                     </div>
-                    <div className="min-w-0 flex-1 space-y-2">
-                      <h3 className="text-sm sm:text-[15px] font-black text-black dark:text-white transition-colors line-clamp-2 leading-snug break-keep group-hover:underline">
+                    <div className="min-w-0 flex-1 space-y-2 mt-2">
+                      <h3 className="text-[17px] sm:text-[18px] font-black-han font-normal tracking-wide text-black dark:text-white transition-colors line-clamp-2 leading-snug break-keep group-hover:underline">
                         {post.title}
                       </h3>
                       <p className="text-xs sm:text-[13px] text-gray-700 dark:text-gray-300 font-bold line-clamp-2 leading-relaxed break-keep">
