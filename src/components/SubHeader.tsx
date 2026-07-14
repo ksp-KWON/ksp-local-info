@@ -3,56 +3,58 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-interface SubHeaderProps {
-  tags?: string[];
-}
-
-export default function SubHeader({ tags = [] }: SubHeaderProps) {
+export default function SubHeader() {
   const pathname = usePathname();
-  const visibleTags = tags.slice(0, 6); // 상단 가로 스크롤에 보여줄 태그 수
+
+  const getLinkClass = (path: string) => {
+    // Check if current path matches
+    return `flex items-center gap-1.5 text-xs sm:text-sm font-bold transition-colors group px-3 py-1.5 rounded-full ${
+      pathname === path
+        ? 'bg-[#0090D6]/10 text-[#0090D6]'
+        : 'text-[#5f6368] dark:text-[#9aa0a6] hover:bg-gray-50 dark:hover:bg-white/5 hover:text-[#202124] dark:hover:text-[#e8eaed]'
+    }`;
+  };
 
   return (
-    <div className="w-full bg-white dark:bg-[#121212] border-b border-gray-100 dark:border-white/5 sticky top-[64px] z-40 shadow-sm transition-colors">
+    <div className="w-full bg-white dark:bg-[#1e1f22] border-b border-gray-100 dark:border-white/5 sticky top-[64px] z-40 shadow-sm transition-colors">
       <div className="max-w-7xl mx-auto w-full sm:w-[92vw] xl:w-[85vw] px-2 sm:px-5">
-        <div className="flex items-center h-14 overflow-x-auto no-scrollbar gap-3 sm:gap-6 whitespace-nowrap">
+        <div className="flex items-center justify-between h-14">
           
-          {/* 주요 퀵 메뉴 */}
-          <Link href="/services/local-currency" className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-200 hover:text-[#0090D6] dark:hover:text-[#0090D6] transition-colors group">
-            <span className="text-base group-hover:scale-110 transition-transform">💳</span>
-            지역화폐 가맹점
-          </Link>
-          <div className="w-px h-4 bg-gray-200 dark:bg-gray-800 shrink-0"></div>
+          {/* 좌측: 주요 카테고리 탭 */}
+          <nav className="flex items-center overflow-x-auto no-scrollbar gap-1 sm:gap-2 whitespace-nowrap pr-4">
+            <Link href="/" className={getLinkClass('/')}>
+              홈
+            </Link>
+            <Link href="/blog" className={getLinkClass('/blog')}>
+              전체 소식
+            </Link>
+            <Link href="/blog?category=혜택" className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#5f6368] dark:text-[#9aa0a6] hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group px-3 py-1.5 rounded-full">
+              <span className="text-base group-hover:scale-110 transition-transform">💰</span>
+              복지·지원금
+            </Link>
+            <Link href="/blog?category=행사" className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#5f6368] dark:text-[#9aa0a6] hover:bg-yellow-50 dark:hover:bg-yellow-900/20 hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors group px-3 py-1.5 rounded-full">
+              <span className="text-base group-hover:scale-110 transition-transform">🎉</span>
+              행사·축제
+            </Link>
+            <Link href="/blog?category=의료" className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#5f6368] dark:text-[#9aa0a6] hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-[#0090D6] dark:hover:text-[#00b4d8] transition-colors group px-3 py-1.5 rounded-full">
+              <span className="text-base group-hover:scale-110 transition-transform">🏥</span>
+              건강·의료
+            </Link>
+            <Link href="/blog?category=정보" className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#5f6368] dark:text-[#9aa0a6] hover:bg-gray-50 dark:hover:bg-white/5 hover:text-[#202124] dark:hover:text-[#e8eaed] transition-colors group px-3 py-1.5 rounded-full">
+              <span className="text-base group-hover:scale-110 transition-transform">💡</span>
+              생활정보
+            </Link>
+          </nav>
 
-          <Link href="/services/emergency" className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-200 hover:text-red-500 dark:hover:text-red-400 transition-colors group">
-            <span className="text-base group-hover:scale-110 transition-transform">🚨</span>
-            야간/휴일 병원·약국
-          </Link>
-          <div className="w-px h-4 bg-gray-200 dark:bg-gray-800 shrink-0"></div>
-
-          <Link href="/services/health-check" className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-200 hover:text-[var(--google-yellow)] transition-colors group">
-            <span className="text-base group-hover:scale-110 transition-transform">🩺</span>
-            무료 건강검진
-          </Link>
-          <div className="w-px h-4 bg-gray-200 dark:bg-gray-800 shrink-0 hidden sm:block"></div>
-
-          <Link href="/blog?category=혜택" className="hidden sm:flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-200 hover:text-[#137333] transition-colors group">
-            <span className="text-base group-hover:scale-110 transition-transform">🏠</span>
-            청년·신혼 주거지원
-          </Link>
-          <div className="w-px h-4 bg-gray-200 dark:bg-gray-800 shrink-0"></div>
-
-          {/* 인기 태그 영역 */}
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-wider mr-1">HOT</span>
-            {visibleTags.map((tag) => (
-              <Link 
-                key={tag} 
-                href={`/blog?tag=${tag}`}
-                className="px-2.5 py-1 text-[11px] font-bold bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-[#0090D6]/10 hover:text-[#0090D6] hover:border-[#0090D6]/30 transition-all"
-              >
-                #{tag}
-              </Link>
-            ))}
+          {/* 우측: 긴급 버튼 */}
+          <div className="shrink-0 pl-2 sm:pl-4 border-l border-gray-100 dark:border-white/10 flex items-center">
+            <Link 
+              href="/services/emergency" 
+              className="flex items-center gap-1.5 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-bold hover:bg-red-100 dark:hover:bg-red-900/50 hover:shadow-sm transition-all"
+            >
+              <span className="animate-pulse">🚨</span>
+              응급실/약국
+            </Link>
           </div>
 
         </div>

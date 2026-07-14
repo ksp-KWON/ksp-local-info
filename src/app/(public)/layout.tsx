@@ -81,8 +81,8 @@ export default function PublicLayout({
         </div>
       </header>
 
-      {/* 2.5 보조 헤더 (사이드바 대체 가로 스크롤 메뉴) */}
-      <SubHeader tags={sortedTags} />
+      {/* 2.5 보조 헤더 (사이드바 대체 카테고리 탭) */}
+      <SubHeader />
 
       {/* 3. 본문 단일 컨테이너 구조 (사이드바 제거) */}
       <main className="mx-auto w-full sm:w-[92vw] xl:w-[85vw] max-w-7xl px-2 sm:px-5 py-6 sm:py-8 flex-1 flex flex-col min-h-[50vh]">
