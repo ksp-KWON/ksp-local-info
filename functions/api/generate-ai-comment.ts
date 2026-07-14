@@ -32,7 +32,7 @@ export async function onRequestPost(context: any) {
     const prompt = `${promptContext}\n\n[원문]\n${sourceText.substring(0, 3000)}`;
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
