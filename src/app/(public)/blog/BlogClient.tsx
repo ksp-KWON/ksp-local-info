@@ -105,7 +105,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
         ))}
 
         {mounted && posts.length === 0 && (
-          <NeoBox shadowColor="gray" className="text-center py-16 px-4 sm:p-16 col-span-full">
+          <NeoBox shadowColor="default" className="text-center py-16 px-4 sm:p-16 col-span-full">
             <svg className="w-12 h-12 text-black dark:text-white mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M3 15h6"></path><path d="M3 19h6"></path><path d="M10 15h8"></path><path d="M10 19h8"></path></svg>
             <p className="text-lg font-dohyeon tracking-wide text-black dark:text-white">
               해당 카테고리에 등록된 포스팅이 없습니다.
