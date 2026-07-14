@@ -31,28 +31,46 @@ export async function onRequestPost(context: any) {
     }
 
     const prompt = `${promptContext}\n\n[원문]\n${sourceText.substring(0, 3000)}`;
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      }
-    );
-
-    const data = await response.json();
+    const fallbackModels = ['gemini-flash-lite-latest', 'gemini-flash-latest', 'gemini-pro-latest'];
     
-    if (data.error) {
+    let comment = '';
+    let lastError = null;
+
+    for (const modelName of fallbackModels) {
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 800,
+              }
+            })
+          }
+        );
+
+        const data = await response.json();
+        
+        if (!data.error && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+          comment = data.candidates[0].content.parts[0].text;
+          break;
+        }
+      } catch (err: any) {
+        lastError = err;
+        continue;
+      }
+    }
+
+    if (!comment) {
       return new Response(JSON.stringify({ error: 'AI 생성 중 오류가 발생했습니다.' }), { 
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
     }
-
-    let comment = data.candidates?.[0]?.content?.parts?.[0]?.text || '분석 결과를 생성하지 못했습니다.';
     
     // 강제로 마크다운 기호 제거
     comment = comment.replace(/(\*\*|###|---|__)/g, '').replace(/^#+\s/gm, '');

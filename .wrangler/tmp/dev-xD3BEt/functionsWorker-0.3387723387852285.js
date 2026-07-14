@@ -36,24 +36,41 @@ async function onRequestPost(context) {
 
 [\uC6D0\uBB38]
 ${sourceText.substring(0, 3e3)}`;
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
+    const fallbackModels = ["gemini-flash-lite-latest", "gemini-flash-latest", "gemini-pro-latest"];
+    let comment = "";
+    let lastError = null;
+    for (const modelName of fallbackModels) {
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 800
+              }
+            })
+          }
+        );
+        const data = await response.json();
+        if (!data.error && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+          comment = data.candidates[0].content.parts[0].text;
+          break;
+        }
+      } catch (err) {
+        lastError = err;
+        continue;
       }
-    );
-    const data = await response.json();
-    if (data.error) {
+    }
+    if (!comment) {
       return new Response(JSON.stringify({ error: "AI \uC0DD\uC131 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4." }), {
         status: 500,
         headers: { "Content-Type": "application/json" }
       });
     }
-    let comment = data.candidates?.[0]?.content?.parts?.[0]?.text || "\uBD84\uC11D \uACB0\uACFC\uB97C \uC0DD\uC131\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
     comment = comment.replace(/(\*\*|###|---|__)/g, "").replace(/^#+\s/gm, "");
     return new Response(JSON.stringify({ comment: comment.trim() }), {
       headers: { "Content-Type": "application/json" }
