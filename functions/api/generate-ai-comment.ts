@@ -52,7 +52,10 @@ export async function onRequestPost(context: any) {
       });
     }
 
-    const comment = data.candidates?.[0]?.content?.parts?.[0]?.text || '분석 결과를 생성하지 못했습니다.';
+    let comment = data.candidates?.[0]?.content?.parts?.[0]?.text || '분석 결과를 생성하지 못했습니다.';
+    
+    // 강제로 마크다운 기호 제거
+    comment = comment.replace(/(\*\*|###|---|__)/g, '').replace(/^#+\s/gm, '');
 
     return new Response(JSON.stringify({ comment: comment.trim() }), {
       headers: { 'Content-Type': 'application/json' }

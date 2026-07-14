@@ -51,7 +51,8 @@ ${sourceText.substring(0, 3e3)}`;
         headers: { "Content-Type": "application/json" }
       });
     }
-    const comment = data.candidates?.[0]?.content?.parts?.[0]?.text || "\uBD84\uC11D \uACB0\uACFC\uB97C \uC0DD\uC131\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
+    let comment = data.candidates?.[0]?.content?.parts?.[0]?.text || "\uBD84\uC11D \uACB0\uACFC\uB97C \uC0DD\uC131\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
+    comment = comment.replace(/(\*\*|###|---|__)/g, "").replace(/^#+\s/gm, "");
     return new Response(JSON.stringify({ comment: comment.trim() }), {
       headers: { "Content-Type": "application/json" }
     });
@@ -562,7 +563,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-EcJGH4/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-HgZHla/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -594,7 +595,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-EcJGH4/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-HgZHla/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

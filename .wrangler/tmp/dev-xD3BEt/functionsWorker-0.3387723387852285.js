@@ -53,7 +53,8 @@ ${sourceText.substring(0, 3e3)}`;
         headers: { "Content-Type": "application/json" }
       });
     }
-    const comment = data.candidates?.[0]?.content?.parts?.[0]?.text || "\uBD84\uC11D \uACB0\uACFC\uB97C \uC0DD\uC131\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
+    let comment = data.candidates?.[0]?.content?.parts?.[0]?.text || "\uBD84\uC11D \uACB0\uACFC\uB97C \uC0DD\uC131\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
+    comment = comment.replace(/(\*\*|###|---|__)/g, "").replace(/^#+\s/gm, "");
     return new Response(JSON.stringify({ comment: comment.trim() }), {
       headers: { "Content-Type": "application/json" }
     });
