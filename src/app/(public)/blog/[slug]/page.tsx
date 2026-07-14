@@ -179,9 +179,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               </time>
             </div>
             
-            <NeoHeading level={1} highlighterColor="blue" className="mb-0">
-              {post.title}
-            </NeoHeading>
+            <div className="bg-[#e8f0fe] dark:bg-[#8ab4f8]/10 border-2 border-black dark:border-white p-4 sm:p-5 mt-2 mb-0">
+              <h1 className="text-2xl sm:text-3xl font-dohyeon font-normal tracking-wide text-black dark:text-white leading-[1.4] break-keep m-0">
+                {post.title}
+              </h1>
+            </div>
 
             {post.summary && (
               <NeoBox shadowColor="yellow" className="mt-8 !bg-gray-50 dark:!bg-[#303134] text-[14px] leading-relaxed font-bold">
