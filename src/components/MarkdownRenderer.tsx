@@ -13,7 +13,7 @@ const baseComponents: Components = {
     <h1
       id={id}
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
-      className="text-[24px] sm:text-[28px] font-black text-[#202124] dark:text-[#e8eaed] mt-16 mb-8 pb-4 border-b-4 border-[#1a73e8] dark:border-[#8ab4f8] tracking-tight break-keep"
+      className="text-[24px] sm:text-[28px] font-dohyeon font-normal text-[#202124] dark:text-[#e8eaed] mt-16 mb-8 pb-4 border-b-4 border-[#1a73e8] dark:border-[#8ab4f8] tracking-tight break-keep"
     >
       {children}
     </h1>
@@ -22,7 +22,7 @@ const baseComponents: Components = {
     <h2
       id={id}
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
-      className="group flex items-center text-[20px] sm:text-[22px] font-black text-[#202124] dark:text-[#e8eaed] mt-14 mb-6 px-4 sm:px-5 py-3.5 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent border-l-[6px] border-[#1a73e8] dark:border-[#8ab4f8] tracking-tight break-keep"
+      className="group flex items-center text-[20px] sm:text-[22px] font-dohyeon font-normal text-[#202124] dark:text-[#e8eaed] mt-14 mb-6 px-4 sm:px-5 py-3.5 bg-gradient-to-r from-gray-50 to-transparent dark:from-white/5 dark:to-transparent border-l-[6px] border-[#1a73e8] dark:border-[#8ab4f8] tracking-tight break-keep"
     >
       {children}
     </h2>
@@ -31,7 +31,7 @@ const baseComponents: Components = {
     <h3
       id={id}
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
-      className="flex items-center gap-2 text-[17px] sm:text-[18px] font-bold text-[#3c4043] dark:text-[#e8eaed] mt-10 mb-4 px-1 tracking-tight break-keep"
+      className="flex items-center gap-2 text-[17px] sm:text-[18px] font-dohyeon font-normal text-[#3c4043] dark:text-[#e8eaed] mt-10 mb-4 px-1 tracking-tight break-keep"
     >
       <span className="text-[#1a73e8] dark:text-[#8ab4f8]">■</span>
       {children}
