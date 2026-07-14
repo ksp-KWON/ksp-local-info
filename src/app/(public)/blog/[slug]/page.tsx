@@ -153,7 +153,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       )}
 
       <div className="mb-6">
-        <Link href="/blog" className="inline-flex items-center text-sm font-bold text-[#5f6368] hover:text-[var(--google-blue)] transition-colors">
+        <Link href="/blog" className="inline-flex items-center text-sm font-jua font-normal text-[#5f6368] hover:text-[var(--google-blue)] transition-colors">
           <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           목록으로 돌아가기
         </Link>
@@ -165,11 +165,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <header className="border-b border-gray-200 dark:border-gray-800 pb-8 mb-8 sm:mb-10">
             <div className="flex flex-wrap items-center gap-3 text-xs mb-5">
               {post.category && (
-                <span className="px-2.5 py-1 font-bold rounded-none bg-gray-100 text-[#5f6368] dark:bg-[#303134] dark:text-[#9aa0a6] border border-transparent">
+                <span className="px-2.5 py-1 font-jua font-normal rounded-none bg-gray-100 text-[#5f6368] dark:bg-[#303134] dark:text-[#9aa0a6] border border-transparent">
                   {post.category}
                 </span>
               )}
-              <time dateTime={post.date} className="text-[#5f6368] dark:text-[#9aa0a6] font-medium tracking-wide flex items-center gap-1">
+              <time dateTime={post.date} className="text-[#5f6368] dark:text-[#9aa0a6] font-jua font-normal tracking-wide flex items-center gap-1">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 작성일 {post.date}
               </time>

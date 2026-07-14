@@ -93,10 +93,10 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
                 >
                   <div className="p-4 sm:p-5 flex flex-col justify-between h-full flex-1">
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="px-2 py-1 text-[11px] font-black border-2 border-black dark:border-white text-black dark:text-white uppercase tracking-wider">
+                      <span className="px-2 py-1 text-[11px] font-jua font-normal border-2 border-black dark:border-white text-black dark:text-white uppercase tracking-wider">
                         {post.category}
                       </span>
-                      <time className="text-[11px] font-black text-black dark:text-white flex items-center gap-1 shrink-0">
+                      <time className="text-[11px] font-jua font-normal text-black dark:text-white flex items-center gap-1 shrink-0">
                         <Calendar className="w-3 h-3" strokeWidth={3} />
                         {post.date}
                       </time>
