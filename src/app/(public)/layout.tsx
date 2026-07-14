@@ -99,6 +99,10 @@ export default function PublicLayout({
           <p className="iagree text-center md:text-right flex items-center justify-center flex-wrap gap-2">
             <Link href="/about" className="hover:text-[#0090D6] cursor-pointer transition-colors">플랫폼 소개</Link>
             <span className="w-1 h-1 rounded-full bg-[#dadce0] dark:bg-[#5f6368]"></span>
+            <Link href="/terms" className="hover:text-[#0090D6] cursor-pointer transition-colors">이용약관</Link>
+            <span className="w-1 h-1 rounded-full bg-[#dadce0] dark:bg-[#5f6368]"></span>
+            <Link href="/privacy" className="hover:text-[#0090D6] cursor-pointer transition-colors">개인정보처리방침</Link>
+            <span className="w-1 h-1 rounded-full bg-[#dadce0] dark:bg-[#5f6368]"></span>
             본 포털은 의정부시의 주요 공공서비스 및 혜택 정보를 제공하는 비영리 안내 사이트입니다.
           </p>
         </div>
