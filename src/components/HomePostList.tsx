@@ -52,10 +52,10 @@ const getCategoryTheme = (category: string) => {
 };
 
 const CATEGORIES = [
-  { id: '복지·지원금', keywords: ['지원금', '혜택', '복지'] },
-  { id: '행사·축제', keywords: ['행사', '축제', '문화'] },
-  { id: '건강·의료', keywords: ['의료', '건강', '병원'] },
-  { id: '생활정보', keywords: ['정보', '민원', '기타'] }
+  { id: '혜택', label: '복지·지원금', keywords: ['지원금', '혜택', '복지'] },
+  { id: '행사', label: '행사·축제', keywords: ['행사', '축제', '문화'] },
+  { id: '의료', label: '건강·의료', keywords: ['의료', '건강', '병원'] },
+  { id: '정보', label: '생활정보', keywords: ['정보', '민원', '기타'] }
 ];
 
 export default function HomePostList({ initialPosts }: { initialPosts: PostData[] }) {
@@ -65,18 +65,17 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
       if (!post.category) return false;
       return cat.keywords.some(keyword => post.category?.includes(keyword));
     });
-    // 분류에 실패한 포스트들을 '생활정보'에 추가 (선택사항)
-    return { category: cat.id, posts };
+    return { categoryId: cat.id, categoryLabel: cat.label, posts };
   }).filter(item => item.posts.length > 0);
 
   return (
     <div className="space-y-12">
-      {categoriesWithPosts.map(({ category, posts }) => {
-        const theme = getCategoryTheme(category);
+      {categoriesWithPosts.map(({ categoryId, categoryLabel, posts }) => {
+        const theme = getCategoryTheme(categoryLabel);
         const displayPosts = posts.slice(0, 3); // 3개 노출
 
         return (
-          <section key={category} className="relative">
+          <section key={categoryId} className="relative">
             {/* 카테고리 헤더 */}
             <div className="flex items-center justify-between mb-5 px-4 sm:px-5 py-3 sm:py-3.5 relative z-10">
               <div className={`flex items-center gap-2 bg-gradient-to-r ${theme.headerBg} px-3 sm:px-4 py-1.5 sm:py-2`}>
@@ -84,7 +83,7 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
                   {theme.title}
                 </h2>
               </div>
-              <Link href={`/blog?category=${category}`} className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors group">
+              <Link href={`/blog?category=${categoryId}`} className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors group">
                 전체보기
                 <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </Link>

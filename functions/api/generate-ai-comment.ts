@@ -1,16 +1,23 @@
-import { NextResponse } from 'next/server';
-
-export async function POST(req: Request) {
+export async function onRequestPost(context: any) {
   try {
-    const { sourceText, type } = await req.json();
+    const { request, env } = context;
+    const body = await request.json();
+    const sourceText = body.sourceText;
+    const type = body.type;
 
     if (!sourceText) {
-      return NextResponse.json({ error: '텍스트가 없습니다.' }, { status: 400 });
+      return new Response(JSON.stringify({ error: '텍스트가 없습니다.' }), { 
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = env.GEMINI_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
+      return new Response(JSON.stringify({ error: 'API 키가 설정되지 않았습니다.' }), { 
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     let promptContext = '';
@@ -38,15 +45,21 @@ export async function POST(req: Request) {
     const data = await response.json();
     
     if (data.error) {
-      console.error('Gemini API Error:', data.error);
-      return NextResponse.json({ error: 'AI 생성 중 오류가 발생했습니다.' }, { status: 500 });
+      return new Response(JSON.stringify({ error: 'AI 생성 중 오류가 발생했습니다.' }), { 
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const comment = data.candidates?.[0]?.content?.parts?.[0]?.text || '분석 결과를 생성하지 못했습니다.';
 
-    return NextResponse.json({ comment: comment.trim() });
+    return new Response(JSON.stringify({ comment: comment.trim() }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
   } catch (error) {
-    console.error('AI Comment Error:', error);
-    return NextResponse.json({ error: '서버 에러가 발생했습니다.' }, { status: 500 });
+    return new Response(JSON.stringify({ error: '서버 에러가 발생했습니다.' }), { 
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 }
