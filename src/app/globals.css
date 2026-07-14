@@ -304,6 +304,32 @@ body {
   line-height: 1.8 !important;
 }
 
+/* 마크다운 제목 형광펜 및 폰트 효과 (Neo-brutalism / Sketchnote) */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-jua), sans-serif !important;
+  color: var(--foreground) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.02em;
+}
+
+.prose h2 {
+  width: fit-content;
+  background: linear-gradient(180deg, transparent 50%, rgba(135, 206, 235, 0.6) 50%);
+  padding: 0 4px;
+}
+.dark .prose h2 {
+  background: linear-gradient(180deg, transparent 50%, rgba(70, 130, 180, 0.6) 50%);
+}
+
+.prose h3 {
+  width: fit-content;
+  background: linear-gradient(180deg, transparent 50%, rgba(255, 215, 0, 0.6) 50%);
+  padding: 0 4px;
+}
+.dark .prose h3 {
+  background: linear-gradient(180deg, transparent 50%, rgba(218, 165, 32, 0.6) 50%);
+}
+
 
 /* ── 로고: 다크모드 외곽선 색상 전환 ── */
 /* 라이트모드: 흰 외곽선 (원본 로고 스타일 그대로) */

@@ -159,7 +159,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </Link>
       </div>
 
-      <article className="bg-white dark:bg-[#202124] rounded-none border border-gray-100 dark:border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.06)] hover:border-[var(--google-blue)] transition-all duration-300 overflow-hidden relative">
+      <article className="bg-white dark:bg-[#202124] border-2 border-black dark:border-white shadow-marker-blue transition-all duration-300 overflow-hidden relative">
         <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
           
           <header className="border-b border-gray-200 dark:border-gray-800 pb-8 mb-8 sm:mb-10">
@@ -175,13 +175,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               </time>
             </div>
             
-            <h1 className="text-xl sm:text-2xl lg:text-[28px] font-black tracking-tight text-[#202124] dark:text-[#e8eaed] leading-snug break-keep">
-              {post.title}
+            <h1 className="text-xl sm:text-2xl lg:text-[28px] font-jua font-normal tracking-wide text-[#202124] dark:text-[#e8eaed] leading-snug break-keep">
+              <span className="highlighter-blue px-1">{post.title}</span>
             </h1>
 
             {post.summary && (
-              <div className="mt-8 bg-gray-50 dark:bg-[#303134] p-5 rounded-none border border-gray-200 dark:border-white/5 border-l-[6px] border-l-[#1a73e8] text-[#3c4043] dark:text-[#bdc1c6] text-[14px] leading-relaxed font-bold shadow-sm">
-                📌 핵심 요약 : {post.summary}
+              <div className="mt-8 bg-gray-50 dark:bg-[#303134] p-5 border-2 border-black dark:border-white shadow-marker-yellow text-black dark:text-white text-[14px] leading-relaxed font-bold">
+                <span className="highlighter-yellow px-1">핵심 요약</span> : {post.summary}
               </div>
             )}
           </header>
@@ -197,8 +197,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <hr className="my-12 border-gray-200 dark:border-gray-800" />
 
           {sourceLink && (
-            <div className="mb-6 bg-gray-50 dark:bg-[#303134] border border-gray-200 dark:border-white/5 rounded-none p-5 shadow-sm border-l-[6px] border-l-[#1a73e8]">
-              <span className="font-bold text-gray-800 dark:text-gray-200 block mb-2">🔗 공식 원문 출처</span>
+            <div className="mb-6 bg-gray-50 dark:bg-[#303134] border-2 border-black dark:border-white p-5 shadow-marker-green">
+              <span className="font-bold text-gray-800 dark:text-gray-200 block mb-2"><span className="highlighter-green px-1">🔗 공식 원문 출처</span></span>
               <a 
                 href={sourceLink} 
                 target="_blank" 
@@ -210,7 +210,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </div>
           )}
 
-          <div className="bg-yellow-50 dark:bg-[#303134] border border-yellow-200 dark:border-white/5 rounded-none p-5 text-[13.5px] text-gray-700 dark:text-gray-300 leading-relaxed mb-10 flex gap-3 shadow-sm font-medium border-l-[6px] border-l-yellow-500">
+          <div className="bg-yellow-50 dark:bg-[#303134] border-2 border-black dark:border-white p-5 text-[13.5px] text-gray-700 dark:text-gray-300 leading-relaxed mb-10 flex gap-3 shadow-marker-pink font-medium">
             <span className="text-lg leading-none">💡</span>
             <p>
               이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-[#1a73e8] dark:text-[#8ab4f8] hover:underline font-bold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
