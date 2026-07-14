@@ -1,20 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { PostData } from './types';
 
 const postsDirectory = path.join(process.cwd(), 'src/content/posts');
 
-export interface Post {
-  slug: string;
-  title: string;
-  date: string;
-  summary: string;
-  category?: string;
-  tags?: string[];
-  content: string;
-}
-
-export function getSortedPostsData(): Post[] {
+export function getSortedPostsData(): PostData[] {
   if (!fs.existsSync(postsDirectory)) {
     return [];
   }
@@ -50,7 +41,7 @@ export function getSortedPostsData(): Post[] {
   });
 }
 
-export function getPostData(slug: string): Post | null {
+export function getPostData(slug: string): PostData | null {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   if (!fs.existsSync(fullPath)) return null;
   

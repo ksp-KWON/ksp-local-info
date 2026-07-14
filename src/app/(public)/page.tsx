@@ -34,7 +34,7 @@ export default async function Home() {
   const posts = getSortedPostsData();
 
   return (
-    <div className="space-y-8 sm:px-0 pb-16">
+    <div className="space-y-8 pb-16">
       
       {/* 1. 메인 페이지 인트로 헤더 (Neo-brutalism 스타일) */}
       <NeoBox shadowColor="blue" hoverEffect className="mt-4">
