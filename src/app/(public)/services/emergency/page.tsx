@@ -9,6 +9,8 @@ import EmergencyBottomSheet from '@/components/emergency/EmergencyBottomSheet';
 import NeoHeading from '@/components/ui/NeoHeading';
 import NeoButton from '@/components/ui/NeoButton';
 
+import NeoBox from '@/components/ui/NeoBox';
+
 // 의정부 주요 동네 좌표
 const neighborhoods = [
   { name: '의정부역(중심)', lat: 37.7380, lng: 127.0450 },
@@ -30,7 +32,7 @@ export default function EmergencyPage() {
   });
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-gray-50 dark:bg-[#121212]">
+    <NeoBox shadowColor="red" hoverEffect={false} className="!p-0 flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2">
       {/* 1. 헤더 영역 */}
       <header className="bg-white dark:bg-[#202124] shadow-sm z-20 shrink-0 border-b-[3px] border-black dark:border-white">
         <div className="p-4 pb-2">
@@ -119,6 +121,6 @@ export default function EmergencyPage() {
           </>
         )}
       </main>
-    </div>
+    </NeoBox>
   );
 }

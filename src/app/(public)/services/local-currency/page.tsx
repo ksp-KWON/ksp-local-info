@@ -68,7 +68,7 @@ export default function LocalCurrencyMapPage() {
   }, []);
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-gray-50 dark:bg-[#121212]">
+    <NeoBox shadowColor="blue" hoverEffect={false} className="!p-0 flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2">
       {/* 2. 헤더 바 */}
       <header className="bg-white dark:bg-[#202124] shadow-sm z-20 p-4 pb-2 flex flex-col gap-3 relative border-b-[3px] border-black dark:border-white shrink-0">
         <div className="flex items-center justify-between">
@@ -162,6 +162,6 @@ export default function LocalCurrencyMapPage() {
           </div>
         )}
       </main>
-    </div>
+    </NeoBox>
   );
 }

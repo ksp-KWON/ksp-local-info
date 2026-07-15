@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
+import NeoBox from '@/components/ui/NeoBox';
 
 // 의정부 주요 동네 좌표
 const neighborhoods = [
@@ -95,7 +96,7 @@ export default function HealthCheckPage() {
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-gray-50 dark:bg-[#121212]">
+    <NeoBox shadowColor="green" hoverEffect={false} className="!p-0 flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2">
       {/* 1. 헤더 바 & 동네 선택 */}
       <header className="bg-white dark:bg-[#202124] shadow-sm z-20 p-4 pb-2 flex flex-col gap-3 relative shrink-0">
         <div className="flex items-center gap-3">
@@ -239,6 +240,6 @@ export default function HealthCheckPage() {
           </Map>
         )}
       </main>
-    </div>
+    </NeoBox>
   );
 }
