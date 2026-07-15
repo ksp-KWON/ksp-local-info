@@ -1,16 +1,16 @@
 name: 로컬인포 자동글쓰기
 
 on:
-  # 매일 오전 7시 (KST) = UTC 22:00 전날
+  # 매일 오전 8시 (KST) = UTC 23:00 전날
   schedule:
-    - cron: '0 22 * * *'
+    - cron: '0 23 * * *'
   # 수동 실행 (테스트용)
   workflow_dispatch:
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
       contents: write
     env:
@@ -26,37 +26,53 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+          cache: 'npm'
 
       - name: 의존성 설치
         run: npm ci
 
-      - name: 데이터 수집 및 자동글쓰기 실행
+      # ── 공공데이터 수집 (실패해도 다음 단계 진행) ──────────────────────
+      - name: 공공데이터 수집
+        id: fetch_data
         env:
           PUBLIC_DATA_API_KEY: ${{ secrets.PUBLIC_DATA_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           echo "🔍 공공데이터 수집 시작 (scripts/fetch-public-data.js)"
-          node scripts/fetch-public-data.js
-          
-          echo "✍️ 블로그 글쓰기 시작 (scripts/generate-blog-post.js)"
-          node scripts/generate-blog-post.js
+          node scripts/fetch-public-data.js && echo "FETCH_OK=true" >> $GITHUB_OUTPUT || echo "FETCH_OK=false" >> $GITHUB_OUTPUT
 
+      # ── 블로그 글쓰기 (실패해도 커밋 단계 진행) ────────────────────────
+      - name: 블로그 자동글쓰기
+        id: generate_post
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "✍️ 블로그 글쓰기 시작 (scripts/generate-blog-post.js)"
+          node scripts/generate-blog-post.js && echo "GENERATE_OK=true" >> $GITHUB_OUTPUT || echo "GENERATE_OK=false" >> $GITHUB_OUTPUT
+
+      # ── 생성된 파일 커밋 & 푸시 ─────────────────────────────────────────
       - name: 변경사항 커밋 & 푸시
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # 1. 새롭게 자동 작성된 포스트(.md) 및 업데이트된 공공데이터 수집본 스테이징
-          git add public/data/local-info.json src/content/posts/
-          
-          # 2. 변경사항이 존재하는 경우에만 처리 진행
+
+          # 자동 작성 결과물 스테이징
+          git add public/data/local-info.json src/content/posts/ || true
+
+          # 변경사항이 있을 때만 커밋
           if ! git diff --cached --quiet; then
-            # 3. 신규 글을 커밋 (글 파일명은 날짜 기반이므로 100% 충돌 없음)
-            git commit -m "auto: 자동글쓰기 콘텐츠 및 데이터 업데이트 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
-            
-            # 4. 원격 저장소의 최신 커밋을 땡겨와 안전하게 리베이스 진행
+            git commit -m "auto: 자동글쓰기 업데이트 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
             git pull --rebase origin main
-            
-            # 5. 원격 저장소에 최종 푸시
             git push origin main
+            echo "✅ 커밋 & 푸시 완료"
+          else
+            echo "ℹ️ 변경사항 없음 — 커밋 건너뜀"
           fi
+
+      # ── 실행 결과 요약 ───────────────────────────────────────────────────
+      - name: 실행 결과 요약
+        if: always()
+        run: |
+          echo "📊 실행 결과 요약"
+          echo "  - 데이터 수집 : ${{ steps.fetch_data.outputs.FETCH_OK == 'true' && '✅ 성공' || '⚠️ 실패/데이터없음' }}"
+          echo "  - 블로그 글쓰기: ${{ steps.generate_post.outputs.GENERATE_OK == 'true' && '✅ 성공' || '⚠️ 실패/글없음' }}"

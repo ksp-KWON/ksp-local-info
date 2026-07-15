@@ -1,6 +1,19 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const fs = require('fs');
+/**
+ * fetch-public-data.js (의정부 로컬인포 v2)
+ * 공공데이터포털 API에서 의정부/경기 관련 정보 1건을 수집하여
+ * public/data/local-info.json에 저장합니다.
+ *
+ * 변경 이력:
+ * v2 - 폴백 전체반환 제거: 의정부/경기 데이터가 없으면 정상 종료
+ *    - gemini-helper.js 공통 모듈 사용 (지능형 재시도/모델 폴오버)
+ */
+
+'use strict';
+
+const fs   = require('fs');
 const path = require('path');
+const { callGemini, sleep } = require('./gemini-helper');
 
 // ── 환경변수 로드 (.env.local) ──────────────────────────────────────────────
 const envPath = path.join(process.cwd(), '.env.local');
@@ -13,138 +26,152 @@ if (fs.existsSync(envPath)) {
   });
 }
 
+// ── 필터링 상수 ─────────────────────────────────────────────────────────────
+// 1순위: 의정부 키워드
+const UIJEONGBU_KEYWORDS = ['의정부'];
+// 2순위: 경기도 키워드 (의정부 없을 때만)
+const GYEONGGI_KEYWORDS  = ['경기도', '경기'];
+
+/**
+ * API 응답 아이템이 키워드 목록 중 하나를 포함하는지 확인합니다.
+ */
+function matchesKeywords(item, keywords) {
+  const searchFields = [item.서비스명, item.서비스목적요약, item.지원대상, item.소관기관명];
+  return keywords.some(kw =>
+    searchFields.some(field => field && field.includes(kw))
+  );
+}
+
 async function main() {
-  const apiKey = process.env.PUBLIC_DATA_API_KEY;
+  const apiKey    = process.env.PUBLIC_DATA_API_KEY;
   const geminiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey || !geminiKey) {
-    console.error("Missing API keys");
+    console.error('오류: PUBLIC_DATA_API_KEY 또는 GEMINI_API_KEY가 설정되지 않았습니다.');
     process.exit(1);
   }
 
-  // [1단계] 공공데이터포털 API에서 데이터 가져오기
-  const url = `https://api.odcloud.kr/api/gov24/v3/serviceList?page=1&perPage=20&returnType=JSON&serviceKey=${encodeURIComponent(apiKey)}`;
-  
+  // ── [1단계] 공공데이터 API 호출 ──────────────────────────────────────────
+  const url = `https://api.odcloud.kr/api/gov24/v3/serviceList?page=1&perPage=100&returnType=JSON&serviceKey=${encodeURIComponent(apiKey)}`;
+
+  let items = [];
   try {
+    console.log('  [API] 공공데이터포털 서비스 목록 수집 중...');
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`API fetch failed: ${response.status}`);
+      throw new Error(`공공데이터 API 오류: HTTP ${response.status}`);
     }
     const data = await response.json();
-    const items = data.data || [];
-
-    // 필터링
-    let filtered = items.filter(item => 
-      (item.서비스명 && item.서비스명.includes('의정부')) ||
-      (item.서비스목적요약 && item.서비스목적요약.includes('의정부')) ||
-      (item.지원대상 && item.지원대상.includes('의정부')) ||
-      (item.소관기관명 && item.소관기관명.includes('의정부'))
-    );
-
-    if (filtered.length === 0) {
-      filtered = items.filter(item => 
-        (item.서비스명 && item.서비스명.includes('경기')) ||
-        (item.서비스목적요약 && item.서비스목적요약.includes('경기')) ||
-        (item.지원대상 && item.지원대상.includes('경기')) ||
-        (item.소관기관명 && item.소관기관명.includes('경기'))
-      );
-    }
-
-    if (filtered.length === 0) {
-      filtered = items;
-    }
-
-    if (filtered.length === 0) {
-      console.log("새로운 데이터가 없습니다");
-      return;
-    }
-
-    // [2단계] 기존 데이터와 비교
-    const localInfoPath = path.join(process.cwd(), 'public/data/local-info.json');
-    let localInfo = { events: [], benefits: [], lastUpdated: "" };
-    if (fs.existsSync(localInfoPath)) {
-      const fileContent = fs.readFileSync(localInfoPath, 'utf8');
-      localInfo = JSON.parse(fileContent);
-    }
-
-    const existingNames = new Set([
-      ...localInfo.events.map(e => e.title), // local-info.json에서는 title을 사용함
-      ...localInfo.benefits.map(b => b.title)
-    ]);
-
-    // 새로운 항목 1개 찾기
-    let newItem = null;
-    for (const item of filtered) {
-      if (!existingNames.has(item.서비스명)) {
-        newItem = item;
-        break;
-      }
-    }
-
-    if (!newItem) {
-      console.log("새로운 데이터가 없습니다");
-      return;
-    }
-
-    // [3단계] Gemini AI로 새 항목 1개만 가공
-    const prompt = `아래 공공데이터 1건을 분석해서 JSON 객체로 변환해줘. 형식:
-{id: 숫자, name: 서비스명, category: '행사' 또는 '혜택', startDate: 'YYYY-MM-DD', endDate: 'YYYY-MM-DD', location: 장소 또는 기관명, target: 지원대상, summary: 한줄요약, link: 상세URL}
-category는 내용을 보고 행사/축제면 '행사', 지원금/서비스면 '혜택'으로 판단해.
-startDate가 없으면 오늘 날짜, endDate가 없으면 '상시'로 넣어.
-반드시 JSON 객체만 출력해. 다른 텍스트 없이.
-
-데이터:
-${JSON.stringify(newItem)}`;
-
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
-    
-    const geminiRes = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
-      })
-    });
-
-    if (!geminiRes.ok) {
-      throw new Error(`Gemini API failed: ${geminiRes.status}`);
-    }
-
-    const geminiData = await geminiRes.json();
-    let aiText = geminiData.candidates[0].content.parts[0].text;
-    
-    // 마크다운 코드블록 제거
-    aiText = aiText.replace(/```json/gi, '').replace(/```/g, '').trim();
-    const parsedItem = JSON.parse(aiText);
-
-    // [4단계] 기존 데이터에 추가
-    const finalItem = {
-      id: String(parsedItem.id),
-      title: parsedItem.name, // 프론트엔드 호환성을 위해 name을 title로 매핑
-      category: parsedItem.category,
-      startDate: parsedItem.startDate,
-      endDate: parsedItem.endDate,
-      location: parsedItem.location,
-      target: parsedItem.target,
-      summary: parsedItem.summary,
-      link: parsedItem.link || "#"
-    };
-
-    if (finalItem.category === '행사') {
-      localInfo.events.unshift(finalItem);
-    } else {
-      localInfo.benefits.unshift(finalItem);
-    }
-
-    localInfo.lastUpdated = new Date().toISOString().split('T')[0];
-
-    fs.writeFileSync(localInfoPath, JSON.stringify(localInfo, null, 2), 'utf8');
-    console.log("데이터 추가 성공");
-
-  } catch (error) {
-    console.error("오류 발생:", error.message);
+    items = data.data || [];
+    console.log(`  [완료] 총 ${items.length}건 수신.`);
+  } catch (err) {
+    console.error('오류 발생:', err.message);
     process.exit(1);
   }
+
+  // ── [2단계] 의정부 → 경기 순서로 필터링 (전체 반환 폴백 없음) ──────────
+  let filtered = items.filter(item => matchesKeywords(item, UIJEONGBU_KEYWORDS));
+
+  if (filtered.length === 0) {
+    console.log('  [필터] 의정부 관련 데이터 없음. 경기도 범위로 재시도합니다...');
+    filtered = items.filter(item => matchesKeywords(item, GYEONGGI_KEYWORDS));
+  }
+
+  if (filtered.length === 0) {
+    // ✅ 전체 반환 폴백 제거: 관련 없는 데이터를 수집하지 않습니다.
+    console.log('새로운 데이터가 없습니다 (의정부/경기 관련 데이터를 찾을 수 없음)');
+    return;
+  }
+
+  console.log(`  [필터] 관련 데이터 ${filtered.length}건 확인.`);
+
+  // ── [3단계] 기존 데이터와 비교 (중복 제거) ───────────────────────────────
+  const localInfoPath = path.join(process.cwd(), 'public/data/local-info.json');
+  let localInfo = { events: [], benefits: [], lastUpdated: '' };
+
+  if (fs.existsSync(localInfoPath)) {
+    localInfo = JSON.parse(fs.readFileSync(localInfoPath, 'utf8'));
+  }
+
+  const existingNames = new Set([
+    ...localInfo.events.map(e => e.title),
+    ...localInfo.benefits.map(b => b.title),
+  ]);
+
+  // 아직 처리되지 않은 신규 항목 1개 탐색
+  const newItem = filtered.find(item => !existingNames.has(item.서비스명));
+
+  if (!newItem) {
+    console.log('새로운 데이터가 없습니다 (모두 이미 수집된 항목)');
+    return;
+  }
+
+  console.log(`  [신규] "${newItem.서비스명}" 항목을 처리합니다.`);
+
+  // ── [4단계] Gemini AI로 신규 항목 1건 가공 ──────────────────────────────
+  const today = new Date().toISOString().split('T')[0];
+
+  const ITEM_SCHEMA = {
+    type: 'OBJECT',
+    properties: {
+      id:        { type: 'INTEGER' },
+      name:      { type: 'STRING' },
+      category:  { type: 'STRING', enum: ['행사', '혜택'] },
+      startDate: { type: 'STRING' },
+      endDate:   { type: 'STRING' },
+      location:  { type: 'STRING' },
+      target:    { type: 'STRING' },
+      summary:   { type: 'STRING' },
+      link:      { type: 'STRING' },
+    },
+    required: ['id', 'name', 'category', 'startDate', 'endDate', 'location', 'target', 'summary', 'link'],
+  };
+
+  const prompt = `아래 공공데이터 1건을 분석해서 JSON 객체로 변환하세요.
+category는 행사/축제면 '행사', 지원금/서비스면 '혜택'으로 판단하세요.
+startDate가 없으면 오늘 날짜(${today}), endDate가 없으면 '상시'로 넣으세요.
+link는 상세URL이 없으면 빈 문자열("")로 넣으세요.
+
+데이터:
+${JSON.stringify(newItem, null, 2)}`;
+
+  let parsedItem;
+  try {
+    parsedItem = await callGemini(geminiKey, prompt, ITEM_SCHEMA);
+  } catch (err) {
+    console.error('오류 발생:', err.message);
+    process.exit(1);
+  }
+
+  // ── [5단계] 기존 데이터에 추가 및 저장 ──────────────────────────────────
+  const finalItem = {
+    id:        String(parsedItem.id || Date.now()),
+    title:     parsedItem.name,
+    category:  parsedItem.category,
+    startDate: parsedItem.startDate,
+    endDate:   parsedItem.endDate,
+    location:  parsedItem.location,
+    target:    parsedItem.target,
+    summary:   parsedItem.summary,
+    link:      parsedItem.link || '#',
+  };
+
+  if (finalItem.category === '행사') {
+    localInfo.events.unshift(finalItem);
+  } else {
+    localInfo.benefits.unshift(finalItem);
+  }
+
+  localInfo.lastUpdated = today;
+
+  const dir = path.dirname(localInfoPath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(localInfoPath, JSON.stringify(localInfo, null, 2), 'utf8');
+
+  console.log(`데이터 추가 성공: [${finalItem.category}] ${finalItem.title}`);
 }
 
-main();
+main().catch(err => {
+  console.error('치명적 오류:', err.message);
+  process.exit(1);
+});
