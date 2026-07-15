@@ -1,5 +1,8 @@
 import React from 'react';
 import { EmergencyItem, TabType } from '@/lib/api/emergency';
+import NeoBox from '@/components/ui/NeoBox';
+import NeoBadge from '@/components/ui/NeoBadge';
+import NeoButton from '@/components/ui/NeoButton';
 
 interface BottomSheetProps {
   item: EmergencyItem | null;
@@ -9,10 +12,10 @@ interface BottomSheetProps {
 
 const getStatusColor = (status?: string) => {
   switch (status) {
-    case 'good': return 'text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30';
-    case 'normal': return 'text-yellow-600 bg-yellow-50 dark:bg-yellow-500/10 border-yellow-200 dark:border-yellow-500/30';
-    case 'busy': return 'text-red-500 bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/30';
-    default: return 'text-gray-500 bg-gray-50';
+    case 'good': return 'green';
+    case 'normal': return 'yellow';
+    case 'busy': return 'pink';
+    default: return 'gray';
   }
 };
 
@@ -29,14 +32,15 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
   if (!item) return null;
 
   return (
-    <div className="absolute z-10 bottom-6 left-1/2 transform -translate-x-1/2 w-[92%] max-w-md">
-      <div className="bg-white dark:bg-[#202124] rounded-2xl shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800 animate-slide-up">
-        <div className={`${activeTab === 'er' ? 'bg-[#ff4757]' : 'bg-[#2ed573]'} px-5 py-3.5 flex justify-between items-center`}>
-          <h3 className="font-extrabold text-white text-base truncate pr-4">
+    <div className="absolute z-10 bottom-6 left-4 right-4 max-w-md mx-auto animate-slide-up">
+      <NeoBox shadowColor={activeTab === 'er' ? 'red' : 'green'} className="!p-0 bg-white dark:bg-[#202124] overflow-hidden flex flex-col">
+        {/* Header */}
+        <div className={`${activeTab === 'er' ? 'bg-[#ff4757]' : 'bg-[#2ed573]'} px-5 py-3.5 flex justify-between items-center border-b-2 border-black dark:border-white`}>
+          <h3 className="font-dohyeon text-white text-lg tracking-wide truncate pr-4">
             {item.name}
           </h3>
-          <button onClick={onClose} className="text-white/80 hover:text-white bg-black/10 rounded-full p-1">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          <button onClick={onClose} className="text-black bg-white/20 hover:bg-white/40 rounded-full p-1 border-2 border-black transition-colors shrink-0">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
         
@@ -44,69 +48,61 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
           {activeTab === 'er' && (
             <div className="flex items-center justify-between">
               <div className="flex flex-col">
-                <span className="text-xs text-gray-500 font-semibold mb-1">실시간 응급실 병상</span>
+                <span className="text-xs text-gray-500 font-bold mb-1">실시간 응급실 병상</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-2xl font-black text-gray-900 dark:text-white">{item.availableBeds}</span>
-                  <span className="text-sm text-gray-500">/ {item.totalBeds}석</span>
+                  <span className="text-sm text-gray-500 font-jua">/ {item.totalBeds}석</span>
                 </div>
               </div>
-              <div className={`px-3 py-1.5 rounded-lg border text-sm font-extrabold ${getStatusColor(item.status)}`}>
+              <NeoBadge color={getStatusColor(item.status)} className="!text-sm !py-1.5">
                 {getStatusText(item.status)}
-              </div>
+              </NeoBadge>
             </div>
           )}
 
           {activeTab === 'pharmacy' && (
             <div className="flex items-center gap-2">
               {item.isNightOpen && (
-                <span className="bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/30 px-2.5 py-1 rounded-md text-[11px] font-bold">
-                  🌙 심야 운영
-                </span>
+                <NeoBadge color="blue">🌙 심야 운영</NeoBadge>
               )}
-              <span className="bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 px-2.5 py-1 rounded-md text-[11px] font-bold">
-                🕒 {item.hours}
-              </span>
+              <NeoBadge color="green">🕒 {item.hours}</NeoBadge>
             </div>
           )}
 
-          <div className="h-px bg-gray-100 dark:bg-gray-800"></div>
+          <div className="h-0.5 bg-black dark:bg-white/20 w-full opacity-10 dark:opacity-100 my-2"></div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             <div className="flex items-start gap-2.5">
-              <span className="text-gray-400 shrink-0">📍</span>
-              <p className="text-[13px] font-medium text-gray-700 dark:text-gray-300 leading-snug break-keep">
+              <span className="text-black dark:text-white shrink-0 mt-0.5">📍</span>
+              <p className="text-[14px] font-jua text-gray-800 dark:text-gray-200 leading-snug break-keep">
                 {item.address}
               </p>
             </div>
             <div className="flex items-center gap-2.5">
-              <span className="text-gray-400 shrink-0">📞</span>
-              <a href={`tel:${item.tel}`} className="text-[13px] font-bold text-[#1a73e8] dark:text-[#8ab4f8] hover:underline">
+              <span className="text-black dark:text-white shrink-0">📞</span>
+              <a href={`tel:${item.tel}`} className="text-[14px] font-jua text-blue-600 dark:text-[#8ab4f8] hover:underline underline-offset-4 decoration-2">
                 {item.tel}
               </a>
             </div>
           </div>
           
-          <div className="flex gap-2 mt-2">
-            <a 
+          <div className="mt-4">
+            <NeoButton 
               href={`https://map.kakao.com/link/to/${item.name},${item.lat},${item.lng}`}
-              target="_blank"
-              rel="noreferrer"
-              className={`flex-1 flex justify-center items-center gap-1.5 py-3 rounded-xl text-sm font-bold text-white transition-transform active:scale-95 ${
-                activeTab === 'er' ? 'bg-[#ff4757] shadow-lg shadow-red-500/30' : 'bg-[#2ed573] shadow-lg shadow-emerald-500/30'
-              }`}
+              variant={activeTab === 'er' ? 'danger' : 'primary'}
+              className="w-full flex justify-center !py-3 !text-[15px]"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
               길찾기 바로가기
-            </a>
+            </NeoButton>
           </div>
           
           {activeTab === 'er' && (
-            <p className="text-[10px] text-gray-400 text-right">
+            <p className="text-[11px] font-jua text-gray-400 text-right mt-2">
               업데이트: {item.updatedAt}
             </p>
           )}
         </div>
-      </div>
+      </NeoBox>
     </div>
   );
 }

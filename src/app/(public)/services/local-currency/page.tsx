@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
+import NeoHeading from '@/components/ui/NeoHeading';
+import NeoButton from '@/components/ui/NeoButton';
+import NeoBox from '@/components/ui/NeoBox';
+import NeoBadge from '@/components/ui/NeoBadge';
 
 interface MerchantItem {
   id: string;
@@ -66,34 +70,31 @@ export default function LocalCurrencyMapPage() {
   return (
     <div className="flex flex-col h-[100dvh] bg-gray-50 dark:bg-[#121212]">
       {/* 2. 헤더 바 */}
-      <header className="bg-white dark:bg-[#202124] shadow-sm z-20 p-4 pb-2 flex flex-col gap-3 relative">
+      <header className="bg-white dark:bg-[#202124] shadow-sm z-20 p-4 pb-2 flex flex-col gap-3 relative border-b-[3px] border-black dark:border-white shrink-0">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button onClick={() => window.history.back()} className="p-2 -ml-2 text-gray-600 dark:text-gray-300">
+          <div className="flex items-center gap-2">
+            <button onClick={() => window.history.back()} className="p-2 -ml-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors border-2 border-transparent hover:border-black dark:hover:border-white">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <span className="text-xl">💳</span> 의정부 사랑카드 가맹점
-            </h1>
+            <NeoHeading level={2} highlighterColor="yellow" className="!mb-0 flex items-center gap-2 text-xl sm:text-2xl mt-1">
+              💳 의정부 사랑카드 가맹점
+            </NeoHeading>
           </div>
         </div>
         
         {/* 동네 선택 스크롤 메뉴 */}
-        <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-2">
+        <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-3 mt-1">
           {neighborhoods.map((nb) => (
-            <button
+            <NeoButton
               key={nb.name}
               onClick={() => setMapCenter(nb)}
-              className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-bold border transition-colors ${
-                mapCenter.name === nb.name
-                  ? 'bg-[#0090D6] border-[#0090D6] text-white shadow-md'
-                  : 'bg-white dark:bg-[#2d2e30] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-[#0090D6]'
-              }`}
+              variant={mapCenter.name === nb.name ? 'primary' : 'secondary'}
+              className="!px-4 !py-1.5 !text-[13px] sm:!text-sm whitespace-nowrap shrink-0"
             >
               {nb.name}
-            </button>
+            </NeoButton>
           ))}
         </div>
       </header>
@@ -101,16 +102,16 @@ export default function LocalCurrencyMapPage() {
       {/* 3. 지도 영역 */}
       <main className="flex-1 relative">
         {loading && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 dark:bg-[#2d2e30]">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#0090D6] mb-4"></div>
-            <p className="text-gray-500 font-bold">지도 데이터를 불러오는 중입니다...</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-black dark:border-white mb-4"></div>
+            <p className="text-black dark:text-white font-dohyeon text-lg tracking-wide">지도 데이터를 불러오는 중입니다...</p>
           </div>
         )}
 
         {error && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 dark:bg-[#2d2e30]">
-            <p className="text-red-500 font-bold mb-2">지도를 불러오지 못했습니다.</p>
-            <p className="text-gray-500 text-sm">브라우저를 새로고침 해보세요.</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
+            <p className="text-red-500 font-dohyeon text-xl mb-2">지도를 불러오지 못했습니다.</p>
+            <p className="text-gray-600 dark:text-gray-300 font-jua">브라우저를 새로고침 해보세요.</p>
           </div>
         )}
 
@@ -137,25 +138,27 @@ export default function LocalCurrencyMapPage() {
 
         {/* 4. 선택된 가맹점 팝업 정보창 */}
         {selectedMerchant && (
-          <div className="absolute bottom-6 left-4 right-4 bg-white dark:bg-[#202124] rounded-2xl shadow-xl p-5 border border-gray-100 dark:border-white/5 z-20 animate-in slide-in-from-bottom-5">
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <span className="inline-block px-2 py-1 bg-[#0090D6]/10 text-[#0090D6] dark:text-[#8ab4f8] text-xs font-bold rounded-lg mb-2">
-                  {selectedMerchant.category}
-                </span>
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white">{selectedMerchant.name}</h2>
+          <div className="absolute bottom-6 left-4 right-4 z-20 animate-in slide-in-from-bottom-5 max-w-md mx-auto">
+            <NeoBox shadowColor="blue" className="!p-5 bg-white dark:bg-[#202124]">
+              <div className="flex justify-between items-start mb-3">
+                <div className="flex-1 min-w-0 pr-4">
+                  <div className="mb-2">
+                    <NeoBadge color="blue">{selectedMerchant.category}</NeoBadge>
+                  </div>
+                  <h2 className="text-xl font-dohyeon text-gray-900 dark:text-white tracking-wide truncate">{selectedMerchant.name}</h2>
+                </div>
+                <button onClick={() => setSelectedMerchant(null)} className="shrink-0 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full p-1.5 border-2 border-black dark:border-white transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
               </div>
-              <button onClick={() => setSelectedMerchant(null)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{selectedMerchant.address}</p>
-            
-            <button className="w-full bg-[#0090D6] hover:bg-[#007ab8] text-white font-bold py-3 rounded-xl transition-colors shadow-md">
-              길찾기
-            </button>
+              <p className="text-[14px] font-jua text-gray-700 dark:text-gray-300 mb-5 break-keep leading-relaxed">{selectedMerchant.address}</p>
+              
+              <NeoButton href={`https://map.kakao.com/link/to/${selectedMerchant.name},${selectedMerchant.lat},${selectedMerchant.lng}`} className="w-full flex justify-center !py-3 !text-base">
+                길찾기 바로가기
+              </NeoButton>
+            </NeoBox>
           </div>
         )}
       </main>

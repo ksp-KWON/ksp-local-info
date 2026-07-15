@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
-import { Home, HandHeart, PartyPopper, Stethoscope, Ambulance } from 'lucide-react';
+import { Home, Coins, PartyPopper, Stethoscope, Ambulance } from 'lucide-react';
 
 function NavContent() {
   const pathname = usePathname();
@@ -20,24 +20,24 @@ function NavContent() {
     },
     {
       id: 'benefits',
-      label: '복지·지원',
-      href: '/blog?category=혜택',
-      isActive: category === '혜택',
-      icon: <HandHeart className="w-6 h-6 mb-1" strokeWidth={category === '혜택' ? 3 : 2} />
+      label: '복지·지원금',
+      href: '/blog?category=복지·지원금',
+      isActive: category === '복지·지원금',
+      icon: <Coins className="w-6 h-6 mb-1" strokeWidth={category === '복지·지원금' ? 3 : 2} />
     },
     {
       id: 'events',
-      label: '행사·축제',
-      href: '/blog?category=행사',
-      isActive: category === '행사',
-      icon: <PartyPopper className="w-6 h-6 mb-1" strokeWidth={category === '행사' ? 3 : 2} />
+      label: '문화·행사',
+      href: '/blog?category=문화·행사',
+      isActive: category === '문화·행사',
+      icon: <PartyPopper className="w-6 h-6 mb-1" strokeWidth={category === '문화·행사' ? 3 : 2} />
     },
     {
       id: 'medical',
       label: '건강·의료',
-      href: '/blog?category=의료',
-      isActive: category === '의료',
-      icon: <Stethoscope className="w-6 h-6 mb-1" strokeWidth={category === '의료' ? 3 : 2} />
+      href: '/blog?category=건강·의료',
+      isActive: category === '건강·의료',
+      icon: <Stethoscope className="w-6 h-6 mb-1" strokeWidth={category === '건강·의료' ? 3 : 2} />
     },
     {
       id: 'emergency',
