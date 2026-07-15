@@ -116,7 +116,7 @@ async function main() {
     properties: {
       id:        { type: 'INTEGER' },
       name:      { type: 'STRING' },
-      category:  { type: 'STRING', enum: ['행사', '혜택'] },
+      category:  { type: 'ARRAY', items: { type: 'STRING' }, description: '가장 적합한 카테고리 1~2개 배열' },
       startDate: { type: 'STRING' },
       endDate:   { type: 'STRING' },
       location:  { type: 'STRING' },
@@ -128,7 +128,8 @@ async function main() {
   };
 
   const prompt = `아래 공공데이터 1건을 분석해서 JSON 객체로 변환하세요.
-category는 행사/축제면 '행사', 지원금/서비스면 '혜택'으로 판단하세요.
+category는 다음 8개 중 가장 적합한 것을 1~2개 선택하여 배열(Array)로 넣으세요:
+['복지·지원금', '문화·행사', '교육·육아', '건강·의료', '일자리·창업', '주거·부동산', '교통·환경', '생활·민원']
 startDate가 없으면 오늘 날짜(${today}), endDate가 없으면 '상시'로 넣으세요.
 link는 상세URL이 없으면 빈 문자열("")로 넣으세요.
 

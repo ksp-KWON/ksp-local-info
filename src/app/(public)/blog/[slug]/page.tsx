@@ -170,8 +170,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           
           <header className="border-b-4 border-black dark:border-white pb-8 mb-8 sm:mb-10">
             <div className="flex flex-wrap items-center gap-3 text-xs mb-5">
-              {post.category && (
-                <NeoBadge color="gray">{post.category}</NeoBadge>
+              {Array.isArray(post.category) ? post.category.map(cat => (
+                <NeoBadge key={cat} color="gray">{cat}</NeoBadge>
+              )) : post.category && (
+                <NeoBadge color="gray">{post.category as string}</NeoBadge>
               )}
               <time dateTime={post.date} className="text-black dark:text-white font-dohyeon font-normal tracking-wide flex items-center gap-1.5">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>

@@ -3,7 +3,7 @@ export type PostData = {
   title: string;
   date: string;
   summary: string;
-  category?: string;
+  category?: string | string[];
   tags?: string[];
   content: string;
 };

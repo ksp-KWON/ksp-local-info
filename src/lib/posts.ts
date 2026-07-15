@@ -21,12 +21,21 @@ export function getSortedPostsData(): PostData[] {
       dateStr = dateStr.toISOString().split('T')[0];
     }
 
+    let categoryArray: string[] = [];
+    if (matterResult.data.category) {
+      if (Array.isArray(matterResult.data.category)) {
+        categoryArray = matterResult.data.category;
+      } else if (typeof matterResult.data.category === 'string') {
+        categoryArray = matterResult.data.category.split(',').map(s => s.trim());
+      }
+    }
+
     return {
       slug,
       title: matterResult.data.title || '',
       date: dateStr || '',
       summary: matterResult.data.summary || '',
-      category: matterResult.data.category || '',
+      category: categoryArray,
       tags: matterResult.data.tags || [],
       content: matterResult.content,
     };
@@ -53,13 +62,22 @@ export function getPostData(slug: string): PostData | null {
     dateStr = dateStr.toISOString().split('T')[0];
   }
 
-  return {
-    slug,
-    title: matterResult.data.title || '',
-    date: dateStr || '',
-    summary: matterResult.data.summary || '',
-    category: matterResult.data.category || '',
-    tags: matterResult.data.tags || [],
-    content: matterResult.content,
-  };
+    let categoryArray: string[] = [];
+    if (matterResult.data.category) {
+      if (Array.isArray(matterResult.data.category)) {
+        categoryArray = matterResult.data.category;
+      } else if (typeof matterResult.data.category === 'string') {
+        categoryArray = matterResult.data.category.split(',').map(s => s.trim());
+      }
+    }
+
+    return {
+      slug,
+      title: matterResult.data.title || '',
+      date: dateStr || '',
+      summary: matterResult.data.summary || '',
+      category: categoryArray,
+      tags: matterResult.data.tags || [],
+      content: matterResult.content,
+    };
 }

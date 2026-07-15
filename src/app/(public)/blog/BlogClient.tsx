@@ -23,21 +23,36 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   let categoryTitle = '유용한 소식 및 생활 정보';
   let categoryDesc = '의정부시와 관련된 유용한 정보와 생활 소식을 정리하여 제공합니다.';
 
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
   if (mounted && categoryId) {
     const matchedCategory = CATEGORIES.find(c => c.id === categoryId);
     if (matchedCategory) {
       categoryTitle = matchedCategory.title;
       categoryDesc = matchedCategory.desc;
       posts = posts.filter(post => {
-        if (!post.category) return false;
-        return matchedCategory.keywords.some(keyword => post.category?.includes(keyword));
+        if (!post.category || !Array.isArray(post.category)) return false;
+        const cats = post.category as string[];
+        return matchedCategory.keywords.some(keyword => cats.some(cat => cat.includes(keyword)));
       });
     } else {
       // 키워드 직접 매칭 폴백
       categoryTitle = `${categoryId} 소식`;
       categoryDesc = `의정부시의 다양한 ${categoryId} 관련 정보를 모아보세요.`;
-      posts = posts.filter((post) => post.category?.includes(categoryId));
+      posts = posts.filter(post => {
+         if (!post.category || !Array.isArray(post.category)) return false;
+         const cats = post.category as string[];
+         return cats.some(cat => cat.includes(categoryId));
+      });
     }
+  }
+
+  // 카테고리로 1차 필터링된 포스트들에서 존재하는 모든 고유 태그 추출
+  const availableTags = Array.from(new Set(posts.flatMap(post => post.tags || []))).sort();
+
+  // 선택된 태그로 2차 필터링
+  if (selectedTag) {
+    posts = posts.filter(post => post.tags?.includes(selectedTag));
   }
 
   return (
@@ -52,6 +67,35 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
         </p>
       </NeoBox>
       
+      {/* 해시태그 필터 UI */}
+      {availableTags.length > 0 && (
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mt-2">
+          <button
+            onClick={() => setSelectedTag(null)}
+            className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-bold transition-all border-2 ${
+              selectedTag === null 
+                ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_rgba(255,255,255,1)]' 
+                : 'bg-white text-black border-black/20 hover:border-black dark:bg-[#1a1a1a] dark:text-white dark:border-white/20 dark:hover:border-white'
+            }`}
+          >
+            #전체
+          </button>
+          {availableTags.map(tag => (
+            <button
+              key={tag}
+              onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+              className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-bold transition-all border-2 ${
+                selectedTag === tag
+                  ? 'bg-[#3b82f6] text-white border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_rgba(255,255,255,1)]'
+                  : 'bg-white text-black border-black/20 hover:border-black dark:bg-[#1a1a1a] dark:text-white dark:border-white/20 dark:hover:border-white'
+              }`}
+            >
+              #{tag}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="flex flex-col gap-4 sm:gap-5">
         {posts.map((post) => (
           <PostCard key={post.slug} post={post} variant="list" />

@@ -11,17 +11,20 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
-  const categoryLabel = post.category || '정보';
-  const theme = getCategoryTheme(categoryLabel);
+  const categoriesToDisplay = Array.isArray(post.category) ? post.category : (post.category ? [post.category] : []);
+  const mainCategory = categoriesToDisplay[0] || '생활·민원';
+  const theme = getCategoryTheme(mainCategory);
 
   if (variant === 'list') {
     return (
       <Link href={`/blog/${post.slug}`} className="group flex flex-col min-h-[160px]">
         <NeoBox shadowColor={theme.color} hoverEffect className="!p-4 sm:!p-5 h-full flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-3 text-xs mb-3">
-              <NeoBadge color="gray">{categoryLabel}</NeoBadge>
-              <time className="text-[11px] font-jua font-normal text-black dark:text-white flex items-center gap-1 shrink-0">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              {categoriesToDisplay.map(cat => (
+                <NeoBadge key={cat} color="gray">{cat}</NeoBadge>
+              ))}
+              <time className="text-[11px] font-jua font-normal text-black dark:text-white flex items-center gap-1 shrink-0 ml-1">
                 <Calendar className="w-3.5 h-3.5" strokeWidth={3} />
                 {post.date}
               </time>
@@ -51,9 +54,11 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   return (
     <Link href={`/blog/${post.slug}`} className="group flex flex-col min-h-[160px]">
       <NeoBox shadowColor={theme.color} hoverEffect className="!p-4 sm:!p-5 h-full flex flex-col justify-between">
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <NeoBadge color="gray">{categoryLabel}</NeoBadge>
-          <time className="text-[11px] font-jua font-normal text-black dark:text-white flex items-center gap-1 shrink-0">
+        <div className="flex items-center flex-wrap gap-2 mb-3">
+          {categoriesToDisplay.map(cat => (
+            <NeoBadge key={cat} color="gray">{cat}</NeoBadge>
+          ))}
+          <time className="text-[11px] font-jua font-normal text-black dark:text-white flex items-center gap-1 shrink-0 ml-auto">
             <Calendar className="w-3 h-3" strokeWidth={3} />
             {post.date}
           </time>

@@ -10,8 +10,9 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
   // 카테고리별 포스트 분류
   const categoriesWithPosts = CATEGORIES.map(cat => {
     const posts = initialPosts.filter(post => {
-      if (!post.category) return false;
-      return cat.keywords.some(keyword => post.category?.includes(keyword));
+      if (!post.category || !Array.isArray(post.category)) return false;
+      const cats = post.category as string[];
+      return cat.keywords.some(keyword => cats.some(c => c.includes(keyword)));
     });
     return { categoryId: cat.id, categoryLabel: cat.label, posts };
   }).filter(item => item.posts.length > 0);
