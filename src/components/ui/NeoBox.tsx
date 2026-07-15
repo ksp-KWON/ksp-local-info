@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ShadowColor = 'blue' | 'pink' | 'yellow' | 'green' | 'red' | 'default';
+type ShadowColor = 'blue' | 'pink' | 'yellow' | 'green' | 'red' | 'purple' | 'orange' | 'cyan' | 'default';
 
 interface NeoBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   shadowColor?: ShadowColor;

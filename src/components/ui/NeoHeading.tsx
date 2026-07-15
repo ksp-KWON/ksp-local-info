@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Color = 'blue' | 'pink' | 'yellow' | 'green' | 'red' | 'default';
+type Color = 'blue' | 'pink' | 'yellow' | 'green' | 'red' | 'purple' | 'orange' | 'cyan' | 'default';
 
 interface NeoHeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   level?: 1 | 2 | 3 | 4 | 5 | 6;

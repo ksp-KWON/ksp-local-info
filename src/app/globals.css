@@ -256,3 +256,35 @@ body.hide-footer footer {
 .dark .highlighter-green {
   background: linear-gradient(180deg, transparent 50%, rgba(60, 179, 113, 0.6) 50%);
 }
+.shadow-marker-red { box-shadow: 4px 4px 0px 0px rgba(255, 99, 71, 1) !important; }
+.dark .shadow-marker-red { box-shadow: 4px 4px 0px 0px rgba(205, 92, 92, 1) !important; }
+.hover\:shadow-marker-red:hover { box-shadow: 6px 6px 0px 0px rgba(255, 99, 71, 1) !important; }
+.dark .hover\:shadow-marker-red:hover { box-shadow: 6px 6px 0px 0px rgba(205, 92, 92, 1) !important; }
+
+.shadow-marker-orange { box-shadow: 4px 4px 0px 0px rgba(255, 165, 0, 1) !important; }
+.dark .shadow-marker-orange { box-shadow: 4px 4px 0px 0px rgba(255, 140, 0, 1) !important; }
+.hover\:shadow-marker-orange:hover { box-shadow: 6px 6px 0px 0px rgba(255, 165, 0, 1) !important; }
+.dark .hover\:shadow-marker-orange:hover { box-shadow: 6px 6px 0px 0px rgba(255, 140, 0, 1) !important; }
+
+.shadow-marker-cyan { box-shadow: 4px 4px 0px 0px rgba(0, 206, 209, 1) !important; }
+.dark .shadow-marker-cyan { box-shadow: 4px 4px 0px 0px rgba(72, 209, 204, 1) !important; }
+.hover\:shadow-marker-cyan:hover { box-shadow: 6px 6px 0px 0px rgba(0, 206, 209, 1) !important; }
+.dark .hover\:shadow-marker-cyan:hover { box-shadow: 6px 6px 0px 0px rgba(72, 209, 204, 1) !important; }
+
+.shadow-marker-purple { box-shadow: 4px 4px 0px 0px rgba(147, 112, 219, 1) !important; }
+.dark .shadow-marker-purple { box-shadow: 4px 4px 0px 0px rgba(138, 43, 226, 1) !important; }
+.hover\:shadow-marker-purple:hover { box-shadow: 6px 6px 0px 0px rgba(147, 112, 219, 1) !important; }
+.dark .hover\:shadow-marker-purple:hover { box-shadow: 6px 6px 0px 0px rgba(138, 43, 226, 1) !important; }
+
+.highlighter-red { background: linear-gradient(180deg, transparent 50%, rgba(255, 99, 71, 0.6) 50%); display: inline; }
+.dark .highlighter-red { background: linear-gradient(180deg, transparent 50%, rgba(205, 92, 92, 0.6) 50%); }
+
+.highlighter-orange { background: linear-gradient(180deg, transparent 50%, rgba(255, 165, 0, 0.6) 50%); display: inline; }
+.dark .highlighter-orange { background: linear-gradient(180deg, transparent 50%, rgba(255, 140, 0, 0.6) 50%); }
+
+.highlighter-cyan { background: linear-gradient(180deg, transparent 50%, rgba(0, 206, 209, 0.6) 50%); display: inline; }
+.dark .highlighter-cyan { background: linear-gradient(180deg, transparent 50%, rgba(72, 209, 204, 0.6) 50%); }
+
+.highlighter-purple { background: linear-gradient(180deg, transparent 50%, rgba(147, 112, 219, 0.6) 50%); display: inline; }
+.dark .highlighter-purple { background: linear-gradient(180deg, transparent 50%, rgba(138, 43, 226, 0.6) 50%); }
+

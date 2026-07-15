@@ -29,10 +29,10 @@ export const getCategoryTheme = (category: string) => {
     return { title: '일자리 및 창업 지원', icon: Briefcase, color: 'red' as const };
   }
   if (category.includes('주거') || category.includes('부동산')) {
-    return { title: '안정적인 주거 생활', icon: Home, color: 'green' as const };
+    return { title: '안정적인 주거 생활', icon: Home, color: 'orange' as const };
   }
   if (category.includes('교통') || category.includes('환경')) {
-    return { title: '편리한 교통 및 환경', icon: Bus, color: 'blue' as const };
+    return { title: '편리한 교통 및 환경', icon: Bus, color: 'cyan' as const };
   }
-  return { title: '꼭 알아야 할 생활 꿀팁', icon: Lightbulb, color: 'yellow' as const };
+  return { title: '꼭 알아야 할 생활 꿀팁', icon: Lightbulb, color: 'purple' as const };
 };
