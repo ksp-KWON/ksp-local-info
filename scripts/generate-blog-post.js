@@ -79,20 +79,26 @@ function makeSlug(title, date, seq) {
 }
 
 /**
- * posts 디렉터리에서 이미 발행된 제목 Set을 반환합니다.
+ * posts 디렉터리에서 이미 발행된 고유 슬러그(날짜 제외) Set을 반환합니다.
+ * 제목(title)은 AI가 매번 다르게 생성하므로 중복 검사 기준이 될 수 없습니다.
  */
-function getExistingTitles() {
-  const titles = new Set();
+function getExistingSlugs() {
+  const slugs = new Set();
   if (!fs.existsSync(POSTS_DIR)) {
     fs.mkdirSync(POSTS_DIR, { recursive: true });
-    return titles;
+    return slugs;
   }
   for (const file of fs.readdirSync(POSTS_DIR)) {
     if (!file.endsWith('.md')) continue;
-    const { data } = matter(fs.readFileSync(path.join(POSTS_DIR, file), 'utf8'));
-    if (data.title) titles.add(data.title.trim());
+    // 파일명 패턴: YYYY-MM-DD-slug.md
+    const match = file.match(/^\d{4}-\d{2}-\d{2}-(.*)\.md$/);
+    if (match) {
+      // seq 번호(-1, -2 등)를 제거하여 순수 슬러그만 추출
+      const baseSlug = match[1].replace(/-\d+$/, '').toLowerCase();
+      slugs.add(baseSlug);
+    }
   }
-  return titles;
+  return slugs;
 }
 
 /**
@@ -179,8 +185,8 @@ async function main() {
     process.exit(1);
   }
 
-  // [1단계] 기존 포스트 제목 수집
-  const existingTitles = getExistingTitles();
+  // [1단계] 기존 발행 슬러그 수집 (중복 검사용)
+  const existingSlugs = getExistingSlugs();
 
   // [2단계] local-info.json 로드
   if (!fs.existsSync(LOCAL_INFO_PATH)) {
@@ -191,8 +197,13 @@ async function main() {
   const localInfo = JSON.parse(fs.readFileSync(LOCAL_INFO_PATH, 'utf8'));
   const allItems  = [...(localInfo.events || []), ...(localInfo.benefits || [])];
 
-  // [3단계] 미발행 항목 필터링
-  const pending = allItems.filter(item => item.title && !existingTitles.has(item.title.trim()));
+  // [3단계] 미발행 항목 필터링 (원본 제목을 이용해 생성될 baseSlug로 비교)
+  const pending = allItems.filter(item => {
+    if (!item.title) return false;
+    // date와 seq를 비우고 순수 슬러그만 추출
+    let itemBaseSlug = makeSlug(item.title, '', 1).replace(/^-/, '').replace(/-1$/, '');
+    return !existingSlugs.has(itemBaseSlug.toLowerCase());
+  });
 
   if (pending.length === 0) {
     console.log('모든 데이터가 이미 포스팅되어 있습니다. 새 글을 작성하지 않습니다.');
@@ -218,8 +229,8 @@ async function main() {
       continue;
     }
 
-    // ANALYSIS 블록 제거 (독자에게 보이지 않도록)
-    const cleanedText = aiText.replace(/\[ANALYSIS_START\][\s\S]*?\[ANALYSIS_END\]/g, '').trim();
+    // ANALYSIS 블록 및 찌꺼기 텍스트 제거 (독자에게 보이지 않도록 강력한 정규식 적용)
+    const cleanedText = aiText.replace(/## 1\. 사전 분석.*?(?:\r?\n)\[ANALYSIS_START\][\s\S]*?\[ANALYSIS_END\]/g, '').trim();
 
     // 슬러그 생성 및 파일 저장
     const slug     = makeSlug(item.title, today, seq);
