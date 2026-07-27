@@ -38,9 +38,23 @@ export default async function Home() {
     <div className="space-y-8 pb-16">
       
       {/* 1. 메인 페이지 인트로 헤더 (Neo-brutalism 스타일) */}
-      <NeoBox shadowColor="blue" hoverEffect className="mt-4 relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
-          <div className="flex-1">
+      <NeoBox shadowColor="blue" hoverEffect className="mt-4 relative overflow-hidden p-6">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          
+          {/* 로고 (좌측) */}
+          <div className="shrink-0 bg-white/50 dark:bg-white/90 p-4 border-2 border-black drop-shadow-[2px_2px_0_rgba(0,0,0,1)] w-full md:w-auto flex justify-center">
+            <Image 
+              src="/images/uijeongbu-logo.png" 
+              alt="의정부 행복특별시 마크" 
+              width={140} 
+              height={140} 
+              className="w-28 md:w-32 object-contain" 
+              priority
+            />
+          </div>
+
+          {/* 텍스트 (중앙) */}
+          <div className="flex-1 text-center md:text-left">
             <NeoHeading level={1} highlighterColor="blue" className="mb-3">
               의정부 주민 맞춤형 혜택·의료 포털
             </NeoHeading>
@@ -48,32 +62,27 @@ export default async function Home() {
               의정부시의 유용한 생활 밀착 혜택과 주요 정책들을 전문가의 시선으로 큐레이션하여 제공합니다.
             </p>
           </div>
-          <div className="hidden sm:block shrink-0 bg-white/50 dark:bg-white/90 p-2 rounded-xl border-2 border-black drop-shadow-[2px_2px_0_rgba(0,0,0,1)]">
-            <Image 
-              src="/images/uijeongbu-logo.png" 
-              alt="의정부 행복특별시 마크" 
-              width={100} 
-              height={100} 
-              className="w-20 object-contain" 
-              priority
-            />
+
+          {/* 버튼 영역 (우측, 수직 정렬) */}
+          <div className="flex flex-col gap-3 w-full md:w-auto shrink-0">
+            <NeoButton 
+              href="/services/emergency" 
+              variant="danger" 
+              icon={<Ambulance className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />}
+              className="w-full justify-center"
+            >
+              응급실/약국 찾기
+            </NeoButton>
+            <NeoButton 
+              href="/services/local-currency" 
+              variant="primary" 
+              icon={<CreditCard className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />}
+              className="w-full justify-center"
+            >
+              의정부사랑카드 사용처 지도
+            </NeoButton>
           </div>
-        </div>
-        <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-end gap-4">
-          <NeoButton 
-            href="/services/local-currency" 
-            variant="primary" 
-            icon={<CreditCard className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />}
-          >
-            의정부사랑카드 사용처 지도
-          </NeoButton>
-          <NeoButton 
-            href="/services/emergency" 
-            variant="danger" 
-            icon={<Ambulance className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />}
-          >
-            응급실/약국 찾기
-          </NeoButton>
+
         </div>
       </NeoBox>
 
