@@ -42,7 +42,7 @@ export default async function Home() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           
           {/* 로고 (좌측) */}
-          <div className="shrink-0 bg-white/50 dark:bg-white/90 p-4 border-2 border-black drop-shadow-[2px_2px_0_rgba(0,0,0,1)] w-full md:w-auto flex justify-center">
+          <div className="shrink-0 w-full md:w-auto flex justify-center items-center">
             <Image 
               src="/images/uijeongbu-logo.png" 
               alt="의정부 행복특별시 마크" 
