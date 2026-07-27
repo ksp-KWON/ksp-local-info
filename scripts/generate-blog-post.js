@@ -66,7 +66,7 @@ async function main() {
     try {
       const prompt = buildBlogPrompt(item);
       // JSON Schema를 강제하여 파싱 에러나 찌꺼기 텍스트 발생을 원천 차단
-      aiResult = await callGemini(geminiKey, prompt, POST_SCHEMA);
+      aiResult = await callGemini(prompt, POST_SCHEMA);
     } catch (err) {
       console.error(`  [건너뜀] "${item.title}" — API 오류: ${err.message}`);
       continue;
