@@ -41,14 +41,14 @@ export default async function Home() {
       <NeoBox shadowColor="blue" hoverEffect className="mt-4 relative overflow-hidden !p-0">
         <div className="flex flex-col md:flex-row items-stretch">
           
-          {/* 로고 (좌측 - 노란색 영역 꽉 차게) */}
-          <div className="shrink-0 w-full md:w-64 lg:w-72 bg-[#FFFF00] flex justify-center items-center relative overflow-hidden border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white">
-            {/* mix-blend-multiply로 이미지의 흰색 배경을 투명하게 만들고, scale-110으로 테두리 회색을 화면 밖으로 밀어냄 */}
+          {/* 로고 (좌측 - 꽉 찬 영역) */}
+          <div className="shrink-0 w-full md:w-64 lg:w-72 bg-white flex justify-center items-center relative overflow-hidden border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white">
+            {/* scale-[1.1]로 이미지 자체의 회색 테두리를 잘라냄 */}
             <Image 
               src="/images/uijeongbu-logo.png" 
               alt="의정부 행복특별시 마크" 
               fill
-              className="object-cover scale-[1.1] mix-blend-multiply" 
+              className="object-cover scale-[1.1]" 
               priority
             />
           </div>
