@@ -42,13 +42,13 @@ export default async function Home() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           
           {/* 로고 (좌측) */}
-          <div className="shrink-0 w-full md:w-auto flex justify-center items-center">
+          <div className="shrink-0 w-full md:w-auto flex justify-center items-center self-stretch">
             <Image 
               src="/images/uijeongbu-logo.png" 
               alt="의정부 행복특별시 마크" 
-              width={140} 
-              height={140} 
-              className="w-28 md:w-32 object-contain" 
+              width={200} 
+              height={200} 
+              className="w-32 md:w-auto md:h-full min-h-[120px] object-contain" 
               priority
             />
           </div>

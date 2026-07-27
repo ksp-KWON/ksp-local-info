@@ -50,7 +50,7 @@ async function callGemini(apiKey, prompt, schema = null) {
   modelLoop: for (const { name: model, maxTokens } of GEMINI_MODELS) {
     const generationConfig = {
       ...baseGenerationConfig,
-      maxOutputTokens: schema ? Math.min(4096, maxTokens) : maxTokens,
+      maxOutputTokens: maxTokens,
     };
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
@@ -145,7 +145,7 @@ async function callGemini(apiKey, prompt, schema = null) {
           const cleaned = text.replace(/```json/gi, '').replace(/```/g, '').trim();
           return JSON.parse(cleaned);
         } catch (e) {
-          console.error(`  [실패] '${model}' JSON 스키마 파싱 실패.`);
+          console.error(`  [실패] '${model}' JSON 스키마 파싱 실패. Raw Text:\n${text}`);
           if (attempt < RETRY_CONFIG.maxRetries) { await sleep(2000); continue; }
           continue modelLoop;
         }
