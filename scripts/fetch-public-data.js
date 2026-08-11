@@ -51,39 +51,50 @@ async function main() {
     process.exit(1);
   }
 
-  // ── [1단계] 공공데이터 API 호출 ──────────────────────────────────────────
-  const url = `https://api.odcloud.kr/api/gov24/v3/serviceList?page=1&perPage=100&returnType=JSON&serviceKey=${encodeURIComponent(apiKey)}`;
+  // ── [1단계 & 2단계] 공공데이터 API 호출 및 필터링 ──────────────────────────────────────────
+  let filtered = [];
+  let page = 1;
+  const MAX_PAGES = 10;
 
-  let items = [];
-  try {
-    console.log('  [API] 공공데이터포털 서비스 목록 수집 중...');
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`공공데이터 API 오류: HTTP ${response.status}`);
+  while (page <= MAX_PAGES && filtered.length === 0) {
+    const url = `https://api.odcloud.kr/api/gov24/v3/serviceList?page=${page}&perPage=100&returnType=JSON&serviceKey=${encodeURIComponent(apiKey)}`;
+    let items = [];
+    
+    try {
+      console.log(`  [API] 공공데이터포털 서비스 목록 수집 중... (페이지 ${page}/${MAX_PAGES})`);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`공공데이터 API 오류: HTTP ${response.status}`);
+      }
+      const data = await response.json();
+      items = data.data || [];
+      console.log(`  [완료] 총 ${items.length}건 수신.`);
+    } catch (err) {
+      console.error('오류 발생:', err.message);
+      break;
     }
-    const data = await response.json();
-    items = data.data || [];
-    console.log(`  [완료] 총 ${items.length}건 수신.`);
-  } catch (err) {
-    console.error('오류 발생:', err.message);
-    process.exit(1);
+
+    filtered = items.filter(item => matchesKeywords(item, UIJEONGBU_KEYWORDS));
+
+    if (filtered.length === 0) {
+      console.log('  [필터] 의정부 관련 데이터 없음. 경기도 범위로 재검색...');
+      filtered = items.filter(item => matchesKeywords(item, GYEONGGI_KEYWORDS));
+    }
+
+    if (filtered.length > 0) {
+      console.log(`  [필터] 관련 데이터 ${filtered.length}건 확인.`);
+      break; // 찾았으면 루프 종료
+    }
+    
+    console.log(`  [필터] 페이지 ${page}에 새로운 데이터가 없습니다. 다음 페이지 검색...`);
+    page++;
+    await sleep(500); // API 과부하 방지
   }
 
-  // ── [2단계] 의정부 → 경기 순서로 필터링 (전체 반환 폴백 없음) ──────────
-  let filtered = items.filter(item => matchesKeywords(item, UIJEONGBU_KEYWORDS));
-
   if (filtered.length === 0) {
-    console.log('  [필터] 의정부 관련 데이터 없음. 경기도 범위로 재시도합니다...');
-    filtered = items.filter(item => matchesKeywords(item, GYEONGGI_KEYWORDS));
-  }
-
-  if (filtered.length === 0) {
-    // ✅ 전체 반환 폴백 제거: 관련 없는 데이터를 수집하지 않습니다.
-    console.log('새로운 데이터가 없습니다 (의정부/경기 관련 데이터를 찾을 수 없음)');
+    console.log('새로운 데이터가 없습니다 (최대 페이지까지 의정부/경기 관련 데이터를 찾을 수 없음)');
     return;
   }
-
-  console.log(`  [필터] 관련 데이터 ${filtered.length}건 확인.`);
 
   // ── [3단계] 기존 데이터와 비교 (중복 제거) ───────────────────────────────
   const localInfoPath = path.join(process.cwd(), 'public/data/local-info.json');
@@ -138,7 +149,7 @@ ${JSON.stringify(newItem, null, 2)}`;
 
   let parsedItem;
   try {
-    parsedItem = await callGemini(geminiKey, prompt, ITEM_SCHEMA);
+    parsedItem = await callGemini(prompt, ITEM_SCHEMA);
   } catch (err) {
     console.error('오류 발생:', err.message);
     process.exit(1);

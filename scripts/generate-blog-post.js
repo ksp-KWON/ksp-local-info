@@ -15,13 +15,19 @@ if (fs.existsSync(envPath)) {
 
 const { callGemini, sleep } = require('./gemini-helper');
 const { generateSourceId, getExistingSourceIds, saveMarkdownPost, makeSlug } = require('./post-utils');
-const { POST_SCHEMA, buildBlogPrompt } = require('./prompt-builder');
+const { 
+  PLAN_SCHEMA, 
+  CONTENT_SCHEMA, 
+  getRandomAngle, 
+  buildPlanPrompt, 
+  buildContentPrompt 
+} = require('./prompt-builder');
 
 const LOCAL_INFO_PATH = path.join(process.cwd(), 'public/data/local-info.json');
 const COOLDOWN_SEC = 10;
 
 async function main() {
-  console.log(`=== 의정부 자동글쓰기 전면 개편 버전 시작 (${new Date().toISOString()}) ===`);
+  console.log(`=== 의정부 AI 자동글쓰기 2-Step 파이프라인 시작 (${new Date().toISOString()}) ===`);
 
   const geminiKey = process.env.GEMINI_API_KEY;
   if (!geminiKey) {
@@ -57,44 +63,51 @@ async function main() {
   const today = new Date().toISOString().split('T')[0];
   let successCount = 0;
 
-  // 3. 메인 루프 (항목별 AI 호출 -> 파일 저장)
+  // 3. 메인 루프 (2-Step AI 호출 -> 파일 저장)
   for (const item of pending) {
     const sourceId = generateSourceId(item.title);
-    console.log(`\n[작성 중] ${item.title} (Source ID: ${sourceId})`);
+    console.log(`\n[작업 시작] ${item.title} (Source ID: ${sourceId})`);
+    
+    const currentAngle = getRandomAngle();
+    console.log(`  [설정] 앵글(관점): ${currentAngle.name}`);
 
-    let aiResult;
     try {
-      const prompt = buildBlogPrompt(item);
-      // JSON Schema를 강제하여 파싱 에러나 찌꺼기 텍스트 발생을 원천 차단
-      aiResult = await callGemini(prompt, POST_SCHEMA);
-    } catch (err) {
-      console.error(`  [건너뜀] "${item.title}" — API 오류: ${err.message}`);
-      continue;
-    }
+      // Step 1: 기획안 생성
+      console.log('  [Step 1] 기획안 생성 중...');
+      const planPrompt = buildPlanPrompt(item);
+      const plan = await callGemini(planPrompt, PLAN_SCHEMA);
+      
+      console.log(`    🧠 [기획 사고 과정] : ${plan.thoughtProcess}`);
+      console.log(`    ✅ 기획 완료 : ${plan.frontmatter.title}`);
+      
+      console.log('  [대기] 5초 쿨다운...');
+      await sleep(5000);
 
-    if (!aiResult || !aiResult.frontmatter || !aiResult.markdownContent) {
-      console.error(`  [오류] AI가 올바른 JSON 규격으로 응답하지 않았습니다. 스킵합니다.`);
-      continue;
-    }
+      // Step 2: 본문 작성
+      console.log('  [Step 2] 본문 마크다운 작성 중...');
+      const contentPrompt = buildContentPrompt(item, plan, currentAngle);
+      const contentResult = await callGemini(contentPrompt, CONTENT_SCHEMA);
+      
+      console.log(`    🧠 [본문 집필 사고 과정] : ${contentResult.thoughtProcess}`);
+      console.log(`    ✅ 본문 완료 (${contentResult.markdownContent.length}자)`);
 
-    // AI가 생성한 메타데이터에 시스템 고유값 주입
-    const frontmatter = {
-      title: aiResult.frontmatter.title,
-      date: today,
-      summary: aiResult.frontmatter.summary,
-      category: aiResult.frontmatter.category,
-      tags: aiResult.frontmatter.tags,
-      sourceId: sourceId,
-      slug: makeSlug(item.title, today)
-    };
+      // 메타데이터 병합 및 저장
+      const frontmatter = {
+        title: plan.frontmatter.title,
+        date: today,
+        summary: plan.frontmatter.summary,
+        category: plan.frontmatter.category,
+        tags: plan.frontmatter.tags,
+        sourceId: sourceId,
+        slug: makeSlug(item.title, today)
+      };
 
-    // gray-matter 를 사용하여 완벽한 YAML 문법으로 안전하게 파일 저장
-    try {
-      const saved = saveMarkdownPost(frontmatter, aiResult.markdownContent);
+      const saved = saveMarkdownPost(frontmatter, contentResult.markdownContent);
       console.log(`  [완료] ${path.basename(saved.filePath)} 저장됨.`);
       successCount++;
+
     } catch (err) {
-      console.error(`  [오류] 파일 저장 중 문제 발생: ${err.message}`);
+      console.error(`  [오류] "${item.title}" — 파이프라인 실패: ${err.message}`);
     }
 
     if (item !== pending[pending.length - 1]) {
