@@ -39,18 +39,18 @@ export default function ThemeToggle() {
     >
       {/* 라이트 모드 (해 아이콘) */}
       {theme === "light" && (
-        <Sun className="w-5 h-5 sm:w-[20px] sm:h-[20px]" strokeWidth={2.5} />
+        <Sun className="w-5 h-5 sm:w-[20px] sm:h-[20px] text-amber-500 dark:text-amber-400" strokeWidth={3} />
       )}
 
       {/* 다크 모드 (달 아이콘) */}
       {theme === "dark" && (
-        <Moon className="w-5 h-5 sm:w-[20px] sm:h-[20px]" strokeWidth={2.5} />
+        <Moon className="w-5 h-5 sm:w-[20px] sm:h-[20px] text-indigo-500 dark:text-indigo-400" strokeWidth={3} />
       )}
 
       {/* 시스템 기본값 (모니터 아이콘) */}
       {theme === "system" && (
         <div className="relative flex items-center justify-center">
-          <Monitor className="w-5 h-5 sm:w-[20px] sm:h-[20px]" strokeWidth={2.5} />
+          <Monitor className="w-5 h-5 sm:w-[20px] sm:h-[20px] text-gray-500 dark:text-gray-400" strokeWidth={3} />
           <span className="absolute -top-1 -right-1 flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black dark:bg-white opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-black dark:bg-white"></span>

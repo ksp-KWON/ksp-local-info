@@ -27,7 +27,7 @@ export default function SearchBar() {
         aria-label="검색 열기"
         title="검색"
       >
-        <Search className="w-5 h-5 sm:w-[20px] sm:h-[20px]" strokeWidth={2.5} />
+        <Search className="w-5 h-5 sm:w-[20px] sm:h-[20px] text-pink-500 dark:text-pink-400" strokeWidth={3} />
       </button>
 
       {/* Full Screen Search Modal */}
