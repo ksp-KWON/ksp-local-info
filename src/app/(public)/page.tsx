@@ -91,7 +91,7 @@ export default async function Home() {
           <MiniMapPreview type="emergency" />
           <div className="relative z-10">
             <h3 className="text-xl sm:text-2xl font-extrabold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
-              우리아이 달빛어린이병원 <br className="hidden sm:block" />& 심야약국 찾기
+              달빛어린이병원 & 심야약국 찾기
             </h3>
             <p className="text-[14px] sm:text-[15px] font-medium text-red-900/70 dark:text-red-300/70 break-keep max-w-[85%]">
               갑자기 아플 때, 밤이나 휴일에도 문 여는 병원과 약국을 실시간으로 확인하세요.
@@ -115,7 +115,7 @@ export default async function Home() {
           <MiniMapPreview type="currency" />
           <div className="relative z-10">
             <h3 className="text-xl sm:text-2xl font-extrabold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
-              의정부 사랑카드 (지역화폐) <br className="hidden sm:block" />가맹점 지도
+              의정부 사랑카드 가맹점 찾기
             </h3>
             <p className="text-[14px] sm:text-[15px] font-medium text-blue-900/70 dark:text-blue-300/70 break-keep max-w-[85%]">
               내 주변에서 의정부 지역화폐를 사용할 수 있는 착한 가맹점들을 한눈에 찾아보세요.
