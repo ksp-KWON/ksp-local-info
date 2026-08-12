@@ -7,7 +7,8 @@ import { getSortedPostsData } from '@/lib/posts';
 import HomePostList from '@/components/HomePostList';
 import { Metadata } from 'next';
 import Image from 'next/image';
-import MiniMapPreview from '@/components/MiniMapPreview';
+import EmergencyMapWidget from '@/components/emergency/EmergencyMapWidget';
+import LocalCurrencyMapWidget from '@/components/local-currency/LocalCurrencyMapWidget';
 
 interface LocalData {
   lastUpdated: string;
@@ -71,56 +72,18 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 서비스 퀵메뉴 (Bento Box 영역) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
+      {/* 2. 서비스 위젯(Full Map) 영역 */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
         
-        {/* 응급실/약국 찾기 카드 */}
-        <Link 
-          href="/services/emergency"
-          className="group relative overflow-hidden border border-red-100 dark:border-red-900/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
-        >
-          <MiniMapPreview type="emergency" />
-          <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
-              우리아이 달빛어린이병원 <br className="hidden sm:block" />& 야간약국 찾기
-            </h3>
-            <p className="text-[14px] sm:text-[15px] font-medium text-red-900/70 dark:text-red-300/70 break-keep max-w-[85%]">
-              갑자기 아플 때? 늦은 밤, 휴일에도 문 여는 병원과 약국을 실시간으로 확인하세요.
-            </p>
-          </div>
-          
-          <div className="relative z-10 flex items-center justify-end w-full">
-            <span className="flex items-center gap-1.5 text-sm font-bold text-red-600 dark:text-red-400 group-hover:translate-x-1 transition-transform">
-              바로가기 <ArrowRight className="w-4 h-4" />
-            </span>
-          </div>
+        {/* 응급실/약국 찾기 위젯 */}
+        <div className="w-full">
+          <EmergencyMapWidget isWidget={true} />
+        </div>
 
-          <Ambulance className="absolute -bottom-4 -right-4 w-32 h-32 text-red-500/10 dark:text-red-500/5 group-hover:scale-110 transition-transform duration-500" />
-        </Link>
-
-        {/* 의정부 사랑카드 가맹점 지도 카드 */}
-        <Link 
-          href="/services/local-currency"
-          className="group relative overflow-hidden border border-blue-100 dark:border-blue-900/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1"
-        >
-          <MiniMapPreview type="currency" />
-          <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
-              의정부 사랑카드 (지역화폐) <br className="hidden sm:block" />가맹점 지도
-            </h3>
-            <p className="text-[14px] sm:text-[15px] font-medium text-blue-900/70 dark:text-blue-300/70 break-keep max-w-[85%]">
-              내 주변 지역화폐 사용처는 어디? 골목 상권과 내 지갑을 살리는 혜택 가맹점 맵.
-            </p>
-          </div>
-          
-          <div className="relative z-10 flex items-center justify-end w-full">
-            <span className="flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform">
-              바로가기 <ArrowRight className="w-4 h-4" />
-            </span>
-          </div>
-
-          <CreditCard className="absolute -bottom-4 -right-4 w-32 h-32 text-blue-500/10 dark:text-blue-500/5 group-hover:-rotate-12 transition-transform duration-500" />
-        </Link>
+        {/* 의정부 사랑카드 가맹점 지도 위젯 */}
+        <div className="w-full">
+          <LocalCurrencyMapWidget isWidget={true} />
+        </div>
 
       </div>
 
