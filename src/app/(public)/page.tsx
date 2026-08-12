@@ -50,23 +50,7 @@ export default async function Home() {
               의정부시의 유용한 생활 밀착 혜택과 주요 정책들을 전문가의 시선으로 큐레이션하여 알기 쉽게 제공합니다.
             </p>
             
-            {/* 버튼 영역 */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full justify-center lg:justify-start">
-              <Link 
-                href="/services/emergency" 
-                className="group flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
-              >
-                <Ambulance className="w-5 h-5 group-hover:-translate-y-1 group-hover:scale-110 transition-transform" />
-                응급실/약국 찾기
-              </Link>
-              <Link 
-                href="/services/local-currency" 
-                className="group flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
-              >
-                <CreditCard className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                사랑카드 사용처 지도
-              </Link>
-            </div>
+            {/* 버튼 영역 (제거됨 - 벤토 박스로 분리) */}
           </div>
 
           {/* 로고 (우측) */}
@@ -86,7 +70,58 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 블로그 콘텐츠 큐레이션 리스트 */}
+      {/* 2. 서비스 퀵메뉴 (Bento Box 영역) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
+        
+        {/* 응급실/약국 찾기 카드 */}
+        <Link 
+          href="/services/emergency"
+          className="group relative overflow-hidden bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/10 border border-red-100 dark:border-red-900/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
+        >
+          <div className="relative z-10">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
+              우리아이 달빛어린이병원 <br className="hidden sm:block" />& 야간약국 찾기
+            </h3>
+            <p className="text-[14px] sm:text-[15px] font-medium text-red-900/70 dark:text-red-300/70 break-keep max-w-[85%]">
+              갑자기 아플 때? 늦은 밤, 휴일에도 문 여는 병원과 약국을 실시간으로 확인하세요.
+            </p>
+          </div>
+          
+          <div className="relative z-10 flex items-center justify-end w-full">
+            <span className="flex items-center gap-1.5 text-sm font-bold text-red-600 dark:text-red-400 group-hover:translate-x-1 transition-transform">
+              바로가기 <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
+
+          <Ambulance className="absolute -bottom-4 -right-4 w-32 h-32 text-red-500/10 dark:text-red-500/5 group-hover:scale-110 transition-transform duration-500" />
+        </Link>
+
+        {/* 의정부 사랑카드 가맹점 지도 카드 */}
+        <Link 
+          href="/services/local-currency"
+          className="group relative overflow-hidden bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/10 border border-blue-100 dark:border-blue-900/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1"
+        >
+          <div className="relative z-10">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
+              의정부 사랑카드 (지역화폐) <br className="hidden sm:block" />가맹점 지도
+            </h3>
+            <p className="text-[14px] sm:text-[15px] font-medium text-blue-900/70 dark:text-blue-300/70 break-keep max-w-[85%]">
+              내 주변 지역화폐 사용처는 어디? 골목 상권과 내 지갑을 살리는 혜택 가맹점 맵.
+            </p>
+          </div>
+          
+          <div className="relative z-10 flex items-center justify-end w-full">
+            <span className="flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform">
+              바로가기 <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
+
+          <CreditCard className="absolute -bottom-4 -right-4 w-32 h-32 text-blue-500/10 dark:text-blue-500/5 group-hover:-rotate-12 transition-transform duration-500" />
+        </Link>
+
+      </div>
+
+      {/* 3. 블로그 콘텐츠 큐레이션 리스트 */}
       <HomePostList initialPosts={posts} />
 
       {/* 광고 영역 */}
