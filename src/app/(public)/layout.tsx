@@ -42,10 +42,10 @@ export default function PublicLayout({
                 <div className="relative flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 shrink-0 bg-white border-2 border-black dark:border-white group-hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:group-hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] group-hover:-translate-y-0.5 group-hover:-translate-x-0.5 transition-all duration-200 z-10 overflow-hidden rounded-none">
                   <Image src="/images/uijeongbu-logo.png" alt="의정부 행복특별시 로고" fill className="object-contain p-1" sizes="44px" />
                 </div>
-                <span className="hidden sm:inline font-jua font-normal text-2xl text-black dark:text-white truncate tracking-tight">
+                <span className="hidden sm:inline font-sans font-black text-2xl text-black dark:text-white truncate tracking-tight">
                   의정부 건강·생활 정보 포털
                 </span>
-                <span className="sm:hidden font-jua font-normal text-xl text-black dark:text-white truncate tracking-tight">
+                <span className="sm:hidden font-sans font-black text-xl text-black dark:text-white truncate tracking-tight">
                   의정부 생활정보
                 </span>
                 <span className="hidden lg:inline-flex items-center px-1.5 py-0.5 ml-1 bg-white dark:bg-[#121417] text-[9px] font-black text-black dark:text-white tracking-widest uppercase border-2 border-black dark:border-white">
