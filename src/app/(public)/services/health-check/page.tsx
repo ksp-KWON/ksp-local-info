@@ -95,7 +95,7 @@ export default function HealthCheckPage() {
   };
 
   return (
-    <div className="flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-none-none sm:rounded-none-none shadow-2xl border border-gray-100 dark:border-gray-800">
+    <div className="flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-none sm:rounded-none shadow-2xl border border-gray-100 dark:border-gray-800">
       {/* 1. 헤더 바 & 동네 선택 */}
       <header className="bg-white dark:bg-[#202124] shadow-2xl z-20 p-4 pb-2 flex flex-col gap-3 relative shrink-0">
         <div className="flex items-center gap-3">
@@ -115,7 +115,7 @@ export default function HealthCheckPage() {
             <button
               key={nb.name}
               onClick={() => setMapCenter(nb)}
-              className={`whitespace-nowrap px-4 py-1.5 rounded-none-full text-sm font-bold border transition-colors ${
+              className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-bold border transition-colors ${
                 mapCenter.name === nb.name
                   ? 'bg-[#FF6B6B] border-[#FF6B6B] text-white shadow-2xl'
                   : 'bg-white dark:bg-[#2d2e30] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-[#FF6B6B]'
@@ -134,20 +134,20 @@ export default function HealthCheckPage() {
           <input 
             type="number" 
             placeholder="출생연도 4자리 (예: 1980)" 
-            className="flex-1 bg-gray-100 dark:bg-[#2d2e30] border-none rounded-none-none px-4 py-2 text-sm focus:ring-2 focus:ring-[#FF6B6B] outline-none text-gray-900 dark:text-white"
+            className="flex-1 bg-gray-100 dark:bg-[#2d2e30] border-none rounded-none px-4 py-2 text-sm focus:ring-2 focus:ring-[#FF6B6B] outline-none text-gray-900 dark:text-white"
             value={birthYear}
             onChange={(e) => setBirthYear(e.target.value)}
           />
           <button 
             onClick={calculateCheckup}
-            className="bg-[#FF6B6B] text-white px-5 py-2 rounded-none-none text-sm font-bold shadow-2xl hover:bg-[#ff5252] transition-colors"
+            className="bg-[#FF6B6B] text-white px-5 py-2 rounded-none text-sm font-bold shadow-2xl hover:bg-[#ff5252] transition-colors"
           >
             결과 확인
           </button>
         </div>
         
         {showResult && (
-          <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-none-none animate-fade-in">
+          <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-none animate-fade-in">
             <ul className="space-y-1">
               {checkupResult.map((res, idx) => (
                 <li key={idx} className="text-[13px] font-medium text-gray-800 dark:text-gray-200">
@@ -163,7 +163,7 @@ export default function HealthCheckPage() {
       <main className="flex-1 relative">
         {loading && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 dark:bg-[#2d2e30]">
-            <div className="animate-spin rounded-none-full h-10 w-10 border-t-2 border-b-2 border-[#FF6B6B] mb-4"></div>
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#FF6B6B] mb-4"></div>
             <p className="text-gray-500 font-bold">병원 데이터를 불러오는 중입니다...</p>
           </div>
         )}
@@ -198,7 +198,7 @@ export default function HealthCheckPage() {
               <div 
                 className="absolute z-10 bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm"
               >
-                <div className="bg-white dark:bg-[#202124] rounded-none-none shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800 animate-slide-up">
+                <div className="bg-white dark:bg-[#202124] rounded-none shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800 animate-slide-up">
                   <div className="bg-[#FF6B6B] px-4 py-3 flex justify-between items-center">
                     <h3 className="font-bold text-white text-base truncate pr-4">
                       {selectedHospital.BIZPLC_NM}
@@ -228,7 +228,7 @@ export default function HealthCheckPage() {
                       href={`https://map.kakao.com/link/to/${selectedHospital.BIZPLC_NM},${selectedHospital.REFINE_WGS84_LAT},${selectedHospital.REFINE_WGS84_LOGT}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-3 w-full block text-center bg-[#FF6B6B]/10 hover:bg-[#FF6B6B]/20 text-[#FF6B6B] font-bold py-2.5 rounded-none-none text-sm transition-colors"
+                      className="mt-3 w-full block text-center bg-[#FF6B6B]/10 hover:bg-[#FF6B6B]/20 text-[#FF6B6B] font-bold py-2.5 rounded-none text-sm transition-colors"
                     >
                       길찾기
                     </a>

@@ -78,16 +78,16 @@ export default function MobileAdminNav({ activeTab, setActiveTab, onLogout }: Mo
       <BottomSheet isOpen={openModal === 'more'} onClose={closeModals} showBackdrop={true}>
         <h3 className="text-lg font-bold text-gray-900 dark:text-white px-1 mb-4">추가 메뉴</h3>
         
-        <button onClick={() => { setActiveTab('posts'); closeModals(); }} className={`w-full flex items-center gap-3 p-4 border rounded-none-none transition-colors mb-3 ${activeTab === 'posts' ? 'bg-purple-50 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800' : 'bg-gray-50 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 hover:bg-gray-100'}`}>
+        <button onClick={() => { setActiveTab('posts'); closeModals(); }} className={`w-full flex items-center gap-3 p-4 border rounded-none transition-colors mb-3 ${activeTab === 'posts' ? 'bg-purple-50 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800' : 'bg-gray-50 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 hover:bg-gray-100'}`}>
           <span className="text-base text-gray-900 dark:text-white font-bold">📝 블로그 포스트 관리</span>
         </button>
         
-        <button onClick={() => { setActiveTab('settings'); closeModals(); }} className={`w-full flex items-center gap-3 p-4 border rounded-none-none transition-colors mb-4 ${activeTab === 'settings' ? 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800' : 'bg-gray-50 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 hover:bg-gray-100'}`}>
+        <button onClick={() => { setActiveTab('settings'); closeModals(); }} className={`w-full flex items-center gap-3 p-4 border rounded-none transition-colors mb-4 ${activeTab === 'settings' ? 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800' : 'bg-gray-50 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 hover:bg-gray-100'}`}>
           <span className="text-base text-gray-900 dark:text-white font-bold">⚙️ API 및 환경 설정</span>
         </button>
 
         {onLogout && (
-          <button onClick={() => { onLogout(); closeModals(); }} className="w-full flex items-center p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-none-none hover:bg-red-100 dark:hover:bg-red-900/20 text-left transition-colors">
+          <button onClick={() => { onLogout(); closeModals(); }} className="w-full flex items-center p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-none hover:bg-red-100 dark:hover:bg-red-900/20 text-left transition-colors">
             <span className="text-base text-red-600 dark:text-red-400 font-bold">🚪 로그아웃</span>
           </button>
         )}

@@ -24,24 +24,24 @@ export default function SettingsPanel() {
       <div className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-6 lg:p-10">
         <div className="max-w-3xl mx-auto w-full flex flex-col h-full space-y-6">
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 rounded-none-none flex items-center justify-center mx-auto mb-4 ring-1 ring-gray-200 dark:ring-zinc-700">
+            <div className="w-16 h-16 bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 rounded-none flex items-center justify-center mx-auto mb-4 ring-1 ring-gray-200 dark:ring-zinc-700">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
             </div>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">보안 자격 증명</h3>
             <p className="text-gray-500">통합 관리자 시스템에 필요한 외부 서비스 API 키를 설정합니다.</p>
           </div>
 
-          <div className="space-y-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-none-none p-6 shadow-2xl">
+          <div className="space-y-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-none p-6 shadow-2xl">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-none-full bg-blue-500"></span>
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                 Google Gemini API Key
               </label>
               <input 
                 type="password" 
                 value={geminiKey} 
                 onChange={e => setGeminiKey(e.target.value)} 
-                className="w-full px-4 py-3 rounded-none-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-mono" 
+                className="w-full px-4 py-3 rounded-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-mono" 
                 placeholder="AIzaSy..." 
               />
               <p className="text-xs text-gray-500">포스팅 자동 창작 및 원문 확장에 사용되는 구글 AI의 기본 키입니다.</p>
@@ -51,14 +51,14 @@ export default function SettingsPanel() {
 
             <div className="flex flex-col gap-2">
               <label className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-none-full bg-indigo-500"></span>
+                <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
                 GitHub Personal Token
               </label>
               <input 
                 type="password" 
                 value={githubToken} 
                 onChange={e => setGithubToken(e.target.value)} 
-                className="w-full px-4 py-3 rounded-none-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all font-mono" 
+                className="w-full px-4 py-3 rounded-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all font-mono" 
                 placeholder="ghp_..." 
               />
               <p className="text-xs text-gray-500">블로그 데이터(MD 파일)를 읽고 쓰고 삭제하기 위한 저장소 접근 권한입니다.</p>
@@ -67,13 +67,13 @@ export default function SettingsPanel() {
 
           <button 
             onClick={saveKeys} 
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-none-none text-sm shadow-2xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-none text-sm shadow-2xl transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
             안전하게 저장하기
           </button>
 
-          <div className="mt-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/50 rounded-none-none p-4 flex gap-3">
+          <div className="mt-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/50 rounded-none p-4 flex gap-3">
             <div className="text-blue-500 mt-0.5">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>

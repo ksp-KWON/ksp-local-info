@@ -33,13 +33,13 @@ export default function EmergencyMapWidget({ isWidget = false }: EmergencyMapWid
   });
 
   return (
-    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-none-none shadow-2xl border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-none shadow-2xl border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
       {/* 1. 헤더 영역 */}
       <header className="bg-white dark:bg-[#202124] shadow-2xl z-20 shrink-0 border-b border-gray-100 dark:border-gray-800">
         <div className="p-4 pb-2">
           <div className="flex items-center gap-2">
             {!isWidget && (
-              <Link href="/" className="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-none-full transition-colors">
+              <Link href="/" className="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full transition-colors">
                 <ArrowLeft className="w-6 h-6" />
               </Link>
             )}
@@ -54,7 +54,7 @@ export default function EmergencyMapWidget({ isWidget = false }: EmergencyMapWid
               <button
                 key={nb.name}
                 onClick={() => setMapCenter(nb)}
-                className={`whitespace-nowrap px-4 py-1.5 rounded-none-full text-sm font-semibold transition-all duration-200 shrink-0 ${
+                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 shrink-0 ${
                   mapCenter.name === nb.name
                     ? 'bg-red-500 text-white shadow-2xl'
                     : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -97,7 +97,7 @@ export default function EmergencyMapWidget({ isWidget = false }: EmergencyMapWid
       <main className="flex-1 relative">
         {(loading || isDataLoading) && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
-            <div className={`animate-spin rounded-none-full h-10 w-10 border-t-2 border-b-2 mb-4 ${activeTab === 'er' ? 'border-red-500' : 'border-emerald-500'}`}></div>
+            <div className={`animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 mb-4 ${activeTab === 'er' ? 'border-red-500' : 'border-emerald-500'}`}></div>
             <p className="text-gray-800 dark:text-gray-200 font-bold tracking-wide">
               {activeTab === 'er' ? '실시간 병상 정보를 불러오는 중...' : '영업 중인 약국을 찾는 중...'}
             </p>

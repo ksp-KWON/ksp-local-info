@@ -67,7 +67,7 @@ export default function BottomSheet({
         <div className={`w-full flex flex-col ${padding} space-y-4 ${maxHeight} overflow-y-auto overscroll-contain`}>
           {/* Drag Handle Indicator */}
           <div 
-            className="w-12 h-1.5 bg-gray-200 dark:bg-white/20 rounded-none-full mx-auto mb-6 shrink-0 cursor-pointer" 
+            className="w-12 h-1.5 bg-gray-200 dark:bg-white/20 rounded-full mx-auto mb-6 shrink-0 cursor-pointer" 
             onClick={onClose}
           />
           {children}

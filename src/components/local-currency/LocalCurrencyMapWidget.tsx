@@ -69,13 +69,13 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
   }, []);
 
   return (
-    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-none-none shadow-2xl border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-none shadow-2xl border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
       {/* 2. 헤더 바 */}
       <header className="bg-white dark:bg-[#202124] shadow-2xl z-20 p-4 pb-2 flex flex-col gap-3 relative border-b border-gray-200 dark:border-gray-800 shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {!isWidget && (
-              <button onClick={() => window.history.back()} className="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-none-full transition-colors">
+              <button onClick={() => window.history.back()} className="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full transition-colors">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -93,7 +93,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
             <button
               key={nb.name}
               onClick={() => setMapCenter(nb)}
-              className={`whitespace-nowrap px-4 py-1.5 rounded-none-full text-sm font-semibold transition-all duration-200 shrink-0 ${
+              className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 shrink-0 ${
                 mapCenter.name === nb.name
                   ? 'bg-blue-600 text-white shadow-2xl'
                   : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -109,7 +109,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
       <main className="flex-1 relative">
         {loading && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
-            <div className="animate-spin rounded-none-full h-10 w-10 border-t-2 border-b-2 border-blue-600 mb-4"></div>
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-600 mb-4"></div>
             <p className="text-gray-800 dark:text-gray-200 font-bold tracking-wide">지도 데이터를 불러오는 중입니다...</p>
           </div>
         )}
@@ -145,17 +145,17 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
         {/* 4. 선택된 가맹점 팝업 정보창 */}
         {selectedMerchant && (
           <div className="absolute bottom-6 left-4 right-4 z-20 animate-slide-up max-w-md mx-auto">
-            <div className="p-5 bg-white/95 dark:bg-[#1a1c20]/95 backdrop-blur-md rounded-none-none shadow-xl border border-gray-100 dark:border-gray-800">
+            <div className="p-5 bg-white/95 dark:bg-[#1a1c20]/95 backdrop-blur-md rounded-none shadow-xl border border-gray-100 dark:border-gray-800">
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1 min-w-0 pr-4">
                   <div className="mb-2">
-                    <span className="px-2.5 py-1 text-xs font-bold rounded-none-full bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                    <span className="px-2.5 py-1 text-xs font-bold rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
                       {selectedMerchant.category}
                     </span>
                   </div>
                   <h2 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight truncate">{selectedMerchant.name}</h2>
                 </div>
-                <button onClick={() => setSelectedMerchant(null)} className="shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-none-full p-2 transition-colors">
+                <button onClick={() => setSelectedMerchant(null)} className="shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-full p-2 transition-colors">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -166,7 +166,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
               
               <a 
                 href={`https://map.kakao.com/link/to/${selectedMerchant.name},${selectedMerchant.lat},${selectedMerchant.lng}`} 
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-none-none bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-2xl hover:-translate-y-0.5"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-none bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-2xl hover:-translate-y-0.5"
                 target="_blank"
                 rel="noreferrer"
               >

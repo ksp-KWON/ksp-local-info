@@ -17,7 +17,7 @@ export default function PremiumButton({
   icon,
   ...props
 }: PremiumButtonProps) {
-  let baseClass = 'inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold transition-all duration-300 rounded-none-none relative overflow-hidden group/btn';
+  let baseClass = 'inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold transition-all duration-300 rounded-none relative overflow-hidden group/btn';
   
   if (variant === 'primary') {
     baseClass += ' bg-[var(--google-blue)] hover:bg-blue-700 text-white shadow-2xl hover:shadow-2xl hover:shadow-[0_4px_14px_0_rgba(26,115,232,0.39)]';

@@ -27,7 +27,7 @@ export default function PremiumCard({
     default: 'from-blue-50/80 to-transparent dark:from-blue-900/20'
   };
 
-  let baseClass = 'bg-white dark:bg-[#202124] p-5 sm:p-6 border border-gray-100 dark:border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] transition-all duration-300 relative overflow-hidden rounded-none-none';
+  let baseClass = 'bg-white dark:bg-[#202124] p-5 sm:p-6 border border-gray-100 dark:border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] transition-all duration-300 relative overflow-hidden rounded-none';
   
   if (hoverEffect) {
     // Add vertical lift to make it pop visually

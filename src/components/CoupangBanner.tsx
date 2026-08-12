@@ -27,7 +27,7 @@ export default function CoupangBanner() {
 
   // 쿠팡 파트너스 다이내믹 광고 코드 예시 레이아웃 생성
   return (
-    <div ref={containerRef} className="w-full my-8 flex justify-center overflow-hidden border border-gray-100 rounded-none-none p-2 bg-gray-50">
+    <div ref={containerRef} className="w-full my-8 flex justify-center overflow-hidden border border-gray-100 rounded-none p-2 bg-gray-50">
       <script
         dangerouslySetInnerHTML={{
           __html: `

@@ -30,14 +30,14 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   if (variant === 'list') {
     return (
       <Link href={`/blog/${post.slug}`} className="group flex flex-col w-full">
-        <div className="bg-white dark:bg-[#1a1c20] rounded-none-none sm:rounded-none-none p-5 sm:p-6 shadow-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
+        <div className="bg-white dark:bg-[#1a1c20] rounded-none sm:rounded-none p-5 sm:p-6 shadow-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
           {/* 호버 시 배경 이펙트 */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-gray-50/50 dark:to-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
           
           <div className="flex-1 min-w-0 z-10">
             <div className="flex flex-wrap items-center gap-2 mb-3">
               {categoriesToDisplay.map(cat => (
-                <span key={cat} className={`px-2.5 py-1 rounded-none-full text-xs font-semibold tracking-tight ring-1 ring-inset ${currentStyle}`}>
+                <span key={cat} className={`px-2.5 py-1 rounded-full text-xs font-semibold tracking-tight ring-1 ring-inset ${currentStyle}`}>
                   {cat.replace(/^[^\s]+\s/, '')} {/* 아이콘 이모지 제거 */}
                 </span>
               ))}
@@ -70,13 +70,13 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   // Grid variant
   return (
     <Link href={`/blog/${post.slug}`} className="group flex flex-col w-full h-full">
-      <div className="bg-white dark:bg-[#1a1c20] rounded-none-none sm:rounded-none-none p-5 shadow-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800/50 flex flex-col justify-between h-full relative overflow-hidden hover:-translate-y-1">
+      <div className="bg-white dark:bg-[#1a1c20] rounded-none sm:rounded-none p-5 shadow-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800/50 flex flex-col justify-between h-full relative overflow-hidden hover:-translate-y-1">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-50/50 dark:to-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
         
         <div className="z-10">
           <div className="flex items-center flex-wrap gap-2 mb-3">
             {categoriesToDisplay.map(cat => (
-              <span key={cat} className={`px-2.5 py-1 rounded-none-full text-xs font-semibold tracking-tight ring-1 ring-inset ${currentStyle}`}>
+              <span key={cat} className={`px-2.5 py-1 rounded-full text-xs font-semibold tracking-tight ring-1 ring-inset ${currentStyle}`}>
                 {cat.replace(/^[^\s]+\s/, '')}
               </span>
             ))}
