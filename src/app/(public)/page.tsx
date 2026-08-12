@@ -7,7 +7,7 @@ import { getSortedPostsData } from '@/lib/posts';
 import HomePostList from '@/components/HomePostList';
 import { Metadata } from 'next';
 import Image from 'next/image';
-import EmergencyMapWidget from '@/components/emergency/EmergencyMapWidget';
+import MiniMapPreview from '@/components/MiniMapPreview';
 
 interface LocalData {
   lastUpdated: string;
@@ -80,28 +80,57 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 서비스 위젯(Full Map) 영역 (응급실 & 약국 좌우 분리) */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
+      {/* 2. 서비스 퀵메뉴 (Bento Box 영역) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
         
-        {/* 실시간 응급실 위젯 */}
-        <div className="w-full">
-          <EmergencyMapWidget isWidget={true} defaultTab="er" hideTabs={true} />
-        </div>
+        {/* 응급실/약국 찾기 카드 */}
+        <Link 
+          href="/services/emergency"
+          className="group relative overflow-hidden border border-red-100 dark:border-red-900/50 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-2xl hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1"
+        >
+          <MiniMapPreview type="emergency" />
+          <div className="relative z-10">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
+              우리아이 달빛어린이병원 <br className="hidden sm:block" />& 심야약국 찾기
+            </h3>
+            <p className="text-[14px] sm:text-[15px] font-medium text-red-900/70 dark:text-red-300/70 break-keep max-w-[85%]">
+              갑자기 아플 때, 밤이나 휴일에도 문 여는 병원과 약국을 실시간으로 확인하세요.
+            </p>
+          </div>
+          
+          <div className="relative z-10 flex items-center justify-end w-full">
+            <span className="flex items-center gap-1.5 text-sm font-bold text-red-600 dark:text-red-400 group-hover:translate-x-1 transition-transform">
+              바로가기 <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
 
-        {/* 심야/휴일 약국 위젯 */}
-        <div className="w-full">
-          <EmergencyMapWidget isWidget={true} defaultTab="pharmacy" hideTabs={true} />
-        </div>
-
-      </div>
-
-      {/* 3. 의정부 사랑카드 가맹점 버튼 */}
-      <div className="mt-8 flex justify-center">
-        <Link href="/services/local-currency" className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold rounded-none shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          <CreditCard className="w-6 h-6" />
-          의정부 사랑카드 가맹점 찾기
-          <ArrowRight className="w-5 h-5 ml-2" />
+          <Ambulance className="absolute -bottom-4 -right-4 w-32 h-32 text-red-500/10 dark:text-red-500/5 group-hover:scale-110 transition-transform duration-500" />
         </Link>
+
+        {/* 의정부 사랑카드 가맹점 지도 카드 */}
+        <Link 
+          href="/services/local-currency"
+          className="group relative overflow-hidden border border-blue-100 dark:border-blue-900/50 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-2xl hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1"
+        >
+          <MiniMapPreview type="currency" />
+          <div className="relative z-10">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
+              의정부 사랑카드 (지역화폐) <br className="hidden sm:block" />가맹점 지도
+            </h3>
+            <p className="text-[14px] sm:text-[15px] font-medium text-blue-900/70 dark:text-blue-300/70 break-keep max-w-[85%]">
+              내 주변에서 의정부 지역화폐를 사용할 수 있는 착한 가맹점들을 한눈에 찾아보세요.
+            </p>
+          </div>
+
+          <div className="relative z-10 flex items-center justify-end w-full">
+            <span className="flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform">
+              바로가기 <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
+          
+          <CreditCard className="absolute -bottom-4 -right-4 w-32 h-32 text-blue-500/10 dark:text-blue-500/5 group-hover:scale-110 transition-transform duration-500" />
+        </Link>
+
       </div>
 
       {/* 3. 블로그 콘텐츠 큐레이션 리스트 */}
