@@ -42,9 +42,9 @@ export default async function Home() {
           
           {/* 텍스트 영역 (좌측) */}
           <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2]">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-400 dark:from-white dark:to-gray-500">의정부</span> <br className="hidden sm:block lg:hidden" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-400 dark:from-white dark:to-gray-500">건강ㆍ생활 정보 포털</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2] text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-400 dark:from-white dark:to-gray-500">
+              의정부 <br className="hidden sm:block lg:hidden" />
+              건강ㆍ생활 정보 포털
             </h1>
           </div>
 
