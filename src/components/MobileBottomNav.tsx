@@ -47,7 +47,7 @@ function NavContent() {
 
   return (
     <>
-      <nav className="lg:hidden fixed bottom-0 left-0 w-full h-[64px] bg-white dark:bg-[#121417] border-t-2 border-black dark:border-white flex items-center justify-around px-1 z-[100] pb-[env(safe-area-inset-bottom)]">
+      <nav className="lg:hidden fixed bottom-0 left-0 w-full h-[64px] bg-white/85 dark:bg-[#1a1c20]/85 backdrop-blur-md shadow-[0_-4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.3)] border-t border-gray-200/50 dark:border-gray-800/50 flex items-center justify-around px-1 z-[100] pb-[env(safe-area-inset-bottom)] transition-colors duration-300">
         {navItems.map((item) => (
           <Link
             key={item.id}
@@ -133,10 +133,10 @@ function NavContent() {
                         key={cat.id}
                         href={`/blog?category=${encodeURIComponent(cat.label)}`}
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-2 p-3 border-2 border-black dark:border-white hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all bg-gray-50 dark:bg-[#202124]"
+                        className="flex items-center gap-2 p-3 bg-white dark:bg-[#1a1c20] rounded-xl border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
                       >
-                        <Icon className={`w-5 h-5 shrink-0 ${colorMap[theme.color] || 'text-gray-500'}`} strokeWidth={2.5} />
-                        <span className="font-jua text-[13px] truncate">{cat.label.replace(/^[^\s]+\s/, '')}</span>
+                        <Icon className={`w-5 h-5 shrink-0 ${colorMap[theme.color] || 'text-gray-500'}`} strokeWidth={2} />
+                        <span className="font-bold text-[13px] tracking-tight truncate text-gray-800 dark:text-gray-200">{cat.label.replace(/^[^\s]+\s/, '')}</span>
                       </Link>
                     );
                   })}
@@ -149,16 +149,16 @@ function NavContent() {
             <Link
               href="/services/local-currency"
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center gap-2 p-3 border-2 border-black dark:border-white bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all"
+              className="flex items-center gap-2 p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-300 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
             >
-              <span className="font-jua text-sm truncate">💳 사랑카드 가맹점</span>
+              <span className="font-bold text-sm tracking-tight truncate">💳 사랑카드 가맹점</span>
             </Link>
             <Link
               href="/services/health-check"
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center gap-2 p-3 border-2 border-black dark:border-white bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all"
+              className="flex items-center gap-2 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
             >
-              <span className="font-jua text-sm truncate">🏥 무료 건강검진</span>
+              <span className="font-bold text-sm tracking-tight truncate">🏥 무료 건강검진</span>
             </Link>
           </div>
         </div>

@@ -1,15 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
-import { RefreshCw, Ambulance, CreditCard } from 'lucide-react';
+import { Ambulance, CreditCard, ArrowRight } from 'lucide-react';
 import AdBanner from '@/components/AdBanner';
 import { getSortedPostsData } from '@/lib/posts';
 import HomePostList from '@/components/HomePostList';
 import { Metadata } from 'next';
 import Image from 'next/image';
-import NeoBox from '@/components/ui/NeoBox';
-import NeoHeading from '@/components/ui/NeoHeading';
-import NeoButton from '@/components/ui/NeoButton';
 
 interface LocalData {
   lastUpdated: string;
@@ -37,56 +34,57 @@ export default async function Home() {
   return (
     <div className="space-y-8 pb-16">
       
-      {/* 1. 메인 페이지 인트로 헤더 (Neo-brutalism 스타일) */}
-      <NeoBox shadowColor="blue" hoverEffect className="mt-4 relative overflow-hidden p-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+      {/* 1. 메인 페이지 인트로 헤더 (Premium 스타일) */}
+      <div className="mt-4 relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-white to-blue-50/30 dark:from-[#1a1c20] dark:via-[#1a1c20] dark:to-blue-900/20 border border-blue-100 dark:border-gray-800 p-6 sm:p-8 lg:p-10 shadow-sm">
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] dark:opacity-[0.05] mix-blend-overlay pointer-events-none" />
+        
+        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-8 lg:gap-12">
           
-          {/* 로고 (좌측) */}
-          <div className="shrink-0 w-full md:w-auto flex justify-center items-center self-stretch relative">
-            {/* 이미지 원본의 미세한 회색 테두리를 없애기 위해 clip-path로 가장자리 2px을 잘라냅니다 */}
-            <Image 
-              src="/images/uijeongbu-logo.png" 
-              alt="의정부 행복특별시 마크" 
-              width={200} 
-              height={200} 
-              className="w-32 md:w-auto md:h-full min-h-[120px] object-contain"
-              style={{ clipPath: 'inset(2px)' }}
-              priority
-            />
-          </div>
-
-          {/* 텍스트 (중앙) */}
-          <div className="flex-1 text-center md:text-left">
-            <NeoHeading level={1} highlighterColor="blue" className="mb-3">
-              의정부 주민 맞춤형 혜택·의료 포털
-            </NeoHeading>
-            <p className="text-xs sm:text-sm text-black/80 dark:text-white/80 break-keep leading-relaxed font-jua font-normal">
-              의정부시의 유용한 생활 밀착 혜택과 주요 정책들을 전문가의 시선으로 큐레이션하여 제공합니다.
+          {/* 텍스트 (좌측) */}
+          <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 leading-tight">
+              의정부 주민 맞춤형 <br className="hidden sm:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">혜택·의료 포털</span>
+            </h1>
+            <p className="text-[15px] sm:text-[17px] text-gray-600 dark:text-gray-400 break-keep leading-relaxed font-medium mb-8 max-w-2xl mx-auto lg:mx-0">
+              의정부시의 유용한 생활 밀착 혜택과 주요 정책들을 전문가의 시선으로 큐레이션하여 알기 쉽게 제공합니다.
             </p>
+            
+            {/* 버튼 영역 */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full justify-center lg:justify-start">
+              <Link 
+                href="/services/emergency" 
+                className="group flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+              >
+                <Ambulance className="w-5 h-5 group-hover:-translate-y-1 group-hover:scale-110 transition-transform" />
+                응급실/약국 찾기
+              </Link>
+              <Link 
+                href="/services/local-currency" 
+                className="group flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+              >
+                <CreditCard className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                사랑카드 사용처 지도
+              </Link>
+            </div>
           </div>
 
-          {/* 버튼 영역 (우측, 수직 정렬) */}
-          <div className="flex flex-col gap-3 w-full md:w-auto shrink-0">
-            <NeoButton 
-              href="/services/emergency" 
-              variant="danger" 
-              icon={<Ambulance className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />}
-              className="w-full justify-center"
-            >
-              응급실/약국 찾기
-            </NeoButton>
-            <NeoButton 
-              href="/services/local-currency" 
-              variant="primary" 
-              icon={<CreditCard className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />}
-              className="w-full justify-center"
-            >
-              의정부사랑카드 사용처 지도
-            </NeoButton>
+          {/* 로고 (우측) */}
+          <div className="shrink-0 w-full lg:w-auto flex justify-center items-center order-1 lg:order-2">
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 drop-shadow-xl bg-white dark:bg-white/10 rounded-full p-4 border-4 border-white/50 backdrop-blur-sm">
+              <Image 
+                src="/images/uijeongbu-logo.png" 
+                alt="의정부 행복특별시 마크" 
+                fill
+                className="object-contain p-2"
+                sizes="(max-width: 768px) 128px, (max-width: 1024px) 160px, 192px"
+                priority
+              />
+            </div>
           </div>
 
         </div>
-      </NeoBox>
+      </div>
 
       {/* 2. 블로그 콘텐츠 큐레이션 리스트 */}
       <HomePostList initialPosts={posts} />

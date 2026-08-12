@@ -2,8 +2,6 @@
 
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import NeoBox from '@/components/ui/NeoBox';
-import NeoHeading from '@/components/ui/NeoHeading';
 import PostCard from '@/components/ui/PostCard';
 import { PostData } from '@/lib/types';
 import { CATEGORIES } from '@/lib/constants';
@@ -57,15 +55,15 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
 
   return (
     <div className="space-y-8 pb-16">
-      {/* 블로그 페이지 헤더 */}
-      <NeoBox shadowColor="blue" hoverEffect className="mt-4 border-b-0">
-        <NeoHeading level={1} highlighterColor="blue" className="mb-3">
+      {/* 블로그 페이지 헤더 (Premium 스타일) */}
+      <div className="mt-4 relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50/80 via-white to-blue-50/30 dark:from-[#1a1c20] dark:via-[#1a1c20] dark:to-blue-900/10 border border-blue-100/50 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-3">
           {categoryTitle}
-        </NeoHeading>
-        <p className="text-xs sm:text-sm text-black/80 dark:text-white/80 break-keep leading-relaxed font-jua font-normal">
+        </h1>
+        <p className="text-[15px] text-gray-600 dark:text-gray-400 font-medium break-keep">
           {categoryDesc}
         </p>
-      </NeoBox>
+      </div>
       
       {/* 해시태그 필터 UI */}
       {availableTags.length > 0 && (
@@ -101,12 +99,12 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
           <PostCard key={post.slug} post={post} variant="list" />
         ))}
         {mounted && posts.length === 0 && (
-          <NeoBox shadowColor="default" className="text-center py-16 px-4 sm:p-16 col-span-full">
-            <svg className="w-12 h-12 text-black dark:text-white mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M3 15h6"></path><path d="M3 19h6"></path><path d="M10 15h8"></path><path d="M10 19h8"></path></svg>
-            <p className="text-lg font-dohyeon tracking-wide text-black dark:text-white">
+          <div className="bg-white dark:bg-[#1a1c20] rounded-2xl border border-gray-100 dark:border-gray-800 text-center py-16 px-4 sm:p-16 col-span-full shadow-sm">
+            <svg className="w-12 h-12 text-gray-400 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M3 15h6"></path><path d="M3 19h6"></path><path d="M10 15h8"></path><path d="M10 19h8"></path></svg>
+            <p className="text-lg font-bold tracking-wide text-gray-500 dark:text-gray-400">
               해당 카테고리에 등록된 포스팅이 없습니다.
             </p>
-          </NeoBox>
+          </div>
         )}
       </div>
     </div>

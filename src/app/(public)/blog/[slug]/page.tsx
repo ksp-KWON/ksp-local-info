@@ -7,10 +7,7 @@ import MarkdownRenderer from '@/components/MarkdownRenderer';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
 import AiCommentBox from '@/components/blog/AiCommentBox';
-import NeoBox from '@/components/ui/NeoBox';
-import NeoHeading from '@/components/ui/NeoHeading';
-import NeoBadge from '@/components/ui/NeoBadge';
-import NeoButton from '@/components/ui/NeoButton';
+import Link from 'next/link';
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -155,39 +152,39 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       )}
 
       <div className="mb-6">
-        <NeoButton 
-          variant="ghost" 
+        <Link 
           href="/blog" 
-          icon={<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>}
+          className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
         >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           목록으로 돌아가기
-        </NeoButton>
+        </Link>
       </div>
 
-      <NeoBox shadowColor="blue" className="!p-0 overflow-hidden relative">
+      <article className="bg-white dark:bg-[#1a1c20] rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden relative">
         <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
           
-          <header className="border-b-4 border-black dark:border-white pb-8 mb-8 sm:mb-10">
+          <header className="border-b border-gray-100 dark:border-gray-800 pb-8 mb-8 sm:mb-10">
             <div className="flex flex-wrap items-center gap-3 text-xs mb-5">
               {Array.isArray(post.category) ? post.category.map(cat => (
-                <NeoBadge key={cat} color="gray">{cat}</NeoBadge>
+                <span key={cat} className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 font-semibold">{cat}</span>
               )) : post.category && (
-                <NeoBadge color="gray">{post.category as string}</NeoBadge>
+                <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 font-semibold">{post.category as string}</span>
               )}
-              <time dateTime={post.date} className="text-black dark:text-white font-dohyeon font-normal tracking-wide flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                작성일 {post.date}
+              <time dateTime={post.date} className="text-gray-500 dark:text-gray-400 font-medium tracking-wide flex items-center gap-1.5 ml-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                {post.date}
               </time>
             </div>
             
-            <NeoHeading level={1} highlighterColor="blue" className="mb-0">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6 leading-snug">
               {post.title}
-            </NeoHeading>
+            </h1>
 
             {post.summary && (
-              <NeoBox shadowColor="yellow" className="mt-8 !bg-gray-50 dark:!bg-[#303134] text-[14px] leading-relaxed font-bold">
-                <span className="highlighter-yellow px-1">핵심 요약</span> : {post.summary}
-              </NeoBox>
+              <div className="mt-8 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/50 rounded-2xl p-5 sm:p-6 text-[15px] sm:text-base leading-relaxed text-gray-800 dark:text-gray-200">
+                <strong className="text-amber-600 dark:text-amber-500 mr-2">핵심 요약</strong> {post.summary}
+              </div>
             )}
           </header>
 
@@ -195,36 +192,44 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <AiCommentBox sourceText={post.content} type="policy" />
           </div>
 
-          <div className="prose prose-indigo dark:prose-invert max-w-none font-jua prose-p:font-jua prose-li:font-jua prose-a:font-jua prose-table:w-full prose-table:table-auto prose-th:whitespace-nowrap">
+          <div className="prose prose-indigo dark:prose-invert max-w-none font-medium prose-p:font-medium prose-li:font-medium prose-a:font-medium prose-table:w-full prose-table:table-auto prose-th:whitespace-nowrap">
             <MarkdownRenderer content={post.content} />
           </div>
           
-          <hr className="my-12 border-2 border-black dark:border-white" />
+          <hr className="my-12 border-gray-100 dark:border-gray-800" />
 
           {sourceLink && (
-            <NeoBox shadowColor="green" className="mb-6 !bg-gray-50 dark:!bg-[#303134]">
-              <span className="font-bold text-gray-800 dark:text-gray-200 block mb-2"><span className="highlighter-green px-1">🔗 공식 원문 출처</span></span>
+            <div className="mb-6 bg-blue-50 dark:bg-blue-900/10 rounded-2xl p-5 border border-blue-100 dark:border-blue-900/50">
+              <span className="font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-2">
+                <span className="text-xl">🔗</span> 공식 원문 출처
+              </span>
               <a 
                 href={sourceLink} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-[#1a73e8] hover:text-blue-700 font-bold underline break-all text-[14px]"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 hover:underline font-bold break-all text-[14px]"
               >
                 {sourceLink}
               </a>
-            </NeoBox>
+            </div>
           )}
 
-          {/* 관련된 의정부 혜택 추천 (새로운 제안) */}
-          <NeoBox shadowColor="pink" className="!bg-indigo-50 dark:!bg-[#303134] mb-10">
-            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+          {/* 관련된 의정부 혜택 추천 */}
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 border border-purple-100 dark:border-purple-900/50 rounded-2xl p-6 sm:p-8 mb-10">
+            <h3 className="font-bold text-lg mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
               <span>🌟</span> 의정부 시민들이 많이 찾는 다른 혜택
             </h3>
-            <ul className="list-disc pl-5 space-y-2 text-sm font-medium">
-              <li><a href="/blog" className="text-blue-600 hover:underline">의정부시 청년 및 신혼부부 전세자금 대출 이자 지원 안내</a></li>
-              <li><a href="/blog" className="text-blue-600 hover:underline">의정부사랑카드(지역화폐) 인센티브 혜택 완벽 가이드</a></li>
+            <ul className="space-y-3 text-[15px] font-medium">
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500 mt-1">•</span>
+                <Link href="/blog" className="text-purple-700 dark:text-purple-400 hover:underline">의정부시 청년 및 신혼부부 전세자금 대출 이자 지원 안내</Link>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500 mt-1">•</span>
+                <Link href="/blog" className="text-purple-700 dark:text-purple-400 hover:underline">의정부사랑카드(지역화폐) 인센티브 혜택 완벽 가이드</Link>
+              </li>
             </ul>
-          </NeoBox>
+          </div>
 
           <div className="my-8">
             <AdBanner slot="blog-bottom-ad" />
@@ -232,7 +237,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <CoupangBanner />
 
         </div>
-      </NeoBox>
+      </article>
     </div>
   );
 }

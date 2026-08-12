@@ -2,10 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
-import NeoHeading from '@/components/ui/NeoHeading';
-import NeoButton from '@/components/ui/NeoButton';
-import NeoBox from '@/components/ui/NeoBox';
-import NeoBadge from '@/components/ui/NeoBadge';
+import { MapPin, X, Navigation } from 'lucide-react';
 
 interface MerchantItem {
   id: string;
@@ -68,33 +65,36 @@ export default function LocalCurrencyMapPage() {
   }, []);
 
   return (
-    <NeoBox shadowColor="blue" hoverEffect={false} className="!p-0 flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2">
+    <div className="flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-2xl sm:rounded-3xl shadow-lg border border-gray-100 dark:border-gray-800">
       {/* 2. 헤더 바 */}
-      <header className="bg-white dark:bg-[#202124] shadow-sm z-20 p-4 pb-2 flex flex-col gap-3 relative border-b-[3px] border-black dark:border-white shrink-0">
+      <header className="bg-white dark:bg-[#202124] shadow-sm z-20 p-4 pb-2 flex flex-col gap-3 relative border-b border-gray-200 dark:border-gray-800 shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <button onClick={() => window.history.back()} className="p-2 -ml-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors border-2 border-transparent hover:border-black dark:hover:border-white">
+            <button onClick={() => window.history.back()} className="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full transition-colors">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <NeoHeading level={2} highlighterColor="yellow" className="!mb-0 flex items-center gap-2 text-xl sm:text-2xl mt-1">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-2 mt-1">
               💳 의정부 사랑카드 가맹점
-            </NeoHeading>
+            </h1>
           </div>
         </div>
         
         {/* 동네 선택 스크롤 메뉴 */}
         <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-3 mt-1">
           {neighborhoods.map((nb) => (
-            <NeoButton
+            <button
               key={nb.name}
               onClick={() => setMapCenter(nb)}
-              variant={mapCenter.name === nb.name ? 'primary' : 'secondary'}
-              className="!px-4 !py-1.5 !text-[13px] sm:!text-sm whitespace-nowrap shrink-0"
+              className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 shrink-0 ${
+                mapCenter.name === nb.name
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+              }`}
             >
               {nb.name}
-            </NeoButton>
+            </button>
           ))}
         </div>
       </header>
@@ -103,15 +103,15 @@ export default function LocalCurrencyMapPage() {
       <main className="flex-1 relative">
         {loading && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-black dark:border-white mb-4"></div>
-            <p className="text-black dark:text-white font-dohyeon text-lg tracking-wide">지도 데이터를 불러오는 중입니다...</p>
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-600 mb-4"></div>
+            <p className="text-gray-800 dark:text-gray-200 font-bold tracking-wide">지도 데이터를 불러오는 중입니다...</p>
           </div>
         )}
 
         {error && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
-            <p className="text-red-500 font-dohyeon text-xl mb-2">지도를 불러오지 못했습니다.</p>
-            <p className="text-gray-600 dark:text-gray-300 font-jua">브라우저를 새로고침 해보세요.</p>
+            <p className="text-red-500 font-bold text-lg mb-2">지도를 불러오지 못했습니다.</p>
+            <p className="text-gray-600 dark:text-gray-300 font-medium">브라우저를 새로고침 해보세요.</p>
           </div>
         )}
 
@@ -138,30 +138,37 @@ export default function LocalCurrencyMapPage() {
 
         {/* 4. 선택된 가맹점 팝업 정보창 */}
         {selectedMerchant && (
-          <div className="absolute bottom-6 left-4 right-4 z-20 animate-in slide-in-from-bottom-5 max-w-md mx-auto">
-            <NeoBox shadowColor="blue" className="!p-5 bg-white dark:bg-[#202124]">
+          <div className="absolute bottom-6 left-4 right-4 z-20 animate-slide-up max-w-md mx-auto">
+            <div className="p-5 bg-white/95 dark:bg-[#1a1c20]/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800">
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1 min-w-0 pr-4">
                   <div className="mb-2">
-                    <NeoBadge color="blue">{selectedMerchant.category}</NeoBadge>
+                    <span className="px-2.5 py-1 text-xs font-bold rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                      {selectedMerchant.category}
+                    </span>
                   </div>
-                  <h2 className="text-xl font-dohyeon text-gray-900 dark:text-white tracking-wide truncate">{selectedMerchant.name}</h2>
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight truncate">{selectedMerchant.name}</h2>
                 </div>
-                <button onClick={() => setSelectedMerchant(null)} className="shrink-0 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full p-1.5 border-2 border-black dark:border-white transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                <button onClick={() => setSelectedMerchant(null)} className="shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-full p-2 transition-colors">
+                  <X className="w-5 h-5" />
                 </button>
               </div>
-              <p className="text-[14px] font-jua text-gray-700 dark:text-gray-300 mb-5 break-keep leading-relaxed">{selectedMerchant.address}</p>
+              <div className="flex items-start gap-2 mb-5 mt-1">
+                <MapPin className="w-4 h-4 text-gray-400 mt-0.5 shrink-0" />
+                <p className="text-[14px] font-medium text-gray-600 dark:text-gray-300 break-keep leading-relaxed">{selectedMerchant.address}</p>
+              </div>
               
-              <NeoButton href={`https://map.kakao.com/link/to/${selectedMerchant.name},${selectedMerchant.lat},${selectedMerchant.lng}`} className="w-full flex justify-center !py-3 !text-base">
+              <a 
+                href={`https://map.kakao.com/link/to/${selectedMerchant.name},${selectedMerchant.lat},${selectedMerchant.lng}`} 
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-sm hover:-translate-y-0.5"
+              >
+                <Navigation className="w-4 h-4" />
                 길찾기 바로가기
-              </NeoButton>
-            </NeoBox>
+              </a>
+            </div>
           </div>
         )}
       </main>
-    </NeoBox>
+    </div>
   );
 }

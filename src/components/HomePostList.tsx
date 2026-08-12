@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import NeoHeading from '@/components/ui/NeoHeading';
 import PostCard from '@/components/ui/PostCard';
 import { PostData } from '@/lib/types';
 import { CATEGORIES, getCategoryTheme } from '@/lib/constants';
@@ -38,13 +37,14 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
         const IconComponent = theme.icon;
         return (
           <section key={categoryId} className="relative">
-            <div className="flex items-center justify-between mb-5 py-3 sm:py-3.5 relative z-10 border-b-4 border-black dark:border-white">
-              <NeoHeading level={2} highlighterColor={theme.color} icon={<IconComponent className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />} className="!mb-0">
+            <div className="flex items-center justify-between mb-5 py-3 sm:py-3.5 relative z-10 border-b border-gray-200 dark:border-gray-800">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 text-gray-900 dark:text-white mb-0">
+                <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 text-${theme.color}-500`} strokeWidth={2.5} />
                 {theme.title}
-              </NeoHeading>
-              <Link href={`/blog?category=${encodeURIComponent(categoryId)}`} className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-black dark:text-white hover:underline transition-colors group shrink-0 ml-4">
+              </h2>
+              <Link href={`/blog?category=${encodeURIComponent(categoryId)}`} className="flex items-center gap-1 text-[13px] font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 transition-colors group shrink-0 ml-4">
                 전체보기
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -58,20 +58,20 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
 
       {/* 2. 하단 탭형 카테고리 */}
       {restCategories.length > 0 && (
-        <section className="mt-12 bg-gray-50 dark:bg-[#1a1c20] p-4 sm:p-6 rounded-2xl border-2 border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
-          <h3 className="font-dohyeon text-xl mb-4 text-black dark:text-white flex items-center gap-2">
+        <section className="mt-12 bg-white dark:bg-[#1a1c20] p-5 sm:p-8 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm">
+          <h3 className="font-bold text-xl sm:text-2xl mb-5 text-gray-900 dark:text-white flex items-center gap-2">
             <span>✨</span> 더 많은 맞춤 혜택 찾아보기
           </h3>
           
-          <div className="flex overflow-x-auto pb-2 mb-4 scrollbar-hide gap-2">
+          <div className="flex overflow-x-auto pb-2 mb-6 scrollbar-hide gap-2">
             {restCategories.map(cat => (
               <button
                 key={cat.categoryId}
                 onClick={() => setActiveTab(cat.categoryId)}
-                className={`whitespace-nowrap px-4 py-2 font-jua text-sm rounded-full border-2 transition-colors ${
+                className={`whitespace-nowrap px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-200 ${
                   currentTabCategory?.categoryId === cat.categoryId
-                    ? 'border-black dark:border-white bg-black text-white dark:bg-white dark:text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)]'
-                    : 'border-black dark:border-white bg-white text-black hover:bg-gray-100 dark:bg-[#202124] dark:text-white dark:hover:bg-gray-800'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
                 {cat.categoryLabel}
@@ -88,8 +88,8 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
           )}
           
           {currentTabCategory && (
-            <div className="mt-6 text-center">
-              <Link href={`/blog?category=${encodeURIComponent(currentTabCategory.categoryId)}`} className="inline-flex items-center gap-2 font-bold text-sm bg-white dark:bg-[#202124] px-6 py-3 border-2 border-black dark:border-white hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all">
+            <div className="mt-8 text-center">
+              <Link href={`/blog?category=${encodeURIComponent(currentTabCategory.categoryId)}`} className="inline-flex items-center gap-2 font-bold text-[15px] bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-6 py-3.5 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200">
                 {currentTabCategory.categoryLabel} 전체보기 ➡️
               </Link>
             </div>

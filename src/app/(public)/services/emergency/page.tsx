@@ -6,10 +6,7 @@ import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useEmergencyData } from '@/hooks/useEmergencyData';
 import EmergencyMap from '@/components/emergency/EmergencyMap';
 import EmergencyBottomSheet from '@/components/emergency/EmergencyBottomSheet';
-import NeoHeading from '@/components/ui/NeoHeading';
-import NeoButton from '@/components/ui/NeoButton';
-
-import NeoBox from '@/components/ui/NeoBox';
+import { ArrowLeft, Stethoscope, Pill } from 'lucide-react';
 
 // 의정부 주요 동네 좌표
 const neighborhoods = [
@@ -32,57 +29,60 @@ export default function EmergencyPage() {
   });
 
   return (
-    <NeoBox shadowColor="red" hoverEffect={false} className="!p-0 flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2">
+    <div className="flex flex-col h-[700px] max-h-[80vh] w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-2xl sm:rounded-3xl shadow-lg border border-gray-100 dark:border-gray-800">
       {/* 1. 헤더 영역 */}
-      <header className="bg-white dark:bg-[#202124] shadow-sm z-20 shrink-0 border-b-[3px] border-black dark:border-white">
+      <header className="bg-white dark:bg-[#202124] shadow-sm z-20 shrink-0 border-b border-gray-100 dark:border-gray-800">
         <div className="p-4 pb-2">
           <div className="flex items-center gap-2">
-            <Link href="/" className="p-2 -ml-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors border-2 border-transparent hover:border-black dark:hover:border-white">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7" />
-              </svg>
+            <Link href="/" className="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full transition-colors">
+              <ArrowLeft className="w-6 h-6" />
             </Link>
-            <NeoHeading level={2} highlighterColor="red" className="!mb-0 flex items-center gap-2 text-xl sm:text-2xl mt-1">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-2 mt-1">
               🚨 긴급! 약국 & 응급실
-            </NeoHeading>
+            </h1>
           </div>
           
           {/* 동네 선택 스크롤 메뉴 */}
           <div className="flex overflow-x-auto hide-scrollbar gap-2 mt-4 pb-2">
             {neighborhoods.map((nb) => (
-              <NeoButton
+              <button
                 key={nb.name}
                 onClick={() => setMapCenter(nb)}
-                variant={mapCenter.name === nb.name ? 'danger' : 'secondary'}
-                className="!px-4 !py-1.5 !text-[13px] sm:!text-sm whitespace-nowrap shrink-0"
+                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 shrink-0 ${
+                  mapCenter.name === nb.name
+                    ? 'bg-red-500 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
               >
                 {nb.name}
-              </NeoButton>
+              </button>
             ))}
           </div>
         </div>
 
         {/* 탭 메뉴 */}
-        <div className="flex border-t-2 border-black dark:border-white">
+        <div className="flex border-t border-gray-100 dark:border-gray-800">
           <button
             onClick={() => setActiveTab('er')}
-            className={`flex-1 py-3 text-[15px] font-dohyeon text-center border-r-2 border-black dark:border-white transition-colors ${
+            className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-[15px] font-bold text-center transition-colors border-r border-gray-100 dark:border-gray-800 ${
               activeTab === 'er' 
-                ? 'bg-red-500 text-white' 
-                : 'bg-gray-100 dark:bg-[#2d2e30] text-gray-500 hover:text-black dark:hover:text-white hover:bg-gray-200'
+                ? 'bg-red-50 text-red-600 border-b-2 border-b-red-600 dark:bg-red-900/10 dark:text-red-400 dark:border-b-red-500' 
+                : 'bg-white dark:bg-[#202124] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
             }`}
           >
-            🏥 실시간 응급실
+            <Stethoscope className="w-4 h-4" />
+            실시간 응급실
           </button>
           <button
             onClick={() => setActiveTab('pharmacy')}
-            className={`flex-1 py-3 text-[15px] font-dohyeon text-center transition-colors ${
+            className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-[15px] font-bold text-center transition-colors ${
               activeTab === 'pharmacy' 
-                ? 'bg-green-500 text-white' 
-                : 'bg-gray-100 dark:bg-[#2d2e30] text-gray-500 hover:text-black dark:hover:text-white hover:bg-gray-200'
+                ? 'bg-emerald-50 text-emerald-600 border-b-2 border-b-emerald-600 dark:bg-emerald-900/10 dark:text-emerald-400 dark:border-b-emerald-500' 
+                : 'bg-white dark:bg-[#202124] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
             }`}
           >
-            💊 심야/휴일 약국
+            <Pill className="w-4 h-4" />
+            심야/휴일 약국
           </button>
         </div>
       </header>
@@ -91,8 +91,8 @@ export default function EmergencyPage() {
       <main className="flex-1 relative">
         {(loading || isDataLoading) && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
-            <div className={`animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 mb-4 ${activeTab === 'er' ? 'border-red-500' : 'border-green-500'}`}></div>
-            <p className="text-black dark:text-white font-dohyeon text-lg tracking-wide">
+            <div className={`animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 mb-4 ${activeTab === 'er' ? 'border-red-500' : 'border-emerald-500'}`}></div>
+            <p className="text-gray-800 dark:text-gray-200 font-bold tracking-wide">
               {activeTab === 'er' ? '실시간 병상 정보를 불러오는 중...' : '영업 중인 약국을 찾는 중...'}
             </p>
           </div>
@@ -100,8 +100,8 @@ export default function EmergencyPage() {
 
         {error && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
-            <p className="text-red-500 font-dohyeon text-xl mb-2">지도를 불러오지 못했습니다.</p>
-            <p className="text-gray-600 dark:text-gray-300 font-jua">인터넷 연결을 확인하고 다시 시도해주세요.</p>
+            <p className="text-red-500 font-bold text-lg mb-2">지도를 불러오지 못했습니다.</p>
+            <p className="text-gray-600 dark:text-gray-300 font-medium">인터넷 연결을 확인하고 다시 시도해주세요.</p>
           </div>
         )}
 
@@ -121,6 +121,6 @@ export default function EmergencyPage() {
           </>
         )}
       </main>
-    </NeoBox>
+    </div>
   );
 }

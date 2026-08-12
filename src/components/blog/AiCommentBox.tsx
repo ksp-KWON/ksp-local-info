@@ -1,30 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import NeoBox from '@/components/ui/NeoBox';
-import NeoHeading from '@/components/ui/NeoHeading';
-import NeoButton from '@/components/ui/NeoButton';
+import { Sparkles, Zap } from 'lucide-react';
 
 interface AiCommentBoxProps {
   sourceText: string;
   type: 'policy' | 'benefit' | 'event';
   className?: string;
-}
-
-function IconBulb({ className = 'w-4 h-4' }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 18h6" />
-      <path d="M10 22h4" />
-      <path d="M12 2v1" />
-      <path d="M12 7v1" />
-      <path d="M5.6 5.6l.7.7" />
-      <path d="M18.4 5.6l-.7.7" />
-      <path d="M2 12h1" />
-      <path d="M21 12h1" />
-      <path d="M12 11a5 5 0 1 0-5 5h10a5 5 0 1 0-5-5z" />
-    </svg>
-  );
 }
 
 export default function AiCommentBox({ sourceText, type, className = '' }: AiCommentBoxProps) {
@@ -63,37 +45,39 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
   };
 
   return (
-    <NeoBox shadowColor="blue" className={`!bg-white dark:!bg-[#303134] space-y-3 ${className}`}>
-      <NeoHeading level={3} highlighterColor="blue" icon={<IconBulb className="w-5 h-5" />} className="!mb-0 !text-lg">
+    <div className={`bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/10 dark:to-indigo-900/10 border border-blue-100/50 dark:border-blue-800/50 rounded-2xl p-5 shadow-sm space-y-4 ${className}`}>
+      <h3 className="font-bold text-lg text-blue-800 dark:text-blue-300 flex items-center gap-2 m-0">
+        <Sparkles className="w-5 h-5 text-blue-500" />
         AI 핵심 요약 노트
-      </NeoHeading>
+      </h3>
       
-      <div className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-medium pl-1 min-h-[2.5rem]">
+      <div className="text-[13px] sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium pl-1 min-h-[2.5rem]">
         {!hasStarted ? (
-          <NeoButton
+          <button
             onClick={fetchComment}
-            variant="primary"
-            icon={<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>}
-            className="mt-1"
+            className="group flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 mt-1"
           >
+            <Zap className="w-4 h-4 group-hover:scale-110 transition-transform" />
             이 정책의 AI 핵심 요약 및 꿀팁 보기
-          </NeoButton>
+          </button>
         ) : loading ? (
           <div className="flex items-center gap-2 text-[var(--google-blue)] animate-pulse mt-1">
-            <div className="w-3 h-3 border-2 border-[var(--google-blue)] border-t-transparent rounded-full animate-spin" />
-            <span>지원 조건 및 핵심 혜택을 분석 중입니다... (약 2~4초 소요)</span>
+            <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <span className="text-blue-600 dark:text-blue-400">지원 조건 및 핵심 혜택을 분석 중입니다... (약 2~4초 소요)</span>
           </div>
         ) : (
-          <div className="space-y-1.5 mt-1">
-            <p className={`whitespace-pre-wrap ${error ? 'text-red-500' : ''}`}>{comment}</p>
+          <div className="space-y-2 mt-1">
+            <p className={`whitespace-pre-wrap ${error ? 'text-red-500' : 'text-gray-800 dark:text-gray-200'}`}>
+              {comment}
+            </p>
             {!error && (
-              <p className="text-[10px] text-gray-400 mt-2 block border-t border-gray-200 dark:border-gray-800 pt-2">
+              <p className="text-[11px] text-gray-400 dark:text-gray-500 mt-3 block border-t border-gray-200/50 dark:border-gray-700/50 pt-3">
                 ※ 본 요약은 공공데이터 원문을 바탕으로 AI(Gemini)가 실시간 분석한 내용입니다. 실제 신청 시 반드시 공식 모집공고를 확인하시기 바랍니다.
               </p>
             )}
           </div>
         )}
       </div>
-    </NeoBox>
+    </div>
   );
 }
