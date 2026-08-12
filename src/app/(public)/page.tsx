@@ -86,49 +86,49 @@ export default async function Home() {
         {/* 응급실/약국 찾기 카드 */}
         <Link 
           href="/services/emergency"
-          className="group relative overflow-hidden border border-red-100 dark:border-red-900/50 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-red-500/20 dark:hover:shadow-red-500/10 hover:-translate-y-1"
+          className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-gray-900/10 dark:hover:shadow-white/5 hover:-translate-y-1 bg-white dark:bg-[#121212]"
         >
           <MiniMapPreview type="emergency" />
           <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
               달빛어린이병원 & 심야약국 찾기
             </h3>
-            <p className="text-[14px] sm:text-[15px] font-medium text-red-900/70 dark:text-red-300/70 break-keep max-w-[85%]">
+            <p className="text-[14px] sm:text-[15px] font-medium text-gray-600 dark:text-gray-400 break-keep max-w-[85%]">
               갑자기 아플 때, 밤이나 휴일에도 문 여는 병원과 약국을 실시간으로 확인하세요.
             </p>
           </div>
           
           <div className="relative z-10 flex items-center justify-end w-full">
-            <span className="flex items-center gap-1.5 text-sm font-bold text-red-600 dark:text-red-400 group-hover:translate-x-1 transition-transform">
+            <span className="flex items-center gap-1.5 text-sm font-bold text-gray-900 dark:text-white group-hover:translate-x-1 transition-transform">
               바로가기 <ArrowRight className="w-4 h-4" />
             </span>
           </div>
 
-          <Ambulance className="absolute -bottom-4 -right-4 w-32 h-32 text-red-500/10 dark:text-red-500/5 group-hover:scale-110 transition-transform duration-500" />
+          <Ambulance className="absolute -bottom-4 -right-4 w-32 h-32 text-gray-900/5 dark:text-white/5 group-hover:scale-110 transition-transform duration-500" />
         </Link>
 
         {/* 의정부 사랑카드 가맹점 지도 카드 */}
         <Link 
           href="/services/local-currency"
-          className="group relative overflow-hidden border border-blue-100 dark:border-blue-900/50 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/10 hover:-translate-y-1"
+          className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-gray-900/10 dark:hover:shadow-white/5 hover:-translate-y-1 bg-white dark:bg-[#121212]"
         >
           <MiniMapPreview type="currency" />
           <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
               의정부 사랑카드 가맹점 찾기
             </h3>
-            <p className="text-[14px] sm:text-[15px] font-medium text-blue-900/70 dark:text-blue-300/70 break-keep max-w-[85%]">
+            <p className="text-[14px] sm:text-[15px] font-medium text-gray-600 dark:text-gray-400 break-keep max-w-[85%]">
               내 주변에서 의정부 지역화폐를 사용할 수 있는 착한 가맹점들을 한눈에 찾아보세요.
             </p>
           </div>
 
           <div className="relative z-10 flex items-center justify-end w-full">
-            <span className="flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform">
+            <span className="flex items-center gap-1.5 text-sm font-bold text-gray-900 dark:text-white group-hover:translate-x-1 transition-transform">
               바로가기 <ArrowRight className="w-4 h-4" />
             </span>
           </div>
           
-          <CreditCard className="absolute -bottom-4 -right-4 w-32 h-32 text-blue-500/10 dark:text-blue-500/5 group-hover:scale-110 transition-transform duration-500" />
+          <CreditCard className="absolute -bottom-4 -right-4 w-32 h-32 text-gray-900/5 dark:text-white/5 group-hover:scale-110 transition-transform duration-500" />
         </Link>
 
       </div>
