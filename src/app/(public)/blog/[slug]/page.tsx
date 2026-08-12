@@ -192,7 +192,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <AiCommentBox sourceText={post.content} type="policy" />
           </div>
 
-          <div className="prose prose-indigo dark:prose-invert max-w-none font-medium prose-p:font-medium prose-li:font-medium prose-a:font-medium prose-table:w-full prose-table:table-auto prose-th:whitespace-nowrap">
+          <div className="prose prose-indigo dark:prose-invert max-w-none font-medium prose-p:font-medium prose-li:font-medium prose-a:font-medium">
             <MarkdownRenderer content={post.content} />
           </div>
           
