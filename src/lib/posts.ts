@@ -19,6 +19,8 @@ export function getSortedPostsData(): PostData[] {
     let dateStr = matterResult.data.date;
     if (dateStr instanceof Date) {
       dateStr = dateStr.toISOString().split('T')[0];
+    } else if (typeof dateStr === 'string' && dateStr.includes('T')) {
+      dateStr = dateStr.split('T')[0];
     }
 
     let categoryArray: string[] = [];
@@ -60,6 +62,8 @@ export function getPostData(slug: string): PostData | null {
   let dateStr = matterResult.data.date;
   if (dateStr instanceof Date) {
     dateStr = dateStr.toISOString().split('T')[0];
+  } else if (typeof dateStr === 'string' && dateStr.includes('T')) {
+    dateStr = dateStr.split('T')[0];
   }
 
     let categoryArray: string[] = [];
