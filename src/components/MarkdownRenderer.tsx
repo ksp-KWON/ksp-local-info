@@ -33,17 +33,17 @@ const baseComponents: Components = {
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
       className="flex items-center gap-2 font-dohyeon font-normal tracking-wide text-black dark:text-white text-[20px] sm:text-[22px] mt-10 mb-4"
     >
-      <span className="w-2.5 h-2.5 rounded-full bg-[#fbbc04] border-2 border-black dark:border-white"></span>
+      <span className="w-2.5 h-2.5 rounded-none-full bg-[#fbbc04] border-2 border-black dark:border-white"></span>
       {children}
     </h3>
   ),
   blockquote: ({ children }) => (
-    <div className="my-7 px-5 py-4 bg-gradient-to-br from-yellow-50/80 to-orange-50/50 dark:from-[#fbbc04]/10 dark:to-[#ea4335]/5 border border-yellow-200/50 dark:border-white/5 border-l-4 border-l-[#fbbc04] dark:border-l-[#fbbc04] text-[15px] font-medium text-gray-800 dark:text-[#e8eaed] leading-[1.7] tracking-tight [&>p]:m-0 break-keep shadow-sm">
+    <div className="my-7 px-5 py-4 bg-gradient-to-br from-yellow-50/80 to-orange-50/50 dark:from-[#fbbc04]/10 dark:to-[#ea4335]/5 border border-yellow-200/50 dark:border-white/5 border-l-4 border-l-[#fbbc04] dark:border-l-[#fbbc04] text-[15px] font-medium text-gray-800 dark:text-[#e8eaed] leading-[1.7] tracking-tight [&>p]:m-0 break-keep shadow-2xl">
       {children}
     </div>
   ),
   table: ({ children }) => (
-    <div className="w-full overflow-x-auto my-8 rounded-none border border-gray-200 dark:border-white/10 shadow-[0_4px_15px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.4)] bg-white dark:bg-[#202124]">
+    <div className="w-full overflow-x-auto my-8 rounded-none-none border border-gray-200 dark:border-white/10 shadow-[0_4px_15px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.4)] bg-white dark:bg-[#202124]">
       <table className="w-full min-w-[500px] text-[14px] border-collapse">{children}</table>
     </div>
   ),
@@ -79,7 +79,7 @@ const baseComponents: Components = {
   hr: () => (
     <div className="my-16 flex items-center justify-center px-8">
       <div className="w-full max-w-[200px] h-[3px] bg-black dark:bg-white relative">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#ea4335] border-2 border-black dark:border-white rounded-full"></div>
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#ea4335] border-2 border-black dark:border-white rounded-none-full"></div>
       </div>
     </div>
   ),
@@ -102,10 +102,10 @@ export const sharedComponents: any = {
   right: ({ children }: { children: React.ReactNode }) => <div className="text-right w-full">{children}</div>,
   
   // Background Colors
-  'bg-yellow': ({ children }: { children: React.ReactNode }) => <span className="bg-yellow-200/60 dark:bg-yellow-900/40 px-1 py-0.5 rounded">{children}</span>,
-  'bg-blue': ({ children }: { children: React.ReactNode }) => <span className="bg-blue-200/60 dark:bg-blue-900/40 px-1 py-0.5 rounded">{children}</span>,
-  'bg-red': ({ children }: { children: React.ReactNode }) => <span className="bg-red-200/60 dark:bg-red-900/40 px-1 py-0.5 rounded">{children}</span>,
-  'bg-green': ({ children }: { children: React.ReactNode }) => <span className="bg-green-200/60 dark:bg-green-900/40 px-1 py-0.5 rounded">{children}</span>,
+  'bg-yellow': ({ children }: { children: React.ReactNode }) => <span className="bg-yellow-200/60 dark:bg-yellow-900/40 px-1 py-0.5 rounded-none">{children}</span>,
+  'bg-blue': ({ children }: { children: React.ReactNode }) => <span className="bg-blue-200/60 dark:bg-blue-900/40 px-1 py-0.5 rounded-none">{children}</span>,
+  'bg-red': ({ children }: { children: React.ReactNode }) => <span className="bg-red-200/60 dark:bg-red-900/40 px-1 py-0.5 rounded-none">{children}</span>,
+  'bg-green': ({ children }: { children: React.ReactNode }) => <span className="bg-green-200/60 dark:bg-green-900/40 px-1 py-0.5 rounded-none">{children}</span>,
   
    
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -115,10 +115,10 @@ export const sharedComponents: any = {
     return (
       <a
         href={href}
-        className="flex items-center justify-between p-4 my-5 bg-[#e8f0fe]/30 hover:bg-[#e8f0fe]/60 dark:bg-[#1a2540]/15 dark:hover:bg-[#1a2540]/30 border-l-4 border-l-[#1A73E8] rounded-r-xl transition-all duration-200 text-[#1A73E8] dark:text-[#8ab4f8] group no-underline break-keep shadow-2xs"
+        className="flex items-center justify-between p-4 my-5 bg-[#e8f0fe]/30 hover:bg-[#e8f0fe]/60 dark:bg-[#1a2540]/15 dark:hover:bg-[#1a2540]/30 border-l-4 border-l-[#1A73E8] rounded-none-r-xl transition-all duration-200 text-[#1A73E8] dark:text-[#8ab4f8] group no-underline break-keep shadow-2xs"
       >
         <div className="flex items-center gap-3">
-          <span className="flex-shrink-0 w-8 h-8 rounded-none border border-[#1A73E8]/30 dark:border-[#8ab4f8]/30 bg-white dark:bg-[#1a2540] flex items-center justify-center shadow-sm">
+          <span className="flex-shrink-0 w-8 h-8 rounded-none-none border border-[#1A73E8]/30 dark:border-[#8ab4f8]/30 bg-white dark:bg-[#1a2540] flex items-center justify-center shadow-2xl">
             <svg className="w-4 h-4 text-[#1A73E8] dark:text-[#8ab4f8] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </span>
           <div className="flex flex-col text-left">
@@ -131,9 +131,9 @@ export const sharedComponents: any = {
   },
   hr1: () => (
     <div className="my-16 flex items-center justify-center gap-3">
-      <span className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white"></span>
-      <span className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white"></span>
-      <span className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white"></span>
+      <span className="w-2.5 h-2.5 rounded-none-full bg-black dark:bg-white"></span>
+      <span className="w-2.5 h-2.5 rounded-none-full bg-black dark:bg-white"></span>
+      <span className="w-2.5 h-2.5 rounded-none-full bg-black dark:bg-white"></span>
     </div>
   ),
   hr2: () => (
@@ -144,7 +144,7 @@ export const sharedComponents: any = {
   hr3: () => (
     <div className="my-16 flex items-center justify-center px-8">
       <div className="w-full max-w-[200px] h-[3px] bg-black dark:bg-white relative">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#ea4335] border-2 border-black dark:border-white rounded-full"></div>
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#ea4335] border-2 border-black dark:border-white rounded-none-full"></div>
       </div>
     </div>
   ),

@@ -97,7 +97,7 @@ function NavContent() {
         <div className="w-full flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-dohyeon">전체 카테고리</h3>
-            <button onClick={() => setIsMenuOpen(false)} className="p-1 border-2 border-transparent hover:border-black dark:hover:border-white rounded-full">
+            <button onClick={() => setIsMenuOpen(false)} className="p-1 border-2 border-transparent hover:border-black dark:hover:border-white rounded-none-full">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -133,7 +133,7 @@ function NavContent() {
                         key={cat.id}
                         href={`/blog?category=${encodeURIComponent(cat.label)}`}
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-2 p-3 bg-white dark:bg-[#1a1c20] rounded-xl border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+                        className="flex items-center gap-2 p-3 bg-white dark:bg-[#1a1c20] rounded-none-none border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-200"
                       >
                         <Icon className={`w-5 h-5 shrink-0 ${colorMap[theme.color] || 'text-gray-500'}`} strokeWidth={2} />
                         <span className="font-bold text-[13px] tracking-tight truncate text-gray-800 dark:text-gray-200">{cat.label.replace(/^[^\s]+\s/, '')}</span>
@@ -149,14 +149,14 @@ function NavContent() {
             <Link
               href="/services/local-currency"
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center gap-2 p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-300 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
+              className="flex items-center gap-2 p-3 rounded-none-none bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-300 hover:-translate-y-0.5 hover:shadow-2xl transition-all duration-200"
             >
               <span className="font-bold text-sm tracking-tight truncate">💳 사랑카드 가맹점</span>
             </Link>
             <Link
               href="/services/health-check"
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center gap-2 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
+              className="flex items-center gap-2 p-3 rounded-none-none bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 hover:-translate-y-0.5 hover:shadow-2xl transition-all duration-200"
             >
               <span className="font-bold text-sm tracking-tight truncate">🏥 무료 건강검진</span>
             </Link>

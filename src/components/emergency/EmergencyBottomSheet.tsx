@@ -31,13 +31,13 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
 
   return (
     <div className="absolute z-10 bottom-6 left-4 right-4 max-w-md mx-auto animate-slide-up">
-      <div className="bg-white/95 dark:bg-[#1a1c20]/95 backdrop-blur-md rounded-3xl overflow-hidden flex flex-col shadow-2xl border border-gray-100 dark:border-gray-800">
+      <div className="bg-white/95 dark:bg-[#1a1c20]/95 backdrop-blur-md rounded-none-none overflow-hidden flex flex-col shadow-2xl border border-gray-100 dark:border-gray-800">
         {/* Header */}
         <div className={`${activeTab === 'er' ? 'bg-red-500/10' : 'bg-emerald-500/10'} px-6 py-5 flex justify-between items-center border-b border-gray-100 dark:border-gray-800/50`}>
           <h3 className="font-bold text-gray-900 dark:text-white text-[17px] tracking-tight truncate pr-4">
             {item.name}
           </h3>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-full p-2 transition-colors shrink-0">
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-none-full p-2 transition-colors shrink-0">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -52,7 +52,7 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
                   <span className="text-sm text-gray-400 font-medium">/ {item.totalBeds}석</span>
                 </div>
               </div>
-              <span className={`px-3 py-1.5 rounded-full text-sm font-bold shadow-sm ${item.status === 'good' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : item.status === 'busy' ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'}`}>
+              <span className={`px-3 py-1.5 rounded-none-full text-sm font-bold shadow-2xl ${item.status === 'good' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : item.status === 'busy' ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'}`}>
                 {getStatusText(item.status)}
               </span>
             </div>
@@ -61,11 +61,11 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
           {activeTab === 'pharmacy' && (
             <div className="flex items-center gap-2">
               {item.isNightOpen && (
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-none-full text-[13px] font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
                   <Moon className="w-3.5 h-3.5" /> 심야 운영
                 </span>
               )}
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-bold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-none-full text-[13px] font-bold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
                 <Clock className="w-3.5 h-3.5" /> {item.hours}
               </span>
             </div>
@@ -91,7 +91,7 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
           <div className="mt-2">
             <a 
               href={`https://map.kakao.com/link/to/${item.name},${item.lat},${item.lng}`}
-              className={`flex items-center justify-center w-full py-3.5 rounded-xl font-bold text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 ${activeTab === 'er' ? 'bg-red-500 hover:bg-red-600' : 'bg-emerald-600 hover:bg-emerald-700'}`}
+              className={`flex items-center justify-center w-full py-3.5 rounded-none-none font-bold text-white transition-all shadow-2xl hover:shadow-2xl hover:-translate-y-0.5 ${activeTab === 'er' ? 'bg-red-500 hover:bg-red-600' : 'bg-emerald-600 hover:bg-emerald-700'}`}
             >
               길찾기 바로가기
             </a>

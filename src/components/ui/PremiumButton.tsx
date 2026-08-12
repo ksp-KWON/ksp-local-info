@@ -17,16 +17,16 @@ export default function PremiumButton({
   icon,
   ...props
 }: PremiumButtonProps) {
-  let baseClass = 'inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold transition-all duration-300 rounded-none relative overflow-hidden group/btn';
+  let baseClass = 'inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold transition-all duration-300 rounded-none-none relative overflow-hidden group/btn';
   
   if (variant === 'primary') {
-    baseClass += ' bg-[var(--google-blue)] hover:bg-blue-700 text-white shadow-md hover:shadow-lg hover:shadow-[0_4px_14px_0_rgba(26,115,232,0.39)]';
+    baseClass += ' bg-[var(--google-blue)] hover:bg-blue-700 text-white shadow-2xl hover:shadow-2xl hover:shadow-[0_4px_14px_0_rgba(26,115,232,0.39)]';
   } else if (variant === 'danger') {
-    baseClass += ' bg-red-600 hover:bg-red-700 text-white shadow-md hover:shadow-lg hover:shadow-[0_4px_14px_0_rgba(239,68,68,0.39)]';
+    baseClass += ' bg-red-600 hover:bg-red-700 text-white shadow-2xl hover:shadow-2xl hover:shadow-[0_4px_14px_0_rgba(239,68,68,0.39)]';
   } else if (variant === 'youtube') {
-    baseClass += ' bg-[#FF0000] hover:bg-red-700 text-white shadow-md hover:shadow-lg hover:shadow-[0_4px_14px_0_rgba(255,0,0,0.39)]';
+    baseClass += ' bg-[#FF0000] hover:bg-red-700 text-white shadow-2xl hover:shadow-2xl hover:shadow-[0_4px_14px_0_rgba(255,0,0,0.39)]';
   } else if (variant === 'secondary') {
-    baseClass += ' bg-white dark:bg-[#303134] text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow-md';
+    baseClass += ' bg-white dark:bg-[#303134] text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-2xl hover:shadow-2xl';
   } else if (variant === 'ghost') {
     baseClass = 'inline-flex items-center text-sm font-medium text-gray-500 hover:text-[var(--google-blue)] transition-colors group/btn';
   }

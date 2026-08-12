@@ -37,7 +37,7 @@ export default async function Home() {
     <div className="space-y-8 pb-16">
       
       {/* 1. 메인 페이지 인트로 헤더 (Premium 스타일) */}
-      <div className="mt-4 relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-white to-blue-50/30 dark:from-[#1a1c20] dark:via-[#1a1c20] dark:to-blue-900/20 border border-blue-100 dark:border-gray-800 p-6 sm:p-8 lg:p-10 shadow-sm">
+      <div className="mt-4 relative overflow-hidden rounded-none-none bg-gradient-to-br from-blue-50 via-white to-blue-50/30 dark:from-[#1a1c20] dark:via-[#1a1c20] dark:to-blue-900/20 border border-blue-100 dark:border-gray-800 p-6 sm:p-8 lg:p-10 shadow-2xl">
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] dark:opacity-[0.05] mix-blend-overlay pointer-events-none" />
         
         <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-8 lg:gap-12">
@@ -57,7 +57,7 @@ export default async function Home() {
 
           {/* 로고 (우측) */}
           <div className="shrink-0 w-full lg:w-auto flex justify-center items-center order-1 lg:order-2">
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 drop-shadow-xl bg-white dark:bg-white/10 rounded-full p-4 border-4 border-white/50 backdrop-blur-sm">
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 drop-shadow-xl bg-white dark:bg-white/10 rounded-none-full p-4 border-4 border-white/50 backdrop-blur-sm">
               <Image 
                 src="/images/uijeongbu-logo.png" 
                 alt="의정부 행복특별시 마크" 

@@ -26,7 +26,7 @@ export default function EmergencyMap({ mapCenter, activeTab, currentData, setSel
           {activeTab === 'er' ? (
             <div 
               onClick={() => setSelectedItem(item)}
-              className={`cursor-pointer px-3 py-1.5 bg-white dark:bg-[#202124] border-2 rounded-full shadow-lg text-sm font-bold flex items-center gap-1.5 transition-transform hover:scale-105 ${
+              className={`cursor-pointer px-3 py-1.5 bg-white dark:bg-[#202124] border-2 rounded-none-full shadow-2xl text-sm font-bold flex items-center gap-1.5 transition-transform hover:scale-105 ${
                 item.status === 'busy' ? 'border-red-500 text-red-600 dark:text-red-400' :
                 item.status === 'normal' ? 'border-yellow-500 text-yellow-600 dark:text-yellow-400' :
                 'border-emerald-500 text-emerald-600 dark:text-emerald-400'
@@ -38,7 +38,7 @@ export default function EmergencyMap({ mapCenter, activeTab, currentData, setSel
           ) : (
             <div 
               onClick={() => setSelectedItem(item)}
-              className="cursor-pointer px-3 py-1.5 bg-white dark:bg-[#202124] border-2 border-[#2ed573] rounded-full shadow-lg text-sm font-bold flex items-center gap-1.5 transition-transform hover:scale-105"
+              className="cursor-pointer px-3 py-1.5 bg-white dark:bg-[#202124] border-2 border-[#2ed573] rounded-none-full shadow-2xl text-sm font-bold flex items-center gap-1.5 transition-transform hover:scale-105"
             >
               <span className="text-[#2ed573]">💊</span>
               <span className="text-gray-800 dark:text-white max-w-[80px] truncate">{item.name}</span>

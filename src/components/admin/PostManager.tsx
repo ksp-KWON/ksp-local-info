@@ -163,7 +163,7 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
   if (loading) {
     return (
       <AdminPanelLayout innerClassName="flex items-center justify-center w-full h-full bg-white dark:bg-[#111111]">
-        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-none-full animate-spin"></div>
       </AdminPanelLayout>
     );
   }
@@ -194,17 +194,17 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
               <button
                 onClick={handleTriggerAiGenerate}
                 disabled={aiGenerating}
-                className={`flex items-center gap-1.5 text-xs font-bold py-2.5 px-4 rounded-lg transition-colors shadow-sm ${aiGenerating ? 'bg-purple-300 dark:bg-purple-900/50 cursor-not-allowed text-white' : 'bg-purple-600 hover:bg-purple-700 text-white cursor-pointer'}`}
+                className={`flex items-center gap-1.5 text-xs font-bold py-2.5 px-4 rounded-none-none transition-colors shadow-2xl ${aiGenerating ? 'bg-purple-300 dark:bg-purple-900/50 cursor-not-allowed text-white' : 'bg-purple-600 hover:bg-purple-700 text-white cursor-pointer'}`}
               >
                 {aiGenerating ? (
-                  <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />생성중...</>
+                  <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-none-full animate-spin" />생성중...</>
                 ) : (
                   <><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>AI 포스팅</>
                 )}
               </button>
               <button
                 onClick={handleOpenAddPost}
-                className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg cursor-pointer transition-colors shadow-sm flex items-center gap-1.5"
+                className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-4 rounded-none-none cursor-pointer transition-colors shadow-2xl flex items-center gap-1.5"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
                 새 글 작성
@@ -239,10 +239,10 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
                           </td>
                           <td className="px-6 py-4 text-center">
                             <div className="flex justify-center gap-2">
-                              <button onClick={() => handleOpenEditPost(p)} className="text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 p-1.5 rounded-md transition-colors" title="수정">
+                              <button onClick={() => handleOpenEditPost(p)} className="text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 p-1.5 rounded-none-none transition-colors" title="수정">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                               </button>
-                              <button onClick={() => handleDeletePost(p.slug)} className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 p-1.5 rounded-md transition-colors" title="삭제">
+                              <button onClick={() => handleDeletePost(p.slug)} className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 p-1.5 rounded-none-none transition-colors" title="삭제">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                               </button>
                             </div>
@@ -267,10 +267,10 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
                       <h4 className="font-bold text-gray-900 dark:text-white text-base leading-tight">{p.title}</h4>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
-                      <button onClick={() => handleOpenEditPost(p)} className="p-2 text-blue-600 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <button onClick={() => handleOpenEditPost(p)} className="p-2 text-blue-600 bg-blue-50 dark:bg-blue-900/20 rounded-none-none">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                       </button>
-                      <button onClick={() => handleDeletePost(p.slug)} className="p-2 text-red-500 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                      <button onClick={() => handleDeletePost(p.slug)} className="p-2 text-red-500 bg-red-50 dark:bg-red-900/20 rounded-none-none">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                       </button>
                     </div>
@@ -283,9 +283,9 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
         ) : (
           <div className="flex-1 overflow-hidden flex flex-col bg-gray-50 dark:bg-zinc-950">
             {/* Top Toolbar */}
-            <div className="h-14 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-between px-4 sm:px-6 shrink-0 shadow-sm z-10">
+            <div className="h-14 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-between px-4 sm:px-6 shrink-0 shadow-2xl z-10">
               <div className="flex items-center gap-3">
-                <button type="button" onClick={() => { setEditingPost(null); setIsAddingPost(false); }} className="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
+                <button type="button" onClick={() => { setEditingPost(null); setIsAddingPost(false); }} className="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-none-none transition-colors">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
                 <h3 className="text-sm font-bold text-gray-800 dark:text-white">
@@ -293,10 +293,10 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
                 </h3>
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={() => setPreviewMode(!previewMode)} className="md:hidden text-xs font-bold px-3 py-1.5 border border-gray-300 dark:border-zinc-700 rounded-lg">
+                <button onClick={() => setPreviewMode(!previewMode)} className="md:hidden text-xs font-bold px-3 py-1.5 border border-gray-300 dark:border-zinc-700 rounded-none-none">
                   {previewMode ? '에디터 보기' : '미리보기'}
                 </button>
-                <button onClick={handleSavePost} className="px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md rounded-xl transition-all">
+                <button onClick={handleSavePost} className="px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-2xl rounded-none-none transition-all">
                   저장하기
                 </button>
               </div>
@@ -312,25 +312,25 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[11px] font-bold text-gray-500">슬러그 (영문)</label>
-                      <input type="text" value={postForm.slug} onChange={e => setPostForm({ ...postForm, slug: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs outline-none" required />
+                      <input type="text" value={postForm.slug} onChange={e => setPostForm({ ...postForm, slug: e.target.value })} className="w-full px-3 py-2 rounded-none-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs outline-none" required />
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[11px] font-bold text-gray-500">날짜</label>
-                      <input type="text" value={postForm.date} onChange={e => setPostForm({ ...postForm, date: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs font-mono outline-none" required />
+                      <input type="text" value={postForm.date} onChange={e => setPostForm({ ...postForm, date: e.target.value })} className="w-full px-3 py-2 rounded-none-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs font-mono outline-none" required />
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[11px] font-bold text-gray-500">카테고리</label>
-                      <input type="text" value={postForm.category} onChange={e => setPostForm({ ...postForm, category: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs outline-none" />
+                      <input type="text" value={postForm.category} onChange={e => setPostForm({ ...postForm, category: e.target.value })} className="w-full px-3 py-2 rounded-none-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs outline-none" />
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[11px] font-bold text-gray-500">태그</label>
-                      <input type="text" value={postForm.tags} onChange={e => setPostForm({ ...postForm, tags: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs outline-none" placeholder="쉼표로 구분" />
+                      <input type="text" value={postForm.tags} onChange={e => setPostForm({ ...postForm, tags: e.target.value })} className="w-full px-3 py-2 rounded-none-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs outline-none" placeholder="쉼표로 구분" />
                     </div>
                   </div>
 
                   <div className="space-y-1.5 pb-4 border-b border-gray-100 dark:border-zinc-800">
                     <label className="text-[11px] font-bold text-gray-500">요약 (SEO Description)</label>
-                    <textarea value={postForm.summary} onChange={e => setPostForm({ ...postForm, summary: e.target.value })} rows={2} className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs outline-none resize-none" required />
+                    <textarea value={postForm.summary} onChange={e => setPostForm({ ...postForm, summary: e.target.value })} rows={2} className="w-full px-3 py-2 rounded-none-none border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-950 text-xs outline-none resize-none" required />
                   </div>
 
                   {/* Raw Markdown Area */}
@@ -348,7 +348,7 @@ export default function PostManager({ showMsg }: { showMsg: (type: 'success' | '
               <div className={`flex-1 flex flex-col bg-gray-50 dark:bg-zinc-950 overflow-y-auto custom-scrollbar ${!previewMode ? 'hidden md:flex' : 'flex'}`}>
                 <div className="p-6 md:p-8 w-full max-w-3xl mx-auto">
                   <div className="text-[10px] font-bold text-gray-400 mb-6 flex items-center gap-2 uppercase tracking-widest">
-                    <span className="w-2 h-2 rounded-full bg-blue-500"></span> Live Preview
+                    <span className="w-2 h-2 rounded-none-full bg-blue-500"></span> Live Preview
                   </div>
                   <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-6 leading-tight break-words">
                     {postForm.title || '제목 없음'}

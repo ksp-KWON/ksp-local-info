@@ -56,7 +56,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   return (
     <div className="space-y-8 pb-16">
       {/* 블로그 페이지 헤더 (Premium 스타일) */}
-      <div className="mt-4 relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50/80 via-white to-blue-50/30 dark:from-[#1a1c20] dark:via-[#1a1c20] dark:to-blue-900/10 border border-blue-100/50 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+      <div className="mt-4 relative overflow-hidden rounded-none-none bg-gradient-to-br from-blue-50/80 via-white to-blue-50/30 dark:from-[#1a1c20] dark:via-[#1a1c20] dark:to-blue-900/10 border border-blue-100/50 dark:border-gray-800 p-6 sm:p-8 shadow-2xl">
         <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-3">
           {categoryTitle}
         </h1>
@@ -70,7 +70,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mt-2">
           <button
             onClick={() => setSelectedTag(null)}
-            className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-bold transition-all border-2 ${
+            className={`shrink-0 px-4 py-1.5 rounded-none-full text-sm font-bold transition-all border-2 ${
               selectedTag === null 
                 ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_rgba(255,255,255,1)]' 
                 : 'bg-white text-black border-black/20 hover:border-black dark:bg-[#1a1a1a] dark:text-white dark:border-white/20 dark:hover:border-white'
@@ -82,7 +82,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
             <button
               key={tag}
               onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-              className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-bold transition-all border-2 ${
+              className={`shrink-0 px-4 py-1.5 rounded-none-full text-sm font-bold transition-all border-2 ${
                 selectedTag === tag
                   ? 'bg-[#3b82f6] text-white border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_rgba(255,255,255,1)]'
                   : 'bg-white text-black border-black/20 hover:border-black dark:bg-[#1a1a1a] dark:text-white dark:border-white/20 dark:hover:border-white'
@@ -99,7 +99,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
           <PostCard key={post.slug} post={post} variant="list" />
         ))}
         {mounted && posts.length === 0 && (
-          <div className="bg-white dark:bg-[#1a1c20] rounded-2xl border border-gray-100 dark:border-gray-800 text-center py-16 px-4 sm:p-16 col-span-full shadow-sm">
+          <div className="bg-white dark:bg-[#1a1c20] rounded-none-none border border-gray-100 dark:border-gray-800 text-center py-16 px-4 sm:p-16 col-span-full shadow-2xl">
             <svg className="w-12 h-12 text-gray-400 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M3 15h6"></path><path d="M3 19h6"></path><path d="M10 15h8"></path><path d="M10 19h8"></path></svg>
             <p className="text-lg font-bold tracking-wide text-gray-500 dark:text-gray-400">
               해당 카테고리에 등록된 포스팅이 없습니다.

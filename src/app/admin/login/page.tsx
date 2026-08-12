@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
-      <div className="w-full max-w-md bg-white dark:bg-[#25262b] border border-slate-300 dark:border-[#444] rounded-xl shadow-md p-8 transition-colors duration-300">
+      <div className="w-full max-w-md bg-white dark:bg-[#25262b] border border-slate-300 dark:border-[#444] rounded-none-none shadow-2xl p-8 transition-colors duration-300">
         <div className="text-center mb-6">
           <span className="text-4xl">🔐</span>
           <h1 className="text-2xl font-bold mt-2 text-slate-800 dark:text-slate-100">관리자 로그인</h1>
@@ -59,13 +59,13 @@ export default function AdminLoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               disabled={loading}
-              className="w-full px-4 py-2 border border-slate-300 dark:border-[#444] rounded-lg bg-slate-50 dark:bg-[#1a1b1e] text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-[#ff5544] focus:border-transparent transition-all"
+              className="w-full px-4 py-2 border border-slate-300 dark:border-[#444] rounded-none-none bg-slate-50 dark:bg-[#1a1b1e] text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-2 focus:ring-[#ff5544] focus:border-transparent transition-all"
               required
             />
           </div>
 
           {error && (
-            <div className="text-sm text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-950/30 p-3 rounded-lg border border-red-200 dark:border-red-900/50">
+            <div className="text-sm text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-950/30 p-3 rounded-none-none border border-red-200 dark:border-red-900/50">
               ⚠️ {error}
             </div>
           )}
@@ -73,7 +73,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#ff5544] hover:bg-[#e04433] text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="w-full bg-[#ff5544] hover:bg-[#e04433] text-white font-medium py-2 px-4 rounded-none-none transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {loading ? '인증 중...' : '로그인'}
           </button>

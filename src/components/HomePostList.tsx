@@ -58,7 +58,7 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
 
       {/* 2. 하단 탭형 카테고리 */}
       {restCategories.length > 0 && (
-        <section className="mt-12 bg-white dark:bg-[#1a1c20] p-5 sm:p-8 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm">
+        <section className="mt-12 bg-white dark:bg-[#1a1c20] p-5 sm:p-8 rounded-none-none border border-gray-100 dark:border-gray-800 shadow-2xl">
           <h3 className="font-bold text-xl sm:text-2xl mb-5 text-gray-900 dark:text-white flex items-center gap-2">
             <span>✨</span> 더 많은 맞춤 혜택 찾아보기
           </h3>
@@ -68,9 +68,9 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
               <button
                 key={cat.categoryId}
                 onClick={() => setActiveTab(cat.categoryId)}
-                className={`whitespace-nowrap px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-200 ${
+                className={`whitespace-nowrap px-5 py-2.5 text-sm font-semibold rounded-none-full transition-all duration-200 ${
                   currentTabCategory?.categoryId === cat.categoryId
-                    ? 'bg-blue-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white shadow-2xl'
                     : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
@@ -89,7 +89,7 @@ export default function HomePostList({ initialPosts }: { initialPosts: PostData[
           
           {currentTabCategory && (
             <div className="mt-8 text-center">
-              <Link href={`/blog?category=${encodeURIComponent(currentTabCategory.categoryId)}`} className="inline-flex items-center gap-2 font-bold text-[15px] bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-6 py-3.5 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200">
+              <Link href={`/blog?category=${encodeURIComponent(currentTabCategory.categoryId)}`} className="inline-flex items-center gap-2 font-bold text-[15px] bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-6 py-3.5 rounded-none-none hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-200">
                 {currentTabCategory.categoryLabel} 전체보기 ➡️
               </Link>
             </div>

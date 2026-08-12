@@ -45,7 +45,7 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
   };
 
   return (
-    <div className={`bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/10 dark:to-indigo-900/10 border border-blue-100/50 dark:border-blue-800/50 rounded-2xl p-5 shadow-sm space-y-4 ${className}`}>
+    <div className={`bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/10 dark:to-indigo-900/10 border border-blue-100/50 dark:border-blue-800/50 rounded-none-none p-5 shadow-2xl space-y-4 ${className}`}>
       <h3 className="font-bold text-lg text-blue-800 dark:text-blue-300 flex items-center gap-2 m-0">
         <Sparkles className="w-5 h-5 text-blue-500" />
         AI 핵심 요약 노트
@@ -55,14 +55,14 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
         {!hasStarted ? (
           <button
             onClick={fetchComment}
-            className="group flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 mt-1"
+            className="group flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-none-none font-bold transition-all duration-200 shadow-2xl hover:shadow-2xl hover:-translate-y-0.5 mt-1"
           >
             <Zap className="w-4 h-4 group-hover:scale-110 transition-transform" />
             이 정책의 AI 핵심 요약 및 꿀팁 보기
           </button>
         ) : loading ? (
           <div className="flex items-center gap-2 text-[var(--google-blue)] animate-pulse mt-1">
-            <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-none-full animate-spin" />
             <span className="text-blue-600 dark:text-blue-400">지원 조건 및 핵심 혜택을 분석 중입니다... (약 2~4초 소요)</span>
           </div>
         ) : (
