@@ -7,6 +7,7 @@ import MobileBottomNav from "@/components/MobileBottomNav";
 import { getSortedPostsData } from "@/lib/posts";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
+import Image from "next/image";
 
 export default function PublicLayout({
   children,
@@ -38,8 +39,8 @@ export default function PublicLayout({
           <div className="flex items-center min-w-0 flex-1 mr-1 sm:mr-2">
             <div className="font-sans font-black text-lg sm:text-xl min-w-0 tracking-tight">
               <Link href="/" className="group flex items-center gap-2 sm:gap-2.5 whitespace-nowrap overflow-hidden">
-                <div className="relative flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 shrink-0 bg-white dark:bg-[#121417] border-2 border-black dark:border-white group-hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:group-hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] group-hover:-translate-y-0.5 group-hover:-translate-x-0.5 transition-all duration-200 z-10">
-                  <Hospital className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white" strokeWidth={2.5} />
+                <div className="relative flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 shrink-0 bg-white border-2 border-black dark:border-white group-hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:group-hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] group-hover:-translate-y-0.5 group-hover:-translate-x-0.5 transition-all duration-200 z-10 overflow-hidden rounded-none">
+                  <Image src="/images/uijeongbu-logo.png" alt="의정부 행복특별시 로고" fill className="object-contain p-1" sizes="44px" />
                 </div>
                 <span className="hidden sm:inline font-jua font-normal text-2xl text-black dark:text-white truncate tracking-tight">
                   의정부 건강·생활 정보 포털
