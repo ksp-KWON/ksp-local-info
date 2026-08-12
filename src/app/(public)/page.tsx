@@ -42,9 +42,9 @@ export default async function Home() {
           
           {/* 텍스트 영역 (좌측) */}
           <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-[1.2]">
-              의정부 <br className="hidden sm:block lg:hidden" />
-              건강ㆍ생활 정보 포털
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2]">
+              <span className="text-gray-900 dark:text-white">의정부</span> <br className="hidden sm:block lg:hidden" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-400">건강ㆍ생활 정보 포털</span>
             </h1>
           </div>
 
@@ -75,7 +75,7 @@ export default async function Home() {
         >
           <MiniMapPreview type="emergency" />
           <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-red-600 dark:text-red-400 mb-2 flex items-center gap-2">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-red-400 dark:to-rose-400 mb-2 block">
               달빛어린이병원 & 심야약국 찾기
             </h3>
             <p className="text-[14px] sm:text-[15px] font-medium text-gray-600 dark:text-gray-400 break-keep max-w-[85%]">
@@ -99,7 +99,7 @@ export default async function Home() {
         >
           <MiniMapPreview type="currency" />
           <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 mb-2 block">
               의정부 사랑카드 가맹점 찾기
             </h3>
             <p className="text-[14px] sm:text-[15px] font-medium text-gray-600 dark:text-gray-400 break-keep max-w-[85%]">
