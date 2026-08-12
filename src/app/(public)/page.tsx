@@ -86,7 +86,7 @@ export default async function Home() {
         {/* 응급실/약국 찾기 카드 */}
         <Link 
           href="/services/emergency"
-          className="group relative overflow-hidden border border-red-100 dark:border-red-900/50 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-2xl hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1"
+          className="group relative overflow-hidden border border-red-100 dark:border-red-900/50 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-red-500/20 dark:hover:shadow-red-500/10 hover:-translate-y-1"
         >
           <MiniMapPreview type="emergency" />
           <div className="relative z-10">
@@ -110,7 +110,7 @@ export default async function Home() {
         {/* 의정부 사랑카드 가맹점 지도 카드 */}
         <Link 
           href="/services/local-currency"
-          className="group relative overflow-hidden border border-blue-100 dark:border-blue-900/50 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-2xl hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1"
+          className="group relative overflow-hidden border border-blue-100 dark:border-blue-900/50 rounded-none p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/10 hover:-translate-y-1"
         >
           <MiniMapPreview type="currency" />
           <div className="relative z-10">
