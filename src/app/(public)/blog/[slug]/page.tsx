@@ -1,8 +1,6 @@
 import { getPostData, getSortedPostsData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import fs from 'fs';
-import path from 'path';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
@@ -48,21 +46,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     notFound();
   }
 
-  // local-info.json에서 매칭되는 원문 링크 찾기
-  let sourceLink = '';
-  try {
-    const localInfoPath = path.join(process.cwd(), 'public/data/local-info.json');
-    if (fs.existsSync(localInfoPath)) {
-      const data = JSON.parse(fs.readFileSync(localInfoPath, 'utf8'));
-      const items = [...(data.events || []), ...(data.benefits || [])];
-      const matched = items.find((item: {title: string, link: string}) => item.title === post.title);
-      if (matched && matched.link && matched.link !== '#') {
-        sourceLink = matched.link;
-      }
-    }
-  } catch {
-    // Ignore error
-  }
+  const sourceLink = post.sourceLink || '';
 
   const blogSchema = {
     "@context": "https://schema.org",

@@ -142,7 +142,8 @@ ${STRICT_RULES}
     date: new Date().toISOString(),
     summary: plan.summary,
     category: plan.category,
-    tags: plan.tags
+    tags: plan.tags,
+    sourceLink: bestNews.link || ''
   };
 
   const fileContent = matter.stringify(markdownContent, frontmatter);

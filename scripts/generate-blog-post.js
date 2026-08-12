@@ -98,6 +98,7 @@ async function main() {
         summary: plan.frontmatter.summary,
         category: plan.frontmatter.category,
         tags: plan.frontmatter.tags,
+        sourceLink: item.link && item.link !== '#' ? item.link : '',
         sourceId: sourceId,
         slug: makeSlug(item.title, today)
       };

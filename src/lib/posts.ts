@@ -5,6 +5,35 @@ import { PostData } from './types';
 
 const postsDirectory = path.join(process.cwd(), 'src/content/posts');
 
+function parsePostMetadata(slug: string, matterResult: matter.GrayMatterFile<string>): PostData {
+  let dateStr = matterResult.data.date;
+  if (dateStr instanceof Date) {
+    dateStr = dateStr.toISOString().split('T')[0];
+  } else if (typeof dateStr === 'string' && dateStr.includes('T')) {
+    dateStr = dateStr.split('T')[0];
+  }
+
+  let categoryArray: string[] = [];
+  if (matterResult.data.category) {
+    if (Array.isArray(matterResult.data.category)) {
+      categoryArray = matterResult.data.category;
+    } else if (typeof matterResult.data.category === 'string') {
+      categoryArray = matterResult.data.category.split(',').map(s => s.trim());
+    }
+  }
+
+  return {
+    slug,
+    title: matterResult.data.title || '',
+    date: dateStr || '',
+    summary: matterResult.data.summary || '',
+    category: categoryArray,
+    tags: matterResult.data.tags || [],
+    sourceLink: matterResult.data.sourceLink || '',
+    content: matterResult.content,
+  };
+}
+
 export function getSortedPostsData(): PostData[] {
   if (!fs.existsSync(postsDirectory)) {
     return [];
@@ -16,31 +45,7 @@ export function getSortedPostsData(): PostData[] {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     const matterResult = matter(fileContents);
-    let dateStr = matterResult.data.date;
-    if (dateStr instanceof Date) {
-      dateStr = dateStr.toISOString().split('T')[0];
-    } else if (typeof dateStr === 'string' && dateStr.includes('T')) {
-      dateStr = dateStr.split('T')[0];
-    }
-
-    let categoryArray: string[] = [];
-    if (matterResult.data.category) {
-      if (Array.isArray(matterResult.data.category)) {
-        categoryArray = matterResult.data.category;
-      } else if (typeof matterResult.data.category === 'string') {
-        categoryArray = matterResult.data.category.split(',').map(s => s.trim());
-      }
-    }
-
-    return {
-      slug,
-      title: matterResult.data.title || '',
-      date: dateStr || '',
-      summary: matterResult.data.summary || '',
-      category: categoryArray,
-      tags: matterResult.data.tags || [],
-      content: matterResult.content,
-    };
+    return parsePostMetadata(slug, matterResult);
   });
 
   return allPostsData.sort((a, b) => {
@@ -58,30 +63,5 @@ export function getPostData(slug: string): PostData | null {
   
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
-  
-  let dateStr = matterResult.data.date;
-  if (dateStr instanceof Date) {
-    dateStr = dateStr.toISOString().split('T')[0];
-  } else if (typeof dateStr === 'string' && dateStr.includes('T')) {
-    dateStr = dateStr.split('T')[0];
-  }
-
-    let categoryArray: string[] = [];
-    if (matterResult.data.category) {
-      if (Array.isArray(matterResult.data.category)) {
-        categoryArray = matterResult.data.category;
-      } else if (typeof matterResult.data.category === 'string') {
-        categoryArray = matterResult.data.category.split(',').map(s => s.trim());
-      }
-    }
-
-    return {
-      slug,
-      title: matterResult.data.title || '',
-      date: dateStr || '',
-      summary: matterResult.data.summary || '',
-      category: categoryArray,
-      tags: matterResult.data.tags || [],
-      content: matterResult.content,
-    };
+  return parsePostMetadata(slug, matterResult);
 }

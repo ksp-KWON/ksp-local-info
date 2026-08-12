@@ -5,5 +5,6 @@ export type PostData = {
   summary: string;
   category?: string | string[];
   tags?: string[];
+  sourceLink?: string;
   content: string;
 };
