@@ -7,6 +7,7 @@ import { getSortedPostsData } from '@/lib/posts';
 import HomePostList from '@/components/HomePostList';
 import { Metadata } from 'next';
 import Image from 'next/image';
+import MiniMapPreview from '@/components/MiniMapPreview';
 
 interface LocalData {
   lastUpdated: string;
@@ -76,8 +77,9 @@ export default async function Home() {
         {/* 응급실/약국 찾기 카드 */}
         <Link 
           href="/services/emergency"
-          className="group relative overflow-hidden bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/10 border border-red-100 dark:border-red-900/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
+          className="group relative overflow-hidden border border-red-100 dark:border-red-900/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1"
         >
+          <MiniMapPreview type="emergency" />
           <div className="relative z-10">
             <h3 className="text-xl sm:text-2xl font-extrabold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
               우리아이 달빛어린이병원 <br className="hidden sm:block" />& 야간약국 찾기
@@ -99,8 +101,9 @@ export default async function Home() {
         {/* 의정부 사랑카드 가맹점 지도 카드 */}
         <Link 
           href="/services/local-currency"
-          className="group relative overflow-hidden bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/10 border border-blue-100 dark:border-blue-900/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1"
+          className="group relative overflow-hidden border border-blue-100 dark:border-blue-900/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-[200px] transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1"
         >
+          <MiniMapPreview type="currency" />
           <div className="relative z-10">
             <h3 className="text-xl sm:text-2xl font-extrabold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
               의정부 사랑카드 (지역화폐) <br className="hidden sm:block" />가맹점 지도
