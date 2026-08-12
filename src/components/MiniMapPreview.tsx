@@ -26,9 +26,9 @@ export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
   ];
 
   if (loading || error) {
-    // 로딩 중이거나 에러 시 무채색 배경색만 표시
+    // 로딩 중이거나 에러 시 배경색만 표시
     return (
-      <div className={`absolute inset-0 z-0 bg-gray-100 dark:bg-[#2a2a2a]`} />
+      <div className={`absolute inset-0 z-0 ${type === 'emergency' ? 'bg-red-50/50 dark:bg-red-900/10' : 'bg-blue-50/50 dark:bg-blue-900/10'}`} />
     );
   }
 
@@ -57,9 +57,14 @@ export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
         ))}
       </Map>
 
-      {/* 가독성을 위한 오버레이 필터 및 흐림 효과(backdrop-blur) */}
-      <div className={`absolute inset-0 z-10 backdrop-blur-[2px] bg-gradient-to-br from-white/95 via-white/80 to-transparent dark:from-[#121212]/95 dark:via-[#121212]/80`} />
-      
+      {/* 가독성을 위한 오버레이 필터 */}
+      <div 
+        className={`absolute inset-0 z-10 transition-colors duration-500 backdrop-blur-[2px] ${
+          type === 'emergency' 
+            ? 'bg-gradient-to-br from-red-50/95 via-red-50/80 to-transparent dark:from-[#2a1313]/95 dark:via-[#2a1313]/80' 
+            : 'bg-gradient-to-br from-blue-50/95 via-blue-50/80 to-transparent dark:from-[#131d2a]/95 dark:via-[#131d2a]/80'
+        }`}
+      />
       {/* 벤토 박스 테두리와 잘 어울리도록 살짝 어두운 틴트 추가 */}
       <div className="absolute inset-0 z-10 bg-black/5 dark:bg-black/30" />
     </div>
