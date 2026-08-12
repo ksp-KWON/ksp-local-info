@@ -75,7 +75,7 @@ export default async function Home() {
         >
           <MiniMapPreview type="emergency" />
           <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-red-600 dark:text-red-400 mb-2 flex items-center gap-2">
               달빛어린이병원 & 심야약국 찾기
             </h3>
             <p className="text-[14px] sm:text-[15px] font-medium text-gray-600 dark:text-gray-400 break-keep max-w-[85%]">
@@ -99,7 +99,7 @@ export default async function Home() {
         >
           <MiniMapPreview type="currency" />
           <div className="relative z-10">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
               의정부 사랑카드 가맹점 찾기
             </h3>
             <p className="text-[14px] sm:text-[15px] font-medium text-gray-600 dark:text-gray-400 break-keep max-w-[85%]">
