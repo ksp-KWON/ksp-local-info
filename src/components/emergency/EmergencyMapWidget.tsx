@@ -33,7 +33,7 @@ export default function EmergencyMapWidget({ isWidget = false }: EmergencyMapWid
   });
 
   return (
-    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-2xl sm:rounded-3xl shadow-lg border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-lg shadow-2xl border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
       {/* 1. 헤더 영역 */}
       <header className="bg-white dark:bg-[#202124] shadow-sm z-20 shrink-0 border-b border-gray-100 dark:border-gray-800">
         <div className="p-4 pb-2">

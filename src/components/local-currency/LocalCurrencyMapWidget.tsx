@@ -69,7 +69,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
   }, []);
 
   return (
-    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-2xl sm:rounded-3xl shadow-lg border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-lg shadow-2xl border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
       {/* 2. 헤더 바 */}
       <header className="bg-white dark:bg-[#202124] shadow-sm z-20 p-4 pb-2 flex flex-col gap-3 relative border-b border-gray-200 dark:border-gray-800 shrink-0">
         <div className="flex items-center justify-between">
