@@ -6,7 +6,7 @@ export const dynamic = 'force-static';
 
 export async function POST() {
   try {
-    const scriptPath = path.join(process.cwd(), 'scripts', 'generate-blog-post.js');
+    const scriptPath = path.join(process.cwd(), 'scripts', 'generate-local-news.js');
     
     // Fire and forget: 비동기로 백그라운드에서 실행하고 응답은 즉시 반환
     // (서버리스 환경이 아닐 경우 백그라운드 프로세스로 잘 동작함)

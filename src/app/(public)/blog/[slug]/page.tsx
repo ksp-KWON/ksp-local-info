@@ -7,7 +7,6 @@ import MarkdownRenderer from '@/components/MarkdownRenderer';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
 import AiCommentBox from '@/components/blog/AiCommentBox';
-import AuthorBioCard from '@/components/blog/AuthorBioCard';
 import NeoBox from '@/components/ui/NeoBox';
 import NeoHeading from '@/components/ui/NeoHeading';
 import NeoBadge from '@/components/ui/NeoBadge';
@@ -196,7 +195,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <AiCommentBox sourceText={post.content} type="policy" />
           </div>
 
-          <div className="prose prose-indigo dark:prose-invert max-w-none font-jua prose-p:font-jua prose-li:font-jua prose-a:font-jua">
+          <div className="prose prose-indigo dark:prose-invert max-w-none font-jua prose-p:font-jua prose-li:font-jua prose-a:font-jua prose-table:w-full prose-table:table-auto prose-th:whitespace-nowrap">
             <MarkdownRenderer content={post.content} />
           </div>
           
@@ -216,14 +215,16 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </NeoBox>
           )}
 
-          <NeoBox shadowColor="pink" className="!bg-yellow-50 dark:!bg-[#303134] text-[13.5px] text-gray-700 dark:text-gray-300 leading-relaxed mb-10 flex gap-3 font-medium">
-            <span className="text-lg leading-none">💡</span>
-            <p>
-              이 포스팅은 공공데이터포털(<a href="http://data.go.kr/" target="_blank" rel="noopener noreferrer" className="text-[#1a73e8] dark:text-[#8ab4f8] hover:underline font-bold">data.go.kr</a>)의 공개 정보를 바탕으로 AI가 유익하고 이해하기 쉽게 정리한 글입니다. 정책 세부 조건 및 변경사항은 공식 출처 링크를 통해 다시 한번 확인해주시기 바랍니다.
-            </p>
+          {/* 관련된 의정부 혜택 추천 (새로운 제안) */}
+          <NeoBox shadowColor="pink" className="!bg-indigo-50 dark:!bg-[#303134] mb-10">
+            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+              <span>🌟</span> 의정부 시민들이 많이 찾는 다른 혜택
+            </h3>
+            <ul className="list-disc pl-5 space-y-2 text-sm font-medium">
+              <li><a href="/blog" className="text-blue-600 hover:underline">의정부시 청년 및 신혼부부 전세자금 대출 이자 지원 안내</a></li>
+              <li><a href="/blog" className="text-blue-600 hover:underline">의정부사랑카드(지역화폐) 인센티브 혜택 완벽 가이드</a></li>
+            </ul>
           </NeoBox>
-
-          <AuthorBioCard />
 
           <div className="my-8">
             <AdBanner slot="blog-bottom-ad" />

@@ -11,7 +11,7 @@
 
 'use strict';
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+const { sleep } = require('./pipeline-utils.js');
 
 
 // ── 모델 계열 정의 ────────────────────────────────────────────────────────────
@@ -128,15 +128,23 @@ async function discoverModels() {
 /**
  * @param {string} prompt - 보낼 프롬프트
  * @param {object|null} schema - JSON 출력용 스키마 (null이면 텍스트 반환)
+ * @param {string} targetTier - 'auto' (기본값: flash 우선), 'lite' (lite 전용), 'flash' (flash 전용)
  * @returns {Promise<string|object>} 응답 텍스트 또는 파싱된 JSON
  */
-async function callGemini(prompt, schema = null) {
+async function callGemini(prompt, schema = null, targetTier = 'auto') {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey || apiKey.length < 10) {
     throw new Error('GEMINI_API_KEY가 등록되지 않았거나 유효하지 않습니다.');
   }
 
-  const models = await discoverModels();
+  let models = await discoverModels();
+  
+  // ── 타겟 티어 우선 정렬 (토큰 절약 목적이되, 실패 시 타 계열로 Fallback) ──
+  if (targetTier === 'lite') {
+    models = [...models].sort((a, b) => (a.tier === 'lite' ? -1 : b.tier === 'lite' ? 1 : 0));
+  } else if (targetTier === 'flash') {
+    models = [...models].sort((a, b) => (a.tier === 'flash' ? -1 : b.tier === 'flash' ? 1 : 0));
+  }
 
   const baseConfig = { temperature: schema ? 0.2 : 0.75 };
   if (schema) {
@@ -151,7 +159,7 @@ async function callGemini(prompt, schema = null) {
     };
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-    const finalizedPrompt = prompt;
+
 
     for (let attempt = 0; attempt <= RETRY_CONFIG.maxRetries; attempt++) {
       const controller = new AbortController();
@@ -163,7 +171,7 @@ async function callGemini(prompt, schema = null) {
         res = await fetch(url, {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ contents: [{ parts: [{ text: finalizedPrompt }] }], generationConfig }),
+          body:    JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig }),
           signal:  controller.signal,
         });
       } catch (networkErr) {
@@ -243,4 +251,4 @@ async function callGemini(prompt, schema = null) {
   throw new Error('모든 Gemini 모델이 응답하지 않았습니다. 잠시 후 다시 실행해 주세요.');
 }
 
-module.exports = { callGemini, discoverModels, sleep };
+module.exports = { callGemini, discoverModels };

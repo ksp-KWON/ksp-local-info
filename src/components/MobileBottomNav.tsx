@@ -24,17 +24,17 @@ function NavContent() {
     },
     {
       id: 'benefits',
-      label: '복지·지원금',
-      href: '/blog?category=복지·지원금',
-      isActive: category === '복지·지원금',
-      icon: <Coins className="w-6 h-6 mb-1" strokeWidth={category === '복지·지원금' ? 3 : 2} />
+      label: '숨은 지원금',
+      href: '/blog?category=💸 숨은 지원금 찾기',
+      isActive: category === '💸 숨은 지원금 찾기',
+      icon: <Coins className="w-6 h-6 mb-1" strokeWidth={category === '💸 숨은 지원금 찾기' ? 3 : 2} />
     },
     {
       id: 'jobs',
-      label: '일자리·창업',
-      href: '/blog?category=일자리·창업',
-      isActive: category === '일자리·창업',
-      icon: <Briefcase className="w-6 h-6 mb-1" strokeWidth={category === '일자리·창업' ? 3 : 2} />
+      label: '취업·창업',
+      href: '/blog?category=💼 취업과 창업',
+      isActive: category === '💼 취업과 창업',
+      icon: <Briefcase className="w-6 h-6 mb-1" strokeWidth={category === '💼 취업과 창업' ? 3 : 2} />
     },
     {
       id: 'emergency',
@@ -102,34 +102,47 @@ function NavContent() {
             </button>
           </div>
           
-          <div className="grid grid-cols-2 gap-3">
-            {CATEGORIES.map((cat) => {
-              const theme = getCategoryTheme(cat.label);
-              const Icon = theme.icon;
-              
-              const colorMap: Record<string, string> = {
-                blue: 'text-blue-500',
-                pink: 'text-pink-500',
-                yellow: 'text-yellow-500',
-                green: 'text-green-500',
-                red: 'text-red-500',
-                purple: 'text-purple-500',
-                orange: 'text-orange-500',
-                cyan: 'text-cyan-500'
-              };
-              
-              return (
-                <Link
-                  key={cat.id}
-                  href={`/blog?category=${cat.label}`}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-2 p-3 border-2 border-black dark:border-white hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all bg-gray-50 dark:bg-[#202124]"
-                >
-                  <Icon className={`w-5 h-5 ${colorMap[theme.color] || 'text-gray-500'}`} strokeWidth={2.5} />
-                  <span className="font-jua text-sm truncate">{cat.label}</span>
-                </Link>
-              );
-            })}
+          <div className="space-y-6">
+            {[
+              {
+                title: '💰 혜택 & 일자리',
+                items: CATEGORIES.filter(c => c.label.includes('지원금') || c.label.includes('취업'))
+              },
+              {
+                title: '👨‍👩‍👧 가족 & 건강',
+                items: CATEGORIES.filter(c => c.label.includes('아이') || c.label.includes('아플 때'))
+              },
+              {
+                title: '☕ 생활 & 즐길거리',
+                items: CATEGORIES.filter(c => !c.label.includes('지원금') && !c.label.includes('취업') && !c.label.includes('아이') && !c.label.includes('아플 때'))
+              }
+            ].map((group, idx) => (
+              <div key={idx}>
+                <h4 className="font-bold text-gray-500 dark:text-gray-400 text-xs mb-3 pl-1">{group.title}</h4>
+                <div className="grid grid-cols-2 gap-3">
+                  {group.items.map((cat) => {
+                    const theme = getCategoryTheme(cat.label);
+                    const Icon = theme.icon;
+                    const colorMap: Record<string, string> = {
+                      blue: 'text-blue-500', pink: 'text-pink-500', yellow: 'text-yellow-500',
+                      green: 'text-green-500', red: 'text-red-500', purple: 'text-purple-500',
+                      orange: 'text-orange-500', cyan: 'text-cyan-500'
+                    };
+                    return (
+                      <Link
+                        key={cat.id}
+                        href={`/blog?category=${encodeURIComponent(cat.label)}`}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="flex items-center gap-2 p-3 border-2 border-black dark:border-white hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all bg-gray-50 dark:bg-[#202124]"
+                      >
+                        <Icon className={`w-5 h-5 shrink-0 ${colorMap[theme.color] || 'text-gray-500'}`} strokeWidth={2.5} />
+                        <span className="font-jua text-[13px] truncate">{cat.label.replace(/^[^\s]+\s/, '')}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
           
           <div className="mt-4 grid grid-cols-2 gap-3">
