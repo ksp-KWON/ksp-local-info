@@ -23,7 +23,7 @@ export default function SearchBar() {
     <div className="flex items-center">
       <button 
         onClick={() => setIsOpen(true)} 
-        className="p-2 bg-white dark:bg-[#121417] border-2 border-black dark:border-white text-black dark:text-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all duration-200 flex items-center justify-center group"
+        className="p-2 text-black dark:text-white hover:-translate-y-0.5 transition-transform duration-200 flex items-center justify-center group rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
         aria-label="검색 열기"
         title="검색"
       >

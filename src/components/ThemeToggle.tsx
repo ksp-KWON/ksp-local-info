@@ -31,7 +31,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={cycleTheme}
-      className="p-2 sm:p-2 bg-white dark:bg-[#121417] border-2 border-black dark:border-white text-black dark:text-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all duration-200 flex items-center justify-center group cursor-pointer"
+      className="p-2 sm:p-2 text-black dark:text-white hover:-translate-y-0.5 transition-transform duration-200 flex items-center justify-center group cursor-pointer rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
       title={`테마 변경 (현재: ${
         theme === "light" ? "라이트 모드" : theme === "dark" ? "다크 모드" : "시스템 기본값"
       })`}
