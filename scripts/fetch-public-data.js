@@ -13,7 +13,8 @@
 
 const fs   = require('fs');
 const path = require('path');
-const { callGemini, sleep } = require('./gemini-helper');
+const { callGemini } = require('./gemini-helper');
+const { sleep } = require('./pipeline-utils');
 
 // ── 환경변수 로드 (.env.local) ──────────────────────────────────────────────
 const envPath = path.join(process.cwd(), '.env.local');

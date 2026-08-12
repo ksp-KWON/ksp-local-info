@@ -75,8 +75,8 @@ async function main() {
   console.log(`  -> 타겟 기사 발굴: ${bestNews.title}`);
 
   // 3. 기획안 작성 (Step 1)
-  // 의정부 전용 헌법 규칙 (보상스쿨 12조 완전 이식)
-  const STRICT_RULES = fs.readFileSync(path.join(__dirname, 'prompt-builder.js'), 'utf8'); // 기존 builder를 헌법으로 재사용하도록 나중에 리팩토링
+  // 의정부 전용 헌법 규칙 (보상스쿨 12조 완벽 이식)
+  const { STRICT_RULES } = require('./prompt-builder.js');
 
   const planPrompt = `의정부 시민을 위한 정보성 블로그 글 기획안을 작성하세요.
 [기사 원문]
@@ -113,14 +113,14 @@ async function main() {
 - 제목: ${plan.title}
 - 내용 요약: ${plan.summary}
 
-[작성 규칙 헌법]
-1. 본문 안에 H1(#) 절대 금지. H2(##)와 H3(###)만 사용.
-2. 마크다운 표(|---|---|) 1개 이상 필수.
-3. <green>강조</green>, <blue>핵심</blue> 등 형광펜 태그 사용. 태그 꼭 닫을 것.
-4. "결론적으로", "알아보았습니다" 등의 뻔한 AI식 맺음말 절대 금지.
-5. 어조는 전문적이고 따뜻한 행정 에디터 톤.
+# ⚖️ 공통 글쓰기 헌법 규칙 (STRICT WRITING RULES)
+${STRICT_RULES}
 
-본문(markdownContent)만 JSON으로 반환하세요.`;
+[추가 특별 지침]
+- 방대한 분량(최소 4~5개 H2 섹션)과 촘촘한 분석(하위 H3)을 갖춘 초장문 전문 칼럼을 작성하십시오.
+- 절차나 데이터, 비교 항목 등은 텍스트로 나열하지 말고 반드시 "마크다운 표(|---|---|)"를 사용하여 렌더링하세요.
+
+위 기획안과 헌법 규칙을 100% 준수하여, 본문(markdownContent)만 JSON으로 반환하세요.`;
 
   const CONTENT_SCHEMA = {
     type: 'OBJECT',
