@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { EmergencyItem, TabType, fetchEmergencyData, mockERs, mockPharmacies } from '@/lib/api/emergency';
 
-export function useEmergencyData() {
-  const [activeTab, setActiveTab] = useState<TabType>('er');
+export function useEmergencyData(initialTab: TabType = 'er') {
+  const [activeTab, setActiveTab] = useState<TabType>(initialTab);
   const [selectedItem, setSelectedItem] = useState<EmergencyItem | null>(null);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [realData, setRealData] = useState<EmergencyItem[]>([]);

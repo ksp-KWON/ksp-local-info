@@ -8,7 +8,6 @@ import HomePostList from '@/components/HomePostList';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import EmergencyMapWidget from '@/components/emergency/EmergencyMapWidget';
-import LocalCurrencyMapWidget from '@/components/local-currency/LocalCurrencyMapWidget';
 
 interface LocalData {
   lastUpdated: string;
@@ -81,19 +80,28 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 서비스 위젯(Full Map) 영역 */}
+      {/* 2. 서비스 위젯(Full Map) 영역 (응급실 & 약국 좌우 분리) */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
         
-        {/* 응급실/약국 찾기 위젯 */}
+        {/* 실시간 응급실 위젯 */}
         <div className="w-full">
-          <EmergencyMapWidget isWidget={true} />
+          <EmergencyMapWidget isWidget={true} defaultTab="er" hideTabs={true} />
         </div>
 
-        {/* 의정부 사랑카드 가맹점 지도 위젯 */}
+        {/* 심야/휴일 약국 위젯 */}
         <div className="w-full">
-          <LocalCurrencyMapWidget isWidget={true} />
+          <EmergencyMapWidget isWidget={true} defaultTab="pharmacy" hideTabs={true} />
         </div>
 
+      </div>
+
+      {/* 3. 의정부 사랑카드 가맹점 버튼 */}
+      <div className="mt-8 flex justify-center">
+        <Link href="/services/local-currency" className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold rounded-none shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <CreditCard className="w-6 h-6" />
+          의정부 사랑카드 가맹점 찾기
+          <ArrowRight className="w-5 h-5 ml-2" />
+        </Link>
       </div>
 
       {/* 3. 블로그 콘텐츠 큐레이션 리스트 */}

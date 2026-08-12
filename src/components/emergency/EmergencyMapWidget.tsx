@@ -10,6 +10,8 @@ import { ArrowLeft, Stethoscope, Pill } from 'lucide-react';
 
 interface EmergencyMapWidgetProps {
   isWidget?: boolean;
+  defaultTab?: 'er' | 'pharmacy';
+  hideTabs?: boolean;
 }
 
 // 의정부 주요 동네 좌표
@@ -22,9 +24,9 @@ const neighborhoods = [
   { name: '가능/녹양', lat: 37.7540, lng: 127.0300 },
 ];
 
-export default function EmergencyMapWidget({ isWidget = false }: EmergencyMapWidgetProps) {
+export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er', hideTabs = false }: EmergencyMapWidgetProps) {
   const [mapCenter, setMapCenter] = useState(neighborhoods[0]);
-  const { activeTab, setActiveTab, selectedItem, setSelectedItem, isDataLoading, currentData } = useEmergencyData();
+  const { activeTab, setActiveTab, selectedItem, setSelectedItem, isDataLoading, currentData } = useEmergencyData(defaultTab);
 
   // 카카오맵 SDK 로더
   const [loading, error] = useKakaoLoader({
@@ -44,7 +46,9 @@ export default function EmergencyMapWidget({ isWidget = false }: EmergencyMapWid
               </Link>
             )}
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-2 mt-1">
-              🚨 긴급! 약국 & 응급실
+              {hideTabs 
+                ? (defaultTab === 'er' ? '🚨 실시간 응급실' : '💊 심야/휴일 약국')
+                : '🚨 긴급! 약국 & 응급실'}
             </h1>
           </div>
           
@@ -67,30 +71,32 @@ export default function EmergencyMapWidget({ isWidget = false }: EmergencyMapWid
         </div>
 
         {/* 탭 메뉴 */}
-        <div className="flex border-t border-gray-100 dark:border-gray-800">
-          <button
-            onClick={() => setActiveTab('er')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-[15px] font-bold text-center transition-colors border-r border-gray-100 dark:border-gray-800 ${
-              activeTab === 'er' 
-                ? 'bg-red-50 text-red-600 border-b-2 border-b-red-600 dark:bg-red-900/10 dark:text-red-400 dark:border-b-red-500' 
-                : 'bg-white dark:bg-[#202124] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
-            }`}
-          >
-            <Stethoscope className="w-4 h-4" />
-            실시간 응급실
-          </button>
-          <button
-            onClick={() => setActiveTab('pharmacy')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-[15px] font-bold text-center transition-colors ${
-              activeTab === 'pharmacy' 
-                ? 'bg-emerald-50 text-emerald-600 border-b-2 border-b-emerald-600 dark:bg-emerald-900/10 dark:text-emerald-400 dark:border-b-emerald-500' 
-                : 'bg-white dark:bg-[#202124] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
-            }`}
-          >
-            <Pill className="w-4 h-4" />
-            심야/휴일 약국
-          </button>
-        </div>
+        {!hideTabs && (
+          <div className="flex border-t border-gray-100 dark:border-gray-800">
+            <button
+              onClick={() => setActiveTab('er')}
+              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-[15px] font-bold text-center transition-colors border-r border-gray-100 dark:border-gray-800 ${
+                activeTab === 'er' 
+                  ? 'bg-red-50 text-red-600 border-b-2 border-b-red-600 dark:bg-red-900/10 dark:text-red-400 dark:border-b-red-500' 
+                  : 'bg-white dark:bg-[#202124] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+              }`}
+            >
+              <Stethoscope className="w-4 h-4" />
+              실시간 응급실
+            </button>
+            <button
+              onClick={() => setActiveTab('pharmacy')}
+              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-[15px] font-bold text-center transition-colors ${
+                activeTab === 'pharmacy' 
+                  ? 'bg-emerald-50 text-emerald-600 border-b-2 border-b-emerald-600 dark:bg-emerald-900/10 dark:text-emerald-400 dark:border-b-emerald-500' 
+                  : 'bg-white dark:bg-[#202124] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+              }`}
+            >
+              <Pill className="w-4 h-4" />
+              심야/휴일 약국
+            </button>
+          </div>
+        )}
       </header>
 
       {/* 2. 지도 및 오버레이 영역 */}
