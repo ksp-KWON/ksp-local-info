@@ -1,46 +1,109 @@
 'use client';
 
-import Link from 'next/link';
 import PostCard from '@/components/ui/PostCard';
+import SectionLayout, { SectionThemeColor } from '@/components/ui/SectionLayout';
+import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 import { PostData } from '@/lib/types';
-import { CATEGORIES, getCategoryTheme } from '@/lib/constants';
+import { CATEGORIES } from '@/lib/constants';
+
+interface CategoryConfig {
+  id: string;
+  label: string;
+  themeColor: SectionThemeColor;
+  iconName: AppIconName;
+  watermarkIcon: AppIconName;
+  desc: string;
+}
+
+const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
+  benefits: {
+    id: 'benefits',
+    label: '💸 숨은 지원금 찾기',
+    themeColor: 'green',
+    iconName: 'bank',
+    watermarkIcon: 'bank',
+    desc: '의정부시와 경기도에서 지원하는 청년·주거·생활 안정 지원금 소식입니다.',
+  },
+  jobs: {
+    id: 'jobs',
+    label: '💼 취업과 창업',
+    themeColor: 'indigo',
+    iconName: 'trending-up',
+    watermarkIcon: 'trending-up',
+    desc: '의정부 일자리 박람회, 청년 면접 지원, 창업 인큐베이팅 공고를 모았습니다.',
+  },
+  family: {
+    id: 'family',
+    label: '👨‍👩‍👧 아이와 임산부',
+    themeColor: 'rose',
+    iconName: 'heart',
+    watermarkIcon: 'heart',
+    desc: '출산축하금, 첫만남이용권, 육아 돌봄 서비스 등 가족을 위한 혜택입니다.',
+  },
+  health: {
+    id: 'health',
+    label: '🏥 아플 때 & 병원',
+    themeColor: 'red',
+    iconName: 'hospital',
+    watermarkIcon: 'hospital',
+    desc: '달빛어린이병원, 심야약국, 무료 건강검진 등 필수 응급의료 안내입니다.',
+  },
+  life: {
+    id: 'life',
+    label: '☕ 생활 & 즐길거리',
+    themeColor: 'cyan',
+    iconName: 'leaf',
+    watermarkIcon: 'leaf',
+    desc: '의정부 행복로 버스킹, 도서관 북콘서트, 시립극장 문화예술 행사입니다.',
+  },
+};
 
 export default function HomePostList({ initialPosts }: { initialPosts: PostData[] }) {
-
-  const categoriesWithPosts = CATEGORIES.map(cat => {
-    const posts = initialPosts.filter(post => {
+  const categoriesWithPosts = CATEGORIES.map((cat) => {
+    const posts = initialPosts.filter((post) => {
       if (!post.category || !Array.isArray(post.category)) return false;
       const cats = post.category as string[];
-      return cat.keywords.some(keyword => cats.some(c => c.includes(keyword)));
+      return cat.keywords.some((keyword) => cats.some((c) => c.includes(keyword)));
     });
     return { categoryId: cat.id, categoryLabel: cat.label, posts };
-  }).filter(item => item.posts.length > 0);
+  }).filter((item) => item.posts.length > 0);
 
   if (categoriesWithPosts.length === 0) return null;
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-10">
       {categoriesWithPosts.map(({ categoryId, categoryLabel, posts }) => {
-        const theme = getCategoryTheme(categoryLabel);
-        const IconComponent = theme.icon;
+        const config = CATEGORY_CONFIGS[categoryId] || {
+          id: categoryId,
+          label: categoryLabel,
+          themeColor: 'blue' as SectionThemeColor,
+          iconName: 'list' as AppIconName,
+          watermarkIcon: 'list' as AppIconName,
+          desc: '의정부시와 관련된 유용한 실생활 혜택 안내입니다.',
+        };
+
+        const displayPosts = posts.slice(0, 3);
+
         return (
-          <section key={categoryId} className="relative">
-            <div className="flex items-center justify-between mb-5 py-3 sm:py-3.5 relative z-10 border-b border-gray-200 dark:border-gray-800">
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 text-gray-900 dark:text-white mb-0">
-                <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 text-${theme.color}-500`} strokeWidth={2.5} />
-                {theme.title}
-              </h2>
-              <Link href={`/blog?category=${encodeURIComponent(categoryId)}`} className="flex items-center gap-1 text-[13px] font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 transition-colors group shrink-0 ml-4">
-                전체보기
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </Link>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.slice(0, 3).map(post => (
+          <SectionLayout
+            key={categoryId}
+            title={categoryLabel.replace(/^[^\s]+\s/, '')}
+            description={config.desc}
+            icon={<AppIcon name={config.iconName} size={22} className="shrink-0" />}
+            themeColor={config.themeColor}
+            watermarkIcon={config.watermarkIcon}
+            viewAllLink={{
+              href: `/blog?category=${encodeURIComponent(categoryLabel)}`,
+              text: '전체보기',
+            }}
+          >
+            {/* 게시물 그리드 (SVG 벡터 스타일 피니시) */}
+            <div className="grid gap-3 sm:gap-4 lg:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {displayPosts.map((post) => (
                 <PostCard key={post.slug} post={post} variant="grid" />
               ))}
             </div>
-          </section>
+          </SectionLayout>
         );
       })}
     </div>
