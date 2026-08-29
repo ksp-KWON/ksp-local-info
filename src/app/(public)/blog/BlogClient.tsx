@@ -43,7 +43,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   return (
     <div className="space-y-8 sm:space-y-10 pb-16">
       {/* 1. 카테고리 헤더 */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.30),0_10px_25px_-5px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95),0_10px_25px_-5px_rgba(0,0,0,0.80)] p-6 sm:p-8 group transition-all duration-300">
+      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] p-6 sm:p-8 group transition-all duration-300">
         <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.03] dark:text-zinc-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
           <AppIcon name="compass" size={160} strokeWidth={1.5} />
         </div>

@@ -135,7 +135,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </Link>
       </nav>
 
-      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
+      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
         <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
           {/* 아티클 헤더 */}
           <header className="border-b border-gray-100 dark:border-zinc-800 pb-8">

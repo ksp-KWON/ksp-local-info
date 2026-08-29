@@ -38,7 +38,7 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   if (variant === 'list') {
     return (
       <Link href={`/blog/${post.slug}`} className="group flex flex-col w-full">
-        <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.30),0_10px_25px_-5px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95),0_10px_25px_-5px_rgba(0,0,0,0.80)] hover:-translate-y-1 transition-all duration-300 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
+        <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 sm:p-6 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] hover:-translate-y-1 transition-all duration-300 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
           {/* 워터마크 SVG */}
           <div className="absolute right-3.5 bottom-2.5 opacity-[0.035] dark:opacity-[0.055] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
             <AppIcon name={watermarkIcon} size={68} strokeWidth={1.5} />
@@ -79,7 +79,7 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col justify-between relative bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.30),0_10px_25px_-5px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95),0_10px_25px_-5px_rgba(0,0,0,0.80)] hover:-translate-y-1 hover:border-zinc-900 dark:hover:border-zinc-100 p-4 sm:p-5 active:scale-[0.98] transition-all duration-300 overflow-hidden rounded-none outline-none"
+      className="group flex flex-col justify-between relative bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] hover:-translate-y-1 hover:border-zinc-900 dark:hover:border-zinc-100 p-4 sm:p-5 active:scale-[0.98] transition-all duration-300 overflow-hidden rounded-none outline-none"
     >
       {/* 워터마크 SVG */}
       <div className="absolute right-3.5 bottom-2.5 opacity-[0.035] dark:opacity-[0.055] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
