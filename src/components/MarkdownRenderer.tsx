@@ -115,18 +115,22 @@ export const sharedComponents: Components & Record<string, any> = {
     );
   },
 
-  // 굵은 2px 먹선 수묵 테이블 (Table)
+  // 굵은 2px 먹선 수묵 테이블 (Table - not-prose 격리로 타이포그래피 간섭 완전 차단)
   table: ({ children }: any) => (
-    <div className="my-8">
-      <PremiumCard hoverEffect={false} className="!p-0 overflow-x-auto rounded-none !border-2 !border-black dark:!border-white">
-        <table className="w-full text-[13.5px] sm:text-[14px] border-collapse min-w-[500px] sm:min-w-full">{children}</table>
-      </PremiumCard>
+    <div className="not-prose my-8 overflow-x-auto border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
+      <table className="w-full text-[13.5px] sm:text-[14px] border-collapse min-w-[500px] sm:min-w-full m-0">{children}</table>
     </div>
+  ),
+  thead: ({ children }: any) => (
+    <thead className="bg-zinc-100 dark:bg-zinc-850 border-b-2 border-black dark:border-white">{children}</thead>
+  ),
+  tbody: ({ children }: any) => (
+    <tbody className="divide-y divide-zinc-200 dark:border-zinc-800 dark:divide-zinc-800">{children}</tbody>
   ),
   th: ({ children, style, ...props }: any) => (
     <th
       style={style}
-      className="bg-zinc-100 dark:bg-zinc-850 p-3.5 font-black text-black dark:text-white border-b-2 border-black dark:border-white tracking-tight whitespace-nowrap text-center"
+      className="p-3 sm:p-3.5 font-black text-black dark:text-white tracking-tight whitespace-nowrap text-center"
       {...props}
     >
       {children}
@@ -135,14 +139,14 @@ export const sharedComponents: Components & Record<string, any> = {
   td: ({ children, style, ...props }: any) => (
     <td
       style={style}
-      className="p-3.5 border-b border-zinc-200 dark:border-zinc-800 align-middle text-zinc-900 dark:text-zinc-100 leading-relaxed text-left font-medium"
+      className="p-3 sm:p-3.5 align-middle text-zinc-900 dark:text-zinc-100 leading-relaxed text-left font-medium"
       {...props}
     >
       {children}
     </td>
   ),
   tr: ({ children }: any) => (
-    <tr className="hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors last:[&>td]:border-b-0">{children}</tr>
+    <tr className="hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">{children}</tr>
   ),
 
   a: ({ href = '', children }) => (

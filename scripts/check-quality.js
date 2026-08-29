@@ -42,56 +42,12 @@ function processPost(filePath) {
 
   body = body.replace(/\uFFFD/g, '');
 
-  // ── [2. 상투적 더미 멘트 박스 및 AI 메모 청소] ──────────────────────────
-  body = body.replace(
-    />\s*###\s*(?:💡|👨‍⚖️|⚖️)?\s*보상스쿨\s*실무쟁점[\s\S]*?(?=\r?\n\r?\n(?:##|#|[^\n>])|$)/gi,
-    ''
-  );
+  // ── [2. 잔존 이모지 및 AI 메모 청소] ──────────────────────────
   body = body.replace(/\[\s*(?:이미지\s*제안|관련\s*글\s*추천|이미지제안|관련글추천)\s*:[^\]]*\]/gi, '');
 
   // ── [2-1. 비표준 GitHub alert 및 비표준 팁 박스 정규화] ──────────
   body = body.replace(/>\s*\[!(?:TIP|NOTE|IMPORTANT|WARNING|CAUTION)\]\s*\r?\n/gi, '> ### 의정부 생활 꿀팁 & 시정 인사이트\n');
-  body = body.replace(/>\s*(?:전문가\s*조언|손해사정사\s*실무\s*조언|실무\s*TIP|생활포털\s*실무\s*팁\s*&\s*안내)\s*:\s*/gi, '> ### 의정부 생활 꿀팁 & 시정 인사이트\n> ');
-
-  // ── [3. 오프닝 & 핵심 요약 순서 교정 및 배치 보장] ───────────────────
-  // 오프닝 문단이 ## 핵심 요약보다 위에 있는 경우 순서를 표준(## 핵심 요약 -> 오프닝)으로 자동 교정
-  const keyPointOrderMatch = body.match(/(?:^|\r?\n)(##\s*(?:💡|🎯)?\s*(?:시정\s*핵심\s*요약|핵심\s*요약|핵심요약|핵심\s*포인트)[^\n]*\r?\n+(?:[ \t]*>?[ \t]*[-*+].*\r?\n*)+)/i);
-  if (keyPointOrderMatch && keyPointOrderMatch.index > 0) {
-    const beforeKeyPoints = body.slice(0, keyPointOrderMatch.index).trim();
-    const keyPointsBlock = keyPointOrderMatch[1].trim();
-    const afterKeyPoints = body.slice(keyPointOrderMatch.index + keyPointOrderMatch[0].length).trim();
-    if (beforeKeyPoints && !beforeKeyPoints.startsWith('#') && !beforeKeyPoints.startsWith('>')) {
-      body = `${keyPointsBlock}\n\n${beforeKeyPoints}\n\n${afterKeyPoints}`;
-    }
-  }
-
-  let hasOpeningText = false;
-  const trimmedBody = body.trim();
-
-  if (!trimmedBody.startsWith('#') && !trimmedBody.startsWith('>')) {
-    hasOpeningText = true;
-  } else if (/^##\s*(?:💡|🎯)?\s*핵심\s*요약/i.test(trimmedBody)) {
-    // 핵심 요약 블록 제거 후 첫 번째 ## H2 이전 영역에 일반 문단이 있는지 확인
-    const afterSummary = trimmedBody.replace(/^##\s*(?:💡|🎯)?\s*핵심\s*요약[^\n]*\r?\n+(?:[ \t]*>?[ \t]*[-*+].*\r?\n*)+/i, '').trim();
-    const firstH2Match = afterSummary.match(/^##\s+/m);
-    const introPart = firstH2Match && firstH2Match.index !== undefined ? afterSummary.slice(0, firstH2Match.index).trim() : afterSummary;
-    const hasParagraph = introPart.split(/\r?\n/).some(l => {
-      const t = l.trim();
-      return t && !t.startsWith('#') && !t.startsWith('>') && !t.startsWith('|') && !t.startsWith('[') && !t.startsWith('!');
-    });
-    if (hasParagraph) {
-      hasOpeningText = true;
-    }
-  }
-
-  if (!hasOpeningText) {
-    const fallbackOpening = data.summary || '의정부시 생활 정보 및 시민 복지 혜택을 상세히 안내해 드립니다.';
-    if (/^##\s*(?:💡|🎯)?\s*핵심\s*요약/i.test(trimmedBody)) {
-      body = body.replace(/(##\s*(?:💡|🎯)?\s*핵심\s*요약[^\n]*\r?\n+(?:[ \t]*>?[ \t]*[-*+].*\r?\n*)+)/i, `$1\n${fallbackOpening}\n\n`);
-    } else {
-      body = `${fallbackOpening}\n\n${body.trim()}`;
-    }
-  }
+  body = body.replace(/>\s*(?:전문가\s*조언|실무\s*TIP|생활포털\s*실무\s*팁\s*&\s*안내)\s*:\s*/gi, '> ### 의정부 생활 꿀팁 & 시정 인사이트\n> ');
 
   // ── [4. 다단계 솔루션(①~⑳) 콜론 분리 및 H6 헤딩 승격] ───────────────────
   body = body.replace(
@@ -105,59 +61,14 @@ function processPost(filePath) {
     }
   );
 
-  // ── [5. 핵심 요약 박스 순수 텍스트 정규화 (💡 제거 및 불릿 래핑)] ─────────
-  body = body.replace(
-    /(##\s*(?:💡\s*|🎯\s*)?(?:핵심\s*요약|핵심요약|핵심\s*포인트)\s*\r?\n+)((?:[ \t]*>?[ \t]*[-*+].*\r?\n*)+)/g,
-    (m, head, bullets) => {
-      const cleanBullets = bullets
-        .split(/\r?\n/)
-        .map((l) => l.trim())
-        .filter(Boolean)
-        .map((l) => {
-          let text = l.replace(/^(?:>\s*)?[-*+]\s*/, '').trim();
-          text = text.replace(/^(?:\*\*)?\[?\s*핵심\s*쟁점\s*\d+\s*\]?(?:\*\*)?\s*\*+\s*:\s*/gi, '');
-          text = text.replace(/^\[?\s*핵심\s*쟁점\s*\d+\s*\]?\s*:\s*/gi, '');
-          text = text.replace(/^\[[^\n\]]+\]\s*\*+\s*:\s*/, '');
-          text = text.replace(/^[💡🎯📌⭐🛡️✅☑️✔]+\s*/, '');
-          return `> - ${text.trim()}`;
-        })
-        .join('\n');
-      return `## 핵심 요약\n${cleanBullets}\n\n`;
-    }
-  );
+  // ── [5. 핵심 요약 박스 이모지 제거] ────────────────────────────────────────
+  body = body.replace(/##\s*[💡🎯📌⭐🛡️✅☑️✔]+\s*(?:시정\s*핵심\s*요약|핵심\s*요약)/gi, '## 시정 핵심 요약');
 
-  // ── [6. 1분 자가진단 헤딩 및 체크리스트 완전 표준화 (이모지 제거)] ─────────
-  body = body.replace(/##[^\n]*1분\s*(?:자가진단|체크리스트|체크)[^\n]*/gi, (m) => {
-    let subject = '';
-    const colonMatch = m.match(/:\s*([^\n\r]+)/);
-    if (colonMatch && !colonMatch[1].includes('지금 전문가')) {
-      subject = ` : ${colonMatch[1].replace(/체크리스트/g, '').replace(/[💡🎯📌⭐🛡️✅☑️✔]/g, '').trim()} 체크리스트`;
-    } else {
-      subject = ' : 체크리스트';
-    }
-    return `## 1분 자가진단${subject}`;
-  });
+  // ── [6. 1분 자가진단 헤딩 이모지 제거] ──────────────────────────────────────
+  body = body.replace(/##\s*[💡🎯📌⭐🛡️✅☑️✔]+\s*(?:신청\s*자격\s*1분\s*자가진단|1분\s*자가진단)/gi, '## 신청 자격 1분 자가진단');
 
-  body = body.replace(/(##\s*1분\s*자가진단[^\n]*\r?\n+)((?:[ \t]*>?[ \t]*[-*+☑️✅✔\[].*\r?\n*)+)/gi, (m, head, bullets) => {
-    const cleanBullets = bullets
-      .split(/\r?\n/)
-      .map((l) => l.trim())
-      .filter((l) => l && !l.startsWith('---') && !l.startsWith('***') && !l.includes('위 항목 중 하나라도'))
-      .map((l) => {
-        let text = l.replace(/^(?:>\s*)?[-*+]\s*/, '').trim();
-        text = text.replace(/^[☑️✅✔]+\s*/, '');
-        if (!text.startsWith('[ ]') && !text.startsWith('[-]') && !text.startsWith('[x]')) {
-          text = `[ ] ${text}`;
-        }
-        return `> - ${text}`;
-      })
-      .join('\n');
-    return `${head.trim()}\n${cleanBullets}\n\n`;
-  });
-
-  // ── [7. FAQ 및 결론 헤딩 표준화 (이모지 제거 및 순수 시맨틱 헤더화)] ───────
-  body = body.replace(/##\s*(?:[1-9]\.\s*)?(?:💡\s*|❓\s*)?(?:자주\s*묻는\s*질문|자주묻는질문|FAQ)[^\n]*/gi, '## 자주 묻는 질문 (FAQ)');
-  body = body.replace(/##\s*(?:[1-9]\.\s*)?(?:결론\s*및\s*보상스쿨의\s*맞춤형\s*솔루션|결론\s*및\s*보상스쿨\s*맞춤형\s*솔루션|결론\s*및\s*맞춤형\s*솔루션)[^\n]*/gi, '## 결론 및 의정부 생활포털 핵심 가이드');
+  // ── [7. FAQ 헤딩 이모지 제거] ──────────────────────────────────────────────
+  body = body.replace(/##\s*(?:[1-9]\.\s*)?[💡❓\s]*(?:시민\s*자주\s*묻는\s*질문|자주\s*묻는\s*질문|FAQ)[^\n]*/gi, '## 시민 자주 묻는 질문');
 
   // ── [8. 표(Table) 끝에 붙은 인라인 용어사전, 팁, 링크 분리 및 삭제] ────
   body = body.replace(
