@@ -26,84 +26,111 @@ export default function AboutPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-2 sm:px-4 py-8 sm:py-12 space-y-8">
+    <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-10 space-y-8">
       {/* 1. 상단 브레드크럼 */}
-      <nav className="flex text-xs text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
-        <ol className="inline-flex items-center space-x-1.5">
+      <nav className="flex text-xs text-zinc-500 dark:text-zinc-400" aria-label="Breadcrumb">
+        <ol className="inline-flex items-center space-x-1.5 font-bold">
           <li>
-            <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <Link href="/" className="hover:text-black dark:hover:text-white transition-colors flex items-center gap-1">
+              <AppIcon name="home" size={13} strokeWidth={2.5} />
               홈
             </Link>
           </li>
           <li>
-            <span className="mx-1">/</span>
+            <span className="mx-1 text-zinc-400">/</span>
           </li>
-          <li className="text-gray-900 dark:text-white font-bold" aria-current="page">
-            사이트 소개
-          </li>
+          <li className="text-black dark:text-white font-black">플랫폼 소개</li>
         </ol>
       </nav>
 
-      {/* 2. 헤더 카드 */}
-      <div className="bg-white dark:bg-[#181a1d] border border-gray-200/80 dark:border-zinc-800 p-6 sm:p-8 rounded-none shadow-md">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-extrabold uppercase tracking-wider mb-4 border border-blue-100 dark:border-blue-800/40 rounded-none">
-          Transparency & E-E-A-T Standard
+      {/* 2. 메인 헤더 배너 (수묵 굵은 라인 SVG) */}
+      <div className="relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] p-6 sm:p-10 group">
+        <div className="absolute -right-6 -bottom-6 text-black/[0.04] dark:text-white/[0.06] pointer-events-none group-hover:scale-105 transition-transform duration-500">
+          <AppIcon name="shield-check" size={180} strokeWidth={2} />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-3">
-          의정부 건강ㆍ생활 정보 포털 소개
-        </h1>
-        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed break-keep">
-          의정부 시민들이 일상에서 꼭 필요한 공공 복지 혜택, 실시간 심야 의료 정보, 지역화폐 혜택을 가장 쉽고 빠르게 찾아볼 수 있도록 돕는 비영리 공공데이터 생활 정보 포털입니다.
-        </p>
-      </div>
-
-      {/* 3. 본문 섹션 카드들 */}
-      <div className="space-y-6">
-        {/* 서비스 운영 목적 */}
-        <section className="bg-white dark:bg-[#181a1d] border border-gray-200/80 dark:border-zinc-800 p-6 sm:p-7 rounded-none shadow-sm space-y-3">
-          <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white flex items-center gap-2.5">
-            <AppIcon name="bullhorn" size={20} className="text-blue-600 dark:text-blue-400 shrink-0" />
-            <span>1. 서비스 운영 목적</span>
-          </h2>
-          <p className="text-sm sm:text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed font-medium break-keep">
-            매년 중앙정부와 의정부시, 경기도에서 다양한 주민 복지 및 청년·육아 지원책이 발표되지만, 여러 기관 웹사이트에 흩어져 있어 제때 혜택을 챙기지 못하는 이웃들이 많습니다. 본 포털은 이러한 정보 비대칭을 해소하고, 누구나 한눈에 알기 쉽게 맞춤형 생활 소식을 탐색할 수 있도록 돕습니다.
-          </p>
-        </section>
-
-        {/* 공식 데이터 출처 */}
-        <section className="bg-white dark:bg-[#181a1d] border border-gray-200/80 dark:border-zinc-800 p-6 sm:p-7 rounded-none shadow-sm space-y-3">
-          <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white flex items-center gap-2.5">
-            <AppIcon name="shield-check" size={20} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>2. 공공데이터 기반 공식 출처 및 연계</span>
-          </h2>
-          <p className="text-sm sm:text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed font-medium break-keep">
-            본 사이트에서 제공하는 데이터는 대한민국 정부 <strong>행정안전부 공공데이터포털(data.go.kr)</strong>의 공공서비스 목록 API, <strong>국립중앙의료원(NMC)</strong>의 전국 응급의료기관 및 휴일지킴이약국 API, <strong>경기지역화폐</strong> 공식 가맹점 데이터를 기반으로 실시간 필터링 및 검증을 거쳐 제공됩니다.
-          </p>
-        </section>
-
-        {/* 콘텐츠 제작 및 면책 고지 */}
-        <section className="bg-white dark:bg-[#181a1d] border border-gray-200/80 dark:border-zinc-800 p-6 sm:p-7 rounded-none shadow-sm space-y-3">
-          <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white flex items-center gap-2.5">
-            <AppIcon name="lightbulb" size={20} className="text-amber-500 shrink-0" />
-            <span>3. 콘텐츠 작성 표준 및 이용자 안내</span>
-          </h2>
-          <p className="text-sm sm:text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed font-medium break-keep">
-            모든 지원금 안내 및 공고 글은 공공기관 원문 고시를 바탕으로 독자의 가독성을 위해 항목별(신청 자격, 지원 금액, 신청 방법, 구비 서류)로 체계화하여 작성됩니다.
-          </p>
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/40 p-4 rounded-none mt-3">
-            <p className="text-xs sm:text-sm text-amber-800 dark:text-amber-300 font-medium leading-relaxed break-keep">
-              ※ <strong>이용 시 유의사항</strong>: 각 지자체의 예산 소진 상황이나 행정 지침 개정에 따라 지원 조건이 실시간 변동될 수 있습니다. 중요한 신청 전에는 본문 하단에 제공된 공식 소관 부서(동 행정복지센터 등) 또는 원문 웹사이트 링크를 통해 최종 공고를 반드시 재확인하시길 권장합니다.
-            </p>
+        <div className="relative z-10 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-black text-white dark:bg-white dark:text-black text-xs font-black uppercase tracking-wider border-2 border-black dark:border-white rounded-none">
+            <AppIcon name="shield-check" size={14} strokeWidth={2.5} />
+            <span>투명성과 공공성</span>
           </div>
-        </section>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-black dark:text-white">
+            의정부 건강·생활 정보 포털의 사명
+          </h1>
+          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed break-keep max-w-2xl">
+            시민들에게 꼭 필요한 공공 혜택과 응급의료 정보가 복잡한 행정 사이트에 흩어져 있어 놓치는 일이 없도록,
+            공공데이터를 실시간으로 연결하여 가장 읽기 쉽고 직관적인 형태로 큐레이션합니다.
+          </p>
+          {lastUpdated && (
+            <div className="pt-2 text-xs font-bold text-zinc-500">
+              최근 데이터 동기화: {lastUpdated}
+            </div>
+          )}
+        </div>
       </div>
 
-      {lastUpdated && (
-        <div className="text-xs text-gray-400 dark:text-gray-500 pt-4 border-t border-gray-200/80 dark:border-zinc-800 flex items-center justify-between">
-          <span>데이터 동기화 최종 기준일</span>
-          <span className="font-bold">{lastUpdated}</span>
+      {/* 3. 3대 핵심 가치 카드 (모노톤 굵은 선 룩) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] space-y-2 relative overflow-hidden">
+          <div className="absolute right-2 bottom-1 opacity-[0.05] text-black dark:text-white pointer-events-none">
+            <AppIcon name="shield" size={60} strokeWidth={2} />
+          </div>
+          <div className="w-9 h-9 bg-black text-white dark:bg-white dark:text-black flex items-center justify-center border border-black dark:border-white">
+            <AppIcon name="shield-check" size={18} strokeWidth={2.5} />
+          </div>
+          <h3 className="text-base font-black text-black dark:text-white pt-2">공식 데이터 검증</h3>
+          <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            행정안전부 공공데이터포털, 경기도 공공데이터, 국립중앙의료원(NMC)의 공인된 Open API만을 기반으로 데이터를 정제합니다.
+          </p>
         </div>
-      )}
+
+        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] space-y-2 relative overflow-hidden">
+          <div className="absolute right-2 bottom-1 opacity-[0.05] text-black dark:text-white pointer-events-none">
+            <AppIcon name="zap" size={60} strokeWidth={2} />
+          </div>
+          <div className="w-9 h-9 bg-black text-white dark:bg-white dark:text-black flex items-center justify-center border border-black dark:border-white">
+            <AppIcon name="zap" size={18} strokeWidth={2.5} />
+          </div>
+          <h3 className="text-base font-black text-black dark:text-white pt-2">실시간 혜택 큐레이션</h3>
+          <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            의정부시청 공고와 경기지역화폐 혜택, 청년 및 출산 지원금 등 놓치기 쉬운 실생활 복지를 알기 쉽게 요약 제공합니다.
+          </p>
+        </div>
+
+        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] space-y-2 relative overflow-hidden">
+          <div className="absolute right-2 bottom-1 opacity-[0.05] text-black dark:text-white pointer-events-none">
+            <AppIcon name="heart" size={60} strokeWidth={2} />
+          </div>
+          <div className="w-9 h-9 bg-black text-white dark:bg-white dark:text-black flex items-center justify-center border border-black dark:border-white">
+            <AppIcon name="heart" size={18} strokeWidth={2.5} />
+          </div>
+          <h3 className="text-base font-black text-black dark:text-white pt-2">시민 편의성 최우선</h3>
+          <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            회원가입이나 개인정보 수집 없이 모든 공공지도와 혜택 안내를 누구나 100% 무료로 자유롭게 열람할 수 있습니다.
+          </p>
+        </div>
+      </div>
+
+      {/* 4. 데이터 출처 명시 (E-E-A-T) */}
+      <div className="p-6 sm:p-8 bg-zinc-50 dark:bg-zinc-900 border-2 border-zinc-300 dark:border-zinc-700 space-y-4">
+        <h3 className="text-base sm:text-lg font-black text-black dark:text-white flex items-center gap-2">
+          <AppIcon name="file-text" size={18} strokeWidth={2.5} />
+          공식 데이터 출처 및 API 연동 명세
+        </h3>
+        <ul className="space-y-2.5 text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          <li className="flex items-start gap-2">
+            <span className="text-black dark:text-white font-black shrink-0">■</span>
+            <span><strong>응급의료 및 약국</strong> : 국립중앙의료원(NMC) 중앙응급의료센터 공공 API</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-black dark:text-white font-black shrink-0">■</span>
+            <span><strong>의정부사랑카드</strong> : 경기데이터드림(경기지역화폐 가맹점 현황 Open API)</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-black dark:text-white font-black shrink-0">■</span>
+            <span><strong>국가 건강검진 기관</strong> : 건강보험심사평가원 및 국민건강보험공단 검진기관 데이터</span>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }

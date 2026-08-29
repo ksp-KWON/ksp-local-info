@@ -7,6 +7,7 @@ import { useEmergencyData } from '@/hooks/useEmergencyData';
 import EmergencyMap from '@/components/emergency/EmergencyMap';
 import EmergencyBottomSheet from '@/components/emergency/EmergencyBottomSheet';
 import { ArrowLeft, Stethoscope, Pill } from 'lucide-react';
+import AppIcon from '@/components/ui/AppIcon';
 
 interface EmergencyMapWidgetProps {
   isWidget?: boolean;
@@ -26,7 +27,7 @@ const neighborhoods = [
 
 export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er', hideTabs = false }: EmergencyMapWidgetProps) {
   const [mapCenter, setMapCenter] = useState(neighborhoods[0]);
-  const { activeTab, setActiveTab, selectedItem, setSelectedItem, isDataLoading, currentData } = useEmergencyData(defaultTab);
+  const { activeTab, setActiveTab, selectedItem, setSelectedItem, currentData } = useEmergencyData(defaultTab);
 
   // 카카오맵 SDK 로더
   const [loading, error] = useKakaoLoader({
@@ -35,33 +36,36 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
   });
 
   return (
-    <div className={`flex flex-col w-full bg-gray-50 dark:bg-[#121212] overflow-hidden mt-2 rounded-none shadow-2xl border border-gray-100 dark:border-gray-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+    <div className={`flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden mt-2 rounded-none shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] border-2 border-black dark:border-white ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
       {/* 1. 헤더 영역 */}
-      <header className="bg-white dark:bg-[#202124] shadow-2xl z-20 shrink-0 border-b border-gray-100 dark:border-gray-800">
-        <div className="p-4 pb-2">
+      <header className="bg-white dark:bg-[#181a1d] z-20 shrink-0 border-b-2 border-black dark:border-white">
+        <div className="p-4 pb-3">
           <div className="flex items-center gap-2">
             {!isWidget && (
-              <Link href="/" className="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full transition-colors">
-                <ArrowLeft className="w-6 h-6" />
+              <Link href="/" className="p-1 text-black dark:text-white hover:opacity-70 transition-opacity">
+                <ArrowLeft className="w-5 h-5 stroke-[2.5]" />
               </Link>
             )}
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center gap-2 mt-1">
-              {hideTabs 
-                ? (defaultTab === 'er' ? '🚨 실시간 응급실' : '💊 심야/휴일 약국')
-                : '🚨 긴급! 약국 & 응급실'}
+            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-black dark:text-white flex items-center gap-2">
+              <AppIcon name="hospital" size={22} strokeWidth={2.5} />
+              <span>
+                {hideTabs 
+                  ? (defaultTab === 'er' ? '실시간 응급실 현황' : '심야/휴일 약국')
+                  : '달빛병원 & 심야약국'}
+              </span>
             </h1>
           </div>
           
-          {/* 동네 선택 스크롤 메뉴 */}
-          <div className="flex overflow-x-auto hide-scrollbar gap-2 mt-4 pb-2">
+          {/* 동네 선택 스크롤 메뉴 (수묵 흑백 칩) */}
+          <div className="flex overflow-x-auto scrollbar-none gap-2 mt-3 pb-1">
             {neighborhoods.map((nb) => (
               <button
                 key={nb.name}
                 onClick={() => setMapCenter(nb)}
-                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 shrink-0 ${
+                className={`whitespace-nowrap px-3 py-1 text-xs font-black transition-all border-2 rounded-none cursor-pointer ${
                   mapCenter.name === nb.name
-                    ? 'bg-red-500 text-white shadow-2xl'
-                    : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.9)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.9)]'
+                    : 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
                 }`}
               >
                 {nb.name}
@@ -70,69 +74,65 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
           </div>
         </div>
 
-        {/* 탭 메뉴 */}
+        {/* 2. 탭 전환 버튼 */}
         {!hideTabs && (
-          <div className="flex border-t border-gray-100 dark:border-gray-800">
+          <div className="grid grid-cols-2 border-t-2 border-black dark:border-white">
             <button
               onClick={() => setActiveTab('er')}
-              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-[15px] font-bold text-center transition-colors border-r border-gray-100 dark:border-gray-800 ${
-                activeTab === 'er' 
-                  ? 'bg-red-50 text-red-600 border-b-2 border-b-red-600 dark:bg-red-900/10 dark:text-red-400 dark:border-b-red-500' 
-                  : 'bg-white dark:bg-[#202124] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+              className={`flex items-center justify-center gap-2 py-2.5 text-xs font-black transition-colors border-r-2 border-black dark:border-white cursor-pointer ${
+                activeTab === 'er'
+                  ? 'bg-black text-white dark:bg-white dark:text-black'
+                  : 'bg-white dark:bg-[#181a1d] text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
               }`}
             >
-              <Stethoscope className="w-4 h-4" />
-              실시간 응급실
+              <Stethoscope className="w-4 h-4 stroke-[2.5]" />
+              <span>실시간 응급실</span>
             </button>
             <button
               onClick={() => setActiveTab('pharmacy')}
-              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-[15px] font-bold text-center transition-colors ${
-                activeTab === 'pharmacy' 
-                  ? 'bg-emerald-50 text-emerald-600 border-b-2 border-b-emerald-600 dark:bg-emerald-900/10 dark:text-emerald-400 dark:border-b-emerald-500' 
-                  : 'bg-white dark:bg-[#202124] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+              className={`flex items-center justify-center gap-2 py-2.5 text-xs font-black transition-colors cursor-pointer ${
+                activeTab === 'pharmacy'
+                  ? 'bg-black text-white dark:bg-white dark:text-black'
+                  : 'bg-white dark:bg-[#181a1d] text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
               }`}
             >
-              <Pill className="w-4 h-4" />
-              심야/휴일 약국
+              <Pill className="w-4 h-4 stroke-[2.5]" />
+              <span>심야/휴일 약국</span>
             </button>
           </div>
         )}
       </header>
 
-      {/* 2. 지도 및 오버레이 영역 */}
-      <main className="flex-1 relative">
-        {(loading || isDataLoading) && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
-            <div className={`animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 mb-4 ${activeTab === 'er' ? 'border-red-500' : 'border-emerald-500'}`}></div>
-            <p className="text-gray-800 dark:text-gray-200 font-bold tracking-wide">
-              {activeTab === 'er' ? '실시간 병상 정보를 불러오는 중...' : '영업 중인 약국을 찾는 중...'}
-            </p>
+      {/* 3. 지도 및 컨텐츠 영역 */}
+      <div className="relative flex-1 w-full min-h-0">
+        {loading ? (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-900">
+            <AppIcon name="refresh" size={32} strokeWidth={2.5} className="animate-spin text-zinc-500 mb-2" />
+            <p className="text-xs font-black text-zinc-500">카카오 지도 로딩 중...</p>
           </div>
-        )}
-
-        {error && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-[#121212]/80 backdrop-blur-sm z-10">
-            <p className="text-red-500 font-bold text-lg mb-2">지도를 불러오지 못했습니다.</p>
-            <p className="text-gray-600 dark:text-gray-300 font-medium">인터넷 연결을 확인하고 다시 시도해주세요.</p>
+        ) : error ? (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-900 p-4 text-center">
+            <AppIcon name="warning" size={32} strokeWidth={2.5} className="text-black dark:text-white mb-2" />
+            <p className="text-xs font-black text-black dark:text-white">지도를 불러오지 못했습니다.</p>
           </div>
-        )}
-
-        {!loading && !error && (
+        ) : (
           <>
-            <EmergencyMap 
+            <EmergencyMap
               mapCenter={mapCenter}
               activeTab={activeTab}
               currentData={currentData}
               setSelectedItem={setSelectedItem}
             />
-            <EmergencyBottomSheet 
+
+            {/* 하단 바텀시트 */}
+            <EmergencyBottomSheet
               item={selectedItem}
               activeTab={activeTab}
               onClose={() => setSelectedItem(null)}
             />
           </>
         )}
-      </main>
+      </div>
     </div>
   );
 }

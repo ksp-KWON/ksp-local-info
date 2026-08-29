@@ -23,22 +23,24 @@ function SearchResults() {
       setIsLoading(true);
       try {
         const res = await fetch('/api/posts');
-        if (res.ok) {
-          const allPosts: PostData[] = await res.json();
-          const query = q.toLowerCase().trim();
-          const filtered = allPosts.filter((post) => {
-            const titleMatch = post.title?.toLowerCase().includes(query);
-            const summaryMatch = post.summary?.toLowerCase().includes(query);
-            const contentMatch = post.content?.toLowerCase().includes(query);
-            const categoryMatch = Array.isArray(post.category)
-              ? post.category.some((c) => c.toLowerCase().includes(query))
-              : post.category?.toLowerCase().includes(query);
-            return titleMatch || summaryMatch || contentMatch || categoryMatch;
-          });
-          setResults(filtered);
-        }
-      } catch (error) {
-        console.error('Failed to fetch posts for search', error);
+        if (!res.ok) throw new Error('Failed to fetch');
+        const allPosts: PostData[] = await res.json();
+
+        const query = q.toLowerCase().trim();
+        const filtered = allPosts.filter((post) => {
+          const titleMatch = post.title.toLowerCase().includes(query);
+          const summaryMatch = (post.summary || '').toLowerCase().includes(query);
+          const tagsMatch = (post.tags || []).some((tag) => tag.toLowerCase().includes(query));
+          const catMatch = Array.isArray(post.category)
+            ? post.category.some((c) => c.toLowerCase().includes(query))
+            : (post.category || '').toLowerCase().includes(query);
+          return titleMatch || summaryMatch || tagsMatch || catMatch;
+        });
+
+        setResults(filtered);
+      } catch (e) {
+        console.error(e);
+        setResults([]);
       } finally {
         setIsLoading(false);
       }
@@ -47,90 +49,88 @@ function SearchResults() {
     fetchPosts();
   }, [q]);
 
-  const displayResults = q ? results : [];
-  const displayLoading = q ? isLoading : false;
+  const popularKeywords = ['청년', '지원금', '병원', '약국', '사랑카드', '이사비', '건강검진', '출산'];
 
   return (
-    <div className="w-full space-y-6 sm:space-y-8 max-w-4xl mx-auto px-2 sm:px-4 py-8">
-      {/* 1. 상단 브레드크럼 */}
-      <nav className="flex text-xs text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
-        <ol className="inline-flex items-center space-x-1.5">
-          <li>
-            <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-              홈
-            </Link>
-          </li>
-          <li>
-            <span className="mx-1">/</span>
-          </li>
-          <li className="text-gray-900 dark:text-white font-bold" aria-current="page">
-            통합 검색
-          </li>
-        </ol>
-      </nav>
-
-      {/* 2. 헤더 섹션 */}
-      <div className="bg-white dark:bg-[#181a1d] border border-gray-200/80 dark:border-zinc-800 p-6 sm:p-8 rounded-none shadow-md">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-none border border-blue-100 dark:border-blue-800/40">
-            <AppIcon name="search" size={18} />
-          </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white">
-            {q ? `"${q}" 검색 결과` : '의정부 생활정보 통합 검색'}
-          </h1>
+    <div className="space-y-8 pb-16">
+      {/* 1. 검색 인트로 헤더 (모던 수묵 & 굵은 라인 SVG 스타일) */}
+      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] p-6 sm:p-8 group">
+        <div className="absolute -right-6 -bottom-6 text-black/[0.04] dark:text-white/[0.06] pointer-events-none group-hover:scale-105 transition-transform duration-500">
+          <AppIcon name="search" size={160} strokeWidth={2} />
         </div>
-        <p className="text-sm font-medium text-gray-600 dark:text-gray-400 break-keep">
-          {q
-            ? `입력하신 키워드 "${q}"와 일치하는 시정 복지 지원금, 의료/약국, 생활 혜택 안내입니다.`
-            : '궁금하신 지원금, 병원/약국, 청년/육아 혜택 등의 키워드를 입력해 보세요.'}
-        </p>
-        {q && (
-          <div className="mt-4 pt-4 border-t border-gray-100 dark:border-zinc-800 flex items-center justify-between text-xs font-bold">
-            <span className="text-blue-600 dark:text-blue-400">
-              {displayLoading ? '검색 중입니다...' : `총 ${displayResults.length}건이 발견되었습니다.`}
-            </span>
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-black text-white dark:bg-white dark:text-black text-xs font-black uppercase tracking-wider mb-3 border-2 border-black dark:border-white rounded-none">
+            <AppIcon name="search" size={14} strokeWidth={2.5} />
+            <span>통합 검색 센터</span>
           </div>
-        )}
+          <h1 className="text-2xl sm:text-3xl font-black text-black dark:text-white tracking-tight">
+            {q ? (
+              <span>
+                ‘<span className="underline decoration-2">{q}</span>’ 검색 결과
+              </span>
+            ) : (
+              '의정부 생활정보 검색'
+            )}
+          </h1>
+          <p className="mt-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-medium">
+            {q ? `총 ${results.length}개의 관련 소식을 찾았습니다.` : '찾으시는 혜택, 병원, 지원금 키워드를 입력해 보세요.'}
+          </p>
+
+          {/* 추천 키워드 칩 (수묵 흑백 칩) */}
+          <div className="mt-5 flex items-center flex-wrap gap-1.5 pt-4 border-t-2 border-zinc-200 dark:border-zinc-800">
+            <span className="text-xs font-black text-zinc-500 mr-1 flex items-center gap-1">
+              <AppIcon name="zap" size={12} strokeWidth={2.5} />
+              인기 키워드:
+            </span>
+            {popularKeywords.map((kw) => (
+              <Link
+                key={kw}
+                href={`/search?q=${encodeURIComponent(kw)}`}
+                className="px-2.5 py-1 text-xs font-bold rounded-none bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all"
+              >
+                #{kw}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* 3. 검색 결과 목록 */}
-      {!displayLoading && (
-        <div className="space-y-4">
-          {displayResults.length > 0 ? (
-            displayResults.map((post) => <PostCard key={post.slug} post={post} variant="list" />)
-          ) : (
-            <div className="bg-white dark:bg-[#181a1d] border border-gray-200/80 dark:border-zinc-800 p-10 sm:p-14 text-center rounded-none shadow-md">
-              <div className="flex flex-col items-center justify-center space-y-3">
-                <div className="w-12 h-12 flex items-center justify-center text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-none">
-                  <AppIcon name="search" size={24} />
-                </div>
-                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
-                  {q ? `"${q}"에 대한 일치하는 소식을 찾을 수 없습니다.` : '검색어를 입력해 주세요.'}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 max-w-md leading-relaxed font-medium break-keep">
-                  단어의 철자가 정확한지 확인하시거나, 보다 일반적인 키워드(예: 이사비, 청년, 사랑카드, 임산부)로 다시 검색해 보세요.
-                </p>
-                <div className="pt-2">
-                  <Link
-                    href="/blog"
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold inline-flex items-center gap-1.5 transition-colors rounded-none"
-                  >
-                    <span>전체 생활소식 둘러보기</span>
-                    <AppIcon name="chevron-right" size={13} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
+      {/* 2. 결과 목록 */}
+      {isLoading ? (
+        <div className="p-16 text-center border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#181a1d]">
+          <AppIcon name="refresh" size={32} strokeWidth={2.5} className="animate-spin mx-auto text-zinc-500 mb-3" />
+          <p className="text-sm font-black text-zinc-600 dark:text-zinc-400">데이터를 검색하고 있습니다...</p>
         </div>
-      )}
+      ) : results.length > 0 ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {results.map((post) => (
+            <PostCard key={post.slug} post={post} variant="grid" />
+          ))}
+        </div>
+      ) : q ? (
+        <div className="p-16 text-center border-2 border-dashed border-zinc-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d]">
+          <AppIcon name="search" size={40} strokeWidth={2} className="mx-auto text-zinc-400 mb-3" />
+          <h3 className="text-lg font-black text-black dark:text-white mb-1">검색 결과가 없습니다</h3>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto break-keep">
+            단어의 철자가 정확한지 확인하시거나 다른 유사 검색어로 다시 시도해 보세요.
+          </p>
+          <div className="mt-6 flex justify-center gap-3">
+            <Link
+              href="/blog"
+              className="px-4 py-2 bg-black text-white dark:bg-white dark:text-black font-black text-xs border-2 border-black dark:border-white"
+            >
+              전체 소식 보기
+            </Link>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div className="p-12 text-center text-sm text-gray-500 font-bold">검색 엔진을 로드하고 있습니다...</div>}>
+    <Suspense fallback={<div className="p-12 text-center text-sm font-bold text-zinc-500">검색 엔진 로딩 중...</div>}>
       <SearchResults />
     </Suspense>
   );
