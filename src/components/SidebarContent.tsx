@@ -53,7 +53,7 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     watermarkIcon: 'stethoscope',
   },
   {
-    href: `/blog?category=${encodeURIComponent('💸 숨은 지원금 찾기')}`,
+    href: `/blog?category=${encodeURIComponent('숨은 지원금 찾기')}`,
     icon: <AppIcon name="bank" size={18} strokeWidth={2.5} />,
     title: '의정부 지원금 혜택',
     themeColor: 'emerald',
@@ -63,7 +63,7 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     watermarkIcon: 'bank',
   },
   {
-    href: `/blog?category=${encodeURIComponent('💼 취업과 창업')}`,
+    href: `/blog?category=${encodeURIComponent('취업과 창업')}`,
     icon: <AppIcon name="trending-up" size={18} strokeWidth={2.5} />,
     title: '일자리 & 청년창업',
     themeColor: 'indigo',

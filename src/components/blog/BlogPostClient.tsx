@@ -199,10 +199,10 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
       {/* ── [무기 6] 원스톱 공식 신청처 안내 배너 ── */}
       {sourceLink && (
-        <div className="my-8 bg-gradient-to-r from-blue-50/60 via-zinc-50/40 to-transparent dark:from-blue-950/20 dark:via-zinc-900/40 dark:to-transparent p-5 sm:p-6 border border-blue-200/80 dark:border-blue-900/40 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(3,105,161,0.40),0_0_20px_rgba(3,105,161,0.22)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300">
+        <div className="my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300 rounded-none relative overflow-hidden group">
           <div>
-            <span className="font-bold text-blue-950 dark:text-blue-200 flex items-center gap-2 mb-1 text-sm sm:text-base">
-              <AppIcon name="external-link" size={16} strokeWidth={2.5} className="text-blue-600 dark:text-blue-400" />
+            <span className="font-bold text-zinc-950 dark:text-zinc-100 flex items-center gap-2 mb-1 text-sm sm:text-base">
+              <AppIcon name="external-link" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
               <span>의정부시 공식 신청처 및 관련 공고</span>
             </span>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 font-normal">
@@ -213,7 +213,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
             href={sourceLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs border border-blue-600 inline-flex items-center gap-1.5 transition-all shadow-xs active:scale-[0.98] shrink-0 cursor-pointer"
+            className="px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 font-bold text-xs border border-zinc-900 dark:border-zinc-100 inline-flex items-center gap-1.5 transition-all shadow-xs active:scale-[0.98] shrink-0 cursor-pointer rounded-none"
           >
             <span>공식 접수처 바로가기</span>
             <AppIcon name="chevron-right" size={14} strokeWidth={2.5} />
@@ -226,7 +226,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Link
             href="/services/emergency"
-            className="p-4 bg-white dark:bg-[#181a1d] border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/30 dark:hover:bg-emerald-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(4,120,87,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(4,120,87,0.35),0_0_15px_rgba(4,120,87,0.18)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px]"
+            className="p-4 bg-white dark:bg-[#181a1d] border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/30 dark:hover:bg-emerald-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(4,120,87,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(4,120,87,0.45),0_0_15px_rgba(4,120,87,0.22)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
           >
             <div className="flex items-center gap-2 font-bold text-xs text-emerald-950 dark:text-emerald-200">
               <AppIcon name="hospital" size={16} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400" />
@@ -240,13 +240,13 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
           <Link
             href="/services/local-currency"
-            className="p-4 bg-white dark:bg-[#181a1d] border border-blue-200/80 dark:border-blue-900/40 hover:border-blue-500 dark:hover:border-blue-500 hover:bg-blue-50/30 dark:hover:bg-blue-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(3,105,161,0.35),0_0_15px_rgba(3,105,161,0.18)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px]"
+            className="p-4 bg-white dark:bg-[#181a1d] border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-500 dark:hover:border-sky-500 hover:bg-sky-50/30 dark:hover:bg-sky-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(3,105,161,0.45),0_0_15px_rgba(3,105,161,0.22)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
           >
-            <div className="flex items-center gap-2 font-bold text-xs text-blue-950 dark:text-blue-200">
-              <AppIcon name="bank" size={16} strokeWidth={2.5} className="text-blue-600 dark:text-blue-400" />
+            <div className="flex items-center gap-2 font-bold text-xs text-sky-950 dark:text-sky-200">
+              <AppIcon name="bank" size={16} strokeWidth={2.5} className="text-sky-600 dark:text-sky-400" />
               <span>사랑카드 가맹점</span>
             </div>
-            <span className="text-[11px] font-medium text-blue-700 dark:text-blue-400 flex items-center justify-between mt-2">
+            <span className="text-[11px] font-medium text-sky-700 dark:text-sky-400 flex items-center justify-between mt-2">
               <span>지역화폐 가맹점 검색</span>
               <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
@@ -254,7 +254,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
           <Link
             href="/services/health-check"
-            className="p-4 bg-white dark:bg-[#181a1d] border border-amber-200/80 dark:border-amber-900/40 hover:border-amber-500 dark:hover:border-amber-500 hover:bg-amber-50/30 dark:hover:bg-amber-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(180,83,9,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(180,83,9,0.35),0_0_15px_rgba(180,83,9,0.18)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px]"
+            className="p-4 bg-white dark:bg-[#181a1d] border border-amber-200/80 dark:border-amber-900/40 hover:border-amber-500 dark:hover:border-amber-500 hover:bg-amber-50/30 dark:hover:bg-amber-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(180,83,9,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(180,83,9,0.45),0_0_15px_rgba(180,83,9,0.22)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
           >
             <div className="flex items-center gap-2 font-bold text-xs text-amber-950 dark:text-amber-200">
               <AppIcon name="stethoscope" size={16} strokeWidth={2.5} className="text-amber-600 dark:text-amber-400" />
