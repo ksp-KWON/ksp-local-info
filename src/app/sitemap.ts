@@ -21,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/search`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/services/emergency`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
