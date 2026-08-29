@@ -1,22 +1,40 @@
+import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import ThemeToggle from '@/components/ThemeToggle';
 import SearchBar from '@/components/SearchBar';
 import MobileBottomNav from '@/components/MobileBottomNav';
-import { ThemeProvider } from '@/components/ThemeProvider';
 import ScrollProgressBar from '@/components/ScrollProgressBar';
-import Image from 'next/image';
+import SmartStickyLayout from '@/components/SmartStickyLayout';
+import SidebarContent from '@/components/SidebarContent';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import AppIcon from '@/components/ui/AppIcon';
+import { getSortedPostsData } from '@/lib/posts';
 
 export default function PublicLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // 서버에서 전체 태그 목록 사전 계산 → 사이드바에 정적 주입 (초고속 렌더링)
+  const posts = getSortedPostsData();
+  const tagCounts: Record<string, number> = {};
+  for (const post of posts) {
+    if (post.tags) {
+      for (const tag of post.tags) {
+        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+      }
+    }
+  }
+  const sortedTags = Object.entries(tagCounts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([tag]) => tag);
+
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <ScrollProgressBar />
 
-      {/* 1. 프리미엄 패밀리룩 App Bar */}
+      {/* 1. 프리미엄 패밀리룩 헤더 */}
       <header className="sticky top-0 z-50 w-full h-[64px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-b border-gray-200/80 dark:border-zinc-800 transition-colors shadow-sm">
         <div className="mx-auto flex h-full w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5">
           {/* 로고/제목 영역 */}
@@ -30,15 +48,16 @@ export default function PublicLayout({
                     fill
                     className="object-contain"
                     sizes="40px"
+                    priority
                   />
                 </div>
-                <span className="hidden sm:inline font-black text-xl text-gray-900 dark:text-white truncate tracking-tight">
+                <span className="hidden sm:inline font-extrabold text-xl text-gray-900 dark:text-white truncate tracking-tight">
                   의정부 건강·생활 정보 포털
                 </span>
-                <span className="sm:hidden font-black text-lg text-gray-900 dark:text-white truncate tracking-tight">
+                <span className="sm:hidden font-extrabold text-lg text-gray-900 dark:text-white truncate tracking-tight">
                   의정부 생활정보
                 </span>
-                <span className="hidden lg:inline-flex items-center px-2 py-0.5 ml-1 bg-blue-50 dark:bg-blue-900/30 text-[10px] font-extrabold text-blue-700 dark:text-blue-300 tracking-wider uppercase border border-blue-200 dark:border-blue-800/40 rounded-none">
+                <span className="hidden lg:inline-flex items-center px-2 py-0.5 ml-1.5 bg-blue-50 dark:bg-blue-900/30 text-[10px] font-extrabold text-blue-700 dark:text-blue-300 tracking-wider uppercase border border-blue-200 dark:border-blue-800/40 rounded-none">
                   Uijeongbu
                 </span>
               </Link>
@@ -73,13 +92,14 @@ export default function PublicLayout({
         </div>
       </header>
 
-      {/* 2. 본문 컨테이너 */}
-      <main className="mx-auto w-full sm:w-[92vw] xl:w-[85vw] max-w-7xl px-2 sm:px-5 py-6 sm:py-8 flex-1 flex flex-col min-h-[50vh]">
-        {children}
-      </main>
+      {/* 2. 보상스쿨급 스마트 2열 스티키 레이아웃 (본문 73% + 사이드바 27%) */}
+      <SmartStickyLayout
+        mainContent={children}
+        sidebarContent={<SidebarContent tags={sortedTags} />}
+      />
 
       {/* 3. 푸터 */}
-      <footer className="mt-auto w-full bg-white dark:bg-[#181a1d] text-gray-700 dark:text-gray-300 border-t border-gray-200/80 dark:border-zinc-800">
+      <footer className="mt-auto w-full bg-white dark:bg-[#181a1d] text-gray-700 dark:text-gray-300 border-t border-gray-200/80 dark:border-zinc-800 pb-[calc(64px+env(safe-area-inset-bottom))] lg:pb-0">
         <div className="mx-auto flex flex-col md:flex-row h-auto md:h-[70px] w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5 py-5 md:py-0 text-xs font-medium gap-3">
           <p className="copyright text-center md:text-left flex items-center gap-1.5">
             © {new Date().getFullYear()} 의정부 건강·생활 정보 포털. All rights reserved.
@@ -99,6 +119,8 @@ export default function PublicLayout({
           </p>
         </div>
       </footer>
+
+      {/* 모바일 하단 네비게이션 */}
       <MobileBottomNav />
     </ThemeProvider>
   );
