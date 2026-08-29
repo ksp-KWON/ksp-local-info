@@ -36,8 +36,8 @@ export default function PremiumCard({
     default: 'border-gray-200/90 dark:border-zinc-800',
   };
 
-  // 딥 럭셔리 섀도우 & 미세 리프트(-0.5px) 인터랙션
-  const hoverBorders = 'hover:border-zinc-800 dark:hover:border-zinc-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.75)] hover:-translate-y-0.5';
+  // 2중 다중 분산 울트라 딥 섀도우 & 1px 물리적 리프트 인터랙션
+  const hoverBorders = 'hover:border-zinc-900 dark:hover:border-zinc-100 hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.30),0_10px_25px_-5px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95),0_10px_25px_-5px_rgba(0,0,0,0.80)] hover:-translate-y-1';
 
   const baseClass = `bg-white dark:bg-[#181a1d] p-4 sm:p-5 border ${baseBorders[borderColor] || baseBorders.default} shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] transition-all duration-300 relative overflow-hidden rounded-none flex flex-col min-h-0 group ${
     hoverEffect ? hoverBorders : ''

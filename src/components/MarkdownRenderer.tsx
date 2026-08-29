@@ -96,7 +96,7 @@ export const sharedComponents: Components & Record<string, any> = {
       const bodyElements = childArray.slice(1);
 
       return (
-        <div className={`my-8 bg-white dark:bg-[#181a1d] transition-all duration-300 relative overflow-hidden group ${token.tailwind.border} ${token.tailwind.hoverBorder} shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.75)] rounded-none`}>
+        <div className={`my-8 bg-white dark:bg-[#181a1d] transition-all duration-300 relative overflow-hidden group ${token.tailwind.border} ${token.tailwind.hoverBorder} shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.30),0_10px_25px_-5px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95),0_10px_25px_-5px_rgba(0,0,0,0.80)] rounded-none`}>
           <div className={`px-5 sm:px-6 py-3 bg-gradient-to-r ${token.tailwind.headerGradient} relative z-10`}>
             <h3 className={`text-[15px] font-bold flex items-center gap-2.5 tracking-tight !m-0 !p-0 border-0 bg-transparent ${token.tailwind.titleColor}`}>
               <AppIcon name="compass" size={16} strokeWidth={2} />
