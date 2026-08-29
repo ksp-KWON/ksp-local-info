@@ -1,10 +1,47 @@
-# Rules for UI Design
+# 의정부 건강·생활 포털 마스터 헌법 (Uijeongbu Civic Portal Constitution)
 
-## Link Styling Rule
-All HTML `<a>` tags and Markdown links (`[text](url)`) inside body/content MUST be styled as simple inline blue text with underlines, mimicking standard web links (exactly as in the reference screenshot). Do NOT use blocky buttons or box styles for inline text links.
+이 문서는 의정부 건강·생활 정보 포털(ksp-local-info) 전사 시스템의 AI 수석 개발자와 콘텐츠 엔진이 준수해야 할 글로벌 표준(W3C, Google SEO E-E-A-T, Naver D.I.A.+)과 26대 옴니 프로토콜 최상위 가이드라인을 정의합니다.
+모든 블로그 포스팅 창작, 코드 수정, 아키텍처 설계 시 **반드시 아래 헌법 조항을 가장 우선으로 적용**해야 합니다.
 
-When rendering or generating links, ALWAYS use the following classes (or similar variations):
-```tsx
-className="text-[#1A73E8] dark:text-[#8ab4f8] hover:text-[#1557b0] dark:hover:text-[#aecbfa] font-bold underline underline-offset-4 decoration-[#1A73E8]/35 hover:decoration-[#1A73E8] transition-all duration-150 inline"
-```
-Never wrap inline links with `group` buttons or `bg-` utilities unless explicitly asked to create a call-to-action button.
+---
+
+## 🏛️ [제1편] 로컬 콘텐츠 & SEO 헌법 (Content Quality Framework)
+
+### 제1조 — 문체, 문단 호흡 및 순수 텍스트 표준 (Writing & Formatting)
+- **1.1 문장 종결 및 콜론 표준**: 친절하고 명확한 존댓말(~합니다, ~안내해 드립니다, ~하시길 권장합니다)로 통일하며, 콜론 앞뒤는 반드시 한 칸 공백( : )을 둡니다. (예: 신청 기간 : 2026년 9월 1일 ~ 9월 30일)
+- **1.2 표준 문단 호흡 (GFM Paragraph Breathing)**:
+  - 완결된 하나의 논리 단위는 하나의 문단으로 묶고, 문단 전환 시 **표준 빈 줄 1개(\
+\n)로 엄격히 구분**합니다.
+  - 모바일과 PC의 가독성을 위해 **기본 2~4문장(150~250자 내외)**의 호흡을 권장하며, 문단 간 여백은 **mb-4 (16px 황금 여백)**를 준수합니다. (5문장 이상 벽돌 문단 및 문장 중간 강제 엔터 전면 금지)
+- **1.3 순수 텍스트 미니멀리즘 (Pure Text & UI Vector Standard)**:
+  - 구글 E-E-A-T 신뢰도와 네이버 스마트에디터 호환성을 위해 마크다운 원문 내 **유니코드 이모지/조잡한 데코레이션 문자를 전면 배제**합니다. (시스템 렌더러가 W3C 단색 SVG 라인 심볼을 자동 결합)
+- **1.4 키워드 강조 (5대 톤온톤 볼드 & 파스텔 배경)**:
+  - 핵심 지원 조건 및 혜택에 **강조**를 적용하되 문단당 1~2개로 절제합니다. (시스템이 **긴급/주의(레드)/지원금/혜택(에메랄드)/신청/일정(앰버)/공공/조례(블루)/문화/행사(퍼플)** 5대 파스텔 배경으로 자동 렌더링)
+- **1.5 인라인 행정/의료 용어 사전 (Inline Glossary)**:
+  - 해당 용어가 본문에 직접 등장하는 섹션 맨 아래에 마크다운 인용구(> **용어명** : 설명) 형태로 인라인 작성합니다.
+
+### 제2조 — W3C 시맨틱 위계 및 시각화 표준 (Semantic & Visualization)
+- **2.1 W3C 시맨틱 헤딩 위계**: H1은 포스트 제목(Frontmatter 	itle), H2는 대주제/핵심 챕터, H3는 중주제/세부 섹션으로 자연스러운 서술형 소제목을 구성합니다. (본문 내 #  H1 태그 사용 전면 금지)
+- **2.2 마크다운 표(Table) 필수 활용**: 지원 대상 비교, 진료 시간표, 신청 서류 목록 등 비교 데이터는 순수 마크다운 표(| 구분 | 내용 |, |---|---|)로 정리합니다. (백틱 3개 감싸기 및 인용구 감싸기 금지, 시스템이 마크다운 표준 정렬 및 볼드 위계에 따라 렌더링)
+- **2.3 로컬 5대 무기 W3C 단색 라인 SVG 심볼 자동 매핑**:
+  - [무기 1] 핵심 요약 박스: 전구(Lightbulb) 라인 SVG
+  - [무기 2] 시민 자가진단 체크리스트: 체크박스(Clipboard Check) 라인 SVG
+  - [무기 3] 자주 묻는 질문 (FAQ): 말풍선(Message Circle) 라인 SVG
+  - [무기 4] 의정부 시민 실무 팁: 방패(Shield Alert) 라인 SVG
+  - [무기 5] 공식 출처 및 신청 링크: 외부 링크(External Link) 라인 SVG
+
+### 제3조 — 콘텐츠 라이프사이클 블록 구조 (Lifecycle Structure)
+- **3.1 오프닝 표준**: 본문 최상단에 반드시 ## 핵심 요약 (3개 불릿 박스, 대괄호 메모 없이 자연스러운 서술형 문장)을 먼저 작성하고, 직후 시민의 일상 공감을 이끄는 도입 문단을 전개합니다.
+- **3.2 시그니처 팁**: 실질적인 신청 노하우나 꿀팁은 반드시 **> ### 의정부 생활포털 실무 팁 & 안내** 표준 명칭을 사용합니다.
+- **3.3 클로징 맞춤 안내**: 결론부는 **'###### ①/②/③... + 핵심 요점'**과 본문 문단으로 다단계 확장 구성합니다.
+
+---
+
+## ⚙️ [제2편] 전사 엔지니어링 헌법 (Engineering & Architecture)
+
+### 제4조 — 전사 엔지니어링 6대 원칙 및 최적화 무결성 (Core Engineering)
+- **4.1 6대 개발 슬로건**: **[표준 · 범용 · 콤팩트 · 통합 · 공유 · 공통]**을 모든 설계의 최상위 원칙으로 삼습니다.
+- **4.2 샤프 모던 룩 및 순백색 표준**: 모든 카드와 컨테이너는 샤프 모던 엣지(ounded-none), 순백색(g-white), 표준 보더(order-gray-200/80 dark:border-zinc-800)를 일괄 준수합니다.
+- **4.3 TypeScript 컴파일 무결성**: 	sc --noEmit을 실행하여 전사 타입 에러 0개를 보장합니다.
+- **4.4 Turbopack SSG 초고속 정적 빌드**: pm run build를 통해 전 정적 페이지를 무결 컴파일합니다.
+- **4.5 CQF 품질 검증 자동화**: ode scripts/check-quality.js를 통해 대괄호 메모, 이모지, 메타 설명 오류를 0.001초 만에 자동 전수 검사합니다.
