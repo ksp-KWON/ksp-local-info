@@ -21,34 +21,6 @@ interface SectionLayoutProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
   watermarkIcon?: AppIconName;
 }
 
-const gradientBackgrounds: Record<SectionThemeColor, string> = {
-  blue: '!bg-gradient-to-r !from-blue-50/90 !via-indigo-50/40 !to-transparent dark:!from-blue-950/40 dark:!via-indigo-950/20 dark:!to-transparent',
-  rose: '!bg-gradient-to-r !from-rose-50/90 !via-pink-50/40 !to-transparent dark:!from-rose-950/40 dark:!via-pink-950/20 dark:!to-transparent',
-  cyan: '!bg-gradient-to-r !from-sky-50/90 !via-cyan-50/40 !to-transparent dark:!from-sky-950/40 dark:!via-cyan-950/20 dark:!to-transparent',
-  red: '!bg-gradient-to-r !from-red-50/90 !via-rose-50/40 !to-transparent dark:!from-red-950/40 dark:!via-rose-950/20 dark:!to-transparent',
-  green: '!bg-gradient-to-r !from-emerald-50/90 !via-teal-50/40 !to-transparent dark:!from-emerald-950/40 dark:!via-teal-950/20 dark:!to-transparent',
-  orange: '!bg-gradient-to-r !from-orange-50/90 !via-amber-50/40 !to-transparent dark:!from-orange-950/40 dark:!via-amber-950/20 dark:!to-transparent',
-  teal: '!bg-gradient-to-r !from-teal-50/90 !via-emerald-50/40 !to-transparent dark:!from-teal-950/40 dark:!via-emerald-950/20 dark:!to-transparent',
-  indigo: '!bg-gradient-to-r !from-indigo-50/90 !via-blue-50/40 !to-transparent dark:!from-indigo-950/40 dark:!via-blue-950/20 dark:!to-transparent',
-  purple: '!bg-gradient-to-r !from-purple-50/90 !via-indigo-50/40 !to-transparent dark:!from-purple-950/40 dark:!via-indigo-950/20 dark:!to-transparent',
-  yellow: '!bg-gradient-to-r !from-amber-50/90 !via-yellow-50/40 !to-transparent dark:!from-amber-950/40 dark:!via-yellow-950/20 dark:!to-transparent',
-  default: '!bg-gradient-to-r !from-blue-50/90 !via-indigo-50/40 !to-transparent dark:!from-blue-950/40 dark:!via-indigo-950/20 dark:!to-transparent',
-};
-
-const hoverColorMap: Record<SectionThemeColor, string> = {
-  blue: 'hover:text-blue-600 dark:hover:text-blue-400',
-  rose: 'hover:text-rose-600 dark:hover:text-rose-400',
-  cyan: 'hover:text-sky-600 dark:hover:text-sky-400',
-  red: 'hover:text-red-600 dark:hover:text-red-400',
-  green: 'hover:text-emerald-600 dark:hover:text-emerald-400',
-  orange: 'hover:text-orange-600 dark:hover:text-orange-400',
-  teal: 'hover:text-teal-600 dark:hover:text-teal-400',
-  indigo: 'hover:text-indigo-600 dark:hover:text-indigo-400',
-  purple: 'hover:text-purple-600 dark:hover:text-purple-400',
-  yellow: 'hover:text-amber-600 dark:hover:text-amber-400',
-  default: 'hover:text-blue-600 dark:hover:text-blue-400',
-};
-
 export default function SectionLayout({
   title,
   description,
@@ -61,43 +33,37 @@ export default function SectionLayout({
   className = '',
   ...props
 }: SectionLayoutProps) {
-  const gradientClass = gradientBackgrounds[themeColor] || gradientBackgrounds.default;
-  const linkHoverClass = hoverColorMap[themeColor] || hoverColorMap.default;
-
   return (
     <section className={`relative group/section ${className}`} {...props}>
-      {/* 타이틀 박스 (SVG 벡터 라인 워터마크 & 파스텔 그라데이션) */}
+      {/* 타이틀 박스 (수묵화 묵향 그라데이션 & 굵은 라인 SVG 워터마크) */}
       <PremiumCard
-        borderColor={themeColor}
+        borderColor="default"
         hoverEffect={true}
         watermarkIcon={watermarkIcon}
-        className={`mb-5 !p-5 sm:!p-6 group/headerbox ${gradientClass}`}
+        className="mb-5 !p-5 sm:!p-6 group/headerbox !bg-gradient-to-r !from-black/[0.05] !via-black/[0.015] !to-transparent dark:!from-white/[0.08] dark:!via-white/[0.02] dark:!to-transparent !border-2 !border-black/70 dark:!border-white/70"
       >
         <div className={`flex items-center justify-between gap-3 ${description ? 'mb-2' : ''} relative z-10 group/header`}>
-          <PremiumHeading
-            level={headingLevel}
-            gradient={themeColor}
-            icon={icon}
-            className="!mb-0 !text-lg sm:!text-xl font-extrabold"
-            showLeftBorder={false}
-          >
-            {title}
-          </PremiumHeading>
+          <div className="flex items-center gap-2.5 min-w-0">
+            {icon && <span className="text-black dark:text-white shrink-0 stroke-[2.5]">{icon}</span>}
+            <h2 className="text-lg sm:text-xl font-black tracking-tight text-black dark:text-white truncate">
+              {title}
+            </h2>
+          </div>
 
-          {/* 슬림 샤프 전체보기 링크 */}
+          {/* 슬림 샤프 굵은 선 전체보기 링크 */}
           {viewAllLink && (
             <Link
               href={viewAllLink.href}
-              className={`flex items-center gap-1 text-xs font-bold text-gray-500 dark:text-gray-400 ${linkHoverClass} transition-colors group/link shrink-0`}
+              className="flex items-center gap-1 text-xs font-black text-black dark:text-white hover:opacity-70 transition-opacity group/link shrink-0 border-b-2 border-black dark:border-white pb-0.5"
             >
               <span>{viewAllLink.text || '전체보기'}</span>
-              <AppIcon name="chevron-right" size={13} className="group-hover/link:translate-x-0.5 transition-transform" />
+              <AppIcon name="chevron-right" size={13} strokeWidth={3} className="group-hover/link:translate-x-0.5 transition-transform" />
             </Link>
           )}
         </div>
 
         {description && (
-          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-keep leading-relaxed font-medium relative z-10">
+          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed font-medium relative z-10 mt-1">
             {description}
           </p>
         )}

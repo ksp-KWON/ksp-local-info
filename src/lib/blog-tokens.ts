@@ -1,10 +1,7 @@
 /**
  * blog-tokens.ts
- * 의정부 생활포털 웹(MarkdownRenderer) & 네이버 스마트에디터(naver-formatter) 공통 디자인 토큰 및 톤 판별 엔진
- * 
- * [원칙: 표준, 범용, 콤팩트, 통합, 공유, 공통]
- * - 단일 진실 공급원(Single Source of Truth)
- * - 헌법 제1조(순수 텍스트 & W3C 벡터 표준) 및 제12조(의정부 생활포털 실무 팁 & 안내 보라색 톤) 완벽 준수
+ * 의정부 건강·생활 정보 포털 전용 모던 수묵(墨) & 굵은 라인 SVG 모노톤 디자인 토큰
+ * - 알록달록한 원색을 배제하고 굵은 선(Bold Stroke)과 흑백 명도(Value/Shade)의 농담(濃淡)을 활용
  */
 
 export type BlogTone = 'purple' | 'blue' | 'green' | 'red' | 'yellow';
@@ -12,7 +9,6 @@ export type BlogTone = 'purple' | 'blue' | 'green' | 'red' | 'yellow';
 export interface ToneColorToken {
   name: BlogTone;
   label: string;
-  // 네이버 스마트에디터용 Hex 색상
   hex: {
     border: string;
     borderAccent: string;
@@ -26,7 +22,6 @@ export interface ToneColorToken {
     highlightBg: string;
     highlightText: string;
   };
-  // 웹(Tailwind)용 클래스명
   tailwind: {
     border: string;
     hoverBorder: string;
@@ -37,165 +32,154 @@ export interface ToneColorToken {
 }
 
 export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
-  // 1. Purple (Indigo): 의정부 생활포털 실무 팁 & 안내, 최고 권위 의학/법률 전문성
+  // 1. 짙은 흑묵 (실무 인사이트 / 최고 권위)
   purple: {
     name: 'purple',
     label: '실무 인사이트',
     hex: {
-      border: '#c7d2fe',
-      borderAccent: '#4f46e5',
-      headerBg: '#eef2ff',
-      headerText: '#4338ca',
-      headerBorderBottom: '#c7d2fe',
+      border: '#27272a',
+      borderAccent: '#000000',
+      headerBg: '#f4f4f5',
+      headerText: '#000000',
+      headerBorderBottom: '#27272a',
       bodyBg: '#ffffff',
-      bodyText: '#374151',
-      badgeBg: '#e0e7ff',
-      badgeText: '#3730a3',
-      highlightBg: '#e0e7ff',
-      highlightText: '#3730a3',
+      bodyText: '#18181b',
+      badgeBg: '#18181b',
+      badgeText: '#ffffff',
+      highlightBg: '#e4e4e7',
+      highlightText: '#000000',
     },
     tailwind: {
-      border: 'border-indigo-200 dark:border-indigo-900/50',
-      hoverBorder: 'hover:border-indigo-500 hover:shadow-[0_12px_40px_rgba(99,102,241,0.18)]',
-      headerGradient: 'from-indigo-50/90 to-transparent dark:from-indigo-900/25 dark:to-transparent border-b border-indigo-100 dark:border-indigo-900/40',
-      titleColor: 'text-indigo-600 dark:text-indigo-400',
-      highlightClass: 'text-[#4338ca] dark:text-[#a5b4fc] bg-indigo-50 dark:bg-indigo-900/20',
+      border: 'border-2 border-black dark:border-white',
+      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      headerGradient: 'from-black/10 to-transparent dark:from-white/15 dark:to-transparent border-b-2 border-black dark:border-white',
+      titleColor: 'text-black dark:text-white',
+      highlightClass: 'text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 font-bold',
     },
   },
-  // 2. Green / Emerald: 승소, 해결, 지급, 합의, 체크리스트, 맞춤 솔루션
+  // 2. 맑은 먹빛 (솔루션 / 해결 / 지원금)
   green: {
     name: 'green',
     label: '솔루션·해결',
     hex: {
-      border: '#a7f3d0',
-      borderAccent: '#059669',
-      headerBg: '#ecfdf5',
-      headerText: '#065f46',
-      headerBorderBottom: '#a7f3d0',
+      border: '#3f3f46',
+      borderAccent: '#18181b',
+      headerBg: '#f4f4f5',
+      headerText: '#18181b',
+      headerBorderBottom: '#3f3f46',
       bodyBg: '#ffffff',
-      bodyText: '#374151',
-      badgeBg: '#d1fae5',
-      badgeText: '#065f46',
-      highlightBg: '#d1fae5',
-      highlightText: '#065f46',
+      bodyText: '#27272a',
+      badgeBg: '#27272a',
+      badgeText: '#ffffff',
+      highlightBg: '#e4e4e7',
+      highlightText: '#18181b',
     },
     tailwind: {
-      border: 'border-green-200 dark:border-green-900/50',
-      hoverBorder: 'hover:border-[var(--google-green)] hover:shadow-[0_12px_40px_rgba(52,168,83,0.18)]',
-      headerGradient: 'from-green-50/90 to-transparent dark:from-green-900/25 dark:to-transparent border-b border-green-100 dark:border-green-900/40',
-      titleColor: 'text-[var(--google-green)] dark:text-green-400',
-      highlightClass: 'text-[#137333] dark:text-[#81c995] bg-emerald-50 dark:bg-emerald-900/20',
+      border: 'border-2 border-zinc-800 dark:border-zinc-200',
+      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      headerGradient: 'from-zinc-900/8 to-transparent dark:from-zinc-100/10 dark:to-transparent border-b-2 border-zinc-800 dark:border-zinc-200',
+      titleColor: 'text-zinc-900 dark:text-zinc-100',
+      highlightClass: 'text-zinc-900 dark:text-zinc-100 bg-zinc-150 dark:bg-zinc-800 font-bold',
     },
   },
-  // 3. Yellow / Amber: 인라인 용어사전, 핵심 요약, 중요 주의사항
+  // 3. 중간 먹빛 (핵심 / 용어사전)
   yellow: {
     name: 'yellow',
     label: '핵심·용어사전',
     hex: {
-      border: '#fde68a',
-      borderAccent: '#d97706',
-      headerBg: '#fffbeb',
-      headerText: '#b45309',
-      headerBorderBottom: '#fde68a',
+      border: '#52525b',
+      borderAccent: '#27272a',
+      headerBg: '#fafafa',
+      headerText: '#27272a',
+      headerBorderBottom: '#52525b',
       bodyBg: '#ffffff',
-      bodyText: '#374151',
-      badgeBg: '#fef3c7',
-      badgeText: '#92400e',
-      highlightBg: '#fef3c7',
-      highlightText: '#92400e',
+      bodyText: '#3f3f46',
+      badgeBg: '#3f3f46',
+      badgeText: '#ffffff',
+      highlightBg: '#f4f4f5',
+      highlightText: '#27272a',
     },
     tailwind: {
-      border: 'border-yellow-300 dark:border-yellow-900/50',
-      hoverBorder: 'hover:border-yellow-500 hover:shadow-[0_12px_40px_rgba(234,179,8,0.18)]',
-      headerGradient: 'from-yellow-50/90 to-transparent dark:from-yellow-900/25 dark:to-transparent border-b border-yellow-200 dark:border-yellow-900/40',
-      titleColor: 'text-yellow-600 dark:text-yellow-400',
-      highlightClass: 'text-[#e37400] dark:text-[#fde293] bg-amber-50 dark:bg-amber-900/20',
+      border: 'border-2 border-zinc-600 dark:border-zinc-400',
+      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      headerGradient: 'from-zinc-600/8 to-transparent dark:from-zinc-300/10 dark:to-transparent border-b-2 border-zinc-600 dark:border-zinc-400',
+      titleColor: 'text-zinc-800 dark:text-zinc-200',
+      highlightClass: 'text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-850 font-bold',
     },
   },
-  // 4. Red: 위험, 거절, 면책, 부지급, 법적 리스크
+  // 4. 짙은 경계 먹빛 (주의 / 위험 / 면책)
   red: {
     name: 'red',
     label: '주의·면책위험',
     hex: {
-      border: '#fecaca',
-      borderAccent: '#dc2626',
-      headerBg: '#fef2f2',
-      headerText: '#b91c1c',
-      headerBorderBottom: '#fecaca',
+      border: '#000000',
+      borderAccent: '#000000',
+      headerBg: '#f4f4f5',
+      headerText: '#000000',
+      headerBorderBottom: '#000000',
       bodyBg: '#ffffff',
-      bodyText: '#374151',
-      badgeBg: '#fee2e2',
-      badgeText: '#991b1b',
-      highlightBg: '#fee2e2',
-      highlightText: '#991b1b',
+      bodyText: '#000000',
+      badgeBg: '#000000',
+      badgeText: '#ffffff',
+      highlightBg: '#e4e4e7',
+      highlightText: '#000000',
     },
     tailwind: {
-      border: 'border-red-200 dark:border-red-900/50',
-      hoverBorder: 'hover:border-[var(--google-red)] hover:shadow-[0_12px_40px_rgba(234,67,53,0.18)]',
-      headerGradient: 'from-red-50/90 to-transparent dark:from-red-900/25 dark:to-transparent border-b border-red-100 dark:border-red-900/40',
-      titleColor: 'text-[var(--google-red)] dark:text-red-400',
-      highlightClass: 'text-[#d93025] dark:text-[#f28b82] bg-red-50 dark:bg-red-900/20',
+      border: 'border-2 border-black dark:border-white',
+      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      headerGradient: 'from-black/15 to-transparent dark:from-white/20 dark:to-transparent border-b-2 border-black dark:border-white',
+      titleColor: 'text-black dark:text-white',
+      highlightClass: 'text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 font-black',
     },
   },
-  // 5. Blue: 기본 브랜드, 일반 가이드, 설명
+  // 5. 은은한 수묵 안개 (기본 가이드)
   blue: {
     name: 'blue',
     label: '기본 가이드',
     hex: {
-      border: '#bfdbfe',
-      borderAccent: '#2563eb',
-      headerBg: '#eff6ff',
-      headerText: '#1d4ed8',
-      headerBorderBottom: '#bfdbfe',
+      border: '#d4d4d8',
+      borderAccent: '#71717a',
+      headerBg: '#fafafa',
+      headerText: '#3f3f46',
+      headerBorderBottom: '#d4d4d8',
       bodyBg: '#ffffff',
-      bodyText: '#374151',
-      badgeBg: '#dbeafe',
-      badgeText: '#1e40af',
-      highlightBg: '#dbeafe',
-      highlightText: '#1e40af',
+      bodyText: '#3f3f46',
+      badgeBg: '#e4e4e7',
+      badgeText: '#18181b',
+      highlightBg: '#f4f4f5',
+      highlightText: '#18181b',
     },
     tailwind: {
-      border: 'border-blue-200 dark:border-blue-900/50',
-      hoverBorder: 'hover:border-[var(--google-blue)] hover:shadow-[0_12px_40px_rgba(26,115,232,0.18)]',
-      headerGradient: 'from-blue-50/90 to-transparent dark:from-blue-900/25 dark:to-transparent border-b border-blue-100 dark:border-blue-900/40',
-      titleColor: 'text-[var(--google-blue)] dark:text-blue-400',
-      highlightClass: 'text-[#1A73E8] dark:text-[#8ab4f8] bg-blue-50 dark:bg-blue-900/20',
+      border: 'border-2 border-zinc-300 dark:border-zinc-700',
+      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      headerGradient: 'from-zinc-200/40 to-transparent dark:from-zinc-800/30 dark:to-transparent border-b-2 border-zinc-300 dark:border-zinc-700',
+      titleColor: 'text-zinc-800 dark:text-zinc-200',
+      highlightClass: 'text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-900 font-medium',
     },
   },
 };
 
 /**
- * 텍스트 내용 기반 톤(Tone) 자동 판별기 (웹 & 네이버 공통)
+ * 텍스트 내용 기반 톤(Tone) 자동 판별기
  */
 export function getToneColor(text: string): BlogTone {
   const clean = (text || '').trim();
 
-  // 1. [헌법 제12조] 의정부 생활포털 실무 팁 & 안내 -> 보라색(Purple) 톤
   if (/보상스쿨|실무\s*인사이트|실무인사이트|피드백|인사이트/.test(clean)) {
     return 'purple';
   }
-
-  // 2. [헌법 제11조] 핵심 요약 (Key Points) -> 보상스쿨 시그니처 레드(Red) 톤
   if (/(핵심\s*요약|핵심요약|3줄\s*요약|주요\s*포인트)/.test(clean)) {
     return 'red';
   }
-
-  // 3. [헌법 제4조] 인라인 용어 사전 (> **용어명** : 설명) -> 노란색/앰버(Yellow) 톤
   if (/(?:^|\n)\s*(?:\*\*[^*]+\*\*|[^\n:]+)\s*[:：]/.test(clean) || /(?:용어\s*사전|단어\s*설명|용어\s*정의)/.test(clean)) {
     return 'yellow';
   }
-
-  // 4. 위험/면책/부지급 키워드 -> 빨간색(Red) 톤
   if (/(주의|경고|위험|금지|부지급|면책|거절|삭감|과실|위반|분쟁|소송|패소|실패)/.test(clean)) {
     return 'red';
   }
-
-  // 5. 승소/지급/해결 키워드 -> 초록색(Green) 톤
   if (/(해결|승소|지급|보상|합의|성공|전액|확보|부책|방어|수령|구제|유리)/.test(clean)) {
     return 'green';
   }
-
-  // 6. 핵심/체크 키워드 -> 노란색(Yellow) 톤
   if (/(핵심|팁|포인트|체크|요약|기준|원칙)/.test(clean)) {
     return 'yellow';
   }
@@ -204,7 +188,7 @@ export function getToneColor(text: string): BlogTone {
 }
 
 /**
- * 키워드 강조(**텍스트**)의 의미 기반 톤 판별기 (웹 & 네이버 공통)
+ * 키워드 강조(**텍스트**)의 의미 기반 톤 판별기
  */
 export function getKeywordTone(text: string): BlogTone {
   const t = (text || '').trim();
@@ -218,7 +202,7 @@ export function getKeywordTone(text: string): BlogTone {
   if (/(핵심|중요|필수|확인|점검|기준|원칙|주의사항|팁|노하우|명심|포인트|체크|절차|방법|동선)/.test(t)) {
     return 'yellow';
   }
-  if (/(전문가|생활행정전문가|손해사정|의학|법률|조례|자문|소견|감정|진단|포렌식|맥브라이드|자배법)/.test(t)) {
+  if (/(전문가|손해사정사|손해사정|의학|법률|판례|자문|소견|감정|진단|포렌식|맥브라이드|자배법)/.test(t)) {
     return 'purple';
   }
 
