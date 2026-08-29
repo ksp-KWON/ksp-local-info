@@ -96,11 +96,10 @@ export const sharedComponents: Components & Record<string, any> = {
       const bodyElements = childArray.slice(1);
 
       return (
-        <div className="my-8 bg-white dark:bg-[#181a1d] transition-all duration-200 relative overflow-hidden group border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-800 dark:hover:border-zinc-300 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] rounded-none">
-          <div className="absolute top-0 left-0 w-1 h-full bg-zinc-900 dark:bg-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-          <div className="px-5 sm:px-6 py-3 bg-gradient-to-r from-zinc-100/90 via-zinc-50/40 to-transparent dark:from-zinc-800/40 border-b border-gray-200/80 dark:border-zinc-800 relative z-10">
-            <h3 className="text-[15px] font-bold flex items-center gap-2.5 tracking-tight !m-0 !p-0 border-0 bg-transparent text-zinc-900 dark:text-zinc-100">
-              <AppIcon name="shield-alert" size={16} className="text-zinc-700 dark:text-zinc-300" />
+        <div className={`my-8 bg-white dark:bg-[#181a1d] transition-all duration-200 relative overflow-hidden group ${token.tailwind.border} ${token.tailwind.hoverBorder} shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] rounded-none`}>
+          <div className={`px-5 sm:px-6 py-3 bg-gradient-to-r ${token.tailwind.headerGradient} relative z-10`}>
+            <h3 className={`text-[15px] font-bold flex items-center gap-2.5 tracking-tight !m-0 !p-0 border-0 bg-transparent ${token.tailwind.titleColor}`}>
+              <AppIcon name="compass" size={16} strokeWidth={2} />
               <span>{headingChildren}</span>
             </h3>
           </div>
@@ -112,8 +111,7 @@ export const sharedComponents: Components & Record<string, any> = {
     }
 
     return (
-      <div className="my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 transition-all duration-200 relative overflow-hidden group border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-800 dark:hover:border-zinc-300 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] rounded-none">
-        <div className="absolute top-0 left-0 w-1 h-full bg-zinc-900 dark:bg-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
+      <div className={`my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 transition-all duration-200 relative overflow-hidden group ${token.tailwind.border} ${token.tailwind.hoverBorder} shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] rounded-none`}>
         <div className="relative z-10 text-[14.5px] sm:text-[15px] font-normal text-zinc-700 dark:text-zinc-300 leading-[1.8] tracking-tight [&>p]:mb-4 sm:[&>p]:mb-5 [&>p:last-child]:!mb-0 break-keep">
           {children}
         </div>
@@ -157,7 +155,7 @@ export const sharedComponents: Components & Record<string, any> = {
   a: ({ href = '', children }) => (
     <a
       href={href}
-      className="text-zinc-900 dark:text-zinc-100 font-bold underline underline-offset-4 decoration-zinc-400 dark:decoration-zinc-600 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mx-0.5 inline group"
+      className="text-sky-700 dark:text-sky-300 font-bold underline underline-offset-4 decoration-sky-300 dark:decoration-sky-700 hover:text-sky-900 dark:hover:text-sky-200 transition-colors mx-0.5 inline group"
       target={href.startsWith('http') ? '_blank' : undefined}
       rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
     >
@@ -191,11 +189,11 @@ export const sharedComponents: Components & Record<string, any> = {
   },
 
   calculator: () => null,
-  red: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
-  orange: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
-  green: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
-  blue: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
-  purple: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
+  red: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.red.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
+  orange: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.yellow.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
+  green: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.green.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
+  blue: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.blue.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
+  purple: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.purple.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
 
   relatedbox: ({ children }: any) => (
     <PremiumCard borderColor="charcoal" hoverEffect={true} className="my-10 group">
