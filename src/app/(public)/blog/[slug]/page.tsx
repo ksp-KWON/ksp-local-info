@@ -168,35 +168,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           {/* 블로그 본문 (TOC & Markdown & ShareButtons 일체화) */}
           <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} />
 
-          {/* 하단 추천 혜택 박스 */}
+          {/* 하단 광고 배너 */}
           <div className="pt-6 border-t border-gray-100 dark:border-zinc-800">
-            <div className="bg-zinc-50/70 dark:bg-zinc-900/60 border border-gray-200/90 dark:border-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] rounded-none p-6 sm:p-7 mb-8">
-              <h3 className="font-bold text-base mb-3 flex items-center gap-2 text-zinc-950 dark:text-white">
-                <AppIcon name="shield-check" size={18} strokeWidth={2} className="text-emerald-600 dark:text-emerald-400" />
-                <span>의정부 시민들이 함께 확인한 지원 혜택</span>
-              </h3>
-              <ul className="space-y-2.5 text-sm font-normal text-zinc-700 dark:text-zinc-300">
-                <li className="flex items-center gap-2">
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
-                  <Link href="/services/emergency" className="hover:text-emerald-700 dark:hover:text-emerald-300 hover:underline">
-                    의정부 달빛어린이병원 & 심야약국 실시간 지도
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-sky-600 dark:text-sky-400 font-bold">✓</span>
-                  <Link href="/services/local-currency" className="hover:text-sky-700 dark:hover:text-sky-300 hover:underline">
-                    의정부사랑카드(지역화폐) 가맹점 및 인센티브 혜택
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-amber-600 dark:text-amber-400 font-bold">✓</span>
-                  <Link href="/blog" className="hover:text-amber-700 dark:hover:text-amber-300 hover:underline">
-                    의정부시 청년 및 신혼부부 복지 지원금 전체보기
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
             <div className="my-6">
               <AdBanner slot="blog-bottom-ad" />
             </div>
