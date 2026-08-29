@@ -60,12 +60,12 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
   return (
     <div className="space-y-7" data-blog-body>
-      {/* ── [무기 1] 시정 핵심 요약 (3줄 브리핑) ── */}
+      {/* ── [무기 1] 행정 핵심 요약 (3줄 브리핑) ── */}
       {keyPoints && keyPoints.length > 0 && (
         <div className="my-6 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 p-5 sm:p-6 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] transition-all duration-300 relative overflow-hidden group">
           <div className="flex items-center gap-2 pb-3 mb-3.5 border-b border-gray-100 dark:border-zinc-800 font-bold text-base text-zinc-900 dark:text-zinc-100">
             <AppIcon name="file-text" size={18} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400" />
-            <span>{keyPointsTitle || '시정 핵심 요약 (3줄 브리핑)'}</span>
+            <span>{keyPointsTitle || '행정 핵심 요약 (3줄 브리핑)'}</span>
           </div>
           <ul className="space-y-2.5 text-sm sm:text-[15px] font-normal text-zinc-800 dark:text-zinc-200">
             {keyPoints.map((pt, i) => (
@@ -155,12 +155,12 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
         </div>
       )}
 
-      {/* ── [무기 5] 시민 자주 묻는 질문 (Civic FAQ 아코디언) ── */}
+      {/* ── [무기 5] 자주 묻는 질문 (Civic FAQ 아코디언) ── */}
       {faqItems && faqItems.length > 0 && (
         <div className="my-8 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 p-5 sm:p-6 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] transition-all duration-300 relative overflow-hidden group">
           <div className="flex items-center gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-zinc-800 font-bold text-base sm:text-lg text-zinc-900 dark:text-zinc-100">
             <AppIcon name="chat" size={18} strokeWidth={2.5} className="text-amber-600 dark:text-amber-400" />
-            <span>시민 자주 묻는 질문 (FAQ)</span>
+            <span>자주 묻는 질문 (FAQ)</span>
           </div>
           <div className="space-y-3">
             {faqItems.map((faq, idx) => {
