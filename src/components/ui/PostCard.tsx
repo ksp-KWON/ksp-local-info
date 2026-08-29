@@ -38,11 +38,7 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   if (variant === 'list') {
     return (
       <Link href={`/blog/${post.slug}`} className="group flex flex-col w-full">
-        <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 sm:p-6 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] dark:hover:shadow-[0_14px_44px_rgba(255,255,255,0.08)] transition-all duration-200 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-800 dark:hover:border-zinc-300 flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
-          {/* 호버 시 좌측 1.5px 수묵 포인트 획 & 워시 */}
-          <div className="absolute top-0 left-0 w-1 h-full bg-zinc-900 dark:bg-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-          <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/60 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-0" />
-
+        <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.75)] hover:-translate-y-0.5 transition-all duration-300 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-800 dark:hover:border-zinc-300 flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
           {/* 워터마크 SVG */}
           <div className="absolute right-3.5 bottom-2.5 opacity-[0.035] dark:opacity-[0.055] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
             <AppIcon name={watermarkIcon} size={68} strokeWidth={1.5} />
@@ -51,7 +47,7 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
           <div className="flex-1 min-w-0 z-10 relative">
             <div className="flex flex-wrap items-center gap-2 mb-3">
               <PremiumBadge color={badgeColor}>
-                {mainCategory.replace(/^[^s]+s/, '')}
+                {mainCategory.replace(/^[^\s]+\s/, '')}
               </PremiumBadge>
               <time className="text-xs font-medium text-zinc-400 dark:text-zinc-500 flex items-center gap-1 shrink-0 ml-2">
                 <AppIcon name="calendar" size={13} strokeWidth={1.5} />
@@ -83,11 +79,8 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col justify-between relative bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] dark:hover:shadow-[0_14px_44px_rgba(255,255,255,0.08)] hover:border-zinc-800 dark:hover:border-zinc-300 p-4 sm:p-5 active:scale-[0.98] transition-all duration-200 overflow-hidden rounded-none outline-none"
+      className="group flex flex-col justify-between relative bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.75)] hover:-translate-y-0.5 hover:border-zinc-800 dark:hover:border-zinc-300 p-4 sm:p-5 active:scale-[0.98] transition-all duration-300 overflow-hidden rounded-none outline-none"
     >
-      <div className="absolute top-0 left-0 w-1 h-full bg-zinc-900 dark:bg-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-      <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/60 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-0" />
-
       {/* 워터마크 SVG */}
       <div className="absolute right-3.5 bottom-2.5 opacity-[0.035] dark:opacity-[0.055] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
         <AppIcon name={watermarkIcon} size={68} strokeWidth={1.5} />

@@ -36,21 +36,18 @@ export default function PremiumCard({
     default: 'border-gray-200/90 dark:border-zinc-800',
   };
 
-  // 44px 흑요석 앰비언트 글로우 & 정밀 수묵 테두리
-  const hoverBorders = 'hover:border-zinc-800 dark:hover:border-zinc-300 hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] dark:hover:shadow-[0_14px_44px_rgba(255,255,255,0.08)]';
+  // 딥 럭셔리 섀도우 & 미세 리프트(-0.5px) 인터랙션
+  const hoverBorders = 'hover:border-zinc-800 dark:hover:border-zinc-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.75)] hover:-translate-y-0.5';
 
-  const baseClass = `bg-white dark:bg-[#181a1d] p-4 sm:p-5 border ${baseBorders[borderColor] || baseBorders.default} shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-all duration-200 relative overflow-hidden rounded-none flex flex-col min-h-0 group ${
+  const baseClass = `bg-white dark:bg-[#181a1d] p-4 sm:p-5 border ${baseBorders[borderColor] || baseBorders.default} shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] transition-all duration-300 relative overflow-hidden rounded-none flex flex-col min-h-0 group ${
     hoverEffect ? hoverBorders : ''
   }`;
 
   return (
     <div className={`${baseClass} ${className}`} {...props}>
-      {/* 호버 시 좌측 1.5px 수묵 포인트 획 & 은은한 먹물 번짐 워시 */}
+      {/* 호버 시 은은한 워시 배경 (좌측 검은선 배제) */}
       {hoverEffect && (
-        <>
-          <div className="absolute top-0 left-0 w-1 h-full bg-zinc-900 dark:bg-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-          <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/60 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-0" />
-        </>
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/60 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
       )}
 
       {/* 워터마크 라인 SVG */}

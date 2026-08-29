@@ -35,9 +35,7 @@ export default async function Home() {
   return (
     <div className="space-y-8 sm:space-y-10 pb-16">
       {/* 1. 메인 인트로 헤더 (모던 수묵화 앰비언트 글로우) */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] dark:hover:shadow-[0_14px_44px_rgba(255,255,255,0.08)] p-6 sm:p-8 lg:p-10 group transition-all duration-300">
-        {/* 좌측 1.5px 수묵 포인트 획 & 먹물 번짐 워시 */}
-        <div className="absolute top-0 left-0 w-1.5 h-full bg-zinc-900 dark:bg-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
+      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.75)] p-6 sm:p-8 lg:p-10 group transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/70 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
 
         {/* 우측 배경 수묵 워터마크 (SVG) */}
@@ -82,10 +80,9 @@ export default async function Home() {
         {/* 달빛어린이병원 & 심야약국 카드 */}
         <Link
           href="/services/emergency"
-          className="group relative overflow-hidden border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-400 dark:hover:border-emerald-600 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(4,120,87,0.12)] bg-white dark:bg-[#181a1d]"
+          className="group relative overflow-hidden border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-400 dark:hover:border-emerald-600 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_4px_20px_rgba(4,120,87,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(4,120,87,0.25)] hover:-translate-y-0.5 bg-white dark:bg-[#181a1d]"
         >
-          <div className="absolute top-0 left-0 w-1 h-full bg-emerald-600 dark:bg-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-emerald-50/10 to-transparent dark:from-emerald-950/30 dark:via-emerald-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-0" />
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-emerald-50/10 to-transparent dark:from-emerald-950/30 dark:via-emerald-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
           <MiniMapPreview type="emergency" />
           
           <div className="relative z-10">
@@ -116,10 +113,9 @@ export default async function Home() {
         {/* 의정부 사랑카드 가맹점 지도 카드 */}
         <Link
           href="/services/local-currency"
-          className="group relative overflow-hidden border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-400 dark:hover:border-sky-600 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(3,105,161,0.12)] bg-white dark:bg-[#181a1d]"
+          className="group relative overflow-hidden border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-400 dark:hover:border-sky-600 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_4px_20px_rgba(3,105,161,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(3,105,161,0.25)] hover:-translate-y-0.5 bg-white dark:bg-[#181a1d]"
         >
-          <div className="absolute top-0 left-0 w-1 h-full bg-sky-600 dark:bg-sky-400 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-          <div className="absolute inset-0 bg-gradient-to-br from-sky-50/50 via-sky-50/10 to-transparent dark:from-sky-950/30 dark:via-sky-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-0" />
+          <div className="absolute inset-0 bg-gradient-to-br from-sky-50/50 via-sky-50/10 to-transparent dark:from-sky-950/30 dark:via-sky-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
           <MiniMapPreview type="currency" />
           
           <div className="relative z-10">
@@ -150,10 +146,9 @@ export default async function Home() {
         {/* 국가 건강검진 지정병원 찾기 카드 */}
         <Link
           href="/services/health-check"
-          className="group relative overflow-hidden border border-amber-200/80 dark:border-amber-900/40 hover:border-amber-400 dark:hover:border-amber-600 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(180,83,9,0.12)] bg-white dark:bg-[#181a1d]"
+          className="group relative overflow-hidden border border-amber-200/80 dark:border-amber-900/40 hover:border-amber-400 dark:hover:border-amber-600 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_4px_20px_rgba(180,83,9,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(180,83,9,0.25)] hover:-translate-y-0.5 bg-white dark:bg-[#181a1d]"
         >
-          <div className="absolute top-0 left-0 w-1 h-full bg-amber-600 dark:bg-amber-400 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 via-amber-50/10 to-transparent dark:from-amber-950/30 dark:via-amber-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-0" />
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 via-amber-50/10 to-transparent dark:from-amber-950/30 dark:via-amber-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
           
           <div className="relative z-10">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 text-[11px] font-bold mb-2 border border-amber-200 dark:border-amber-800 rounded-none shadow-2xs">

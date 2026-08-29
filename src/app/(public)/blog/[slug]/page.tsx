@@ -136,7 +136,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </Link>
       </nav>
 
-      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
+      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
         <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
           {/* 아티클 헤더 */}
           <header className="border-b border-gray-100 dark:border-zinc-800 pb-8">
@@ -176,7 +176,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* 하단 추천 혜택 박스 */}
           <div className="pt-6 border-t border-gray-100 dark:border-zinc-800">
-            <div className="bg-zinc-50/70 dark:bg-zinc-900/60 border border-gray-200/90 dark:border-zinc-800 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] rounded-none p-6 sm:p-7 mb-8">
+            <div className="bg-zinc-50/70 dark:bg-zinc-900/60 border border-gray-200/90 dark:border-zinc-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] rounded-none p-6 sm:p-7 mb-8">
               <h3 className="font-bold text-base mb-3 flex items-center gap-2 text-zinc-950 dark:text-white">
                 <AppIcon name="shield-check" size={18} strokeWidth={2} className="text-emerald-600 dark:text-emerald-400" />
                 <span>의정부 시민들이 함께 확인한 지원 혜택</span>

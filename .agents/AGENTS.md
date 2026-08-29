@@ -37,9 +37,11 @@
 ### 제3조 — 전사 엔지니어링 6대 원칙 및 수묵 모노톤 무결성
 - **3.1 6대 개발 슬로건**: **[표준 · 범용 · 콤팩트 · 통합 · 공유 · 공통]**을 모든 설계의 최상위 원칙으로 삼습니다.
 - **3.2 샤프 모던 룩 및 순백색 표준**: 모든 카드와 컨테이너는 샤프 모던 엣지(`rounded-none`), 순백색(`bg-white dark:bg-[#181a1d]`), 표준 1px 보더(`border-gray-200/90 dark:border-zinc-800`)를 일괄 준수합니다.
-- **3.3 44px 흑요석 앰비언트 글로우 & 수묵 획 인터랙션**:
-  - 모든 카드는 `PremiumCard` 또는 `InkCard` 표준 컴포넌트를 사용합니다.
-  - 마우스 호버 시 **좌측 1.5px 수묵 포인트 획(`bg-zinc-900 dark:bg-zinc-100`)**과 은은한 먹물 번짐 워시, 그리고 **44px 흑요석 안개 글로우(`hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)]` / dark: `hover:shadow-[0_14px_44px_rgba(255,255,255,0.08)]`)**를 일체화합니다.
+- **3.3 딥 럭셔리 섀도우(Deep Rich Shadow) & 클린 엣지 표준**:
+  - 모든 카드는 `PremiumCard` 표준 컴포넌트 규격을 준수합니다.
+  - 호버 시 좌측 검은 선 스트로크는 전면 배제하며, 순수한 클린 엣지를 유지합니다.
+  - 기본 상태(Resting)는 **또렷하고 깊은 입체 그림자(`shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)]`)**를 적용합니다.
+  - 마우스 호버(Hover) 시 **진하고 선명한 딥 럭셔리 섀도우(`hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.75)]`)**와 미세 리프트(`hover:-translate-y-0.5`)를 일체화합니다.
 - **3.4 네오 브루탈리즘 잔재 영구 금지**:
   - 하드 섀도우(`shadow-[4px_4px_0px_#000]`), 2px 투박한 검정 테두리, 네모 스피너(`rounded-none animate-spin`), 비표준 클래스는 전면 금지하며, 원형 스피너(`rounded-full animate-spin`)와 샤프 모던 엣지(`rounded-none`)를 엄격히 준수합니다.
 - **3.5 절제된 타이포그래피**: `font-black` 남발을 금지하며, 시맨틱 가독성 위계에 맞추어 `font-bold` 및 `font-extrabold`를 표준으로 적용합니다.
