@@ -35,7 +35,7 @@ export default function PublicLayout({
       <ScrollProgressBar />
 
       {/* 1. 프리미엄 패밀리룩 헤더 */}
-      <header className="sticky top-0 z-50 w-full h-[64px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-b border-gray-200/80 dark:border-zinc-800 transition-colors shadow-sm">
+      <header className="sticky top-0 z-50 w-full h-[64px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-b border-gray-200/80 dark:border-zinc-800 transition-colors shadow-[0_0_20px_rgba(0,0,0,0.04)] dark:shadow-[0_0_20px_rgba(0,0,0,0.40)]">
         <div className="mx-auto flex h-full w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5">
           {/* 로고/제목 영역 */}
           <div className="flex items-center min-w-0 flex-1 mr-1 sm:mr-2">
@@ -57,7 +57,7 @@ export default function PublicLayout({
                 <span className="sm:hidden font-extrabold text-lg text-gray-900 dark:text-white truncate tracking-tight">
                   의정부 생활정보
                 </span>
-                <span className="hidden lg:inline-flex items-center px-2 py-0.5 ml-1.5 bg-blue-50 dark:bg-blue-900/30 text-[10px] font-extrabold text-blue-700 dark:text-blue-300 tracking-wider uppercase border border-blue-200 dark:border-blue-800/40 rounded-none">
+                <span className="hidden lg:inline-flex items-center px-2 py-0.5 ml-1.5 bg-zinc-100 dark:bg-zinc-800 text-[10px] font-extrabold text-zinc-900 dark:text-zinc-100 tracking-wider uppercase border border-zinc-200 dark:border-zinc-700 rounded-none">
                   Uijeongbu
                 </span>
               </Link>
@@ -70,7 +70,7 @@ export default function PublicLayout({
             <nav className="hidden md:flex items-center space-x-1.5">
               <Link
                 href="/"
-                className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all rounded-none flex items-center justify-center group"
+                className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all rounded-none flex items-center justify-center group cursor-pointer"
                 aria-label="홈"
                 title="홈"
               >
@@ -78,7 +78,7 @@ export default function PublicLayout({
               </Link>
               <Link
                 href="/blog"
-                className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all rounded-none flex items-center justify-center group"
+                className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all rounded-none flex items-center justify-center group cursor-pointer"
                 aria-label="생활소식"
                 title="생활소식 및 지원금"
               >
@@ -92,28 +92,28 @@ export default function PublicLayout({
         </div>
       </header>
 
-      {/* 2. 보상스쿨급 스마트 2열 스티키 레이아웃 (본문 73% + 사이드바 27%) */}
+      {/* 2. 의정부 포털 스마트 2열 스티키 레이아웃 (본문 73% + 사이드바 27%) */}
       <SmartStickyLayout
         mainContent={children}
         sidebarContent={<SidebarContent tags={sortedTags} />}
       />
 
       {/* 3. 푸터 */}
-      <footer className="mt-auto w-full bg-white dark:bg-[#181a1d] text-gray-700 dark:text-gray-300 border-t border-gray-200/80 dark:border-zinc-800 pb-[calc(64px+env(safe-area-inset-bottom))] lg:pb-0">
+      <footer className="mt-auto w-full bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-t border-gray-200/80 dark:border-zinc-800 pb-[calc(64px+env(safe-area-inset-bottom))] lg:pb-0">
         <div className="mx-auto flex flex-col md:flex-row h-auto md:h-[70px] w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5 py-5 md:py-0 text-xs font-medium gap-3">
           <p className="copyright text-center md:text-left flex items-center gap-1.5">
             © {new Date().getFullYear()} 의정부 건강·생활 정보 포털. All rights reserved.
           </p>
           <p className="iagree text-center md:text-right flex items-center justify-center flex-wrap gap-3 font-semibold">
-            <Link href="/about" className="hover:text-blue-600 dark:hover:text-blue-400 hover:underline cursor-pointer transition-all">
+            <Link href="/about" className="hover:text-zinc-950 dark:hover:text-white hover:underline cursor-pointer transition-all">
               플랫폼 소개
             </Link>
-            <span className="w-1 h-1 bg-gray-300 dark:bg-zinc-700 rounded-full"></span>
-            <Link href="/terms" className="hover:text-blue-600 dark:hover:text-blue-400 hover:underline cursor-pointer transition-all">
+            <span className="w-1 h-1 bg-zinc-300 dark:bg-zinc-700 rounded-none"></span>
+            <Link href="/terms" className="hover:text-zinc-950 dark:hover:text-white hover:underline cursor-pointer transition-all">
               이용약관
             </Link>
-            <span className="w-1 h-1 bg-gray-300 dark:bg-zinc-700 rounded-full"></span>
-            <Link href="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 hover:underline cursor-pointer transition-all">
+            <span className="w-1 h-1 bg-zinc-300 dark:bg-zinc-700 rounded-none"></span>
+            <Link href="/privacy" className="hover:text-zinc-950 dark:hover:text-white hover:underline cursor-pointer transition-all">
               개인정보처리방침
             </Link>
           </p>

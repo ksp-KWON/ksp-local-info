@@ -1,7 +1,7 @@
 /**
  * generate-local-news.js
  * 의정부 지역 뉴스 기반 다이내믹 AI 자동글쓰기 엔진
- * 보상스쿨의 select-daily-topic.js 아키텍처 완벽 이식판
+ * 의정부 시민 마스터 헌법(.agents/AGENTS.md) 준수
  */
 'use strict';
 
@@ -75,7 +75,7 @@ async function main() {
   console.log(`  -> 타겟 기사 발굴: ${bestNews.title}`);
 
   // 3. 기획안 작성 (Step 1)
-  // 의정부 전용 헌법 규칙 (보상스쿨 12조 완벽 이식)
+  // 의정부 전용 헌법 규칙 준수
   const { STRICT_RULES } = require('./prompt-builder.js');
 
   const planPrompt = `의정부 시민을 위한 정보성 블로그 글 기획안을 작성하세요.
