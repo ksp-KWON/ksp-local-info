@@ -1,6 +1,7 @@
 import React from 'react';
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { EmergencyItem, TabType } from '@/lib/api/emergency';
+import AppIcon from '@/components/ui/AppIcon';
 
 interface EmergencyMapProps {
   mapCenter: { lat: number; lng: number };
@@ -24,25 +25,25 @@ export default function EmergencyMap({ mapCenter, activeTab, currentData, setSel
           yAnchor={1}
         >
           {activeTab === 'er' ? (
-            <div 
+            <button 
               onClick={() => setSelectedItem(item)}
-              className={`cursor-pointer px-3 py-1.5 bg-white dark:bg-[#202124] border-2 rounded-full shadow-2xl text-sm font-bold flex items-center gap-1.5 transition-transform hover:scale-105 ${
-                item.status === 'busy' ? 'border-red-500 text-red-600 dark:text-red-400' :
-                item.status === 'normal' ? 'border-yellow-500 text-yellow-600 dark:text-yellow-400' :
-                'border-emerald-500 text-emerald-600 dark:text-emerald-400'
+              className={`cursor-pointer px-2.5 py-1 bg-white dark:bg-[#181a1d] border rounded-none shadow-[0_4px_12px_rgba(0,0,0,0.15)] text-xs font-bold flex items-center gap-1.5 transition-all hover:scale-105 ${
+                item.status === 'busy' ? 'border-rose-400 text-rose-700 dark:text-rose-300' :
+                item.status === 'normal' ? 'border-amber-400 text-amber-700 dark:text-amber-300' :
+                'border-emerald-400 text-emerald-700 dark:text-emerald-300'
               }`}
             >
-              <span>🏥</span>
-              <span>{item.availableBeds}베드</span>
-            </div>
+              <AppIcon name="hospital" size={13} strokeWidth={2.5} />
+              <span>{item.availableBeds}석</span>
+            </button>
           ) : (
-            <div 
+            <button 
               onClick={() => setSelectedItem(item)}
-              className="cursor-pointer px-3 py-1.5 bg-white dark:bg-[#202124] border-2 border-[#2ed573] rounded-full shadow-2xl text-sm font-bold flex items-center gap-1.5 transition-transform hover:scale-105"
+              className="cursor-pointer px-2.5 py-1 bg-white dark:bg-[#181a1d] border border-sky-400 dark:border-sky-600 rounded-none shadow-[0_4px_12px_rgba(0,0,0,0.15)] text-xs font-bold text-zinc-900 dark:text-white flex items-center gap-1.5 transition-all hover:scale-105"
             >
-              <span className="text-[#2ed573]">💊</span>
-              <span className="text-gray-800 dark:text-white max-w-[80px] truncate">{item.name}</span>
-            </div>
+              <AppIcon name="stethoscope" size={13} strokeWidth={2.5} className="text-sky-600 dark:text-sky-400" />
+              <span className="max-w-[84px] truncate">{item.name}</span>
+            </button>
           )}
         </CustomOverlayMap>
       ))}

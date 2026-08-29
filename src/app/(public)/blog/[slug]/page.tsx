@@ -4,7 +4,6 @@ import { Metadata } from 'next';
 import BlogPostClient from '@/components/blog/BlogPostClient';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
-import AiCommentBox from '@/components/blog/AiCommentBox';
 import AppIcon from '@/components/ui/AppIcon';
 import Link from 'next/link';
 
@@ -165,11 +164,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               {post.title}
             </h1>
           </header>
-
-          {/* AI 핵심 요약 노트 */}
-          <div>
-            <AiCommentBox sourceText={post.content} type="policy" />
-          </div>
 
           {/* 블로그 본문 (TOC & Markdown & ShareButtons 일체화) */}
           <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} />

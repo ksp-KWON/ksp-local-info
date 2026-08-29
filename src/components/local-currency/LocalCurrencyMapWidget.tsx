@@ -66,7 +66,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
   }, []);
 
   return (
-    <div className={`flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden mt-2 rounded-none shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] border border-gray-200/90 dark:border-zinc-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+    <div className={`flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden mt-2 rounded-none shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] border border-gray-200/90 dark:border-zinc-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
       <header className="bg-white dark:bg-[#181a1d] z-20 shrink-0 border-b border-gray-200/80 dark:border-zinc-800 p-4 pb-3">
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
           <AppIcon name="bank" size={22} strokeWidth={2} />

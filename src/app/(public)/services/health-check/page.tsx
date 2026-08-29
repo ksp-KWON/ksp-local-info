@@ -66,8 +66,8 @@ export default function HealthCheckPage() {
 
   return (
     <div className="pb-16 space-y-6">
-      {/* 1. 상단 인트로 배너 */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-amber-200/90 dark:border-amber-900/40 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(180,83,9,0.12)] p-6 sm:p-8 group transition-all duration-300">
+      {/* 1. 인트로 헤더 */}
+      <div className="mt-4 relative overflow-hidden rounded-none border border-amber-200/90 dark:border-amber-900/40 bg-white dark:bg-[#181a1d] shadow-[0_4px_20px_rgba(180,83,9,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_25px_60px_-15px_rgba(180,83,9,0.30),0_10px_25px_-5px_rgba(180,83,9,0.15)] p-6 sm:p-8 group transition-all duration-300">
         <div className="absolute -right-6 -bottom-6 text-amber-900/[0.03] dark:text-amber-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
           <AppIcon name="stethoscope" size={160} strokeWidth={1.5} />
         </div>
@@ -86,7 +86,7 @@ export default function HealthCheckPage() {
       </div>
 
       {/* 2. 지도 위젯 박스 */}
-      <div className="flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden rounded-none shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] border border-gray-200/90 dark:border-zinc-800 h-[650px] max-h-[75vh]">
+      <div className="flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden rounded-none shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.45)] border border-gray-200/90 dark:border-zinc-800 h-[650px] max-h-[75vh]">
         <header className="bg-white dark:bg-[#181a1d] z-20 p-4 pb-3 flex flex-col gap-3 relative border-b border-gray-100 dark:border-zinc-800 shrink-0">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-zinc-900 dark:text-white flex items-center gap-2">

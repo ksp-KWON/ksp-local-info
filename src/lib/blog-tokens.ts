@@ -44,7 +44,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border border-purple-200/90 dark:border-purple-900/50',
-      hoverBorder: 'hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-[0_14px_44px_rgba(126,34,206,0.12)]',
+      hoverBorder: 'hover:border-purple-500 dark:hover:border-purple-500 hover:shadow-[0_25px_60px_-15px_rgba(126,34,206,0.30),0_10px_25px_-5px_rgba(126,34,206,0.15)]',
       headerGradient: 'from-purple-50/90 via-purple-50/30 to-transparent dark:from-purple-950/40 dark:via-purple-950/10 dark:to-transparent border-b border-purple-100 dark:border-purple-900/40',
       titleColor: 'text-purple-900 dark:text-purple-200',
       highlightClass: 'text-purple-950 dark:text-purple-200 bg-purple-50 dark:bg-purple-950/70 border border-purple-200/80 dark:border-purple-800/80 font-bold',
@@ -68,7 +68,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border border-emerald-200/90 dark:border-emerald-900/50',
-      hoverBorder: 'hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-[0_14px_44px_rgba(4,120,87,0.12)]',
+      hoverBorder: 'hover:border-emerald-500 dark:hover:border-emerald-500 hover:shadow-[0_25px_60px_-15px_rgba(4,120,87,0.30),0_10px_25px_-5px_rgba(4,120,87,0.15)]',
       headerGradient: 'from-emerald-50/90 via-emerald-50/30 to-transparent dark:from-emerald-950/40 dark:via-emerald-950/10 dark:to-transparent border-b border-emerald-100 dark:border-emerald-900/40',
       titleColor: 'text-emerald-900 dark:text-emerald-200',
       highlightClass: 'text-emerald-950 dark:text-emerald-200 bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200/80 dark:border-emerald-800/80 font-bold',
@@ -92,7 +92,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border border-sky-200/90 dark:border-sky-900/50',
-      hoverBorder: 'hover:border-sky-400 dark:hover:border-sky-600 hover:shadow-[0_14px_44px_rgba(3,105,161,0.12)]',
+      hoverBorder: 'hover:border-sky-500 dark:hover:border-sky-500 hover:shadow-[0_25px_60px_-15px_rgba(3,105,161,0.30),0_10px_25px_-5px_rgba(3,105,161,0.15)]',
       headerGradient: 'from-sky-50/90 via-sky-50/30 to-transparent dark:from-sky-950/40 dark:via-sky-950/10 dark:to-transparent border-b border-sky-100 dark:border-sky-900/40',
       titleColor: 'text-sky-900 dark:text-sky-200',
       highlightClass: 'text-sky-950 dark:text-sky-200 bg-sky-50 dark:bg-sky-950/70 border border-sky-200/80 dark:border-sky-800/80 font-bold',
@@ -116,7 +116,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border border-rose-200/90 dark:border-rose-900/50',
-      hoverBorder: 'hover:border-rose-400 dark:hover:border-rose-600 hover:shadow-[0_14px_44px_rgba(190,18,60,0.12)]',
+      hoverBorder: 'hover:border-rose-500 dark:hover:border-rose-500 hover:shadow-[0_25px_60px_-15px_rgba(190,18,60,0.30),0_10px_25px_-5px_rgba(190,18,60,0.15)]',
       headerGradient: 'from-rose-50/90 via-rose-50/30 to-transparent dark:from-rose-950/40 dark:via-rose-950/10 dark:to-transparent border-b border-rose-100 dark:border-rose-900/40',
       titleColor: 'text-rose-900 dark:text-rose-200',
       highlightClass: 'text-rose-950 dark:text-rose-200 bg-rose-50 dark:bg-rose-950/70 border border-rose-200/80 dark:border-rose-800/80 font-bold',
@@ -140,7 +140,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border border-amber-200/90 dark:border-amber-900/50',
-      hoverBorder: 'hover:border-amber-400 dark:hover:border-amber-600 hover:shadow-[0_14px_44px_rgba(180,83,9,0.12)]',
+      hoverBorder: 'hover:border-amber-500 dark:hover:border-amber-500 hover:shadow-[0_25px_60px_-15px_rgba(180,83,9,0.30),0_10px_25px_-5px_rgba(180,83,9,0.15)]',
       headerGradient: 'from-amber-50/90 via-amber-50/30 to-transparent dark:from-amber-950/40 dark:via-amber-950/10 dark:to-transparent border-b border-amber-100 dark:border-amber-900/40',
       titleColor: 'text-amber-900 dark:text-amber-200',
       highlightClass: 'text-amber-950 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/70 border border-amber-200/80 dark:border-amber-800/80 font-bold',
