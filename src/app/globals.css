@@ -54,7 +54,7 @@ body {
 }
 
 /* ==========================================
-   ✨ 프리미엄 가독성 및 포인트 디자인 시스템
+   🏛️ 의정부 건강·생활 포털 수묵화 & 평면도 타이포그래피 시스템
    ========================================== */
 
 /* 1. 본문(마크다운) 모바일 화면 잘림 방지 및 단어 줄바꿈 최적화 */
@@ -64,38 +64,33 @@ body {
   max-width: 100%;
 }
 .prose table {
-  display: block;
+  display: table;
   width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 .prose pre {
   max-width: 100%;
   overflow-x: auto;
 }
 
-/* 2. 본문 내 강조 단어(**굵게**)는 색상 그대로 유지 (링크와 혼동 방지) */
+/* 2. 본문 내 강조 단어(**굵게**) */
 .prose strong {
-  font-weight: 800 !important;
+  font-weight: 900 !important;
 }
 
-/* 2. .prose 링크 스타일: MarkdownRenderer의 커스텀 <a> 컴포넌트가 처리하므로
-      CSS는 색상·밑줄 기본값만 안전하게 리셋하고 아이콘(::after)은 붙이지 않음 */
+/* 3. 본문 링크 스타일 (수묵 흑백 먹선 밑줄) */
 .prose a {
-  color: var(--google-blue) !important;
-  font-weight: 600 !important;
+  color: inherit !important;
+  font-weight: 800 !important;
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
   transition: opacity 0.15s;
 }
 .prose a:hover {
   opacity: 0.75;
 }
-.dark .prose a {
-  color: #8ab4f8 !important;
-}
 
-/* 3. 목록 행간 및 간격 균일화 */
+/* 4. 목록 행간 및 간격 균일화 */
 .prose ul,
 .prose ol {
   line-height: 1.8 !important;
@@ -112,28 +107,14 @@ body {
   line-height: 1.8 !important;
 }
 
-/* 4. 마크다운 제목 폰트 (Neo-brutalism / Sketchnote) */
-.prose h1, .prose h2, .prose h3, .prose h4 {
-  font-family: var(--font-dohyeon), sans-serif !important;
-  color: var(--foreground) !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.02em;
-}
-.prose h2 {
-  width: fit-content;
-  background: linear-gradient(180deg, transparent 50%, rgba(135, 206, 235, 0.6) 50%);
-  padding: 0 4px;
-}
-.dark .prose h2 {
-  background: linear-gradient(180deg, transparent 50%, rgba(70, 130, 180, 0.6) 50%);
-}
-.prose h3 {
-  width: fit-content;
-  background: linear-gradient(180deg, transparent 50%, rgba(255, 215, 0, 0.6) 50%);
-  padding: 0 4px;
-}
-.dark .prose h3 {
-  background: linear-gradient(180deg, transparent 50%, rgba(218, 165, 32, 0.6) 50%);
+/* 5. 마크다운 제목 폰트 및 배경 (형광펜 잔재 전면 박멸, 순수 수묵 모노톤) */
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  font-family: inherit !important;
+  color: inherit !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em;
+  background: transparent !important;
+  padding: 0 !important;
 }
 
 /* ── 로고: 다크모드 외곽선 색상 전환 ── */
@@ -163,17 +144,17 @@ body {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--google-border);
-  border-radius: 10px;
+  background-color: #d4d4d8;
+  border-radius: 0px;
 }
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #5f6368;
+  background-color: #3f3f46;
 }
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  background-color: #bdc1c6;
+  background-color: #a1a1aa;
 }
 .dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  background-color: #9aa0a6;
+  background-color: #52525b;
 }
 
 /* 관리자 페이지 레이아웃 - 푸터 숨김 */
@@ -184,124 +165,4 @@ body.hide-footer footer {
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* ==========================================
-   🎨 컬러 그림자 & 형광펜 유틸리티 (스케치노트 스타일)
-   ========================================== */
-
-.shadow-marker-blue {
-  box-shadow: 4px 4px 0px 0px rgba(135, 206, 235, 1) !important;
-}
-.dark .shadow-marker-blue {
-  box-shadow: 4px 4px 0px 0px rgba(70, 130, 180, 1) !important;
-}
-.hover\:shadow-marker-blue:hover {
-  box-shadow: 6px 6px 0px 0px rgba(135, 206, 235, 1) !important;
-}
-.dark .hover\:shadow-marker-blue:hover {
-  box-shadow: 6px 6px 0px 0px rgba(70, 130, 180, 1) !important;
-}
-
-.shadow-marker-pink {
-  box-shadow: 4px 4px 0px 0px rgba(255, 182, 193, 1) !important;
-}
-.dark .shadow-marker-pink {
-  box-shadow: 4px 4px 0px 0px rgba(219, 112, 147, 1) !important;
-}
-.hover\:shadow-marker-pink:hover {
-  box-shadow: 6px 6px 0px 0px rgba(255, 182, 193, 1) !important;
-}
-.dark .hover\:shadow-marker-pink:hover {
-  box-shadow: 6px 6px 0px 0px rgba(219, 112, 147, 1) !important;
-}
-
-.shadow-marker-yellow {
-  box-shadow: 4px 4px 0px 0px rgba(255, 215, 0, 1) !important;
-}
-.dark .shadow-marker-yellow {
-  box-shadow: 4px 4px 0px 0px rgba(218, 165, 32, 1) !important;
-}
-.hover\:shadow-marker-yellow:hover {
-  box-shadow: 6px 6px 0px 0px rgba(255, 215, 0, 1) !important;
-}
-.dark .hover\:shadow-marker-yellow:hover {
-  box-shadow: 6px 6px 0px 0px rgba(218, 165, 32, 1) !important;
-}
-
-.shadow-marker-green {
-  box-shadow: 4px 4px 0px 0px rgba(152, 251, 152, 1) !important;
-}
-.dark .shadow-marker-green {
-  box-shadow: 4px 4px 0px 0px rgba(60, 179, 113, 1) !important;
-}
-.hover\:shadow-marker-green:hover {
-  box-shadow: 6px 6px 0px 0px rgba(152, 251, 152, 1) !important;
-}
-.dark .hover\:shadow-marker-green:hover {
-  box-shadow: 6px 6px 0px 0px rgba(60, 179, 113, 1) !important;
-}
-
-/* 📝 텍스트 형광펜 하이라이트 효과 */
-.highlighter-blue {
-  background: linear-gradient(180deg, transparent 50%, rgba(135, 206, 235, 0.6) 50%);
-  display: inline;
-}
-.dark .highlighter-blue {
-  background: linear-gradient(180deg, transparent 50%, rgba(70, 130, 180, 0.6) 50%);
-}
-
-.highlighter-pink {
-  background: linear-gradient(180deg, transparent 50%, rgba(255, 182, 193, 0.6) 50%);
-  display: inline;
-}
-.dark .highlighter-pink {
-  background: linear-gradient(180deg, transparent 50%, rgba(219, 112, 147, 0.6) 50%);
-}
-
-.highlighter-yellow {
-  background: linear-gradient(180deg, transparent 50%, rgba(255, 215, 0, 0.6) 50%);
-  display: inline;
-}
-.dark .highlighter-yellow {
-  background: linear-gradient(180deg, transparent 50%, rgba(218, 165, 32, 0.6) 50%);
-}
-
-.highlighter-green {
-  background: linear-gradient(180deg, transparent 50%, rgba(152, 251, 152, 0.6) 50%);
-  display: inline;
-}
-.dark .highlighter-green {
-  background: linear-gradient(180deg, transparent 50%, rgba(60, 179, 113, 0.6) 50%);
-}
-.shadow-marker-red { box-shadow: 4px 4px 0px 0px rgba(255, 99, 71, 1) !important; }
-.dark .shadow-marker-red { box-shadow: 4px 4px 0px 0px rgba(205, 92, 92, 1) !important; }
-.hover\:shadow-marker-red:hover { box-shadow: 6px 6px 0px 0px rgba(255, 99, 71, 1) !important; }
-.dark .hover\:shadow-marker-red:hover { box-shadow: 6px 6px 0px 0px rgba(205, 92, 92, 1) !important; }
-
-.shadow-marker-orange { box-shadow: 4px 4px 0px 0px rgba(255, 165, 0, 1) !important; }
-.dark .shadow-marker-orange { box-shadow: 4px 4px 0px 0px rgba(255, 140, 0, 1) !important; }
-.hover\:shadow-marker-orange:hover { box-shadow: 6px 6px 0px 0px rgba(255, 165, 0, 1) !important; }
-.dark .hover\:shadow-marker-orange:hover { box-shadow: 6px 6px 0px 0px rgba(255, 140, 0, 1) !important; }
-
-.shadow-marker-cyan { box-shadow: 4px 4px 0px 0px rgba(0, 206, 209, 1) !important; }
-.dark .shadow-marker-cyan { box-shadow: 4px 4px 0px 0px rgba(72, 209, 204, 1) !important; }
-.hover\:shadow-marker-cyan:hover { box-shadow: 6px 6px 0px 0px rgba(0, 206, 209, 1) !important; }
-.dark .hover\:shadow-marker-cyan:hover { box-shadow: 6px 6px 0px 0px rgba(72, 209, 204, 1) !important; }
-
-.shadow-marker-purple { box-shadow: 4px 4px 0px 0px rgba(147, 112, 219, 1) !important; }
-.dark .shadow-marker-purple { box-shadow: 4px 4px 0px 0px rgba(138, 43, 226, 1) !important; }
-.hover\:shadow-marker-purple:hover { box-shadow: 6px 6px 0px 0px rgba(147, 112, 219, 1) !important; }
-.dark .hover\:shadow-marker-purple:hover { box-shadow: 6px 6px 0px 0px rgba(138, 43, 226, 1) !important; }
-
-.highlighter-red { background: linear-gradient(180deg, transparent 50%, rgba(255, 99, 71, 0.6) 50%); display: inline; }
-.dark .highlighter-red { background: linear-gradient(180deg, transparent 50%, rgba(205, 92, 92, 0.6) 50%); }
-
-.highlighter-orange { background: linear-gradient(180deg, transparent 50%, rgba(255, 165, 0, 0.6) 50%); display: inline; }
-.dark .highlighter-orange { background: linear-gradient(180deg, transparent 50%, rgba(255, 140, 0, 0.6) 50%); }
-
-.highlighter-cyan { background: linear-gradient(180deg, transparent 50%, rgba(0, 206, 209, 0.6) 50%); display: inline; }
-.dark .highlighter-cyan { background: linear-gradient(180deg, transparent 50%, rgba(72, 209, 204, 0.6) 50%); }
-
-.highlighter-purple { background: linear-gradient(180deg, transparent 50%, rgba(147, 112, 219, 0.6) 50%); display: inline; }
-.dark .highlighter-purple { background: linear-gradient(180deg, transparent 50%, rgba(138, 43, 226, 0.6) 50%); }
 
