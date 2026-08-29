@@ -60,14 +60,14 @@ export default function BottomSheet({
 
       {/* Bottom Sheet */}
       <div 
-        className={`${displayClass} fixed ${bottomOffset} left-0 w-full bg-white dark:bg-[#181a1d] rounded-none border-t border-gray-200/90 dark:border-zinc-800 shadow-[0_-8px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_-8px_30px_rgba(0,0,0,0.4)] ${zIndex} transition-transform duration-300 transform ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
+        className={`${displayClass} fixed ${bottomOffset} left-0 w-full bg-white dark:bg-[#181a1d] rounded-none border-t border-gray-200/90 dark:border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] ${zIndex} transition-transform duration-300 transform ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
         style={{ touchAction: isOpen ? 'auto' : 'none' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={`w-full flex flex-col ${padding} space-y-4 ${maxHeight} overflow-y-auto overscroll-contain`}>
           {/* Drag Handle Indicator */}
           <div 
-            className="w-12 h-1.5 bg-gray-200 dark:bg-white/20 rounded-full mx-auto mb-6 shrink-0 cursor-pointer" 
+            className="w-12 h-1 bg-zinc-300 dark:bg-zinc-700 rounded-none mx-auto mb-5 shrink-0 cursor-pointer" 
             onClick={onClose}
           />
           {children}

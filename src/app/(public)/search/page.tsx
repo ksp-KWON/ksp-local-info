@@ -97,7 +97,7 @@ function SearchResults() {
 
       {/* 2. 결과 목록 */}
       {isLoading ? (
-        <div className="p-16 text-center border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+        <div className="p-16 text-center border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)]">
           <AppIcon name="refresh" size={32} strokeWidth={2} className="animate-spin mx-auto text-sky-600 mb-3" />
           <p className="text-sm font-bold text-zinc-600 dark:text-zinc-400">데이터를 검색하고 있습니다...</p>
         </div>
@@ -108,7 +108,7 @@ function SearchResults() {
           ))}
         </div>
       ) : q ? (
-        <div className="p-16 text-center border border-dashed border-gray-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+        <div className="p-16 text-center border border-dashed border-gray-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)]">
           <AppIcon name="search" size={40} strokeWidth={1.5} className="mx-auto text-zinc-400 mb-3" />
           <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-1">검색 결과가 없습니다</h3>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto break-keep">

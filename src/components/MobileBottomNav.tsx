@@ -46,7 +46,7 @@ function NavContent() {
 
   return (
     <>
-      <nav className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 flex items-center justify-around px-1 z-[100] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 shadow-lg">
+      <nav className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 flex items-center justify-around px-1 z-[100] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 shadow-[0_0_20px_rgba(0,0,0,0.06)] dark:shadow-[0_0_20px_rgba(0,0,0,0.40)]">
         {navItems.map((item) => (
           <Link
             key={item.id}

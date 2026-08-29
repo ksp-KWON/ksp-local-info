@@ -40,7 +40,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
   };
 
   return (
-    <div className="my-8 p-4 sm:p-5 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] transition-all duration-200 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-none">
+    <div className="my-8 p-4 sm:p-5 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] transition-all duration-300 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-none">
       <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100">
         <AppIcon name="link" size={16} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400" />
         <span>유용한 혜택 정보 지인에게 공유하기</span>

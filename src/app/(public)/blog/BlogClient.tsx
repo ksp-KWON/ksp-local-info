@@ -101,7 +101,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
           ))}
         </div>
       ) : (
-        <div className="p-12 text-center border border-dashed border-gray-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] rounded-none">
+        <div className="p-12 text-center border border-dashed border-gray-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] rounded-none">
           <AppIcon name="info" size={36} strokeWidth={1.5} className="mx-auto mb-3 text-zinc-400" />
           <p className="text-base font-bold text-zinc-800 dark:text-zinc-200">
             해당 조건에 맞는 소식이 아직 등록되지 않았습니다.

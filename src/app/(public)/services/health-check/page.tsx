@@ -144,7 +144,7 @@ export default function HealthCheckPage() {
 
           {/* 선택된 병원 팝업 */}
           {selectedHospital && (
-            <div className="absolute bottom-4 left-4 right-4 z-30 bg-white dark:bg-[#181a1d] p-4 sm:p-5 border border-gray-200/90 dark:border-zinc-800 shadow-[0_20px_50px_rgba(0,0,0,0.25)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.7)] max-w-lg mx-auto rounded-none">
+            <div className="absolute bottom-4 left-4 right-4 z-30 bg-white dark:bg-[#181a1d] p-4 sm:p-5 border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] max-w-lg mx-auto rounded-none">
               <div className="flex justify-between items-start mb-2">
                 <div>
                   <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 dark:text-emerald-300 dark:bg-emerald-950/60 px-2 py-0.5 border border-emerald-200 dark:border-emerald-800 mr-2">
