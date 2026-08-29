@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
-import { MapPin, X, Navigation } from 'lucide-react';
 import AppIcon from '@/components/ui/AppIcon';
 
 interface MerchantItem {
@@ -150,7 +149,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
                 onClick={() => setSelectedMerchant(null)}
                 className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               >
-                <X className="w-4 h-4 text-black dark:text-white stroke-[2.5]" />
+                <AppIcon name="close" size={16} strokeWidth={2.5} className="text-black dark:text-white" />
               </button>
             </div>
             <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-3">
@@ -163,7 +162,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-black text-white dark:bg-white dark:text-black font-black text-xs border-2 border-black dark:border-white"
               >
-                <Navigation className="w-3.5 h-3.5" />
+                <AppIcon name="navigation" size={14} strokeWidth={2.5} />
                 <span>카카오맵 길찾기</span>
               </a>
             </div>

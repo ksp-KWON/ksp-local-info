@@ -93,7 +93,7 @@ async function main() {
       slug: { type: 'STRING', description: '영문 하이픈 구분 (예: uijeongbu-youth-support)' },
       title: { type: 'STRING' },
       summary: { type: 'STRING' },
-      category: { type: 'STRING', description: "'💸 숨은 지원금 찾기', '🎉 이번주 뭐하지?', '👶 우리 아이 혜택', '🩺 아플 때 든든하게', '💼 취업과 창업', '🏡 슬기로운 주거생활', '🚌 출퇴근과 교통', '💡 알아두면 쓸데있는 팁' 중 반드시 1개를 선택하세요." },
+      category: { type: 'STRING', description: "'숨은 지원금 찾기', '이번주 뭐하지?', '우리 아이 혜택', '아플 때 든든하게', '취업과 창업', '슬기로운 주거생활', '출퇴근과 교통', '알아두면 쓸데있는 팁' 중 반드시 1개를 선택하세요." },
       tags: { type: 'ARRAY', items: { type: 'STRING' } }
     },
     required: ['thoughtProcess', 'slug', 'title', 'summary', 'category', 'tags']

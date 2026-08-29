@@ -9,14 +9,15 @@ export type AppIconName =
   | 'phone' | 'chat' | 'mail' | 'link' | 'external-link' | 'plus' | 'edit' | 'trash'
   | 'check' | 'warning' | 'info' | 'close' | 'chevron-right' | 'chevron-left' | 'chevron-down' | 'chevron-up'
   | 'list' | 'menu' | 'copy' | 'refresh' | 'lock' | 'coffee' | 'sun' | 'moon' | 'monitor' | 'send' | 'minimize' | 'play' | 'cloud'
+  | 'navigation' | 'sparkles'
   // 보상 & 법률 & 통계
   | 'scale' | 'shield' | 'shield-check' | 'shield-alert' | 'file-text' | 'folder'
   | 'calculator' | 'chart' | 'trending-up' | 'award' | 'zap' | 'landmark' | 'book' | 'compass' | 'flame'
-  | 'hardhat' | 'lightbulb' | 'rose' | 'bullhorn' | 'bank'
-  // 의학 & 상해 & 신체
+  | 'hardhat' | 'lightbulb' | 'rose' | 'bullhorn' | 'bank' | 'party-popper'
+  // 의학 & 상해 & 신체 & 생활
   | 'car' | 'hospital' | 'heart' | 'bone' | 'brain' | 'pill' | 'syringe'
   | 'bandaid' | 'crutches' | 'wheelchair' | 'stethoscope' | 'scissors' | 'eye'
-  | 'tooth' | 'dna' | 'baby' | 'leaf' | 'skin' | 'pin' | 'youtube';
+  | 'tooth' | 'dna' | 'baby' | 'leaf' | 'skin' | 'pin' | 'youtube' | 'bus';
 
 export interface AppIconProps extends React.SVGProps<SVGSVGElement> {
   name: AppIconName;
@@ -511,6 +512,35 @@ const ICON_PATHS: Record<AppIconName, React.ReactNode> = {
       <line x1="9" y1="10" x2="9" y2="21" />
       <line x1="15" y1="10" x2="15" y2="21" />
       <line x1="19" y1="10" x2="19" y2="21" />
+    </>
+  ),
+  navigation: (
+    <polygon points="3 11 22 2 13 21 11 13 3 11" />
+  ),
+  bus: (
+    <>
+      <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z" />
+      <path d="M4 11h16" />
+      <line x1="8" y1="18" x2="8" y2="21" />
+      <line x1="16" y1="18" x2="16" y2="21" />
+      <circle cx="7.5" cy="14.5" r="1.5" />
+      <circle cx="16.5" cy="14.5" r="1.5" />
+    </>
+  ),
+  'party-popper': (
+    <>
+      <path d="m5.8 11.3 2.9 2.9L3 20l-1-1 3.8-5.7Z" />
+      <path d="m4 14 8-8 3 3-8 8" />
+      <path d="M14 6l4-4" />
+      <path d="M17 10l4-1" />
+      <path d="M11 3l1 4" />
+    </>
+  ),
+  sparkles: (
+    <>
+      <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z" />
+      <path d="M20 3v4" />
+      <path d="M22 5h-4" />
     </>
   ),
 };

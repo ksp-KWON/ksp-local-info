@@ -8,15 +8,6 @@ import { CATEGORIES } from '@/lib/constants';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 import Link from 'next/link';
 
-function getCategoryIcon(label: string): AppIconName {
-  if (label.includes('지원금') || label.includes('혜택')) return 'bank';
-  if (label.includes('취업') || label.includes('창업')) return 'trending-up';
-  if (label.includes('아이') || label.includes('가족')) return 'heart';
-  if (label.includes('병원') || label.includes('아플 때')) return 'hospital';
-  if (label.includes('생활') || label.includes('즐길거리')) return 'leaf';
-  return 'file-text';
-}
-
 function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
@@ -35,7 +26,8 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
     posts = initialPosts.filter((post) => {
       if (!post.category) return false;
       const cats = Array.isArray(post.category) ? post.category : [post.category];
-      return cats.some((c) => c.includes(categoryParam.replace(/^[^\s]+\s/, '')) || c === categoryParam);
+      const cleanParam = categoryParam.replace(/^[^\s]+\s/, '');
+      return cats.some((c) => c.includes(cleanParam) || c === categoryParam);
     });
     categoryTitle = categoryParam.replace(/^[^\s]+\s/, '');
     categoryDesc = `‘${categoryTitle}’ 관련 최신 의정부 소식 및 가이드 목록입니다.`;
@@ -83,20 +75,19 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
           <span>전체보기</span>
         </Link>
         {CATEGORIES.map((cat) => {
-          const isSelected = categoryParam === cat.label;
-          const icon = getCategoryIcon(cat.label);
+          const isSelected = categoryParam === cat.name || categoryParam?.includes(cat.name);
           return (
             <Link
               key={cat.id}
-              href={`/blog?category=${encodeURIComponent(cat.label)}`}
+              href={`/blog?category=${encodeURIComponent(cat.name)}`}
               className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-black whitespace-nowrap transition-all border-2 rounded-none ${
                 isSelected
                   ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.9)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.9)]'
                   : 'bg-white dark:bg-[#181a1d] text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
               }`}
             >
-              <AppIcon name={icon} size={14} strokeWidth={2.5} />
-              <span>{cat.label.replace(/^[^\s]+\s/, '')}</span>
+              <AppIcon name={cat.iconName} size={14} strokeWidth={2.5} />
+              <span>{cat.name}</span>
             </Link>
           );
         })}

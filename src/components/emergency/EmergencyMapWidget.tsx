@@ -6,7 +6,6 @@ import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useEmergencyData } from '@/hooks/useEmergencyData';
 import EmergencyMap from '@/components/emergency/EmergencyMap';
 import EmergencyBottomSheet from '@/components/emergency/EmergencyBottomSheet';
-import { ArrowLeft, Stethoscope, Pill } from 'lucide-react';
 import AppIcon from '@/components/ui/AppIcon';
 
 interface EmergencyMapWidgetProps {
@@ -43,7 +42,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
           <div className="flex items-center gap-2">
             {!isWidget && (
               <Link href="/" className="p-1 text-black dark:text-white hover:opacity-70 transition-opacity">
-                <ArrowLeft className="w-5 h-5 stroke-[2.5]" />
+                <AppIcon name="chevron-left" size={20} strokeWidth={2.5} />
               </Link>
             )}
             <h1 className="text-xl sm:text-2xl font-black tracking-tight text-black dark:text-white flex items-center gap-2">
@@ -85,7 +84,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
                   : 'bg-white dark:bg-[#181a1d] text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
               }`}
             >
-              <Stethoscope className="w-4 h-4 stroke-[2.5]" />
+              <AppIcon name="stethoscope" size={16} strokeWidth={2.5} />
               <span>실시간 응급실</span>
             </button>
             <button
@@ -96,7 +95,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
                   : 'bg-white dark:bg-[#181a1d] text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
               }`}
             >
-              <Pill className="w-4 h-4 stroke-[2.5]" />
+              <AppIcon name="pill" size={16} strokeWidth={2.5} />
               <span>심야/휴일 약국</span>
             </button>
           </div>

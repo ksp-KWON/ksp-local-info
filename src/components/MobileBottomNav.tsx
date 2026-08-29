@@ -3,19 +3,9 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
-import { Home, Coins, Briefcase, Ambulance, Menu, X } from 'lucide-react';
 import { CATEGORIES } from '@/lib/constants';
 import BottomSheet from '@/components/ui/BottomSheet';
-import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
-
-function getCategoryWatermark(label: string): AppIconName {
-  if (label.includes('지원금') || label.includes('혜택')) return 'bank';
-  if (label.includes('취업') || label.includes('창업')) return 'trending-up';
-  if (label.includes('아이') || label.includes('가족')) return 'heart';
-  if (label.includes('병원') || label.includes('아플 때')) return 'hospital';
-  if (label.includes('생활') || label.includes('즐길거리')) return 'leaf';
-  return 'file-text';
-}
+import AppIcon from '@/components/ui/AppIcon';
 
 function NavContent() {
   const pathname = usePathname();
@@ -29,28 +19,28 @@ function NavContent() {
       label: '홈',
       href: '/',
       isActive: pathname === '/' && !categoryParam,
-      icon: <Home className="w-5 h-5 mb-1 stroke-[2.5]" />,
+      iconName: 'home' as const,
     },
     {
       id: 'benefits',
       label: '지원금',
-      href: `/blog?category=${encodeURIComponent('💸 숨은 지원금 찾기')}`,
-      isActive: categoryParam === '💸 숨은 지원금 찾기',
-      icon: <Coins className="w-5 h-5 mb-1 stroke-[2.5]" />,
+      href: `/blog?category=${encodeURIComponent('숨은 지원금 찾기')}`,
+      isActive: categoryParam === '숨은 지원금 찾기' || categoryParam?.includes('지원금'),
+      iconName: 'bank' as const,
     },
     {
       id: 'jobs',
       label: '취업·창업',
-      href: `/blog?category=${encodeURIComponent('💼 취업과 창업')}`,
-      isActive: categoryParam === '💼 취업과 창업',
-      icon: <Briefcase className="w-5 h-5 mb-1 stroke-[2.5]" />,
+      href: `/blog?category=${encodeURIComponent('취업과 창업')}`,
+      isActive: categoryParam === '취업과 창업' || categoryParam?.includes('취업'),
+      iconName: 'trending-up' as const,
     },
     {
       id: 'emergency',
       label: '응급·약국',
       href: '/services/emergency',
       isActive: pathname === '/services/emergency',
-      icon: <Ambulance className="w-5 h-5 mb-1 stroke-[2.5]" />,
+      iconName: 'hospital' as const,
     },
   ];
 
@@ -68,7 +58,7 @@ function NavContent() {
                 : 'text-zinc-400 dark:text-zinc-500 hover:text-black dark:hover:text-white'
             }`}
           >
-            {item.icon}
+            <AppIcon name={item.iconName} size={20} strokeWidth={2.5} className="mb-0.5" />
             <span className={`text-[10.5px] ${item.isActive ? 'font-black' : 'font-medium'}`}>
               {item.label}
             </span>
@@ -83,7 +73,7 @@ function NavContent() {
               : 'text-zinc-400 dark:text-zinc-500 hover:text-black dark:hover:text-white'
           }`}
         >
-          {isMenuOpen ? <X className="w-5 h-5 mb-1 stroke-[2.5]" /> : <Menu className="w-5 h-5 mb-1 stroke-[2.5]" />}
+          <AppIcon name={isMenuOpen ? 'close' : 'menu'} size={20} strokeWidth={2.5} className="mb-0.5" />
           <span className={`text-[10.5px] ${isMenuOpen ? 'font-black' : 'font-medium'}`}>전체메뉴</span>
         </button>
       </nav>
@@ -107,57 +97,28 @@ function NavContent() {
               onClick={() => setIsMenuOpen(false)}
               className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
             >
-              <X className="w-5 h-5 text-black dark:text-white stroke-[2.5]" />
+              <AppIcon name="close" size={20} strokeWidth={2.5} className="text-black dark:text-white" />
             </button>
           </div>
 
-          <div className="space-y-5">
-            {[
-              {
-                title: '혜택 & 일자리',
-                items: CATEGORIES.filter((c) => c.label.includes('지원금') || c.label.includes('취업')),
-              },
-              {
-                title: '가족 & 건강',
-                items: CATEGORIES.filter((c) => c.label.includes('아이') || c.label.includes('아플 때')),
-              },
-              {
-                title: '생활 & 즐길거리',
-                items: CATEGORIES.filter(
-                  (c) =>
-                    !c.label.includes('지원금') &&
-                    !c.label.includes('취업') &&
-                    !c.label.includes('아이') &&
-                    !c.label.includes('아플 때')
-                ),
-              },
-            ].map((group, idx) => (
-              <div key={idx}>
-                <h4 className="font-black text-zinc-400 dark:text-zinc-500 text-xs mb-2.5 pl-1">{group.title}</h4>
-                <div className="grid grid-cols-2 gap-2.5">
-                  {group.items.map((cat) => {
-                    const theme = cat.label;
-                    const watermark = getCategoryWatermark(theme);
-                    return (
-                      <Link
-                        key={cat.id}
-                        href={`/blog?category=${encodeURIComponent(cat.label)}`}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="relative overflow-hidden flex items-center gap-2 p-3 bg-white dark:bg-[#181a1d] rounded-none border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all group"
-                      >
-                        {/* 은은한 굵은 라인 SVG 수묵 워터마크 */}
-                        <div className="absolute right-1 bottom-0 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
-                          <AppIcon name={watermark} size={44} strokeWidth={2} />
-                        </div>
-
-                        <span className="font-black text-xs tracking-tight truncate text-black dark:text-white relative z-10">
-                          {cat.label.replace(/^[^\s]+\s/, '')}
-                        </span>
-                      </Link>
-                    );
-                  })}
+          <div className="grid grid-cols-2 gap-2.5">
+            {CATEGORIES.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/blog?category=${encodeURIComponent(cat.name)}`}
+                onClick={() => setIsMenuOpen(false)}
+                className="relative overflow-hidden flex items-center gap-2 p-3 bg-white dark:bg-[#181a1d] rounded-none border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all group"
+              >
+                {/* 은은한 굵은 라인 SVG 수묵 워터마크 */}
+                <div className="absolute right-1 bottom-0 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
+                  <AppIcon name={cat.watermarkIcon} size={44} strokeWidth={2} />
                 </div>
-              </div>
+
+                <AppIcon name={cat.iconName} size={15} strokeWidth={2.5} className="text-black dark:text-white relative z-10 shrink-0" />
+                <span className="font-black text-xs tracking-tight truncate text-black dark:text-white relative z-10">
+                  {cat.name}
+                </span>
+              </Link>
             ))}
           </div>
 

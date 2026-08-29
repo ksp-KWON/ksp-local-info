@@ -28,11 +28,19 @@ function processPost(filePath) {
   let data = parsed.data;
   let body = parsed.content;
 
-  // ── [1. Frontmatter summary 정규화] ──────────────────────────────────
+  // ── [0. 깨진 유니코드 대체 문자(\uFFFD) 및 잔존 이모지 정제] ────────────
+  if (data.title) {
+    data.title = String(data.title).replace(/\uFFFD/g, '').replace(/^[💡🎯📌⭐🛡️🔴⚡💎🔮🌿🧑‍⚖️⚖️]\s*/, '').trim();
+  }
   if (data.summary) {
-    let s = String(data.summary).replace(/[\r\n]+/g, ' ').replace(/"/g, "'").replace(/^'+|'+$/g, '').trim();
+    let s = String(data.summary).replace(/\uFFFD/g, '').replace(/[\r\n]+/g, ' ').replace(/"/g, "'").replace(/^'+|'+$/g, '').trim();
     data.summary = s;
   }
+  if (Array.isArray(data.tags)) {
+    data.tags = data.tags.map(t => String(t).replace(/\uFFFD/g, '').trim()).filter(Boolean);
+  }
+
+  body = body.replace(/\uFFFD/g, '');
 
   // ── [2. 상투적 더미 멘트 박스 및 AI 메모 청소] ──────────────────────────
   body = body.replace(
@@ -41,13 +49,13 @@ function processPost(filePath) {
   );
   body = body.replace(/\[\s*(?:이미지\s*제안|관련\s*글\s*추천|이미지제안|관련글추천)\s*:[^\]]*\]/gi, '');
 
-  // ── [2-1. 비표준 GitHub alert 및 비표준 전문가 조언 박스 정규화] ──────────
-  body = body.replace(/>\s*\[!(?:TIP|NOTE|IMPORTANT|WARNING|CAUTION)\]\s*\r?\n/gi, '> ### 의정부 생활포털 실무 팁 & 안내\n');
-  body = body.replace(/>\s*(?:전문가\s*조언|손해사정사\s*실무\s*조언|실무\s*TIP)\s*:\s*/gi, '> ### 의정부 생활포털 실무 팁 & 안내\n> ');
+  // ── [2-1. 비표준 GitHub alert 및 비표준 팁 박스 정규화] ──────────
+  body = body.replace(/>\s*\[!(?:TIP|NOTE|IMPORTANT|WARNING|CAUTION)\]\s*\r?\n/gi, '> ### 의정부 생활 꿀팁 & 시정 인사이트\n');
+  body = body.replace(/>\s*(?:전문가\s*조언|손해사정사\s*실무\s*조언|실무\s*TIP|생활포털\s*실무\s*팁\s*&\s*안내)\s*:\s*/gi, '> ### 의정부 생활 꿀팁 & 시정 인사이트\n> ');
 
   // ── [3. 오프닝 & 핵심 요약 순서 교정 및 배치 보장] ───────────────────
   // 오프닝 문단이 ## 핵심 요약보다 위에 있는 경우 순서를 표준(## 핵심 요약 -> 오프닝)으로 자동 교정
-  const keyPointOrderMatch = body.match(/(?:^|\r?\n)(##\s*(?:💡|🎯)?\s*(?:핵심\s*요약|핵심요약|핵심\s*포인트)[^\n]*\r?\n+(?:[ \t]*>?[ \t]*[-*+].*\r?\n*)+)/i);
+  const keyPointOrderMatch = body.match(/(?:^|\r?\n)(##\s*(?:💡|🎯)?\s*(?:시정\s*핵심\s*요약|핵심\s*요약|핵심요약|핵심\s*포인트)[^\n]*\r?\n+(?:[ \t]*>?[ \t]*[-*+].*\r?\n*)+)/i);
   if (keyPointOrderMatch && keyPointOrderMatch.index > 0) {
     const beforeKeyPoints = body.slice(0, keyPointOrderMatch.index).trim();
     const keyPointsBlock = keyPointOrderMatch[1].trim();
@@ -183,14 +191,14 @@ function processPost(filePath) {
   // ── [11-1. 파손된 핵심 요약 볼드 기호 교정] ────────────────────────────
   body = body.replace(/(>\s*-\s*)([^\n*:]+?)\*\*\s*:/g, '$1**$2** :');
 
-  // ── [11-2. 시그니처 박스 표준화 (💡 제거: 의정부 생활포털 실무 팁 & 안내)] ─
+  // ── [11-2. 시그니처 박스 표준화 (💡 제거: 의정부 생활 꿀팁 & 시정 인사이트)] ─
   body = body.replace(
-    />\s*###\s*(?:💡\s*|👨‍⚖️\s*|⚖️\s*)?(?:보상스쿨\s*피드백\s*&\s*실무\s*인사이트|보상스쿨\s*실무\s*TIP|보상스쿨\s*실무TIP|손해사정사\s*실무\s*조언|실무\s*TIP|보상스쿨\s*실무쟁점)[^\n]*/gi,
-    '> ### 의정부 생활포털 실무 팁 & 안내'
+    />\s*###\s*(?:💡\s*|👨‍⚖️\s*|⚖️\s*)?(?:의정부\s*생활포털\s*실무\s*팁\s*&\s*안내|보상스쿨\s*피드백\s*&\s*실무\s*인사이트|보상스쿨\s*실무\s*TIP|보상스쿨\s*실무TIP|손해사정사\s*실무\s*조언|실무\s*TIP|보상스쿨\s*실무쟁점)[^\n]*/gi,
+    '> ### 의정부 생활 꿀팁 & 시정 인사이트'
   );
   body = body.replace(
-    />\s*(?:💡\s*)?\*\*(?:보상스쿨\s*피드백\s*&\s*실무\s*인사이트|보상스쿨\s*실무\s*TIP|보상스쿨\s*실무TIP|손해사정사\s*실무\s*조언|실무\s*TIP)\*\*\s*:\s*/gi,
-    '> ### 의정부 생활포털 실무 팁 & 안내\n> '
+    />\s*(?:💡\s*)?\*\*(?:의정부\s*생활포털\s*실무\s*팁\s*&\s*안내|보상스쿨\s*피드백\s*&\s*실무\s*인사이트|보상스쿨\s*실무\s*TIP|보상스쿨\s*실무TIP|손해사정사\s*실무\s*조언|실무\s*TIP)\*\*\s*:\s*/gi,
+    '> ### 의정부 생활 꿀팁 & 시정 인사이트\n> '
   );
 
   // ── [11-3. 본문 및 헤딩 내 잔존 유니코드 이모지 및 대괄호([]) 일괄 정규화] ─
