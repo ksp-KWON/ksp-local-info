@@ -86,7 +86,7 @@ function SearchResults() {
               <Link
                 key={kw}
                 href={`/search?q=${encodeURIComponent(kw)}`}
-                className="px-2.5 py-1 text-xs font-medium rounded-none bg-zinc-50 dark:bg-zinc-850 text-zinc-800 dark:text-zinc-200 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all shadow-2xs"
+                className="px-2.5 py-1 text-xs font-medium rounded-none bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all shadow-2xs"
               >
                 #{kw}
               </Link>

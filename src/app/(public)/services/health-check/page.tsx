@@ -106,7 +106,7 @@ export default function HealthCheckPage() {
                 className={`whitespace-nowrap px-3 py-1.5 text-xs font-medium transition-all border rounded-none cursor-pointer ${
                   mapCenter.name === nb.name
                     ? 'bg-amber-600 text-white border-amber-600 font-bold shadow-xs'
-                    : 'bg-zinc-50 text-zinc-700 dark:bg-zinc-850 dark:text-zinc-300 border-gray-200/80 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
+                    : 'bg-zinc-50 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 border-gray-200/80 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
                 }`}
               >
                 {nb.name}

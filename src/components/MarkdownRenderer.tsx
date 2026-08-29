@@ -125,7 +125,7 @@ export const sharedComponents: Components & Record<string, any> = {
     </div>
   ),
   thead: ({ children }: any) => (
-    <thead className="bg-zinc-50 dark:bg-zinc-850 border-b border-gray-200/90 dark:border-zinc-800">{children}</thead>
+    <thead className="bg-zinc-50 dark:bg-zinc-800 border-b border-gray-200/90 dark:border-zinc-800">{children}</thead>
   ),
   tbody: ({ children }: any) => (
     <tbody className="divide-y divide-gray-100 dark:divide-zinc-800/80">{children}</tbody>
