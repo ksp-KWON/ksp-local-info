@@ -42,36 +42,36 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
 
   return (
     <div className="space-y-8 sm:space-y-10 pb-16">
-      {/* 1. 카테고리 헤더 (모던 수묵 & 굵은 라인 SVG 스타일) */}
-      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[0_1px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.2)] p-6 sm:p-8 group">
-        <div className="absolute -right-6 -bottom-6 text-black/[0.04] dark:text-white/[0.06] pointer-events-none group-hover:scale-105 transition-transform duration-500">
-          <AppIcon name="compass" size={160} strokeWidth={2} />
+      {/* 1. 카테고리 헤더 */}
+      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] p-6 sm:p-8 group transition-all duration-300">
+        <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.03] dark:text-zinc-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
+          <AppIcon name="compass" size={160} strokeWidth={1.5} />
         </div>
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-black text-white dark:bg-white dark:text-black text-xs font-black uppercase tracking-wider mb-3 border-2 border-black dark:border-white rounded-none">
-            <AppIcon name="list" size={14} strokeWidth={2.5} />
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 text-xs font-bold uppercase tracking-wider mb-3 border border-sky-200 dark:border-sky-800 rounded-none shadow-2xs">
+            <AppIcon name="list" size={14} strokeWidth={2} className="text-sky-600 dark:text-sky-400" />
             <span>카테고리 큐레이션</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-black dark:text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white mb-2">
             {categoryTitle}
           </h1>
-          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-medium break-keep">
+          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal break-keep">
             {categoryDesc} (총 {posts.length}건)
           </p>
         </div>
       </div>
 
-      {/* 2. 카테고리 필터 탭바 (수묵 흑백 굵은 먹선 칩) */}
+      {/* 2. 카테고리 필터 탭바 */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         <Link
           href="/blog"
-          className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-black whitespace-nowrap transition-all border-2 rounded-none ${
+          className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold whitespace-nowrap transition-all border rounded-none shadow-2xs ${
             !categoryParam && !tagParam
-              ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white'
-              : 'bg-white dark:bg-[#181a1d] text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
+              ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100'
+              : 'bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
           }`}
         >
-          <AppIcon name="list" size={14} strokeWidth={2.5} />
+          <AppIcon name="list" size={14} strokeWidth={2} />
           <span>전체보기</span>
         </Link>
         {CATEGORIES.map((cat) => {
@@ -80,13 +80,13 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
             <Link
               key={cat.id}
               href={`/blog?category=${encodeURIComponent(cat.name)}`}
-              className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-black whitespace-nowrap transition-all border-2 rounded-none ${
+              className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold whitespace-nowrap transition-all border rounded-none shadow-2xs ${
                 isSelected
-                  ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white'
-                  : 'bg-white dark:bg-[#181a1d] text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
+                  ? 'bg-sky-50 text-sky-950 dark:bg-sky-950/70 dark:text-sky-200 border-sky-300 dark:border-sky-800'
+                  : 'bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
               }`}
             >
-              <AppIcon name={cat.iconName} size={14} strokeWidth={2.5} />
+              <AppIcon name={cat.iconName} size={14} strokeWidth={2} className={isSelected ? 'text-sky-600 dark:text-sky-400' : 'text-zinc-500'} />
               <span>{cat.name}</span>
             </Link>
           );
@@ -101,17 +101,17 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
           ))}
         </div>
       ) : (
-        <div className="p-12 text-center border-2 border-dashed border-zinc-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d]">
-          <AppIcon name="info" size={36} strokeWidth={2} className="mx-auto mb-3 text-zinc-400" />
-          <p className="text-base font-bold text-zinc-700 dark:text-zinc-300">
+        <div className="p-12 text-center border border-dashed border-gray-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] rounded-none">
+          <AppIcon name="info" size={36} strokeWidth={1.5} className="mx-auto mb-3 text-zinc-400" />
+          <p className="text-base font-bold text-zinc-800 dark:text-zinc-200">
             해당 조건에 맞는 소식이 아직 등록되지 않았습니다.
           </p>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 mt-4 px-4 py-2 bg-black text-white dark:bg-white dark:text-black font-black text-xs border-2 border-black dark:border-white"
+            className="inline-flex items-center gap-1.5 mt-4 px-5 py-2.5 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs border border-zinc-900 dark:border-white shadow-xs hover:opacity-90 transition-opacity"
           >
             <span>전체 글 보기</span>
-            <AppIcon name="chevron-right" size={14} strokeWidth={2.5} />
+            <AppIcon name="chevron-right" size={14} strokeWidth={2} />
           </Link>
         </div>
       )}

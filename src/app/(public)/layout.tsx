@@ -39,7 +39,7 @@ export default function PublicLayout({
         <div className="mx-auto flex h-full w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5">
           {/* 로고/제목 영역 */}
           <div className="flex items-center min-w-0 flex-1 mr-1 sm:mr-2">
-            <div className="font-sans font-black text-lg sm:text-xl min-w-0 tracking-tight">
+            <div className="font-sans font-extrabold text-lg sm:text-xl min-w-0 tracking-tight">
               <Link href="/" className="group flex items-center gap-2 sm:gap-2.5 whitespace-nowrap overflow-hidden">
                 <div className="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 shrink-0 group-hover:-translate-y-0.5 transition-transform duration-200 z-10 overflow-hidden">
                   <Image

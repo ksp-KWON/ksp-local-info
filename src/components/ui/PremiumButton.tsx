@@ -17,14 +17,16 @@ export default function PremiumButton({
   icon,
   ...props
 }: PremiumButtonProps) {
-  let baseClass = 'inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-black transition-all duration-200 rounded-none relative border-2 cursor-pointer';
+  let baseClass = 'inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 rounded-none relative border shadow-xs cursor-pointer active:scale-[0.99]';
 
-  if (variant === 'primary' || variant === 'danger' || variant === 'youtube') {
-    baseClass += ' bg-black text-white dark:bg-white dark:text-black border-black dark:border-white hover:opacity-85';
+  if (variant === 'primary' || variant === 'youtube') {
+    baseClass += ' bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border-zinc-900 dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-100 hover:shadow-md';
+  } else if (variant === 'danger') {
+    baseClass += ' bg-rose-600 text-white dark:bg-rose-700 dark:text-white border-rose-600 dark:border-rose-700 hover:bg-rose-700 hover:shadow-md';
   } else if (variant === 'secondary') {
-    baseClass += ' bg-white dark:bg-[#181a1d] text-zinc-900 dark:text-zinc-100 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white';
+    baseClass += ' bg-white dark:bg-[#181a1d] text-zinc-900 dark:text-zinc-100 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-800 dark:hover:border-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/60';
   } else if (variant === 'ghost') {
-    baseClass = 'inline-flex items-center text-xs sm:text-sm font-black text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white transition-colors cursor-pointer';
+    baseClass = 'inline-flex items-center text-xs sm:text-sm font-bold text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-colors cursor-pointer border-0 shadow-none';
   }
 
   const content = (

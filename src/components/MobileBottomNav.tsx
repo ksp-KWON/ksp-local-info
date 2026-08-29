@@ -46,7 +46,7 @@ function NavContent() {
 
   return (
     <>
-      <nav className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t-2 border-black dark:border-white flex items-center justify-around px-1 z-[100] pb-[env(safe-area-inset-bottom)] transition-colors duration-300">
+      <nav className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 flex items-center justify-around px-1 z-[100] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 shadow-lg">
         {navItems.map((item) => (
           <Link
             key={item.id}
@@ -54,12 +54,12 @@ function NavContent() {
             onClick={() => setIsMenuOpen(false)}
             className={`flex flex-col items-center justify-center w-full h-full transition-all ${
               item.isActive
-                ? 'text-black dark:text-white font-black'
-                : 'text-zinc-400 dark:text-zinc-500 hover:text-black dark:hover:text-white'
+                ? 'text-zinc-950 dark:text-white font-bold'
+                : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
             }`}
           >
-            <AppIcon name={item.iconName} size={20} strokeWidth={2.5} className="mb-0.5" />
-            <span className={`text-[10.5px] ${item.isActive ? 'font-black' : 'font-medium'}`}>
+            <AppIcon name={item.iconName} size={20} strokeWidth={item.isActive ? 2.5 : 2} className={`mb-0.5 ${item.isActive ? 'text-zinc-900 dark:text-white' : ''}`} />
+            <span className={`text-[10.5px] ${item.isActive ? 'font-bold' : 'font-medium'}`}>
               {item.label}
             </span>
           </Link>
@@ -69,16 +69,16 @@ function NavContent() {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className={`flex flex-col items-center justify-center w-full h-full transition-all cursor-pointer ${
             isMenuOpen
-              ? 'text-black dark:text-white font-black'
-              : 'text-zinc-400 dark:text-zinc-500 hover:text-black dark:hover:text-white'
+              ? 'text-zinc-950 dark:text-white font-bold'
+              : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
           }`}
         >
-          <AppIcon name={isMenuOpen ? 'close' : 'menu'} size={20} strokeWidth={2.5} className="mb-0.5" />
-          <span className={`text-[10.5px] ${isMenuOpen ? 'font-black' : 'font-medium'}`}>전체메뉴</span>
+          <AppIcon name={isMenuOpen ? 'close' : 'menu'} size={20} strokeWidth={isMenuOpen ? 2.5 : 2} className="mb-0.5" />
+          <span className={`text-[10.5px] ${isMenuOpen ? 'font-bold' : 'font-medium'}`}>전체메뉴</span>
         </button>
       </nav>
 
-      {/* 전체 메뉴 바텀시트 (모던 수묵 & 굵은 라인 SVG 스타일) */}
+      {/* 전체 메뉴 바텀시트 */}
       <BottomSheet
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
@@ -88,16 +88,16 @@ function NavContent() {
         maxHeight="max-h-[85vh]"
       >
         <div className="w-full flex flex-col">
-          <div className="flex justify-between items-center mb-5 pb-3 border-b-2 border-black dark:border-white">
-            <h3 className="text-base font-black text-black dark:text-white flex items-center gap-2">
-              <AppIcon name="compass" size={18} strokeWidth={2.5} />
+          <div className="flex justify-between items-center mb-5 pb-3 border-b border-gray-100 dark:border-zinc-800">
+            <h3 className="text-base font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+              <AppIcon name="compass" size={18} strokeWidth={2} className="text-zinc-700 dark:text-zinc-300" />
               <span>의정부 생활정보 전체 카테고리</span>
             </h3>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+              className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-none text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors cursor-pointer"
             >
-              <AppIcon name="close" size={20} strokeWidth={2.5} className="text-black dark:text-white" />
+              <AppIcon name="close" size={20} strokeWidth={2} />
             </button>
           </div>
 
@@ -107,44 +107,38 @@ function NavContent() {
                 key={cat.id}
                 href={`/blog?category=${encodeURIComponent(cat.name)}`}
                 onClick={() => setIsMenuOpen(false)}
-                className="relative overflow-hidden flex items-center gap-2 p-3 bg-white dark:bg-[#181a1d] rounded-none border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all group"
+                className="relative overflow-hidden flex items-center gap-2.5 p-3 bg-white dark:bg-[#181a1d] rounded-none border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all group shadow-2xs"
               >
-                {/* 은은한 굵은 라인 SVG 수묵 워터마크 */}
-                <div className="absolute right-1 bottom-0 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
-                  <AppIcon name={cat.watermarkIcon} size={44} strokeWidth={2} />
+                {/* 은은한 워터마크 */}
+                <div className="absolute right-1 bottom-0 opacity-[0.045] dark:opacity-[0.07] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
+                  <AppIcon name={cat.watermarkIcon} size={44} strokeWidth={1.5} />
                 </div>
 
-                <AppIcon name={cat.iconName} size={15} strokeWidth={2.5} className="text-black dark:text-white relative z-10 shrink-0" />
-                <span className="font-black text-xs tracking-tight truncate text-black dark:text-white relative z-10">
+                <AppIcon name={cat.iconName} size={15} strokeWidth={2} className="text-zinc-700 dark:text-zinc-300 relative z-10 shrink-0" />
+                <span className="font-bold text-xs tracking-tight truncate text-zinc-900 dark:text-zinc-100 relative z-10">
                   {cat.name}
                 </span>
               </Link>
             ))}
           </div>
 
-          {/* 주요 3대 공공서비스 퀵링크 바 (모노톤 굵은 선 룩) */}
-          <div className="mt-5 grid grid-cols-2 gap-2.5 pt-3 border-t-2 border-zinc-200 dark:border-zinc-800">
+          {/* 주요 3대 공공서비스 퀵링크 바 */}
+          <div className="mt-5 grid grid-cols-2 gap-2.5 pt-3 border-t border-gray-100 dark:border-zinc-800">
             <Link
               href="/services/local-currency"
               onClick={() => setIsMenuOpen(false)}
-              className="relative overflow-hidden flex items-center justify-center gap-1.5 p-3 rounded-none bg-zinc-100 dark:bg-zinc-900 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white text-black dark:text-white font-black text-xs group"
+              className="relative overflow-hidden flex items-center justify-center gap-1.5 p-3 rounded-none bg-sky-50/70 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800 hover:border-sky-400 dark:hover:border-sky-600 text-sky-950 dark:text-sky-200 font-bold text-xs group transition-all"
             >
-              <div className="absolute -right-1 -bottom-1 opacity-[0.07] text-black dark:text-white pointer-events-none group-hover:scale-110 transition-transform">
-                <AppIcon name="bank" size={42} strokeWidth={2} />
-              </div>
-              <AppIcon name="bank" size={14} strokeWidth={2.5} className="relative z-10" />
+              <AppIcon name="bank" size={14} strokeWidth={2} className="relative z-10 text-sky-700 dark:text-sky-400" />
               <span className="relative z-10">사랑카드 가맹점</span>
             </Link>
 
             <Link
               href="/services/health-check"
               onClick={() => setIsMenuOpen(false)}
-              className="relative overflow-hidden flex items-center justify-center gap-1.5 p-3 rounded-none bg-zinc-100 dark:bg-zinc-900 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white text-black dark:text-white font-black text-xs group"
+              className="relative overflow-hidden flex items-center justify-center gap-1.5 p-3 rounded-none bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 hover:border-amber-400 dark:hover:border-amber-600 text-amber-950 dark:text-amber-200 font-bold text-xs group transition-all"
             >
-              <div className="absolute -right-1 -bottom-1 opacity-[0.07] text-black dark:text-white pointer-events-none group-hover:scale-110 transition-transform">
-                <AppIcon name="stethoscope" size={42} strokeWidth={2} />
-              </div>
-              <AppIcon name="stethoscope" size={14} strokeWidth={2.5} className="relative z-10" />
+              <AppIcon name="stethoscope" size={14} strokeWidth={2} className="relative z-10 text-amber-700 dark:text-amber-400" />
               <span className="relative z-10">건강검진 지정병원</span>
             </Link>
           </div>
@@ -158,7 +152,7 @@ export default function MobileBottomNav() {
   return (
     <Suspense
       fallback={
-        <div className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t-2 border-black dark:border-white z-[100]"></div>
+        <div className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 z-[100]"></div>
       }
     >
       <NavContent />

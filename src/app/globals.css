@@ -117,22 +117,12 @@ body {
   padding: 0 !important;
 }
 
-/* ── 로고: 다크모드 외곽선 색상 전환 ── */
+/* ── 타이포그래피 & 로고 보조 스타일 ── */
 .logo-main-text {
-  -webkit-text-stroke: 3px white;
-  paint-order: stroke fill;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+  letter-spacing: -0.03em;
 }
 .logo-tv-text {
-  -webkit-text-stroke: 2px white;
-  paint-order: stroke fill;
-}
-.dark .logo-main-text {
-  -webkit-text-stroke: 3px #18181b;
-  text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.05);
-}
-.dark .logo-tv-text {
-  -webkit-text-stroke: 2px #18181b;
+  letter-spacing: -0.02em;
 }
 
 /* 프리미엄 스크롤바 */

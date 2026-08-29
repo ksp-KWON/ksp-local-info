@@ -2,13 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import PremiumCard from '@/components/ui/PremiumCard';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
+import PremiumBadge, { type BadgeColor } from '@/components/ui/PremiumBadge';
 
 export interface MenuCardProps {
   href?: string;
   onClick?: () => void;
   icon: React.ReactNode;
   title: string;
-  themeColor?: string;
+  themeColor?: 'emerald' | 'blue' | 'amber' | 'purple' | 'indigo' | 'rose' | 'default';
   badgeText?: string;
   description: string;
   buttonText?: string;
@@ -20,30 +21,51 @@ export default function MenuCard({
   onClick,
   icon,
   title,
+  themeColor = 'default',
   badgeText,
   description,
   buttonText,
   watermarkIcon,
 }: MenuCardProps) {
+  const iconColorMap = {
+    emerald: 'text-emerald-600 dark:text-emerald-400',
+    blue: 'text-sky-600 dark:text-sky-400',
+    indigo: 'text-indigo-600 dark:text-indigo-400',
+    amber: 'text-amber-600 dark:text-amber-400',
+    purple: 'text-purple-600 dark:text-purple-400',
+    rose: 'text-rose-600 dark:text-rose-400',
+    default: 'text-zinc-700 dark:text-zinc-300',
+  };
+
+  const badgeColorMap: Record<string, BadgeColor> = {
+    emerald: 'green',
+    blue: 'blue',
+    indigo: 'indigo',
+    amber: 'amber',
+    purple: 'purple',
+    rose: 'rose',
+    default: 'charcoal',
+  };
+
   const content = (
     <PremiumCard
-      borderColor="charcoal"
+      borderColor="default"
       hoverEffect
       watermarkIcon={watermarkIcon}
       className="!p-4 sm:!p-5 relative overflow-hidden group"
     >
       <div className="relative z-10 space-y-2 flex flex-col min-w-0">
         <div className="flex items-center justify-between min-w-0 gap-2">
-          <div className="flex items-center gap-2 min-w-0 flex-1 pr-2 rounded-none bg-gradient-to-r from-zinc-100/80 to-transparent dark:from-zinc-800/40 dark:to-transparent">
-            <span className="text-zinc-900 dark:text-zinc-100 shrink-0 flex items-center justify-center">
+          <div className="flex items-center gap-2 min-w-0 flex-1 pr-2 rounded-none bg-gradient-to-r from-zinc-100/70 to-transparent dark:from-zinc-800/40 dark:to-transparent">
+            <span className={`${iconColorMap[themeColor] || iconColorMap.default} shrink-0 flex items-center justify-center`}>
               {icon}
             </span>
             <h3 className="text-sm font-bold text-gray-900 dark:text-white truncate">{title}</h3>
           </div>
           {badgeText && (
-            <span className="bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-none border border-zinc-200 dark:border-zinc-700">
+            <PremiumBadge color={badgeColorMap[themeColor] || 'charcoal'}>
               {badgeText}
-            </span>
+            </PremiumBadge>
           )}
         </div>
         <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed truncate sm:whitespace-normal font-normal">

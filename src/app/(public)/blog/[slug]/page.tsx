@@ -129,39 +129,39 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       <nav className="mb-4">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-black text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-colors"
         >
-          <AppIcon name="chevron-left" size={16} strokeWidth={2.5} />
+          <AppIcon name="chevron-left" size={16} strokeWidth={2} />
           <span>전체 생활 소식 목록</span>
         </Link>
       </nav>
 
-      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_1px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.2)] border-2 border-black dark:border-white overflow-hidden relative">
+      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
         <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
-          {/* 아티클 헤더 (수묵 모노톤 굵은 선 룩) */}
-          <header className="border-b-2 border-black dark:border-white pb-8">
+          {/* 아티클 헤더 */}
+          <header className="border-b border-gray-100 dark:border-zinc-800 pb-8">
             <div className="flex flex-wrap items-center gap-2.5 text-xs mb-4">
               {Array.isArray(post.category) ? (
                 post.category.map((cat) => (
                   <span
                     key={cat}
-                    className="px-2.5 py-1 rounded-none bg-black text-white dark:bg-white dark:text-black font-black border border-black dark:border-white"
+                    className="px-2.5 py-1 rounded-none bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800 shadow-2xs"
                   >
                     {cat.replace(/^[^\s]+\s/, '')}
                   </span>
                 ))
               ) : post.category ? (
-                <span className="px-2.5 py-1 rounded-none bg-black text-white dark:bg-white dark:text-black font-black border border-black dark:border-white">
+                <span className="px-2.5 py-1 rounded-none bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800 shadow-2xs">
                   {(post.category as string).replace(/^[^\s]+\s/, '')}
                 </span>
               ) : null}
-              <time dateTime={post.date} className="text-zinc-500 dark:text-zinc-400 font-bold tracking-wide flex items-center gap-1 ml-auto">
-                <AppIcon name="calendar" size={14} strokeWidth={2.5} />
+              <time dateTime={post.date} className="text-zinc-500 dark:text-zinc-400 font-medium tracking-wide flex items-center gap-1 ml-auto">
+                <AppIcon name="calendar" size={14} strokeWidth={2} />
                 <span>{post.date}</span>
               </time>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-black dark:text-white leading-[1.3] break-keep">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white leading-[1.3] break-keep">
               {post.title}
             </h1>
           </header>
@@ -174,29 +174,29 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           {/* 블로그 본문 (TOC & Markdown & ShareButtons 일체화) */}
           <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} />
 
-          {/* 하단 추천 혜택 박스 (수묵 2px 굵은 먹선) */}
-          <div className="pt-6 border-t-2 border-zinc-200 dark:border-zinc-800">
-            <div className="bg-zinc-50 dark:bg-zinc-900 border-2 border-black dark:border-white rounded-none p-6 sm:p-7 mb-8">
-              <h3 className="font-black text-base mb-3 flex items-center gap-2 text-black dark:text-white">
-                <AppIcon name="shield-check" size={18} strokeWidth={2.5} />
+          {/* 하단 추천 혜택 박스 */}
+          <div className="pt-6 border-t border-gray-100 dark:border-zinc-800">
+            <div className="bg-zinc-50/70 dark:bg-zinc-900/60 border border-gray-200/90 dark:border-zinc-800 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] rounded-none p-6 sm:p-7 mb-8">
+              <h3 className="font-bold text-base mb-3 flex items-center gap-2 text-zinc-950 dark:text-white">
+                <AppIcon name="shield-check" size={18} strokeWidth={2} className="text-emerald-600 dark:text-emerald-400" />
                 <span>의정부 시민들이 함께 확인한 지원 혜택</span>
               </h3>
-              <ul className="space-y-2.5 text-sm font-bold">
-                <li className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
-                  <span className="text-black dark:text-white">■</span>
-                  <Link href="/services/emergency" className="hover:underline">
+              <ul className="space-y-2.5 text-sm font-normal text-zinc-700 dark:text-zinc-300">
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
+                  <Link href="/services/emergency" className="hover:text-emerald-700 dark:hover:text-emerald-300 hover:underline">
                     의정부 달빛어린이병원 & 심야약국 실시간 지도
                   </Link>
                 </li>
-                <li className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
-                  <span className="text-black dark:text-white">■</span>
-                  <Link href="/services/local-currency" className="hover:underline">
+                <li className="flex items-center gap-2">
+                  <span className="text-sky-600 dark:text-sky-400 font-bold">✓</span>
+                  <Link href="/services/local-currency" className="hover:text-sky-700 dark:hover:text-sky-300 hover:underline">
                     의정부사랑카드(지역화폐) 가맹점 및 인센티브 혜택
                   </Link>
                 </li>
-                <li className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
-                  <span className="text-black dark:text-white">■</span>
-                  <Link href="/blog" className="hover:underline">
+                <li className="flex items-center gap-2">
+                  <span className="text-amber-600 dark:text-amber-400 font-bold">✓</span>
+                  <Link href="/blog" className="hover:text-amber-700 dark:hover:text-amber-300 hover:underline">
                     의정부시 청년 및 신혼부부 복지 지원금 전체보기
                   </Link>
                 </li>

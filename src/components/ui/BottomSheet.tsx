@@ -60,7 +60,7 @@ export default function BottomSheet({
 
       {/* Bottom Sheet */}
       <div 
-        className={`${displayClass} fixed ${bottomOffset} left-0 w-full bg-white dark:bg-[#181a1d] rounded-none border-t-2 border-black dark:border-white shadow-[0_-8px_30px_rgba(0,0,0,0.12)] ${zIndex} transition-transform duration-300 transform ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
+        className={`${displayClass} fixed ${bottomOffset} left-0 w-full bg-white dark:bg-[#181a1d] rounded-none border-t border-gray-200/90 dark:border-zinc-800 shadow-[0_-8px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_-8px_30px_rgba(0,0,0,0.4)] ${zIndex} transition-transform duration-300 transform ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
         style={{ touchAction: isOpen ? 'auto' : 'none' }}
         onClick={(e) => e.stopPropagation()}
       >

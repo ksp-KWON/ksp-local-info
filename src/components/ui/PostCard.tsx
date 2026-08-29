@@ -8,6 +8,8 @@ interface PostCardProps {
   variant?: 'grid' | 'list';
 }
 
+import { type BadgeColor } from '@/components/ui/PremiumBadge';
+
 function getWatermarkIcon(category: string): AppIconName {
   if (category.includes('지원금') || category.includes('혜택') || category.includes('복지')) return 'bank';
   if (category.includes('취업') || category.includes('창업') || category.includes('일자리')) return 'trending-up';
@@ -17,10 +19,21 @@ function getWatermarkIcon(category: string): AppIconName {
   return 'file-text';
 }
 
+function getCategoryBadgeColor(category: string): BadgeColor {
+  if (category.includes('지원금') || category.includes('혜택') || category.includes('복지')) return 'green';
+  if (category.includes('병원') || category.includes('약국') || category.includes('의료') || category.includes('건강')) return 'teal';
+  if (category.includes('취업') || category.includes('창업') || category.includes('일자리')) return 'blue';
+  if (category.includes('문화') || category.includes('행사') || category.includes('축제')) return 'purple';
+  if (category.includes('아이') || category.includes('임산부') || category.includes('가족') || category.includes('출산')) return 'rose';
+  if (category.includes('주거') || category.includes('교통')) return 'amber';
+  return 'charcoal';
+}
+
 export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   const categoriesToDisplay = Array.isArray(post.category) ? post.category : post.category ? [post.category] : [];
   const mainCategory = categoriesToDisplay[0] || '생활·민원';
   const watermarkIcon = getWatermarkIcon(mainCategory);
+  const badgeColor = getCategoryBadgeColor(mainCategory);
 
   if (variant === 'list') {
     return (
@@ -37,7 +50,7 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
 
           <div className="flex-1 min-w-0 z-10 relative">
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <PremiumBadge color="charcoal">
+              <PremiumBadge color={badgeColor}>
                 {mainCategory.replace(/^[^s]+s/, '')}
               </PremiumBadge>
               <time className="text-xs font-medium text-zinc-400 dark:text-zinc-500 flex items-center gap-1 shrink-0 ml-2">
@@ -82,7 +95,7 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
 
       <div className="relative z-10">
         <div className="flex items-center justify-between gap-2 mb-3">
-          <PremiumBadge color="charcoal">
+          <PremiumBadge color={badgeColor}>
             {mainCategory.replace(/^[^s]+s/, '')}
           </PremiumBadge>
           <time className="text-[11px] font-medium text-gray-400 dark:text-gray-500 flex items-center gap-1">

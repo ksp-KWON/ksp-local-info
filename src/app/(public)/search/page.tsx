@@ -53,40 +53,40 @@ function SearchResults() {
 
   return (
     <div className="space-y-8 pb-16">
-      {/* 1. 검색 인트로 헤더 (모던 수묵 & 굵은 라인 SVG 스타일) */}
-      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[0_1px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.2)] p-6 sm:p-8 group">
-        <div className="absolute -right-6 -bottom-6 text-black/[0.04] dark:text-white/[0.06] pointer-events-none group-hover:scale-105 transition-transform duration-500">
-          <AppIcon name="search" size={160} strokeWidth={2} />
+      {/* 1. 검색 인트로 헤더 */}
+      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] p-6 sm:p-8 group transition-all duration-300">
+        <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.03] dark:text-zinc-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
+          <AppIcon name="search" size={160} strokeWidth={1.5} />
         </div>
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-black text-white dark:bg-white dark:text-black text-xs font-black uppercase tracking-wider mb-3 border-2 border-black dark:border-white rounded-none">
-            <AppIcon name="search" size={14} strokeWidth={2.5} />
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 text-xs font-bold uppercase tracking-wider mb-3 border border-sky-200 dark:border-sky-800 rounded-none shadow-2xs">
+            <AppIcon name="search" size={14} strokeWidth={2} className="text-sky-600 dark:text-sky-400" />
             <span>통합 검색 센터</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-black dark:text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 dark:text-white tracking-tight">
             {q ? (
               <span>
-                ‘<span className="underline decoration-2">{q}</span>’ 검색 결과
+                ‘<span className="text-sky-700 dark:text-sky-400 underline decoration-2">{q}</span>’ 검색 결과
               </span>
             ) : (
               '의정부 생활정보 검색'
             )}
           </h1>
-          <p className="mt-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-medium">
+          <p className="mt-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal">
             {q ? `총 ${results.length}개의 관련 소식을 찾았습니다.` : '찾으시는 혜택, 병원, 지원금 키워드를 입력해 보세요.'}
           </p>
 
-          {/* 추천 키워드 칩 (수묵 흑백 칩) */}
-          <div className="mt-5 flex items-center flex-wrap gap-1.5 pt-4 border-t-2 border-zinc-200 dark:border-zinc-800">
-            <span className="text-xs font-black text-zinc-500 mr-1 flex items-center gap-1">
-              <AppIcon name="zap" size={12} strokeWidth={2.5} />
+          {/* 추천 키워드 칩 */}
+          <div className="mt-5 flex items-center flex-wrap gap-1.5 pt-4 border-t border-gray-100 dark:border-zinc-800">
+            <span className="text-xs font-bold text-zinc-500 mr-1 flex items-center gap-1">
+              <AppIcon name="zap" size={12} strokeWidth={2} className="text-amber-500" />
               인기 키워드:
             </span>
             {popularKeywords.map((kw) => (
               <Link
                 key={kw}
                 href={`/search?q=${encodeURIComponent(kw)}`}
-                className="px-2.5 py-1 text-xs font-bold rounded-none bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all"
+                className="px-2.5 py-1 text-xs font-medium rounded-none bg-zinc-50 dark:bg-zinc-850 text-zinc-800 dark:text-zinc-200 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all shadow-2xs"
               >
                 #{kw}
               </Link>
@@ -97,9 +97,9 @@ function SearchResults() {
 
       {/* 2. 결과 목록 */}
       {isLoading ? (
-        <div className="p-16 text-center border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#181a1d]">
-          <AppIcon name="refresh" size={32} strokeWidth={2.5} className="animate-spin mx-auto text-zinc-500 mb-3" />
-          <p className="text-sm font-black text-zinc-600 dark:text-zinc-400">데이터를 검색하고 있습니다...</p>
+        <div className="p-16 text-center border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+          <AppIcon name="refresh" size={32} strokeWidth={2} className="animate-spin mx-auto text-sky-600 mb-3" />
+          <p className="text-sm font-bold text-zinc-600 dark:text-zinc-400">데이터를 검색하고 있습니다...</p>
         </div>
       ) : results.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -108,16 +108,16 @@ function SearchResults() {
           ))}
         </div>
       ) : q ? (
-        <div className="p-16 text-center border-2 border-dashed border-zinc-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d]">
-          <AppIcon name="search" size={40} strokeWidth={2} className="mx-auto text-zinc-400 mb-3" />
-          <h3 className="text-lg font-black text-black dark:text-white mb-1">검색 결과가 없습니다</h3>
+        <div className="p-16 text-center border border-dashed border-gray-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+          <AppIcon name="search" size={40} strokeWidth={1.5} className="mx-auto text-zinc-400 mb-3" />
+          <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-1">검색 결과가 없습니다</h3>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto break-keep">
             단어의 철자가 정확한지 확인하시거나 다른 유사 검색어로 다시 시도해 보세요.
           </p>
           <div className="mt-6 flex justify-center gap-3">
             <Link
               href="/blog"
-              className="px-4 py-2 bg-black text-white dark:bg-white dark:text-black font-black text-xs border-2 border-black dark:border-white"
+              className="px-5 py-2.5 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs border border-zinc-900 dark:border-white shadow-xs hover:opacity-90 transition-opacity"
             >
               전체 소식 보기
             </Link>

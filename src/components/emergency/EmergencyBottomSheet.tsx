@@ -82,7 +82,7 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
               href={`https://map.kakao.com/link/to/${item.name},${item.lat},${item.lng}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-2.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-xs font-bold text-center border border-zinc-300 dark:border-zinc-700 flex items-center justify-center gap-1.5 transition-colors hover:bg-zinc-200"
+              className="flex-1 py-2.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-xs font-bold text-center border border-gray-200/90 dark:border-zinc-800 flex items-center justify-center gap-1.5 transition-colors hover:bg-zinc-200 dark:hover:bg-zinc-700 shadow-2xs"
             >
               <AppIcon name="navigation" size={14} />
               <span>길찾기</span>
