@@ -1,68 +1,86 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: '개인정보처리방침 | 의정부 건강·생활 정보 포털',
-  description: '의정부 건강·생활 정보 포털의 개인정보처리방침입니다.',
+  description: '의정부 건강·생활 정보 포털의 이용자 개인정보 보호 및 처리 방침입니다.',
   alternates: {
-    canonical: 'https://ksp-local-info.vercel.app/privacy',
+    canonical: '/privacy',
   },
 };
 
 export default function PrivacyPage() {
   return (
-    <div className="bg-white dark:bg-[#202124] rounded-none p-6 sm:p-12 border border-gray-100 dark:border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)]">
-      <h1 className="text-2xl sm:text-3xl font-bold text-[#202124] dark:text-[#e8eaed] mb-8 pb-4 border-b border-gray-100 dark:border-white/5">
-        개인정보처리방침
-      </h1>
-      <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none text-[#5f6368] dark:text-[#9aa0a6] space-y-6">
-        <p>
-          &quot;의정부 건강·생활 정보 포털&quot;(이하 &quot;사이트&quot;)는 이용자의 개인정보를 중요시하며, 「개인정보보호법」, 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」 등 관련 법규를 준수하고 있습니다.
-        </p>
-        <p>
-          본 사이트는 기본적으로 별도의 회원가입 없이 모든 콘텐츠 열람이 가능하며, 이 과정에서 <strong>이용자를 식별할 수 있는 민감한 개인정보를 수집하거나 저장하지 않습니다.</strong>
-        </p>
+    <div className="max-w-4xl mx-auto px-2 sm:px-4 py-8 sm:py-12 space-y-6">
+      {/* 브레드크럼 */}
+      <nav className="flex text-xs text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
+        <ol className="inline-flex items-center space-x-1.5">
+          <li>
+            <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              홈
+            </Link>
+          </li>
+          <li>
+            <span className="mx-1">/</span>
+          </li>
+          <li className="text-gray-900 dark:text-white font-bold" aria-current="page">
+            개인정보처리방침
+          </li>
+        </ol>
+      </nav>
 
-        <section>
-          <h3 className="font-bold text-[#202124] dark:text-[#e8eaed] mt-6 mb-2">1. 수집하는 개인정보 항목 및 수집 방법</h3>
+      <div className="bg-white dark:bg-[#181a1d] rounded-none p-6 sm:p-10 border border-gray-200/80 dark:border-zinc-800 shadow-md">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mb-6 pb-4 border-b border-gray-100 dark:border-zinc-800">
+          개인정보처리방침
+        </h1>
+        <div className="text-sm sm:text-[15px] leading-relaxed text-gray-700 dark:text-gray-300 space-y-6 font-medium">
           <p>
-            - <strong>자동 수집 항목:</strong> 사이트 이용 과정에서 접속 IP 정보, 쿠키(Cookie), 접속 로그, 브라우저 종류 및 OS, 방문 일시 등 서비스 이용 기록이 자동으로 생성되어 수집될 수 있습니다.<br />
-            - <strong>수집 방법:</strong> 웹사이트 실행 및 이용 과정에서의 자동 수집
+            &quot;의정부 건강·생활 정보 포털&quot;(이하 &quot;사이트&quot;)은 이용자의 개인정보를 소중히 다루며, 「개인정보 보호법」 등 관련 법규를 철저히 준수합니다.
           </p>
-        </section>
-
-        <section>
-          <h3 className="font-bold text-[#202124] dark:text-[#e8eaed] mt-6 mb-2">2. 개인정보의 수집 및 이용 목적</h3>
           <p>
-            사이트는 수집한 정보를 다음의 목적을 위해 이용합니다.<br />
-            - <strong>서비스 제공:</strong> 접속 빈도 파악 및 서비스 이용에 대한 통계<br />
-            - <strong>서비스 개선:</strong> 이용자의 접속 환경에 최적화된 서비스 제공 및 신규 서비스 개발의 기초 자료
+            본 사이트는 별도의 회원가입 없이 모든 공공데이터 혜택 및 지도 정보를 자유롭게 열람할 수 있으며, <strong>이용자를 식별할 수 있는 민감한 개인정보를 일절 수집하거나 저장하지 않습니다.</strong>
           </p>
-        </section>
 
-        <section>
-          <h3 className="font-bold text-[#202124] dark:text-[#e8eaed] mt-6 mb-2">3. 개인정보의 보유 및 이용 기간</h3>
-          <p>
-            이용자의 개인정보는 원칙적으로 개인정보의 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 관련 법령에 의거 보존할 필요가 있는 경우 해당 기간 동안 보존합니다.
-          </p>
-        </section>
+          <section className="space-y-2">
+            <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+              1. 수집하는 로그 항목 및 방법
+            </h2>
+            <p>
+              - <strong>자동 수집 항목:</strong> 웹사이트 접속 시 통계 분석 및 보안을 위해 접속 IP, 쿠키(Cookie), 브라우저 종류, 방문 일시 등의 비식별 로그가 자동으로 수집될 수 있습니다.<br />
+              - <strong>수집 방법:</strong> 웹 브라우저의 기본 요청 헤더 및 분석 도구를 통한 자동 수집
+            </p>
+          </section>
 
-        <section>
-          <h3 className="font-bold text-[#202124] dark:text-[#e8eaed] mt-6 mb-2">4. 개인정보의 제3자 제공 및 위탁</h3>
-          <p>
-            사이트는 이용자의 사전 동의 없이는 원칙적으로 이용자의 개인정보를 외부에 제공하지 않습니다. 단, 법령의 규정에 의거하거나, 수사 목적으로 법령에 정해진 절차와 방법에 따라 수사기관의 요구가 있는 경우는 예외로 합니다.
-          </p>
-        </section>
+          <section className="space-y-2">
+            <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+              2. 개인정보의 이용 목적
+            </h2>
+            <p>
+              수집된 비식별 통계 정보는 사이트 접속 트래픽 분석, 사용자 환경 최적화, 신규 생활 공공서비스 콘텐츠 발굴을 위한 기초 통계 목적으로만 활용됩니다.
+            </p>
+          </section>
 
-        <section>
-          <h3 className="font-bold text-[#202124] dark:text-[#e8eaed] mt-6 mb-2">5. 쿠키(Cookie)의 운용 및 거부</h3>
-          <p>
-            사이트는 이용자에게 개별적인 맞춤서비스를 제공하기 위해 이용정보를 저장하고 수시로 불러오는 &apos;쿠키(cookie)&apos;를 사용합니다.<br />
-            - <strong>쿠키 설정 거부 방법:</strong> 이용자는 쿠키 설치에 대한 선택권을 가지고 있으며, 웹브라우저 옵션 설정을 통해 모든 쿠키를 허용하거나 거부할 수 있습니다.
-          </p>
-        </section>
+          <section className="space-y-2">
+            <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+              3. 제3자 제공 및 위탁
+            </h2>
+            <p>
+              사이트는 이용자의 개인정보를 외부에 판매하거나 제공하지 않습니다. 다만, 법령에 따른 공식 수사기관의 적법한 요청이 있는 경우에는 예외로 합니다.
+            </p>
+          </section>
 
-        <div className="mt-12 text-sm text-[#5f6368] dark:text-[#9aa0a6] border-t border-gray-100 dark:border-white/5 pt-6">
-          본 개인정보처리방침은 사이트 개설일부터 적용됩니다.
+          <section className="space-y-2">
+            <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+              4. 쿠키(Cookie) 운용 및 거부 방법
+            </h2>
+            <p>
+              이용자는 웹 브라우저 설정을 통해 쿠키 허용 여부를 언제든지 직접 제어할 수 있습니다. 쿠키 저장을 거부하더라도 사이트의 모든 공공서비스 및 글 열람에 어떠한 제약도 없습니다.
+            </p>
+          </section>
+
+          <div className="mt-8 text-xs text-gray-400 dark:text-gray-500 border-t border-gray-100 dark:border-zinc-800 pt-4">
+            본 개인정보처리방침은 사이트 개설일부터 적용됩니다.
+          </div>
         </div>
       </div>
     </div>

@@ -5,6 +5,8 @@ import { Suspense, useEffect, useState } from 'react';
 import PostCard from '@/components/ui/PostCard';
 import { PostData } from '@/lib/types';
 import { CATEGORIES } from '@/lib/constants';
+import AppIcon from '@/components/ui/AppIcon';
+import Link from 'next/link';
 
 function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   const searchParams = useSearchParams();
@@ -12,80 +14,99 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
-  // Hydration 불일치를 막기 위해, 마운트 되기 전(SSR/SSG 단계)에는 전체 글을 렌더링
   let posts = initialPosts;
   let categoryTitle = '유용한 소식 및 생활 정보';
-  let categoryDesc = '의정부시와 관련된 유용한 정보와 생활 소식을 정리하여 제공합니다.';
+  let categoryDesc = '의정부시와 관련된 실생활 지원금, 공공 복지, 의료 및 시정 소식을 정리하여 제공합니다.';
 
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   if (mounted && categoryId) {
-    const matchedCategory = CATEGORIES.find(c => c.id === categoryId);
+    const matchedCategory = CATEGORIES.find((c) => c.id === categoryId || c.label === categoryId);
     if (matchedCategory) {
       categoryTitle = matchedCategory.title;
       categoryDesc = matchedCategory.desc;
-      posts = posts.filter(post => {
+      posts = posts.filter((post) => {
         if (!post.category || !Array.isArray(post.category)) return false;
         const cats = post.category as string[];
-        return matchedCategory.keywords.some(keyword => cats.some(cat => cat.includes(keyword)));
+        return matchedCategory.keywords.some((keyword) => cats.some((cat) => cat.includes(keyword)));
       });
     } else {
-      // 키워드 직접 매칭 폴백
       categoryTitle = `${categoryId} 소식`;
       categoryDesc = `의정부시의 다양한 ${categoryId} 관련 정보를 모아보세요.`;
-      posts = posts.filter(post => {
-         if (!post.category || !Array.isArray(post.category)) return false;
-         const cats = post.category as string[];
-         return cats.some(cat => cat.includes(categoryId));
+      posts = posts.filter((post) => {
+        if (!post.category || !Array.isArray(post.category)) return false;
+        const cats = post.category as string[];
+        return cats.some((cat) => cat.includes(categoryId));
       });
     }
   }
 
-  // 카테고리로 1차 필터링된 포스트들에서 존재하는 모든 고유 태그 추출
-  const availableTags = Array.from(new Set(posts.flatMap(post => post.tags || []))).sort();
+  const availableTags = Array.from(new Set(posts.flatMap((post) => post.tags || []))).sort();
 
-  // 선택된 태그로 2차 필터링
   if (selectedTag) {
-    posts = posts.filter(post => post.tags?.includes(selectedTag));
+    posts = posts.filter((post) => post.tags?.includes(selectedTag));
   }
 
   return (
-    <div className="space-y-8 pb-16">
-      {/* 블로그 페이지 헤더 (Premium 스타일) */}
-      <div className="mt-4 relative overflow-hidden rounded-none bg-gradient-to-br from-blue-50/80 via-white to-blue-50/30 dark:from-[#1a1c20] dark:via-[#1a1c20] dark:to-blue-900/10 border border-blue-100/50 dark:border-gray-800 p-6 sm:p-8 shadow-2xl">
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-3">
+    <div className="space-y-6 sm:space-y-8 pb-16">
+      {/* 1. 상단 브레드크럼 */}
+      <nav className="flex text-xs text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
+        <ol className="inline-flex items-center space-x-1.5">
+          <li>
+            <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              홈
+            </Link>
+          </li>
+          <li>
+            <span className="mx-1">/</span>
+          </li>
+          <li className="text-gray-900 dark:text-white font-bold" aria-current="page">
+            생활 소식 및 혜택
+          </li>
+        </ol>
+      </nav>
+
+      {/* 2. 블로그 페이지 헤더 (Sharp Modern 스타일) */}
+      <div className="relative overflow-hidden rounded-none bg-white dark:bg-[#181a1d] border border-gray-200/80 dark:border-zinc-800 p-6 sm:p-8 shadow-md">
+        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-extrabold mb-3 border border-blue-100 dark:border-blue-800/40 rounded-none">
+          의정부 생활정보 허브
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-2">
           {categoryTitle}
         </h1>
-        <p className="text-[15px] text-gray-600 dark:text-gray-400 font-medium break-keep">
+        <p className="text-sm sm:text-[15px] text-gray-600 dark:text-gray-400 font-medium break-keep">
           {categoryDesc}
         </p>
+        <div className="mt-4 pt-3 border-t border-gray-100 dark:border-zinc-800 flex items-center justify-between text-xs font-bold text-gray-500 dark:text-gray-400">
+          <span>전체 포스팅</span>
+          <span className="text-blue-600 dark:text-blue-400 font-extrabold">{posts.length}건</span>
+        </div>
       </div>
-      
-      {/* 해시태그 필터 UI */}
+
+      {/* 3. 해시태그 필터 UI */}
       {availableTags.length > 0 && (
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mt-2">
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           <button
             onClick={() => setSelectedTag(null)}
-            className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-bold transition-all border-2 ${
-              selectedTag === null 
-                ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_rgba(255,255,255,1)]' 
-                : 'bg-white text-black border-black/20 hover:border-black dark:bg-[#1a1a1a] dark:text-white dark:border-white/20 dark:hover:border-white'
+            className={`shrink-0 px-3.5 py-1.5 rounded-none text-xs font-bold transition-all border cursor-pointer ${
+              selectedTag === null
+                ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400 dark:bg-[#181a1d] dark:text-gray-300 dark:border-zinc-800 dark:hover:border-zinc-700'
             }`}
           >
-            #전체
+            # 전체보기
           </button>
-          {availableTags.map(tag => (
+          {availableTags.map((tag) => (
             <button
               key={tag}
               onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-              className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-bold transition-all border-2 ${
+              className={`shrink-0 px-3.5 py-1.5 rounded-none text-xs font-bold transition-all border cursor-pointer ${
                 selectedTag === tag
-                  ? 'bg-[#3b82f6] text-white border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_rgba(255,255,255,1)]'
-                  : 'bg-white text-black border-black/20 hover:border-black dark:bg-[#1a1a1a] dark:text-white dark:border-white/20 dark:hover:border-white'
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                  : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400 dark:bg-[#181a1d] dark:text-gray-300 dark:border-zinc-800 dark:hover:border-zinc-700'
               }`}
             >
               #{tag}
@@ -94,15 +115,18 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
         </div>
       )}
 
+      {/* 4. 포스트 리스트 */}
       <div className="flex flex-col gap-4 sm:gap-5">
         {posts.map((post) => (
           <PostCard key={post.slug} post={post} variant="list" />
         ))}
         {mounted && posts.length === 0 && (
-          <div className="bg-white dark:bg-[#1a1c20] rounded-none border border-gray-100 dark:border-gray-800 text-center py-16 px-4 sm:p-16 col-span-full shadow-2xl">
-            <svg className="w-12 h-12 text-gray-400 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M3 15h6"></path><path d="M3 19h6"></path><path d="M10 15h8"></path><path d="M10 19h8"></path></svg>
-            <p className="text-lg font-bold tracking-wide text-gray-500 dark:text-gray-400">
-              해당 카테고리에 등록된 포스팅이 없습니다.
+          <div className="bg-white dark:bg-[#181a1d] rounded-none border border-gray-200/80 dark:border-zinc-800 text-center py-16 px-4 sm:p-16 shadow-md">
+            <div className="w-12 h-12 mx-auto mb-3 flex items-center justify-center text-gray-400 bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700">
+              <AppIcon name="search" size={24} />
+            </div>
+            <p className="text-base font-bold text-gray-600 dark:text-gray-400">
+              해당 조건에 일치하는 포스팅이 없습니다.
             </p>
           </div>
         )}
@@ -113,11 +137,13 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
 
 export default function BlogClient({ initialPosts }: { initialPosts: PostData[] }) {
   return (
-    <Suspense fallback={
-      <div className="space-y-8 pb-16 text-center text-gray-500 font-jua">
-        불러오는 중...
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="space-y-8 pb-16 text-center text-sm font-bold text-gray-400">
+          생활 소식을 불러오는 중입니다...
+        </div>
+      }
+    >
       <BlogClientContent initialPosts={initialPosts} />
     </Suspense>
   );
