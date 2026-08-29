@@ -18,7 +18,7 @@ interface BlogPostClientProps {
 
 export default function BlogPostClient({ content, title, sourceLink }: BlogPostClientProps) {
   const [activeId, setActiveId] = useState('');
-  const { opening, keyPoints, checklistItems, faqItems, toc, sections } = parseBlogPost(content);
+  const { opening, keyPoints, keyPointsTitle, checklistItems, checklistTitle, faqItems, toc, sections } = parseBlogPost(content);
 
   // [무기 4] 자가진단 체크리스트 인터랙티브 상태
   const [checkedMap, setCheckedMap] = useState<Record<number, boolean>>({});
@@ -65,7 +65,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
         <div className="my-6 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
           <div className="flex items-center gap-2 pb-3 mb-3.5 border-b-2 border-black dark:border-white font-black text-base text-black dark:text-white">
             <AppIcon name="file-text" size={18} strokeWidth={2.5} />
-            <span>시정 핵심 요약 (3줄 브리핑)</span>
+            <span>{keyPointsTitle || '시정 핵심 요약 (3줄 브리핑)'}</span>
           </div>
           <ul className="space-y-2.5 text-sm sm:text-[15px] font-medium text-zinc-900 dark:text-zinc-100">
             {keyPoints.map((pt, i) => (
@@ -99,16 +99,32 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
         </div>
       ))}
 
-      {/* ── [무기 4] 신청 자격 1분 자가진단 (인터랙티브 체크리스트) ── */}
+      {/* ── [무기 4] 신청 자격 / 관람 1분 체크리스트 (인터랙티브 체크리스트) ── */}
       {checklistItems && checklistItems.length > 0 && (
         <div className="my-8 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between pb-3 mb-4 border-b-2 border-black dark:border-white">
             <h3 className="font-black text-base sm:text-lg text-black dark:text-white flex items-center gap-2 m-0">
-              <AppIcon name="shield-check" size={18} strokeWidth={2.5} />
-              <span>신청 자격 1분 자가진단</span>
+              <AppIcon
+                name={
+                  checklistTitle?.includes('관람') || checklistTitle?.includes('축제')
+                    ? 'sparkles'
+                    : checklistTitle?.includes('응급') || checklistTitle?.includes('대처')
+                    ? 'shield-alert'
+                    : checklistTitle?.includes('검진')
+                    ? 'stethoscope'
+                    : 'shield-check'
+                }
+                size={18}
+                strokeWidth={2.5}
+              />
+              <span>{checklistTitle || '신청 자격 1분 자가진단'}</span>
             </h3>
             <span className="text-xs font-black text-white bg-black dark:text-black dark:bg-white px-2 py-0.5 border border-black dark:border-white">
-              자가점검표
+              {checklistTitle?.includes('관람')
+                ? '관람안내'
+                : checklistTitle?.includes('체크리스트')
+                ? '체크리스트'
+                : '자가점검표'}
             </span>
           </div>
           <div className="space-y-2.5">
