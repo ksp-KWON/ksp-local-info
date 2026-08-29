@@ -32,13 +32,11 @@ const UnifiedHeadingRenderer = ({ level, children, id }: { level: 1|2|3|4|5|6, c
   );
 };
 
-// 인용구(Blockquote) 톤 컬러 결정 (blog-tokens 엔진과 100% 통합)
 const getToneColor = (node: React.ReactNode): BlogTone => {
   const fullText = extractTextFromNode(node).trim();
   return getTokenTone(fullText);
 };
 
-// 표준 마크다운 컴포넌트 맵 (수묵화 墨 & 굵은 라인 SVG 모노톤)
 export const sharedComponents: Components & Record<string, any> = {
   h1: ({ children, id }) => (
     <PremiumHeading level={1} id={id} style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}>
@@ -51,31 +49,40 @@ export const sharedComponents: Components & Record<string, any> = {
   h5: (props) => <UnifiedHeadingRenderer level={5} {...props} />,
   h6: (props) => <UnifiedHeadingRenderer level={6} {...props} />,
 
-  p: ({ children }) => <p className="mb-4 leading-[1.85] text-zinc-900 dark:text-zinc-100 break-keep font-medium">{children}</p>,
+  p: ({ children }) => (
+    <p className="mb-4 leading-[1.85] text-zinc-800 dark:text-zinc-200 break-keep font-normal text-[15px] sm:text-[15.5px]">
+      {children}
+    </p>
+  ),
 
-  // 굵은 먹선 리스트
-  ul: ({ children }) => <ul className="list-disc ml-5 sm:ml-6 my-5 space-y-2.5 text-[15.5px] sm:text-[16px] text-zinc-900 dark:text-zinc-100 marker:text-black dark:marker:text-white">{children}</ul>,
-  ol: ({ children }) => <ol className="list-decimal ml-5 sm:ml-6 my-5 space-y-2.5 text-[15.5px] sm:text-[16px] text-zinc-900 dark:text-zinc-100 marker:font-black marker:text-black dark:marker:text-white">{children}</ol>,
-  li: ({ children }) => <li className="pl-1 leading-[1.8] break-keep font-medium">{children}</li>,
+  ul: ({ children }) => (
+    <ul className="list-disc ml-5 sm:ml-6 my-5 space-y-2 text-[14.5px] sm:text-[15px] text-zinc-800 dark:text-zinc-200 marker:text-zinc-500">
+      {children}
+    </ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="list-decimal ml-5 sm:ml-6 my-5 space-y-2 text-[14.5px] sm:text-[15px] text-zinc-800 dark:text-zinc-200 marker:font-bold marker:text-zinc-600 dark:marker:text-zinc-400">
+      {children}
+    </ol>
+  ),
+  li: ({ children }) => <li className="pl-1 leading-[1.8] break-keep font-normal">{children}</li>,
 
-  // 수묵화 농담(濃淡) 키워드 강조 (알록달록한 원색 대신 흑백 명도 하이라이트)
   strong: ({ children }) => {
     const text = extractTextFromNode(children).trim();
     const tone = getKeywordTone(text);
     const token = BLOG_TONE_TOKENS[tone] || BLOG_TONE_TOKENS.blue;
     return (
-      <strong className={`${token.tailwind.highlightClass} font-black px-1.5 py-0.5 mx-0.5 rounded-none`}>
+      <strong className={`${token.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>
         {children}
       </strong>
     );
   },
 
-  // 인용구 / 피드백 박스 (수묵화 2px 굵은 먹선 & 평면도 분할)
   blockquote: ({ children }: any) => {
-    const tone: BlogTone = getToneColor(children);
+    const childArray = React.Children.toArray(children);
+    const tone = getToneColor(children);
     const token = BLOG_TONE_TOKENS[tone] || BLOG_TONE_TOKENS.blue;
 
-    const childArray = React.Children.toArray(children);
     const firstChild = childArray[0];
 
     const isFirstChildHeading =
@@ -89,48 +96,46 @@ export const sharedComponents: Components & Record<string, any> = {
       const bodyElements = childArray.slice(1);
 
       return (
-        <div className={`my-8 bg-white dark:bg-[#181a1d] transition-all duration-200 relative overflow-hidden group border-2 ${token.tailwind.border} rounded-none`}>
-          {/* 상단 수묵 명도 헤더 바 */}
-          <div className={`px-5 sm:px-6 py-3 bg-gradient-to-r ${token.tailwind.headerGradient} relative z-10`}>
-            <h3 className={`text-[15.5px] font-black flex items-center gap-2.5 tracking-tight !m-0 !p-0 border-0 bg-transparent ${token.tailwind.titleColor}`}>
-              <AppIcon name="shield-alert" size={16} strokeWidth={2.5} className={token.tailwind.titleColor} />
+        <div className="my-8 bg-white dark:bg-[#181a1d] transition-all duration-200 relative overflow-hidden group border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-800 dark:hover:border-zinc-300 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_14px_44px_rgba(24,24,27,0.12)] rounded-none">
+          <div className="absolute top-0 left-0 w-1 h-full bg-zinc-900 dark:bg-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
+          <div className="px-5 sm:px-6 py-3 bg-gradient-to-r from-zinc-100/90 via-zinc-50/40 to-transparent dark:from-zinc-800/40 border-b border-gray-200/80 dark:border-zinc-800 relative z-10">
+            <h3 className="text-[15px] font-bold flex items-center gap-2.5 tracking-tight !m-0 !p-0 border-0 bg-transparent text-zinc-900 dark:text-zinc-100">
+              <AppIcon name="shield-alert" size={16} className="text-zinc-700 dark:text-zinc-300" />
               <span>{headingChildren}</span>
             </h3>
           </div>
-          {/* 본문 영역 */}
-          <div className="p-5 sm:p-6 text-[14.5px] sm:text-[15px] font-medium text-zinc-800 dark:text-zinc-200 leading-[1.75] tracking-tight [&>p]:mb-4 sm:[&>p]:mb-5 [&>p:last-child]:!mb-0 relative z-10 break-keep">
+          <div className="p-5 sm:p-6 text-[14.5px] sm:text-[15px] font-normal text-zinc-700 dark:text-zinc-300 leading-[1.8] tracking-tight [&>p]:mb-4 sm:[&>p]:mb-5 [&>p:last-child]:!mb-0 relative z-10 break-keep">
             {bodyElements}
           </div>
         </div>
       );
     }
 
-    // 인라인 용어 사전 / 단순 인용구
     return (
-      <div className={`my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 transition-all duration-200 relative overflow-hidden group border-2 ${token.tailwind.border} rounded-none`}>
-        <div className="relative z-10 text-[14.5px] sm:text-[15px] font-medium text-zinc-800 dark:text-zinc-200 leading-[1.75] tracking-tight [&>p]:mb-4 sm:[&>p]:mb-5 [&>p:last-child]:!mb-0 break-keep">
+      <div className="my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 transition-all duration-200 relative overflow-hidden group border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-800 dark:hover:border-zinc-300 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] rounded-none">
+        <div className="absolute top-0 left-0 w-1 h-full bg-zinc-900 dark:bg-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
+        <div className="relative z-10 text-[14.5px] sm:text-[15px] font-normal text-zinc-700 dark:text-zinc-300 leading-[1.8] tracking-tight [&>p]:mb-4 sm:[&>p]:mb-5 [&>p:last-child]:!mb-0 break-keep">
           {children}
         </div>
       </div>
     );
   },
 
-  // 굵은 2px 먹선 수묵 테이블 (Table - not-prose 격리로 타이포그래피 간섭 완전 차단)
   table: ({ children }: any) => (
-    <div className="not-prose my-8 overflow-x-auto border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
+    <div className="not-prose my-8 overflow-x-auto border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
       <table className="w-full text-[13.5px] sm:text-[14px] border-collapse min-w-[500px] sm:min-w-full m-0">{children}</table>
     </div>
   ),
   thead: ({ children }: any) => (
-    <thead className="bg-zinc-100 dark:bg-zinc-850 border-b-2 border-black dark:border-white">{children}</thead>
+    <thead className="bg-zinc-50 dark:bg-zinc-850 border-b border-gray-200/90 dark:border-zinc-800">{children}</thead>
   ),
   tbody: ({ children }: any) => (
-    <tbody className="divide-y divide-zinc-200 dark:border-zinc-800 dark:divide-zinc-800">{children}</tbody>
+    <tbody className="divide-y divide-gray-100 dark:divide-zinc-800/80">{children}</tbody>
   ),
   th: ({ children, style, ...props }: any) => (
     <th
       style={style}
-      className="p-3 sm:p-3.5 font-black text-black dark:text-white tracking-tight whitespace-nowrap text-center"
+      className="p-3 sm:p-3.5 font-bold text-zinc-900 dark:text-zinc-100 tracking-tight whitespace-nowrap text-center"
       {...props}
     >
       {children}
@@ -139,36 +144,36 @@ export const sharedComponents: Components & Record<string, any> = {
   td: ({ children, style, ...props }: any) => (
     <td
       style={style}
-      className="p-3 sm:p-3.5 align-middle text-zinc-900 dark:text-zinc-100 leading-relaxed text-left font-medium"
+      className="p-3 sm:p-3.5 align-middle text-zinc-700 dark:text-zinc-300 leading-relaxed text-left font-normal"
       {...props}
     >
       {children}
     </td>
   ),
   tr: ({ children }: any) => (
-    <tr className="hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">{children}</tr>
+    <tr className="hover:bg-zinc-50/70 dark:hover:bg-zinc-800/30 transition-colors">{children}</tr>
   ),
 
   a: ({ href = '', children }) => (
     <a
       href={href}
-      className="text-black dark:text-white font-black underline underline-offset-4 decoration-2 decoration-black dark:decoration-white hover:opacity-75 transition-opacity mx-0.5 inline group"
+      className="text-zinc-900 dark:text-zinc-100 font-bold underline underline-offset-4 decoration-zinc-400 dark:decoration-zinc-600 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mx-0.5 inline group"
       target={href.startsWith('http') ? '_blank' : undefined}
       rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
     >
       <span className="leading-snug">{children}</span>
-      <AppIcon name="external-link" size={13} strokeWidth={2.5} className="inline-block align-baseline ml-1" />
+      <AppIcon name="external-link" size={13} strokeWidth={2} className="inline-block align-baseline ml-1" />
     </a>
   ),
 
   hr: () => (
-    <div className="my-14 flex justify-center">
-      <div className="w-full h-0.5 bg-black dark:bg-white" />
+    <div className="my-12 flex justify-center">
+      <div className="w-full h-px bg-gray-200 dark:bg-zinc-800" />
     </div>
   ),
 
   pre: ({ children }) => (
-    <pre className="whitespace-pre-wrap break-words bg-zinc-50 dark:bg-zinc-900 p-4 sm:p-5 rounded-none border-2 border-black dark:border-white my-6 text-black dark:text-white font-sans text-[14.5px] sm:text-[15.5px] leading-relaxed overflow-x-hidden">
+    <pre className="whitespace-pre-wrap break-words bg-zinc-50 dark:bg-zinc-900 p-4 sm:p-5 rounded-none border border-gray-200/90 dark:border-zinc-800 my-6 text-zinc-800 dark:text-zinc-200 font-sans text-[14px] leading-relaxed overflow-x-hidden">
       {children}
     </pre>
   ),
@@ -177,7 +182,7 @@ export const sharedComponents: Components & Record<string, any> = {
     const isInline = !className;
     if (isInline) {
       return (
-        <code className="px-1.5 py-0.5 mx-0.5 rounded-none bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white text-[0.9em] font-sans font-black border border-zinc-400 dark:border-zinc-600">
+        <code className="px-1.5 py-0.5 mx-0.5 rounded-none bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-[0.9em] font-sans font-bold border border-zinc-200 dark:border-zinc-700">
           {children}
         </code>
       );
@@ -185,20 +190,19 @@ export const sharedComponents: Components & Record<string, any> = {
     return <code className="font-sans break-keep">{children}</code>;
   },
 
-  // 커스텀 태그 지원 (수묵 명도 흑백 뱃지로 일괄 통일)
   calculator: () => null,
-  red: ({ children }: { children?: React.ReactNode }) => <strong className="text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-black">{children}</strong>,
-  orange: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-150 dark:bg-zinc-850 px-1.5 py-0.5 mx-0.5 rounded-none font-black">{children}</strong>,
-  green: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-150 dark:bg-zinc-850 px-1.5 py-0.5 mx-0.5 rounded-none font-black">{children}</strong>,
-  blue: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-900 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
-  purple: ({ children }: { children?: React.ReactNode }) => <strong className="text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-black">{children}</strong>,
+  red: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
+  orange: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
+  green: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
+  blue: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
+  purple: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
 
   relatedbox: ({ children }: any) => (
-    <PremiumCard borderColor="default" hoverEffect={true} className="my-10 group !border-2 !border-black dark:!border-white">
+    <PremiumCard borderColor="charcoal" hoverEffect={true} className="my-10 group">
       <div className="relative z-10">
-        <div className="border-b-2 border-black dark:border-white pb-3 mb-4">
-          <PremiumHeading level={3} showLeftBorder className="!mb-0 !text-black dark:!text-white font-black">
-            함께 읽으면 도움이 되는 글
+        <div className="border-b border-gray-200/80 dark:border-zinc-800 pb-3 mb-4">
+          <PremiumHeading level={3} showLeftBorder className="!mb-0 !text-zinc-900 dark:!text-zinc-100 font-bold">
+            함께 읽으면 유익한 글
           </PremiumHeading>
         </div>
         <ul className="space-y-3">
@@ -213,8 +217,8 @@ export const sharedComponents: Components & Record<string, any> = {
     const text = props.text || '';
     return (
       <li className="flex items-start gap-2.5 group">
-        <span className="text-black dark:text-white mt-0.5 font-black shrink-0">
-          <AppIcon name="link" size={14} strokeWidth={2.5} />
+        <span className="text-zinc-900 dark:text-zinc-100 mt-0.5 font-bold shrink-0">
+          <AppIcon name="link" size={14} strokeWidth={2} />
         </span>
         <a
           href={href}

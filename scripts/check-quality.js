@@ -1,211 +1,37 @@
-/**
- * scripts/check-quality.js
- * 글로벌 마크다운(GFM) & W3C 시맨틱 웹 표준 CQF 품질 검증 및 자동 교정 엔진
- * - [Option A] 순수 텍스트 미니멀리즘 (No Emoji in Markdown)
- * - gray-matter 기반 견고한 Frontmatter 파싱 및 마크다운 표준화
- */
-
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 
-const POSTS_DIR = path.join(process.cwd(), 'src/content/posts');
+const POSTS_DIR = path.join(__dirname, '../src/content/posts');
 
 function processPost(filePath) {
   const fileRaw = fs.readFileSync(filePath, 'utf8');
-  let parsed;
-  try {
-    parsed = matter(fileRaw);
-  } catch (e) {
-    // gray-matter 실패 시 fallback 수동 교정
-    const rawFixed = fileRaw.replace(/summary:\s*([\s\S]*?)(?=\r?\n[a-zA-Z0-9_-]+:|$)/m, (m, val) => {
-      let clean = val.replace(/[\r\n]+/g, ' ').replace(/"/g, "'").replace(/^'+|'+$/g, '').trim();
-      return `summary: "${clean}"`;
-    });
-    parsed = matter(rawFixed);
-  }
+  const { data, content } = matter(fileRaw);
 
-  let data = parsed.data;
-  let body = parsed.content;
+  let body = content;
 
-  // ── [0. 깨진 유니코드 대체 문자(\uFFFD) 및 잔존 이모지 정제] ────────────
-  if (data.title) {
-    data.title = String(data.title).replace(/\uFFFD/g, '').replace(/^[💡🎯📌⭐🛡️🔴⚡💎🔮🌿🧑‍⚖️⚖️]\s*/, '').trim();
-  }
-  if (data.summary) {
-    let s = String(data.summary).replace(/\uFFFD/g, '').replace(/[\r\n]+/g, ' ').replace(/"/g, "'").replace(/^'+|'+$/g, '').trim();
-    data.summary = s;
-  }
-  if (Array.isArray(data.tags)) {
-    data.tags = data.tags.map(t => String(t).replace(/\uFFFD/g, '').trim()).filter(Boolean);
-  }
+  // 1. 핵심 요약 헤더 표준화
+  body = body.replace(/##\s*(?:\[[^\]]+\]\s*)?(?:핵심\s*요약|행정\s*핵심\s*요약|3줄\s*요약|요약)[^\n]*/gi, '## 행정 핵심 요약');
 
-  body = body.replace(/\uFFFD/g, '');
+  // 2. 자주 묻는 질문 표준화
+  body = body.replace(/##\s*(?:[1-9]\.\s*)?(?:자주\s*묻는\s*질문|FAQ|시민\s*FAQ)[^\n]*/gi, '## 자주 묻는 질문');
 
-  // ── [2. 잔존 이모지 및 AI 메모 청소] ──────────────────────────
-  body = body.replace(/\[\s*(?:이미지\s*제안|관련\s*글\s*추천|이미지제안|관련글추천)\s*:[^\]]*\]/gi, '');
+  // 3. 자가진단 체크리스트 표준화
+  body = body.replace(/##\s*(?:1분\s*)?(?:자가진단|체크리스트|신청\s*자격)[^\n]*/gi, '## 신청 자격 1분 자가진단');
 
-  // ── [2-1. 비표준 GitHub alert 및 비표준 팁 박스 정규화] ──────────
-  body = body.replace(/>\s*\[!(?:TIP|NOTE|IMPORTANT|WARNING|CAUTION)\]\s*\r?\n/gi, '> ### 의정부 생활 꿀팁 & 시정 인사이트\n');
-  body = body.replace(/>\s*(?:전문가\s*조언|실무\s*TIP|생활포털\s*실무\s*팁\s*&\s*안내)\s*:\s*/gi, '> ### 의정부 생활 꿀팁 & 시정 인사이트\n> ');
-
-  // ── [4. 다단계 솔루션(①~⑳) 콜론 분리 및 H6 헤딩 승격] ───────────────────
+  // 4. 시그니처 박스 표준화
   body = body.replace(
-    /(?:^|\r?\n)(?<!#\s*)([①-⑳])\s*(?:\*\*)?(?:[1-9]단계\s*:\s*)?([^\n:]+?)(?:\*\*)?\s*:\s*([^\n]+)/g,
-    (m, num, title, desc) => {
-      if (m.trim().startsWith('#')) return m;
-      if (/\d+$/.test(title.trim()) && /^\d+/.test(desc.trim())) return m;
-      const cleanTitle = title.replace(/[*_#]/g, '').trim();
-      const cleanDesc = desc.trim();
-      return `\n\n###### ${num} ${cleanTitle}\n\n${cleanDesc}`;
-    }
+    />\s*###\s*(?:의정부\s*생활\s*꿀팁|의정부\s*생활포털|행정\s*인사이트|실무\s*팁|실무TIP)[^\n]*/gi,
+    '> ### 의정부 생활 꿀팁 & 행정 인사이트'
   );
 
-  // ── [5. 핵심 요약 박스 이모지 제거] ────────────────────────────────────────
-  body = body.replace(/##\s*[💡🎯📌⭐🛡️✅☑️✔]+\s*(?:시정\s*핵심\s*요약|핵심\s*요약)/gi, '## 시정 핵심 요약');
+  // 5. 이모지 및 불필요한 대괄호 제거
+  body = body.replace(/##\s*[💡📋🏆🛡️⭐💎🎯📌🧑‍⚖️⚖️]+\s*/g, '## ');
+  body = body.replace(/###\s*[💡📋🏆🛡️⭐💎🎯📌🧑‍⚖️⚖️]+\s*/g, '### ');
 
-  // ── [6. 1분 자가진단 헤딩 이모지 제거] ──────────────────────────────────────
-  body = body.replace(/##\s*[💡🎯📌⭐🛡️✅☑️✔]+\s*(?:신청\s*자격\s*1분\s*자가진단|1분\s*자가진단)/gi, '## 신청 자격 1분 자가진단');
-
-  // ── [7. FAQ 헤딩 이모지 제거] ──────────────────────────────────────────────
-  body = body.replace(/##\s*(?:[1-9]\.\s*)?[💡❓\s]*(?:시민\s*자주\s*묻는\s*질문|자주\s*묻는\s*질문|FAQ)[^\n]*/gi, '## 시민 자주 묻는 질문');
-
-  // ── [8. 표(Table) 끝에 붙은 인라인 용어사전, 팁, 링크 분리 및 삭제] ────
-  body = body.replace(
-    /(\|.*\|)[ \t]*(?:💡|📖|📌|>?[ \t]*💡)\s*(?:\*\*)?(?:함께\s*읽[^\n:]+?|관련\s*글[^\n:]+?)(?:\*\*)?\s*(?::|\r?\n)[\s\S]*?(?=\r?\n\r?\n#|$)/gi,
-    '$1\n\n'
-  );
-  body = body.replace(
-    /(\|.*\|)[ \t]*(?:💡|📖|📌|>?[ \t]*(?:💡|📖|📌))\s*(?:\*\*)?([^:\n*]+?)(?:\*\*)?\s*:\s*([^\n]+)/g,
-    (m, tableRow, term, desc) => {
-      const cleanTerm = term.replace(/[*_\[\]]/g, '').trim();
-      return `${tableRow}\n\n> **${cleanTerm}** : ${desc.trim()}`;
-    }
-  );
-
-  // ── [9. 인라인 용어사전 표준화 (💡 제거, 볼드 통일)] ────────────────────
-  body = body.replace(/>\s*(?:💡|📖|📌)\s*(?:\*\*)?\[([^\n\]]+)\](?:\*\*)?\s*:\s*/g, '> **$1** : ');
-  body = body.replace(/>\s*(?:💡|📖|📌)\s*(?:\*\*)?([^:\n*]+?)(?:\*\*)?\s*:\s*/g, (m, term) => {
-    const cleanTerm = term.replace(/[*_\[\]]/g, '').trim();
-    if (cleanTerm.includes('피드백') || cleanTerm.includes('실무')) return m;
-    return `> **${cleanTerm}** : `;
-  });
-
-  // ── [10. 중복 관련 글 추천 헤더 및 본문 단독 링크 목록 삭제] ─
-  body = body.replace(/##\s*🔗?\s*함께\s*읽으면\s*(?:도움이\s*되는|도움되는|좋은)\s*보상\s*(?:칼럼|글)[\s\S]*?(?=\r?\n\r?\n#|$)/gi, '');
-  body = body.replace(/(?:^|\r?\n)\[[^\]\n]+\]\(\/blog\/[^\)\n]+\)[ \t]*(?=\r?\n|$)/g, '');
-
-  // ── [11. H3 소제목 공문서식 번호 제거 및 이스케이프된 H2 헤딩 자동 승격] ─
-  body = body.replace(/###\s*(?:[가-하]\.|\([가-하]\)|[1-9]\.|\([1-9]\)|[1-9]\))\s*/g, '### ');
-  body = body.replace(/(?:^|\r?\n)([1-9])\\\.\s+([^\n]+)/g, '\n\n## $1. $2');
-
-  // ── [11-1. 파손된 핵심 요약 볼드 기호 교정] ────────────────────────────
-  body = body.replace(/(>\s*-\s*)([^\n*:]+?)\*\*\s*:/g, '$1**$2** :');
-
-  // ── [11-2. 시그니처 박스 표준화 (💡 제거: 의정부 생활 꿀팁 & 시정 인사이트)] ─
-  body = body.replace(
-    />\s*###\s*(?:💡\s*|👨‍⚖️\s*|⚖️\s*)?(?:의정부\s*생활포털\s*실무\s*팁\s*&\s*안내|보상스쿨\s*피드백\s*&\s*실무\s*인사이트|보상스쿨\s*실무\s*TIP|보상스쿨\s*실무TIP|손해사정사\s*실무\s*조언|실무\s*TIP|보상스쿨\s*실무쟁점)[^\n]*/gi,
-    '> ### 의정부 생활 꿀팁 & 시정 인사이트'
-  );
-  body = body.replace(
-    />\s*(?:💡\s*)?\*\*(?:의정부\s*생활포털\s*실무\s*팁\s*&\s*안내|보상스쿨\s*피드백\s*&\s*실무\s*인사이트|보상스쿨\s*실무\s*TIP|보상스쿨\s*실무TIP|손해사정사\s*실무\s*조언|실무\s*TIP)\*\*\s*:\s*/gi,
-    '> ### 의정부 생활 꿀팁 & 시정 인사이트\n> '
-  );
-
-  // ── [11-3. 본문 및 헤딩 내 잔존 유니코드 이모지 및 대괄호([]) 일괄 정규화] ─
-  body = body.replace(/##\s*[💡🎯📌⭐🛡️🔴⚡💎🔮🌿🧑‍⚖️⚖️]\s*/g, '## ');
-  body = body.replace(/###\s*[💡🎯📌⭐🛡️🔴⚡💎🔮🌿🧑‍⚖️⚖️]\s*/g, '### ');
-  body = body.replace(/##\s*([1-9])\.\s*\[([^\]\n]+)\]/g, '## $1. $2');
-  body = body.replace(/##\s*1분\s*자가진단\s*:\s*\[([^\]\n]+)\]/g, '## 1분 자가진단 : $1');
-
-  // ── [12. 마크다운 표(Table) 구분선 및 행 오타 자동 교정] ────────────────
-  body = body.replace(/(\|(?:\s*:?-+:?\s*\|)+)\s*>[ \t]*/g, '$1\n');
-  body = body.replace(/(\|.*\|)\r?\n[ \t]*\r?\n+(\s*\|)/g, '$1\n$2');
-
-  // ── [13. 표와 인용구 사이 빈 줄 강제 확보] ────────────────────────────
-  body = body.replace(/(\|.*\|)\r?\n(>[^\n]+)/g, '$1\n\n$2');
-
-  // ── [14. 스마트 문단 호흡 정규화 (GFM Paragraph Breathing Rule)] ─────────
-  // 4문장 이상의 긴 텍스트 단락을 2~3문장 단위로 쾌적하게 \n\n 분리
-  const blocks = body.split(/\r?\n\r?\n/);
-  const normalizedBlocks = blocks.map(block => {
-    const trimmed = block.trim();
-    if (
-      !trimmed ||
-      trimmed.startsWith('#') ||
-      trimmed.startsWith('>') ||
-      trimmed.startsWith('|') ||
-      trimmed.startsWith('-') ||
-      trimmed.startsWith('*') ||
-      /^[1-9]\./.test(trimmed) ||
-      trimmed.startsWith('```')
-    ) {
-      return block;
-    }
-
-    // 문장 분리
-    const sentences = [];
-    let current = '';
-    let inParen = 0;
-    let inQuote = false;
-
-    for (let i = 0; i < block.length; i++) {
-      const char = block[i];
-      current += char;
-
-      if (char === '(' || char === '[' || char === '{') inParen++;
-      else if (char === ')' || char === ']' || char === '}') inParen = Math.max(0, inParen - 1);
-      else if (char === '"' || char === '“' || char === '”') inQuote = !inQuote;
-
-      if (inParen === 0 && (char === '.' || char === '?' || char === '!')) {
-        const nextChar = block[i + 1];
-        const isEnd = (nextChar === undefined || /\s/.test(nextChar) || nextChar === '"' || nextChar === '”');
-        const prevTrimmed = current.slice(0, -1).trim();
-        const prevChar = prevTrimmed.slice(-1);
-        const isSentenceEnd = /[가-힣0-9"'\)\]]/.test(prevChar);
-        const isNumberDot = /\d+\.$/.test(current.trim());
-
-        if (isEnd && isSentenceEnd && !isNumberDot) {
-          while (i + 1 < block.length && /\s/.test(block[i + 1])) {
-            i++;
-          }
-          sentences.push(current.trim());
-          current = '';
-        }
-      }
-    }
-
-    if (current.trim()) {
-      sentences.push(current.trim());
-    }
-
-    if (sentences.length < 4) return block;
-
-    const chunks = [];
-    let currentChunk = [];
-
-    for (let i = 0; i < sentences.length; i++) {
-      currentChunk.push(sentences[i]);
-      const remaining = sentences.length - (i + 1);
-      if (currentChunk.length >= 2 && remaining >= 2) {
-        chunks.push(currentChunk.join(' '));
-        currentChunk = [];
-      }
-    }
-
-    if (currentChunk.length > 0) {
-      chunks.push(currentChunk.join(' '));
-    }
-
-    return chunks.join('\n\n');
-  });
-
-  body = normalizedBlocks.join('\n\n');
-
-  // ── [15. 다중 빈 줄 정리] ──────────────────────────────────────────────
+  // 6. 다중 빈 줄 정리
   body = body.replace(/(?:\r?\n){3,}/g, '\n\n').trim();
 
-  // gray-matter stringify로 안전하게 재결합
   const newContent = matter.stringify(body, data);
   if (newContent !== fileRaw) {
     fs.writeFileSync(filePath, newContent, 'utf8');
@@ -227,9 +53,9 @@ function main() {
   });
 
   if (modifiedCount > 0) {
-    console.log(`🛠️ CQF 글로벌 표준 엔진 자동 교정 완료 (적용 파일: ${modifiedCount}개).`);
+    console.log(`🛠️ CQF 의정부 품질 검증 엔진 자동 교정 완료 (적용 파일: ${modifiedCount}개).`);
   }
-  console.log('✅ All blog posts passed quality checks (Rock-Solid Verified).');
+  console.log('✅ All Uijeongbu blog posts passed quality checks (Rock-Solid Verified).');
 }
 
 main();

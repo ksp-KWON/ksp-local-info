@@ -1,16 +1,13 @@
 import React from 'react';
-import Link from 'next/link';
-import PremiumCard from '@/components/ui/PremiumCard';
-import PremiumHeading from '@/components/ui/PremiumHeading';
-import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
-
-export type SectionThemeColor = 'red' | 'rose' | 'blue' | 'cyan' | 'green' | 'teal' | 'orange' | 'purple' | 'indigo' | 'yellow' | 'default';
+import PremiumCard from './PremiumCard';
+import PremiumHeading from './PremiumHeading';
+import { type AppIconName } from './AppIcon';
 
 interface SectionLayoutProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   title: React.ReactNode;
   description?: React.ReactNode;
   icon?: React.ReactNode;
-  themeColor?: SectionThemeColor;
+  themeColor?: string;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   viewAllLink?: {
     href: string;
@@ -25,7 +22,6 @@ export default function SectionLayout({
   title,
   description,
   icon,
-  themeColor = 'default',
   headingLevel = 2,
   viewAllLink,
   children,
@@ -35,41 +31,39 @@ export default function SectionLayout({
 }: SectionLayoutProps) {
   return (
     <section className={`relative group/section ${className}`} {...props}>
-      {/* 타이틀 박스 (수묵화 묵향 그라데이션 & 굵은 라인 SVG 워터마크) */}
       <PremiumCard
-        borderColor="default"
+        borderColor="charcoal"
         hoverEffect={true}
         watermarkIcon={watermarkIcon}
-        className="mb-5 !p-5 sm:!p-6 group/headerbox !bg-gradient-to-r !from-black/[0.05] !via-black/[0.015] !to-transparent dark:!from-white/[0.08] dark:!via-white/[0.02] dark:!to-transparent !border-2 !border-black/70 dark:!border-white/70"
+        className="mb-6 !p-5 sm:!p-6 !bg-gradient-to-r !from-zinc-100/90 !via-zinc-50/40 !to-transparent dark:!from-zinc-900/40 dark:!via-zinc-900/20 dark:!to-transparent"
       >
-        <div className={`flex items-center justify-between gap-3 ${description ? 'mb-2' : ''} relative z-10 group/header`}>
-          <div className="flex items-center gap-2.5 min-w-0">
-            {icon && <span className="text-black dark:text-white shrink-0 stroke-[2.5]">{icon}</span>}
-            <h2 className="text-lg sm:text-xl font-black tracking-tight text-black dark:text-white truncate">
-              {title}
-            </h2>
-          </div>
+        <div className={`flex items-center justify-between gap-3 ${description ? 'mb-2.5' : ''} relative z-10`}>
+          <PremiumHeading
+            level={headingLevel}
+            gradient="charcoal"
+            icon={icon}
+            className="!mb-0 !text-xl sm:!text-2xl"
+            showLeftBorder={false}
+          >
+            {title}
+          </PremiumHeading>
 
-          {/* 슬림 샤프 굵은 선 전체보기 링크 */}
           {viewAllLink && (
-            <Link
+            <a
               href={viewAllLink.href}
-              className="flex items-center gap-1 text-xs font-black text-black dark:text-white hover:opacity-70 transition-opacity group/link shrink-0 border-b-2 border-black dark:border-white pb-0.5"
+              className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors shrink-0"
             >
-              <span>{viewAllLink.text || '전체보기'}</span>
-              <AppIcon name="chevron-right" size={13} strokeWidth={3} className="group-hover/link:translate-x-0.5 transition-transform" />
-            </Link>
+              {viewAllLink.text || '전체보기'}
+            </a>
           )}
         </div>
-
         {description && (
-          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed font-medium relative z-10 mt-1">
+          <p className="text-xs sm:text-sm text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed relative z-10 font-normal">
             {description}
           </p>
         )}
       </PremiumCard>
 
-      {/* 컨텐츠 그리드 */}
       <div className="relative z-10">{children}</div>
     </section>
   );
