@@ -36,7 +36,7 @@
 
 ### 제3조 — 전사 엔지니어링 원칙 및 수묵 모노톤 무결성
 - **3.1 6대 개발 슬로건**: **[표준 · 범용 · 콤팩트 · 통합 · 공유 · 공통]**을 모든 설계의 최상위 원칙으로 삼습니다.
-- **3.2 샤프 모던 엣지 & 수묵 2px 윤곽선**: 모든 카드와 컨테이너는 샤프 모던 엣지(`rounded-none`), 순백색/흑묵색(`bg-white dark:bg-[#181a1d]`), 선명한 굵은 먹선(`border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white`), 수묵 그림자(`shadow-[4px_4px_0px_rgba(0,0,0,0.85)]`)를 일괄 준수합니다.
+- **3.2 샤프 모던 엣지 & 건축 평면도(Top-Down Blueprint) 2px 윤곽선**: 모든 카드와 컨테이너는 샤프 모던 엣지(`rounded-none`), 순백색/흑묵색(`bg-white dark:bg-[#181a1d]`), 직교 먹선 윤곽(`border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white`), 은은한 평면 앰비언트 깊이(`shadow-[0_1px_3px_rgba(0,0,0,0.04)]`)를 일괄 준수하며, 방향성 네오 브루탈리즘 하드 섀도우(`4px 4px` 등) 및 점프 모션을 전면 배제합니다.
 - **3.3 데드코드 영구 박멸**: 어드민 코드, 더미 파일, 레거시 컴포넌트는 상시 박멸하고 100% 순수 SSG 정적 포털 구조를 유지합니다.
 
 ### 제4조 — CQF 품질 검증 자동화 파이프라인
