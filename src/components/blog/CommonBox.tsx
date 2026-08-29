@@ -12,48 +12,20 @@ interface CommonBoxProps {
 }
 
 export default function CommonBox({ tone, title, children, icon, headerRight, topElement }: CommonBoxProps) {
-  const boxHoverBorders: Record<BoxTone, string> = {
-    blue: 'border-blue-200 dark:border-blue-900/50 hover:border-[var(--google-blue)] hover:shadow-[0_12px_40px_rgba(26,115,232,0.18)]',
-    red: 'border-red-200 dark:border-red-900/50 hover:border-[var(--google-red)] hover:shadow-[0_12px_40px_rgba(234,67,53,0.18)]',
-    green: 'border-green-200 dark:border-green-900/50 hover:border-[var(--google-green)] hover:shadow-[0_12px_40px_rgba(52,168,83,0.18)]',
-    yellow: 'border-yellow-300 dark:border-yellow-900/50 hover:border-yellow-500 hover:shadow-[0_12px_40px_rgba(234,179,8,0.18)]',
-    purple: 'border-purple-200 dark:border-purple-900/50 hover:border-purple-500 hover:shadow-[0_12px_40px_rgba(168,85,247,0.18)]',
-  };
-
-  const headerGradients: Record<BoxTone, string> = {
-    blue: 'bg-gradient-to-r from-blue-50/90 to-transparent dark:from-blue-900/25 dark:to-transparent border-b border-blue-100 dark:border-blue-900/40',
-    red: 'bg-gradient-to-r from-red-50/90 to-transparent dark:from-red-900/25 dark:to-transparent border-b border-red-100 dark:border-red-900/40',
-    green: 'bg-gradient-to-r from-green-50/90 to-transparent dark:from-green-900/25 dark:to-transparent border-b border-green-100 dark:border-green-900/40',
-    yellow: 'bg-gradient-to-r from-yellow-50/90 to-transparent dark:from-yellow-900/25 dark:to-transparent border-b border-yellow-200 dark:border-yellow-900/40',
-    purple: 'bg-gradient-to-r from-purple-50/90 to-transparent dark:from-purple-900/25 dark:to-transparent border-b border-purple-100 dark:border-purple-900/40',
-  };
-
-  const titleStyles: Record<BoxTone, string> = {
-    blue: 'text-[var(--google-blue)] dark:text-blue-400',
-    red: 'text-[var(--google-red)] dark:text-red-400',
-    green: 'text-[var(--google-green)] dark:text-green-400',
-    yellow: 'text-yellow-600 dark:text-yellow-400',
-    purple: 'text-purple-600 dark:text-purple-400',
-  };
-
   return (
-    <div className={`my-10 bg-white dark:bg-[#202124] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-all duration-300 relative overflow-hidden group border ${boxHoverBorders[tone]}`}>
+    <div
+      className="my-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.85)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.85)] transition-all duration-200 overflow-hidden rounded-none"
+    >
       {topElement}
-
-      <div className="relative z-10">
-        {/* Full-width clean header strip with SVG line symbol */}
-        <div className={`-mt-5 sm:-mt-6 -mx-5 sm:-mx-6 px-5 sm:px-6 py-3.5 mb-4 flex items-center justify-between gap-3 flex-wrap ${headerGradients[tone]}`}>
-          <h3 className={`text-[15.5px] font-extrabold flex items-center gap-2.5 tracking-tight ${titleStyles[tone]}`}>
-            {icon && <span className="shrink-0 flex items-center">{icon}</span>}
-            <span>{title}</span>
-          </h3>
-          {headerRight && <div>{headerRight}</div>}
+      <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-black/[0.04] to-transparent dark:from-white/[0.06] dark:to-transparent border-b-2 border-zinc-200 dark:border-zinc-800">
+        <div className="flex items-center gap-2 font-black text-sm sm:text-base text-black dark:text-white">
+          {icon && <span className="shrink-0 stroke-[2.5]">{icon}</span>}
+          <span>{title}</span>
         </div>
-
-        {/* Content Area */}
-        <div className="text-[14.5px] sm:text-[15px] font-medium text-gray-700 dark:text-[#e8eaed] leading-[1.75] tracking-tight break-keep">
-          {children}
-        </div>
+        {headerRight && <div>{headerRight}</div>}
+      </div>
+      <div className="p-4 sm:p-5 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 font-medium">
+        {children}
       </div>
     </div>
   );

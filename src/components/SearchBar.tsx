@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import { Search, X, TrendingUp } from 'lucide-react';
+import AppIcon from '@/components/ui/AppIcon';
 
 export default function SearchBar() {
   const [query, setQuery] = useState('');
@@ -19,71 +20,72 @@ export default function SearchBar() {
     }
   };
 
+  const popularKeywords = ['청년 이사비', '사랑카드 가맹점', '달빛어린이병원', '심야약국', '국가건강검진', '출산축하금'];
+
   return (
-    <div className="flex items-center">
-      <button 
-        onClick={() => setIsOpen(true)} 
-        className="p-2 text-black dark:text-white hover:-translate-y-0.5 transition-transform duration-200 flex items-center justify-center group rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-        aria-label="검색 열기"
-        title="검색"
+    <>
+      {/* 1. 헤더 검색 트리거 버튼 */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-zinc-600 dark:text-zinc-400 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all cursor-pointer"
+        aria-label="통합 검색 열기"
       >
-        <Search className="w-5 h-5 sm:w-[20px] sm:h-[20px] text-pink-500 dark:text-pink-400" strokeWidth={3} />
+        <Search className="w-3.5 h-3.5 stroke-[2.5]" />
+        <span className="hidden sm:inline">통합 검색...</span>
       </button>
 
-      {/* Full Screen Search Modal */}
-      {isOpen && typeof document !== 'undefined' && createPortal(
-        <div className="fixed inset-0 z-[200] bg-white dark:bg-[#121417] animate-in fade-in duration-200">
-          <div className="max-w-3xl mx-auto w-full h-full flex flex-col mt-0 sm:mt-[10vh]">
-            <div className="flex items-center p-3 sm:p-6 border-b-2 border-black dark:border-white sm:border-2 bg-white dark:bg-[#121417]">
-              <button 
-                onClick={() => setIsOpen(false)} 
-                className="p-2 text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors mr-2 border-2 border-transparent hover:border-black dark:hover:border-white"
-              >
-                <X className="w-6 h-6" strokeWidth={2.5} />
-              </button>
-              <form onSubmit={handleSearch} className="flex-1 relative flex items-center">
+      {/* 2. 모달 팝업 */}
+      {isOpen &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div className="fixed inset-0 z-[200] flex items-start justify-center pt-20 px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="w-full max-w-xl bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white shadow-[8px_8px_0px_rgba(0,0,0,0.9)] dark:shadow-[8px_8px_0px_rgba(255,255,255,0.9)] overflow-hidden">
+              <form onSubmit={handleSearch} className="flex items-center p-4 border-b-2 border-black dark:border-white">
+                <Search className="w-5 h-5 text-black dark:text-white stroke-[2.5] mr-3 shrink-0" />
                 <input
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="무엇을 찾으시나요?"
-                  className="w-full bg-white dark:bg-[#121417] border-2 border-black dark:border-white px-5 py-3 sm:py-4 outline-none text-base sm:text-lg text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-bold focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all"
+                  placeholder="혜택, 병원, 지원금 키워드를 입력하세요"
                   autoFocus
+                  className="w-full bg-transparent text-black dark:text-white placeholder-zinc-400 font-bold text-base focus:outline-none"
                 />
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5 text-black dark:text-white stroke-[2.5]" />
+                </button>
               </form>
-              <button 
-                onClick={handleSearch} 
-                className="ml-3 px-6 py-3 sm:py-4 bg-black dark:bg-white text-white dark:text-black font-black border-2 border-black dark:border-white hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.5)] transition-all hidden sm:block"
-              >
-                검색
-              </button>
-            </div>
-            
-            <div className="p-6 sm:px-12 flex-1">
-              <p className="text-sm font-black text-black dark:text-white mb-4 flex items-center gap-2">
-                <TrendingUp className="w-5 h-5" strokeWidth={2.5} />
-                인기 검색 키워드
-              </p>
-              <div className="flex flex-wrap gap-2.5 sm:gap-3">
-                {['청년지원금', '임산부', '일자리', '문화행사', '응급실', '도서관', '지역화폐'].map(keyword => (
-                  <button 
-                    key={keyword}
-                    onClick={() => {
-                      setQuery(keyword);
-                      router.push(`/search?q=${encodeURIComponent(keyword)}`);
-                      setIsOpen(false);
-                    }}
-                    className="px-4 py-2 sm:px-5 sm:py-2.5 bg-white dark:bg-[#121417] text-black dark:text-white border-2 border-black dark:border-white font-bold hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all duration-200"
-                  >
-                    #{keyword}
-                  </button>
-                ))}
+
+              {/* 인기 검색어 안내 */}
+              <div className="p-4 bg-zinc-50 dark:bg-zinc-900">
+                <div className="flex items-center gap-1.5 text-xs font-black text-zinc-500 mb-2.5">
+                  <TrendingUp className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>실시간 추천 검색어</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {popularKeywords.map((kw) => (
+                    <button
+                      key={kw}
+                      type="button"
+                      onClick={() => {
+                        router.push(`/search?q=${encodeURIComponent(kw)}`);
+                        setIsOpen(false);
+                        setQuery('');
+                      }}
+                      className="px-2.5 py-1 text-xs font-bold bg-white dark:bg-[#181a1d] text-zinc-900 dark:text-zinc-100 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all cursor-pointer"
+                    >
+                      #{kw}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </div>,
-        document.body
-      )}
-    </div>
+          </div>,
+          document.body
+        )}
+    </>
   );
 }

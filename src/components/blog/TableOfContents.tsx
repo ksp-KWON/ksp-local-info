@@ -20,10 +20,10 @@ export default function TableOfContents({
   if (!toc.length) return null;
 
   const headerRight = (
-    <span className="text-[11px] font-semibold text-gray-400 mt-1">항목 클릭 시 이동</span>
+    <span className="text-[11px] font-bold text-zinc-500">클릭 시 이동</span>
   );
 
-  const icon = <AppIcon name="list" size={16} className="text-[var(--google-blue)] dark:text-[#8ab4f8]" />;
+  const icon = <AppIcon name="list" size={16} strokeWidth={2.5} className="text-black dark:text-white" />;
 
   return (
     <CommonBox
@@ -32,34 +32,24 @@ export default function TableOfContents({
       icon={icon}
       headerRight={headerRight}
     >
-      <ul className="space-y-3">
-        {toc.map((item, i) => {
+      <ul className="space-y-2 text-xs sm:text-sm">
+        {toc.map((item, idx) => {
           const isActive = activeId === item.id;
           return (
-            <li key={item.id}>
+            <li key={item.id} className="transition-colors">
               <a
                 href={`#${item.id}`}
                 onClick={(e) => onItemClick(e, item.id)}
-                className="group/item flex items-start gap-2.5 w-full"
-              >
-                <span className={`w-5 h-5 rounded-none text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-[1.5px] transition-colors ${
+                className={`flex items-start gap-2 py-1 px-2 rounded-none transition-all ${
                   isActive
-                    ? 'bg-[var(--google-blue)] text-white shadow-sm'
-                    : 'bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 group-hover/item:bg-[var(--google-blue)]/10 group-hover/item:text-[var(--google-blue)] dark:group-hover/item:text-[#8ab4f8]'
-                }`}>
-                  {i + 1}
+                    ? 'bg-black text-white dark:bg-white dark:text-black font-black shadow-[2px_2px_0px_rgba(0,0,0,0.9)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.9)]'
+                    : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white font-medium'
+                }`}
+              >
+                <span className={`text-xs ${isActive ? 'font-black' : 'text-zinc-400 font-bold'}`}>
+                  0{idx + 1}.
                 </span>
-                
-                <span className={`flex-1 text-[14.5px] leading-[1.7] break-keep transition-colors group-hover/item:underline underline-offset-4 decoration-2 ${
-                  isActive 
-                    ? 'font-extrabold text-[var(--google-blue)] dark:text-[#8ab4f8] decoration-[var(--google-blue)]/30' 
-                    : 'font-medium text-gray-700 dark:text-[#e8eaed] group-hover/item:text-[var(--google-blue)] dark:group-hover/item:text-[#8ab4f8] decoration-[var(--google-blue)]/30'
-                }`}>
-                  {item.text}
-                </span>
-                <span className={`shrink-0 mt-1.5 flex items-center gap-1 text-[11px] font-bold transition-all duration-300 ${isActive ? 'text-[var(--google-blue)] dark:text-[#8ab4f8]' : 'text-transparent group-hover/item:text-[var(--google-blue)] dark:group-hover/item:text-[#8ab4f8]'}`}>
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-                </span>
+                <span className="break-keep flex-1 leading-snug">{item.text}</span>
               </a>
             </li>
           );

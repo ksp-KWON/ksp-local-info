@@ -26,51 +26,41 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
       }
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
-    } catch (err) {
-      console.error('Failed to copy URL', err);
+    } catch {
+      alert('링크 복사에 실패했습니다.');
     }
   };
 
-  const handleNativeShare = async () => {
+  const handleKakaoShare = () => {
     const shareUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title,
-          url: shareUrl,
-        });
-      } catch (err) {
-        // User cancelled share
-      }
-    } else {
-      handleCopy();
-    }
+    const kakaoUrl = `https://sharer.kakao.com/talk/friends/picker/link?url=${encodeURIComponent(
+      shareUrl
+    )}&text=${encodeURIComponent(title)}`;
+    window.open(kakaoUrl, '_blank', 'width=500,height=600');
   };
 
   return (
-    <div className="my-8 p-4 sm:p-5 bg-slate-50 dark:bg-zinc-900 border border-gray-200/80 dark:border-zinc-800 rounded-none flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div className="flex items-center gap-2.5 text-gray-800 dark:text-gray-200 text-sm font-bold">
-        <AppIcon name="bullhorn" size={18} className="text-blue-600 dark:text-blue-400 shrink-0" />
-        <span>이 유익한 의정부 생활 정보를 주변 이웃과 공유해보세요!</span>
+    <div className="my-8 p-4 sm:p-5 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="flex items-center gap-2 text-xs font-black text-black dark:text-white">
+        <AppIcon name="link" size={16} strokeWidth={2.5} />
+        <span>유용한 혜택 정보 지인에게 공유하기</span>
       </div>
 
-      <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+      <div className="flex items-center gap-2 w-full sm:w-auto">
         <button
-          onClick={handleNativeShare}
-          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-white dark:bg-zinc-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 border border-gray-300 dark:border-zinc-700 text-xs font-bold transition-all shadow-sm rounded-none cursor-pointer"
-          title="공유하기"
+          onClick={handleKakaoShare}
+          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2 bg-yellow-300 hover:bg-yellow-400 text-black text-xs font-black border-2 border-black transition-all cursor-pointer"
         >
-          <AppIcon name="external-link" size={14} />
-          <span>공유하기</span>
+          <AppIcon name="chat" size={14} strokeWidth={2.5} />
+          <span>카카오톡 공유</span>
         </button>
 
         <button
           onClick={handleCopy}
-          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm rounded-none cursor-pointer"
-          title="URL 링크 복사"
+          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2 bg-black text-white dark:bg-white dark:text-black text-xs font-black border-2 border-black dark:border-white transition-all cursor-pointer relative"
         >
-          <AppIcon name="copy" size={14} />
-          <span>{copied ? '복사 완료! ✓' : '링크 복사'}</span>
+          <AppIcon name={copied ? 'check' : 'copy'} size={14} strokeWidth={2.5} />
+          <span>{copied ? '복사 완료!' : 'URL 링크 복사'}</span>
         </button>
       </div>
     </div>
