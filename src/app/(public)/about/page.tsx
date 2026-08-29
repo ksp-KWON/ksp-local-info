@@ -44,7 +44,7 @@ export default function AboutPage() {
       </nav>
 
       {/* 2. 메인 헤더 배너 */}
-      <div className="relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] p-6 sm:p-10 group transition-all duration-300">
+      <div className="relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] p-6 sm:p-10 group transition-all duration-300">
         <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.03] dark:text-zinc-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
           <AppIcon name="shield-check" size={180} strokeWidth={1.5} />
         </div>
@@ -70,7 +70,7 @@ export default function AboutPage() {
 
       {/* 3. 3대 핵심 가치 카드 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-        <div className="p-6 bg-white dark:bg-[#181a1d] border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-500 dark:hover:border-emerald-500 shadow-[0_0_20px_rgba(4,120,87,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(4,120,87,0.35),0_0_20px_rgba(4,120,87,0.18)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
+        <div className="p-6 bg-white dark:bg-[#181a1d] border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-500 dark:hover:border-emerald-500 shadow-[0_0_20px_rgba(4,120,87,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(4,120,87,0.45),0_0_20px_rgba(4,120,87,0.25)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
           <div className="absolute right-2 bottom-1 opacity-[0.05] text-emerald-900 dark:text-emerald-100 pointer-events-none group-hover:scale-110 transition-transform">
             <AppIcon name="shield" size={60} strokeWidth={1.5} />
           </div>
@@ -83,7 +83,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="p-6 bg-white dark:bg-[#181a1d] border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-500 dark:hover:border-sky-500 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(3,105,161,0.35),0_0_20px_rgba(3,105,161,0.18)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
+        <div className="p-6 bg-white dark:bg-[#181a1d] border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-500 dark:hover:border-sky-500 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(3,105,161,0.45),0_0_20px_rgba(3,105,161,0.25)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
           <div className="absolute right-2 bottom-1 opacity-[0.05] text-sky-900 dark:text-sky-100 pointer-events-none group-hover:scale-110 transition-transform">
             <AppIcon name="zap" size={60} strokeWidth={1.5} />
           </div>
@@ -96,7 +96,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="p-6 bg-white dark:bg-[#181a1d] border border-rose-200/80 dark:border-rose-900/40 hover:border-rose-500 dark:hover:border-rose-500 shadow-[0_0_20px_rgba(225,29,72,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(225,29,72,0.35),0_0_20px_rgba(225,29,72,0.18)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
+        <div className="p-6 bg-white dark:bg-[#181a1d] border border-rose-200/80 dark:border-rose-900/40 hover:border-rose-500 dark:hover:border-rose-500 shadow-[0_0_20px_rgba(225,29,72,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(225,29,72,0.45),0_0_20px_rgba(225,29,72,0.25)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
           <div className="absolute right-2 bottom-1 opacity-[0.05] text-rose-900 dark:text-rose-100 pointer-events-none group-hover:scale-110 transition-transform">
             <AppIcon name="heart" size={60} strokeWidth={1.5} />
           </div>

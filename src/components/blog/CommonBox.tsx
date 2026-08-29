@@ -15,7 +15,7 @@ export default function CommonBox({ tone = 'blue', title, children, icon, header
 
   return (
     <div
-      className={`my-6 bg-white dark:bg-[#181a1d] ${token.tailwind.border} ${token.tailwind.hoverBorder} shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] transition-all duration-300 overflow-hidden rounded-none relative group`}
+      className={`my-6 bg-white dark:bg-[#181a1d] ${token.tailwind.border} ${token.tailwind.hoverBorder} shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] transition-all duration-300 overflow-hidden rounded-none relative group`}
     >
       {topElement}
       <div className={`flex items-center justify-between px-4 py-3 bg-gradient-to-r ${token.tailwind.headerGradient}`}>

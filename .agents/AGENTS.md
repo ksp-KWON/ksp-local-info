@@ -42,7 +42,7 @@
   - 호버 시 좌측 검은 선 스트로크는 전면 배제하며, 순수한 클린 엣지를 유지합니다.
   - 특정 방향으로 쏠림(하향 편향) 없이 **건축 평면도(Top-Down 90° 직하향 조명) 기준 상하좌우 360° 사방 균등 수묵 번짐(`X=0, Y=0`)**을 전사 적용합니다.
   - 기본 상태(Resting)는 **사방 균등 수묵 번짐(`shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)]`)**을 적용합니다.
-  - 마우스 호버(Hover) 시 **2중 다중 분산 사방 균등 울트라 딥 섀도우(`hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)]`)**와 1px 물리적 리프트(`hover:-translate-y-1`), 또렷한 엣지 보더(`hover:border-zinc-900 dark:hover:border-zinc-100`)를 일체화합니다.
+  - 마우스 호버(Hover) 시 **2중 다중 분산 사방 균등 농묵 40% 울트라 딥 섀도우(`hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)]`)**와 1px 물리적 리프트(`hover:-translate-y-1`), 또렷한 엣지 보더(`hover:border-zinc-900 dark:hover:border-zinc-100`)를 일체화합니다.
 - **3.4 네오 브루탈리즘 잔재 영구 금지**:
   - 하드 섀도우(`shadow-[4px_4px_0px_#000]`), 2px 투박한 검정 테두리, 네모 스피너(`rounded-none animate-spin`), 비표준 클래스는 전면 금지하며, 원형 스피너(`rounded-full animate-spin`)와 샤프 모던 엣지(`rounded-none`)를 엄격히 준수합니다.
 - **3.5 절제된 타이포그래피**: `font-black` 남발을 금지하며, 시맨틱 가독성 위계에 맞추어 `font-bold` 및 `font-extrabold`를 표준으로 적용합니다.

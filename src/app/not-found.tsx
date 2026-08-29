@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16 sm:py-24 text-center">
       {/* 404 헤더 박스 */}
-      <div className="p-8 sm:p-12 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] relative overflow-hidden group rounded-none transition-all duration-300">
+      <div className="p-8 sm:p-12 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] relative overflow-hidden group rounded-none transition-all duration-300">
         <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.03] dark:text-zinc-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
           <AppIcon name="warning" size={180} strokeWidth={1.5} />
         </div>

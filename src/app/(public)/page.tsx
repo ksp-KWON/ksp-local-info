@@ -35,7 +35,7 @@ export default async function Home() {
   return (
     <div className="space-y-8 sm:space-y-10 pb-16">
       {/* 1. 메인 인트로 헤더 (모던 수묵화 앰비언트 글로우) */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] p-6 sm:p-8 lg:p-10 group transition-all duration-300">
+      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] p-6 sm:p-8 lg:p-10 group transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/70 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
 
         {/* 우측 배경 수묵 워터마크 (SVG) */}
@@ -80,7 +80,7 @@ export default async function Home() {
         {/* 달빛어린이병원 & 심야약국 카드 */}
         <Link
           href="/services/emergency"
-          className="group relative overflow-hidden border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_0_20px_rgba(4,120,87,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(4,120,87,0.35),0_0_20px_rgba(4,120,87,0.18)] hover:-translate-y-1 bg-white dark:bg-[#181a1d]"
+          className="group relative overflow-hidden border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_0_20px_rgba(4,120,87,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(4,120,87,0.45),0_0_20px_rgba(4,120,87,0.25)] hover:-translate-y-1 bg-white dark:bg-[#181a1d]"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-emerald-50/10 to-transparent dark:from-emerald-950/30 dark:via-emerald-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
           <MiniMapPreview type="emergency" />
@@ -113,7 +113,7 @@ export default async function Home() {
         {/* 의정부 사랑카드 가맹점 지도 카드 */}
         <Link
           href="/services/local-currency"
-          className="group relative overflow-hidden border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-500 dark:hover:border-sky-500 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(3,105,161,0.35),0_0_20px_rgba(3,105,161,0.18)] hover:-translate-y-1 bg-white dark:bg-[#181a1d]"
+          className="group relative overflow-hidden border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-500 dark:hover:border-sky-500 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(3,105,161,0.45),0_0_20px_rgba(3,105,161,0.25)] hover:-translate-y-1 bg-white dark:bg-[#181a1d]"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-sky-50/50 via-sky-50/10 to-transparent dark:from-sky-950/30 dark:via-sky-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
           <MiniMapPreview type="currency" />
@@ -146,7 +146,7 @@ export default async function Home() {
         {/* 국가 건강검진 지정병원 찾기 카드 */}
         <Link
           href="/services/health-check"
-          className="group relative overflow-hidden border border-amber-200/80 dark:border-amber-900/40 hover:border-amber-500 dark:hover:border-amber-500 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_0_20px_rgba(180,83,9,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(180,83,9,0.35),0_0_20px_rgba(180,83,9,0.18)] hover:-translate-y-1 bg-white dark:bg-[#181a1d]"
+          className="group relative overflow-hidden border border-amber-200/80 dark:border-amber-900/40 hover:border-amber-500 dark:hover:border-amber-500 rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-300 shadow-[0_0_20px_rgba(180,83,9,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(180,83,9,0.45),0_0_20px_rgba(180,83,9,0.25)] hover:-translate-y-1 bg-white dark:bg-[#181a1d]"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 via-amber-50/10 to-transparent dark:from-amber-950/30 dark:via-amber-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
           

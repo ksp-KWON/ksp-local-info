@@ -67,7 +67,7 @@ export default function HealthCheckPage() {
   return (
     <div className="pb-16 space-y-6">
       {/* 1. 인트로 헤더 */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-amber-200/90 dark:border-amber-900/40 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(180,83,9,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(180,83,9,0.35),0_0_20px_rgba(180,83,9,0.18)] p-6 sm:p-8 group transition-all duration-300">
+      <div className="mt-4 relative overflow-hidden rounded-none border border-amber-200/90 dark:border-amber-900/40 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(180,83,9,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(180,83,9,0.45),0_0_20px_rgba(180,83,9,0.25)] p-6 sm:p-8 group transition-all duration-300">
         <div className="absolute -right-6 -bottom-6 text-amber-900/[0.03] dark:text-amber-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
           <AppIcon name="stethoscope" size={160} strokeWidth={1.5} />
         </div>
@@ -144,7 +144,7 @@ export default function HealthCheckPage() {
 
           {/* 선택된 병원 팝업 */}
           {selectedHospital && (
-            <div className="absolute bottom-4 left-4 right-4 z-30 bg-white dark:bg-[#181a1d] p-4 sm:p-5 border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] max-w-lg mx-auto rounded-none">
+            <div className="absolute bottom-4 left-4 right-4 z-30 bg-white dark:bg-[#181a1d] p-4 sm:p-5 border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,0.35),0_0_20px_rgba(0,0,0,0.20)] dark:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] max-w-lg mx-auto rounded-none">
               <div className="flex justify-between items-start mb-2">
                 <div>
                   <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 dark:text-emerald-300 dark:bg-emerald-950/60 px-2 py-0.5 border border-emerald-200 dark:border-emerald-800 mr-2">

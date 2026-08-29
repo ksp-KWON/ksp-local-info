@@ -24,7 +24,7 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
 
   return (
     <div className="absolute z-30 bottom-4 left-4 right-4 max-w-md mx-auto">
-      <div className="bg-white dark:bg-[#181a1d] rounded-none overflow-hidden flex flex-col shadow-[0_0_50px_rgba(0,0,0,0.28),0_0_20px_rgba(0,0,0,0.15)] dark:shadow-[0_0_55px_rgba(0,0,0,0.95),0_0_25px_rgba(0,0,0,0.85)] border border-gray-200/90 dark:border-zinc-800">
+      <div className="bg-white dark:bg-[#181a1d] rounded-none overflow-hidden flex flex-col shadow-[0_0_50px_rgba(0,0,0,0.35),0_0_20px_rgba(0,0,0,0.20)] dark:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] border border-gray-200/90 dark:border-zinc-800">
         <div className="bg-zinc-50 dark:bg-zinc-900 px-5 py-3.5 flex justify-between items-center border-b border-gray-200/80 dark:border-zinc-800">
           <div className="flex items-center gap-2 truncate pr-2">
             <AppIcon name={activeTab === 'er' ? 'hospital' : 'stethoscope'} size={18} strokeWidth={2} />
