@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import PremiumCard from './PremiumCard';
 import PremiumHeading from './PremiumHeading';
 import { type AppIconName } from './AppIcon';
@@ -49,12 +50,12 @@ export default function SectionLayout({
           </PremiumHeading>
 
           {viewAllLink && (
-            <a
+            <Link
               href={viewAllLink.href}
               className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors shrink-0"
             >
               {viewAllLink.text || '전체보기'}
-            </a>
+            </Link>
           )}
         </div>
         {description && (

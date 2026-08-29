@@ -2,18 +2,8 @@
 
 const fs = require('fs');
 const path = require('path');
-
-const envPath = path.join(process.cwd(), '.env.local');
-if (fs.existsSync(envPath)) {
-  fs.readFileSync(envPath, 'utf8').split('\n').forEach(line => {
-    const m = line.match(/^\s*([\w.-]+)\s*=\s*(.*?)?\s*$/);
-    if (m && !process.env[m[1]]) {
-      process.env[m[1]] = (m[2] ?? '').replace(/(^['"]|['"]$)/g, '').trim();
-    }
-  });
-}
-
-const { callGemini, sleep } = require('./gemini-helper');
+const { sleep } = require('./pipeline-utils');
+const { callGemini } = require('./gemini-helper');
 const { generateSourceId, getExistingSourceIds, saveMarkdownPost, makeSlug } = require('./post-utils');
 const { 
   PLAN_SCHEMA, 
