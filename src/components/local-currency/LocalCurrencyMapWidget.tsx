@@ -67,7 +67,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
   }, []);
 
   return (
-    <div className={`flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden mt-2 rounded-none shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] border-2 border-black dark:border-white ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+    <div className={`flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden mt-2 rounded-none shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] border-2 border-black dark:border-white ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
       {/* 1. 헤더 바 */}
       <header className="bg-white dark:bg-[#181a1d] z-20 p-4 pb-3 flex flex-col gap-3 relative border-b-2 border-black dark:border-white shrink-0">
         <div className="flex items-center justify-between">
@@ -95,7 +95,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
               onClick={() => setMapCenter(nb)}
               className={`whitespace-nowrap px-3 py-1 text-xs font-black transition-all border-2 rounded-none cursor-pointer ${
                 mapCenter.name === nb.name
-                  ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.9)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.9)]'
+                  ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white'
                   : 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
               }`}
             >
@@ -135,7 +135,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
 
         {/* 3. 선택된 가맹점 상세 정보 카드 (수묵 흑백 팝업) */}
         {selectedMerchant && (
-          <div className="absolute bottom-4 left-4 right-4 z-30 bg-white dark:bg-[#181a1d] p-4 border-2 border-black dark:border-white shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] max-w-lg mx-auto">
+          <div className="absolute bottom-4 left-4 right-4 z-30 bg-white dark:bg-[#181a1d] p-4 border-2 border-black dark:border-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] max-w-lg mx-auto">
             <div className="flex justify-between items-start mb-2">
               <div>
                 <span className="text-[10px] font-black text-white bg-black dark:text-black dark:bg-white px-2 py-0.5 border border-black dark:border-white mr-2">

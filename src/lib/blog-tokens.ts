@@ -51,7 +51,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border-2 border-black dark:border-white',
-      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      hoverBorder: 'hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50',
       headerGradient: 'from-black/10 to-transparent dark:from-white/15 dark:to-transparent border-b-2 border-black dark:border-white',
       titleColor: 'text-black dark:text-white',
       highlightClass: 'text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 font-bold',
@@ -76,7 +76,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border-2 border-zinc-800 dark:border-zinc-200',
-      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      hoverBorder: 'hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50',
       headerGradient: 'from-zinc-900/8 to-transparent dark:from-zinc-100/10 dark:to-transparent border-b-2 border-zinc-800 dark:border-zinc-200',
       titleColor: 'text-zinc-900 dark:text-zinc-100',
       highlightClass: 'text-zinc-900 dark:text-zinc-100 bg-zinc-150 dark:bg-zinc-800 font-bold',
@@ -101,7 +101,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border-2 border-zinc-600 dark:border-zinc-400',
-      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      hoverBorder: 'hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50',
       headerGradient: 'from-zinc-600/8 to-transparent dark:from-zinc-300/10 dark:to-transparent border-b-2 border-zinc-600 dark:border-zinc-400',
       titleColor: 'text-zinc-800 dark:text-zinc-200',
       highlightClass: 'text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-850 font-bold',
@@ -126,7 +126,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border-2 border-black dark:border-white',
-      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      hoverBorder: 'hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50',
       headerGradient: 'from-black/15 to-transparent dark:from-white/20 dark:to-transparent border-b-2 border-black dark:border-white',
       titleColor: 'text-black dark:text-white',
       highlightClass: 'text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 font-black',
@@ -151,7 +151,7 @@ export const BLOG_TONE_TOKENS: Record<BlogTone, ToneColorToken> = {
     },
     tailwind: {
       border: 'border-2 border-zinc-300 dark:border-zinc-700',
-      hoverBorder: 'hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]',
+      hoverBorder: 'hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50',
       headerGradient: 'from-zinc-200/40 to-transparent dark:from-zinc-800/30 dark:to-transparent border-b-2 border-zinc-300 dark:border-zinc-700',
       titleColor: 'text-zinc-800 dark:text-zinc-200',
       highlightClass: 'text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-900 font-medium',

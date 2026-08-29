@@ -14,7 +14,7 @@ interface CommonBoxProps {
 export default function CommonBox({ tone, title, children, icon, headerRight, topElement }: CommonBoxProps) {
   return (
     <div
-      className="my-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.85)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.85)] transition-all duration-200 overflow-hidden rounded-none"
+      className="my-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-200 overflow-hidden rounded-none"
     >
       {topElement}
       <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-black/[0.04] to-transparent dark:from-white/[0.06] dark:to-transparent border-b-2 border-zinc-200 dark:border-zinc-800">

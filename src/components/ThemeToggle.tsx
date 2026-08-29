@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Sun, Moon, Monitor } from "lucide-react";
+import AppIcon from "@/components/ui/AppIcon";
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -31,7 +31,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={cycleTheme}
-      className="p-2 sm:p-2 text-black dark:text-white hover:-translate-y-0.5 transition-transform duration-200 flex items-center justify-center group cursor-pointer rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+      className="p-2 sm:p-2 text-black dark:text-white transition-colors duration-200 flex items-center justify-center group cursor-pointer border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-none"
       title={`테마 변경 (현재: ${
         theme === "light" ? "라이트 모드" : theme === "dark" ? "다크 모드" : "시스템 기본값"
       })`}
@@ -39,18 +39,18 @@ export default function ThemeToggle() {
     >
       {/* 라이트 모드 (해 아이콘) */}
       {theme === "light" && (
-        <Sun className="w-5 h-5 sm:w-[20px] sm:h-[20px] text-amber-500 dark:text-amber-400" strokeWidth={3} />
+        <AppIcon name="sun" size={18} strokeWidth={2.5} className="text-black dark:text-white" />
       )}
 
       {/* 다크 모드 (달 아이콘) */}
       {theme === "dark" && (
-        <Moon className="w-5 h-5 sm:w-[20px] sm:h-[20px] text-indigo-500 dark:text-indigo-400" strokeWidth={3} />
+        <AppIcon name="moon" size={18} strokeWidth={2.5} className="text-black dark:text-white" />
       )}
 
       {/* 시스템 기본값 (모니터 아이콘) */}
       {theme === "system" && (
         <div className="relative flex items-center justify-center">
-          <Monitor className="w-5 h-5 sm:w-[20px] sm:h-[20px] text-gray-500 dark:text-gray-400" strokeWidth={3} />
+          <AppIcon name="monitor" size={18} strokeWidth={2.5} className="text-black dark:text-white" />
           <span className="absolute -top-1 -right-1 flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black dark:bg-white opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-black dark:bg-white"></span>

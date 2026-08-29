@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
-import { Search, X, TrendingUp } from 'lucide-react';
 import AppIcon from '@/components/ui/AppIcon';
 
 export default function SearchBar() {
@@ -30,7 +29,7 @@ export default function SearchBar() {
         className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-zinc-600 dark:text-zinc-400 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all cursor-pointer"
         aria-label="통합 검색 열기"
       >
-        <Search className="w-3.5 h-3.5 stroke-[2.5]" />
+        <AppIcon name="search" size={14} strokeWidth={2.5} />
         <span className="hidden sm:inline">통합 검색...</span>
       </button>
 
@@ -39,9 +38,9 @@ export default function SearchBar() {
         typeof document !== 'undefined' &&
         createPortal(
           <div className="fixed inset-0 z-[200] flex items-start justify-center pt-20 px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="w-full max-w-xl bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white shadow-[8px_8px_0px_rgba(0,0,0,0.9)] dark:shadow-[8px_8px_0px_rgba(255,255,255,0.9)] overflow-hidden">
+            <div className="w-full max-w-xl bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] overflow-hidden">
               <form onSubmit={handleSearch} className="flex items-center p-4 border-b-2 border-black dark:border-white">
-                <Search className="w-5 h-5 text-black dark:text-white stroke-[2.5] mr-3 shrink-0" />
+                <AppIcon name="search" size={20} strokeWidth={2.5} className="text-black dark:text-white mr-3 shrink-0" />
                 <input
                   type="text"
                   value={query}
@@ -55,14 +54,14 @@ export default function SearchBar() {
                   onClick={() => setIsOpen(false)}
                   className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                 >
-                  <X className="w-5 h-5 text-black dark:text-white stroke-[2.5]" />
+                  <AppIcon name="close" size={20} strokeWidth={2.5} className="text-black dark:text-white" />
                 </button>
               </form>
 
               {/* 인기 검색어 안내 */}
               <div className="p-4 bg-zinc-50 dark:bg-zinc-900">
                 <div className="flex items-center gap-1.5 text-xs font-black text-zinc-500 mb-2.5">
-                  <TrendingUp className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <AppIcon name="trending-up" size={14} strokeWidth={2.5} />
                   <span>실시간 추천 검색어</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">

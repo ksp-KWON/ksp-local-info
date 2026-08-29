@@ -40,7 +40,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
   };
 
   return (
-    <div className="my-8 p-4 sm:p-5 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div className="my-8 p-4 sm:p-5 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] flex flex-col sm:flex-row items-center justify-between gap-4">
       <div className="flex items-center gap-2 text-xs font-black text-black dark:text-white">
         <AppIcon name="link" size={16} strokeWidth={2.5} />
         <span>유용한 혜택 정보 지인에게 공유하기</span>

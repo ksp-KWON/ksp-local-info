@@ -35,7 +35,7 @@ export default async function Home() {
   return (
     <div className="space-y-8 sm:space-y-10 pb-16">
       {/* 1. 메인 인트로 헤더 (모던 수묵 & 굵은 라인 SVG 스타일) */}
-      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] p-6 sm:p-8 lg:p-10 group">
+      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[0_1px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.2)] p-6 sm:p-8 lg:p-10 group">
         {/* 우측 배경 수묵 워터마크 (굵은 라인 SVG) */}
         <div className="absolute -right-6 -bottom-6 text-black/[0.04] dark:text-white/[0.06] pointer-events-none transition-transform duration-500 group-hover:scale-105">
           <AppIcon name="compass" size={190} strokeWidth={2} />
@@ -78,7 +78,7 @@ export default async function Home() {
         {/* 달빛어린이병원 & 심야약국 카드 */}
         <Link
           href="/services/emergency"
-          className="group relative overflow-hidden border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] hover:-translate-x-0.5 hover:-translate-y-0.5 bg-gradient-to-br from-black/[0.03] via-white to-white dark:from-white/[0.05] dark:via-[#181a1d] dark:to-[#181a1d]"
+          className="group relative overflow-hidden border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] bg-gradient-to-br from-black/[0.03] via-white to-white dark:from-white/[0.05] dark:via-[#181a1d] dark:to-[#181a1d]"
         >
           <MiniMapPreview type="emergency" />
           <div className="relative z-10">
@@ -110,7 +110,7 @@ export default async function Home() {
         {/* 의정부 사랑카드 가맹점 지도 카드 */}
         <Link
           href="/services/local-currency"
-          className="group relative overflow-hidden border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] hover:-translate-x-0.5 hover:-translate-y-0.5 bg-gradient-to-br from-black/[0.03] via-white to-white dark:from-white/[0.05] dark:via-[#181a1d] dark:to-[#181a1d]"
+          className="group relative overflow-hidden border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] bg-gradient-to-br from-black/[0.03] via-white to-white dark:from-white/[0.05] dark:via-[#181a1d] dark:to-[#181a1d]"
         >
           <MiniMapPreview type="currency" />
           <div className="relative z-10">
@@ -142,7 +142,7 @@ export default async function Home() {
         {/* 국가 건강검진 지정병원 찾기 카드 */}
         <Link
           href="/services/health-check"
-          className="group relative overflow-hidden border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] hover:-translate-x-0.5 hover:-translate-y-0.5 bg-gradient-to-br from-black/[0.03] via-white to-white dark:from-white/[0.05] dark:via-[#181a1d] dark:to-[#181a1d]"
+          className="group relative overflow-hidden border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white rounded-none p-5 sm:p-6 flex flex-col justify-between min-h-[190px] transition-all duration-200 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] bg-gradient-to-br from-black/[0.03] via-white to-white dark:from-white/[0.05] dark:via-[#181a1d] dark:to-[#181a1d]"
         >
           <div className="relative z-10">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-black text-white dark:bg-white dark:text-black text-[11px] font-black mb-2 border border-black dark:border-white rounded-none">

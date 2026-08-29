@@ -34,9 +34,9 @@ export default function PremiumCard({
     default: 'border-zinc-300 dark:border-zinc-700',
   };
 
-  const hoverBorders = 'hover:border-black dark:hover:border-white hover:shadow-[4px_4px_0px_rgba(0,0,0,0.85)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.85)] hover:-translate-x-0.5 hover:-translate-y-0.5';
+  const hoverBorders = 'hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)]';
 
-  const baseClass = `bg-white dark:bg-[#181a1d] p-4 sm:p-5 border-2 ${baseBorders[borderColor]} shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] transition-all duration-200 relative overflow-hidden rounded-none flex flex-col min-h-0 group ${
+  const baseClass = `bg-white dark:bg-[#181a1d] p-4 sm:p-5 border-2 ${baseBorders[borderColor]} shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] transition-all duration-200 relative overflow-hidden rounded-none flex flex-col min-h-0 group ${
     hoverEffect ? hoverBorders : ''
   }`;
 
@@ -44,12 +44,12 @@ export default function PremiumCard({
     <div className={`${baseClass} ${className}`} {...props}>
       {/* 은은한 굵은 라인 SVG 수묵 워터마크 */}
       {watermarkIcon && (
-        <div className="absolute right-3 bottom-2 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-300 z-0">
+        <div className="absolute right-3 bottom-2 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
           <AppIcon name={watermarkIcon} size={72} strokeWidth={2} />
         </div>
       )}
       {!watermarkIcon && watermarkEmoji && (
-        <div className="absolute right-[-8px] bottom-[-14px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
+        <div className="absolute right-[-8px] bottom-[-14px] opacity-[0.03] dark:opacity-[0.05] text-[90px] select-none pointer-events-none group-hover:scale-105 transition-transform duration-300 z-0">
           {watermarkEmoji}
         </div>
       )}

@@ -40,9 +40,9 @@ export default function TableOfContents({
               <a
                 href={`#${item.id}`}
                 onClick={(e) => onItemClick(e, item.id)}
-                className={`flex items-start gap-2 py-1 px-2 rounded-none transition-all ${
+                className={`flex items-start gap-2 py-1.5 px-2.5 rounded-none transition-all ${
                   isActive
-                    ? 'bg-black text-white dark:bg-white dark:text-black font-black shadow-[2px_2px_0px_rgba(0,0,0,0.9)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.9)]'
+                    ? 'bg-black text-white dark:bg-white dark:text-black font-black border border-black dark:border-white'
                     : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white font-medium'
                 }`}
               >

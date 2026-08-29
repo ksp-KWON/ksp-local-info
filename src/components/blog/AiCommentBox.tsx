@@ -45,7 +45,7 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
   };
 
   return (
-    <div className={`bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white rounded-none p-5 sm:p-6 shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] space-y-4 ${className}`}>
+    <div className={`bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white rounded-none p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] space-y-4 ${className}`}>
       <div className="flex items-center justify-between border-b-2 border-zinc-200 dark:border-zinc-800 pb-3">
         <h3 className="font-black text-base sm:text-lg text-black dark:text-white flex items-center gap-2 m-0">
           <AppIcon name="sparkles" size={18} strokeWidth={2.5} />
@@ -60,7 +60,7 @@ export default function AiCommentBox({ sourceText, type, className = '' }: AiCom
         {!hasStarted ? (
           <button
             onClick={fetchComment}
-            className="group flex items-center gap-2 bg-black hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-200 dark:text-black px-5 py-2.5 rounded-none font-black text-xs sm:text-sm border-2 border-black dark:border-white transition-all duration-200 cursor-pointer shadow-[2px_2px_0px_rgba(0,0,0,0.85)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.85)] hover:-translate-y-0.5 mt-1"
+            className="group flex items-center gap-2 bg-black hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-200 dark:text-black px-5 py-2.5 rounded-none font-black text-xs sm:text-sm border-2 border-black dark:border-white transition-all duration-200 cursor-pointer mt-1"
           >
             <AppIcon name="zap" size={15} strokeWidth={2.5} className="group-hover:scale-110 transition-transform" />
             <span>이 정책의 AI 핵심 요약 및 꿀팁 보기</span>

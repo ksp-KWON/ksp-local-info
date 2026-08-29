@@ -62,7 +62,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
     <div className="space-y-7" data-blog-body>
       {/* ── [무기 1] 시정 핵심 요약 (3줄 브리핑) ── */}
       {keyPoints && keyPoints.length > 0 && (
-        <div className="my-6 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white p-5 sm:p-6 shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]">
+        <div className="my-6 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
           <div className="flex items-center gap-2 pb-3 mb-3.5 border-b-2 border-black dark:border-white font-black text-base text-black dark:text-white">
             <AppIcon name="file-text" size={18} strokeWidth={2.5} />
             <span>시정 핵심 요약 (3줄 브리핑)</span>
@@ -101,7 +101,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
       {/* ── [무기 4] 신청 자격 1분 자가진단 (인터랙티브 체크리스트) ── */}
       {checklistItems && checklistItems.length > 0 && (
-        <div className="my-8 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white p-5 sm:p-6 shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]">
+        <div className="my-8 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-between pb-3 mb-4 border-b-2 border-black dark:border-white">
             <h3 className="font-black text-base sm:text-lg text-black dark:text-white flex items-center gap-2 m-0">
               <AppIcon name="shield-check" size={18} strokeWidth={2.5} />
@@ -121,7 +121,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
                   onClick={() => toggleCheck(idx)}
                   className={`w-full text-left flex items-start gap-3 p-3 transition-all border-2 rounded-none cursor-pointer ${
                     isChecked
-                      ? 'bg-zinc-100 dark:bg-zinc-850 border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.8)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.8)]'
+                      ? 'bg-zinc-100 dark:bg-zinc-850 border-black dark:border-white'
                       : 'bg-white dark:bg-[#181a1d] border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
                   }`}
                 >
@@ -140,7 +140,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
       {/* ── [무기 5] 시민 자주 묻는 질문 (Civic FAQ 아코디언) ── */}
       {faqItems && faqItems.length > 0 && (
-        <div className="my-8 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white p-5 sm:p-6 shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]">
+        <div className="my-8 bg-white dark:bg-[#181a1d] border-2 border-black dark:border-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
           <div className="flex items-center gap-2 pb-3 mb-4 border-b-2 border-black dark:border-white font-black text-base sm:text-lg text-black dark:text-white">
             <AppIcon name="chat" size={18} strokeWidth={2.5} />
             <span>시민 자주 묻는 질문 (FAQ)</span>
@@ -182,7 +182,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
       {/* ── [무기 6] 원스톱 공식 신청처 안내 배너 ── */}
       {sourceLink && (
-        <div className="my-8 bg-zinc-50 dark:bg-zinc-900 p-5 sm:p-6 border-2 border-black dark:border-white shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="my-8 bg-zinc-50 dark:bg-zinc-900 p-5 sm:p-6 border-2 border-black dark:border-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <span className="font-black text-black dark:text-white flex items-center gap-2 mb-1 text-sm sm:text-base">
               <AppIcon name="external-link" size={16} strokeWidth={2.5} />
@@ -209,7 +209,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Link
             href="/services/emergency"
-            className="p-3.5 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all shadow-[2px_2px_0px_rgba(0,0,0,0.05)] hover:shadow-[3px_3px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[3px_3px_0px_rgba(255,255,255,0.9)] group flex flex-col justify-between min-h-[90px]"
+            className="p-3.5 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50 transition-all shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] group flex flex-col justify-between min-h-[90px]"
           >
             <div className="flex items-center gap-2 font-black text-xs text-black dark:text-white">
               <AppIcon name="hospital" size={16} strokeWidth={2.5} />
@@ -217,13 +217,13 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
             </div>
             <span className="text-[11px] font-bold text-zinc-500 flex items-center justify-between mt-2">
               <span>야간·휴일 응급의료</span>
-              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </Link>
 
           <Link
             href="/services/local-currency"
-            className="p-3.5 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all shadow-[2px_2px_0px_rgba(0,0,0,0.05)] hover:shadow-[3px_3px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[3px_3px_0px_rgba(255,255,255,0.9)] group flex flex-col justify-between min-h-[90px]"
+            className="p-3.5 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50 transition-all shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] group flex flex-col justify-between min-h-[90px]"
           >
             <div className="flex items-center gap-2 font-black text-xs text-black dark:text-white">
               <AppIcon name="bank" size={16} strokeWidth={2.5} />
@@ -231,13 +231,13 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
             </div>
             <span className="text-[11px] font-bold text-zinc-500 flex items-center justify-between mt-2">
               <span>지역화폐 가맹점 검색</span>
-              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </Link>
 
           <Link
             href="/services/health-check"
-            className="p-3.5 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white transition-all shadow-[2px_2px_0px_rgba(0,0,0,0.05)] hover:shadow-[3px_3px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[3px_3px_0px_rgba(255,255,255,0.9)] group flex flex-col justify-between min-h-[90px]"
+            className="p-3.5 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50 transition-all shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] group flex flex-col justify-between min-h-[90px]"
           >
             <div className="flex items-center gap-2 font-black text-xs text-black dark:text-white">
               <AppIcon name="stethoscope" size={16} strokeWidth={2.5} />
@@ -245,7 +245,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
             </div>
             <span className="text-[11px] font-bold text-zinc-500 flex items-center justify-between mt-2">
               <span>지정 병·의원 지도</span>
-              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </Link>
         </div>

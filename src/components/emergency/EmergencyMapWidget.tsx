@@ -35,7 +35,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
   });
 
   return (
-    <div className={`flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden mt-2 rounded-none shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] border-2 border-black dark:border-white ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+    <div className={`flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden mt-2 rounded-none shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] border-2 border-black dark:border-white ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
       {/* 1. 헤더 영역 */}
       <header className="bg-white dark:bg-[#181a1d] z-20 shrink-0 border-b-2 border-black dark:border-white">
         <div className="p-4 pb-3">
@@ -63,7 +63,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
                 onClick={() => setMapCenter(nb)}
                 className={`whitespace-nowrap px-3 py-1 text-xs font-black transition-all border-2 rounded-none cursor-pointer ${
                   mapCenter.name === nb.name
-                    ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.9)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.9)]'
+                    ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white'
                     : 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
                 }`}
               >

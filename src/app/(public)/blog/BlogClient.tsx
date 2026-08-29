@@ -43,7 +43,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   return (
     <div className="space-y-8 sm:space-y-10 pb-16">
       {/* 1. 카테고리 헤더 (모던 수묵 & 굵은 라인 SVG 스타일) */}
-      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] p-6 sm:p-8 group">
+      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[0_1px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.2)] p-6 sm:p-8 group">
         <div className="absolute -right-6 -bottom-6 text-black/[0.04] dark:text-white/[0.06] pointer-events-none group-hover:scale-105 transition-transform duration-500">
           <AppIcon name="compass" size={160} strokeWidth={2} />
         </div>
@@ -67,7 +67,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
           href="/blog"
           className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-black whitespace-nowrap transition-all border-2 rounded-none ${
             !categoryParam && !tagParam
-              ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.9)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.9)]'
+              ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white'
               : 'bg-white dark:bg-[#181a1d] text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
           }`}
         >
@@ -82,7 +82,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
               href={`/blog?category=${encodeURIComponent(cat.name)}`}
               className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-black whitespace-nowrap transition-all border-2 rounded-none ${
                 isSelected
-                  ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-[2px_2px_0px_rgba(0,0,0,0.9)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.9)]'
+                  ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white'
                   : 'bg-white dark:bg-[#181a1d] text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white'
               }`}
             >

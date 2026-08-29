@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Calendar, ArrowRight } from 'lucide-react';
 import { PostData } from '@/lib/types';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 
@@ -25,9 +24,9 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   if (variant === 'list') {
     return (
       <Link href={`/blog/${post.slug}`} className="group flex flex-col w-full">
-        <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 sm:p-6 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
+        <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-200 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50 flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
           {/* 은은한 굵은 라인 SVG 수묵 워터마크 */}
-          <div className="absolute right-2 bottom-1 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-300 z-0">
+          <div className="absolute right-2 bottom-1 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
             <AppIcon name={watermarkIcon} size={68} strokeWidth={2} />
           </div>
 
@@ -42,8 +41,8 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
                 </span>
               ))}
               <time className="text-xs font-medium text-zinc-400 dark:text-zinc-500 flex items-center gap-1 shrink-0 ml-2">
-                <Calendar className="w-3.5 h-3.5" />
-                {post.date}
+                <AppIcon name="calendar" size={13} strokeWidth={2} />
+                <span>{post.date}</span>
               </time>
             </div>
             <div className="min-w-0 space-y-1.5 mt-1">
@@ -57,9 +56,9 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
           </div>
 
           <div className="sm:shrink-0 mt-2 sm:mt-0 pt-3 sm:pt-0 border-t-2 border-zinc-100 dark:border-zinc-800 sm:border-t-0 sm:border-l-2 sm:pl-6 flex items-center justify-end z-10 relative">
-            <span className="text-xs font-black tracking-wide text-black dark:text-white group-hover:translate-x-1 transition-transform flex items-center gap-1">
+            <span className="text-xs font-black tracking-wide text-black dark:text-white flex items-center gap-1">
               <span>자세히 보기</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <AppIcon name="chevron-right" size={13} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </div>
         </div>
@@ -70,9 +69,9 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   // Grid variant
   return (
     <Link href={`/blog/${post.slug}`} className="group flex flex-col w-full h-full">
-      <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:hover:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white flex flex-col justify-between h-full relative overflow-hidden">
+      <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-200 border-2 border-zinc-300 dark:border-zinc-700 hover:border-black dark:hover:border-white hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50 flex flex-col justify-between h-full relative overflow-hidden">
         {/* 은은한 굵은 라인 SVG 수묵 워터마크 */}
-        <div className="absolute right-2 bottom-1 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-300 z-0">
+        <div className="absolute right-2 bottom-1 opacity-[0.045] dark:opacity-[0.07] text-black dark:text-white select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
           <AppIcon name={watermarkIcon} size={68} strokeWidth={2} />
         </div>
 
@@ -87,8 +86,8 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
               </span>
             ))}
             <time className="text-xs font-medium text-zinc-400 dark:text-zinc-500 flex items-center gap-1 shrink-0 ml-auto">
-              <Calendar className="w-3.5 h-3.5" />
-              {post.date}
+              <AppIcon name="calendar" size={13} strokeWidth={2} />
+              <span>{post.date}</span>
             </time>
           </div>
           <div className="min-w-0 space-y-1.5 mt-2 mb-4">
@@ -103,7 +102,7 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
         <div className="flex items-center justify-end pt-2 border-t-2 border-zinc-100 dark:border-zinc-800/80 z-10 relative">
           <span className="text-xs font-black text-black dark:text-white flex items-center gap-1 transition-colors">
             <span>상세 안내</span>
-            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            <AppIcon name="chevron-right" size={12} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
           </span>
         </div>
       </div>

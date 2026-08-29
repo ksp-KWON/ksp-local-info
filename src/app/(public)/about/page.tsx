@@ -44,7 +44,7 @@ export default function AboutPage() {
       </nav>
 
       {/* 2. 메인 헤더 배너 (수묵 굵은 라인 SVG) */}
-      <div className="relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] p-6 sm:p-10 group">
+      <div className="relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[0_1px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.2)] p-6 sm:p-10 group">
         <div className="absolute -right-6 -bottom-6 text-black/[0.04] dark:text-white/[0.06] pointer-events-none group-hover:scale-105 transition-transform duration-500">
           <AppIcon name="shield-check" size={180} strokeWidth={2} />
         </div>
@@ -70,7 +70,7 @@ export default function AboutPage() {
 
       {/* 3. 3대 핵심 가치 카드 (모노톤 굵은 선 룩) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] space-y-2 relative overflow-hidden">
+        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 space-y-2 relative overflow-hidden">
           <div className="absolute right-2 bottom-1 opacity-[0.05] text-black dark:text-white pointer-events-none">
             <AppIcon name="shield" size={60} strokeWidth={2} />
           </div>
@@ -83,7 +83,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] space-y-2 relative overflow-hidden">
+        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 space-y-2 relative overflow-hidden">
           <div className="absolute right-2 bottom-1 opacity-[0.05] text-black dark:text-white pointer-events-none">
             <AppIcon name="zap" size={60} strokeWidth={2} />
           </div>
@@ -96,7 +96,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.06)] space-y-2 relative overflow-hidden">
+        <div className="p-6 bg-white dark:bg-[#181a1d] border-2 border-zinc-300 dark:border-zinc-700 space-y-2 relative overflow-hidden">
           <div className="absolute right-2 bottom-1 opacity-[0.05] text-black dark:text-white pointer-events-none">
             <AppIcon name="heart" size={60} strokeWidth={2} />
           </div>

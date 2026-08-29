@@ -136,7 +136,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </Link>
       </nav>
 
-      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] border-2 border-black dark:border-white overflow-hidden relative">
+      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_1px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.2)] border-2 border-black dark:border-white overflow-hidden relative">
         <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
           {/* 아티클 헤더 (수묵 모노톤 굵은 선 룩) */}
           <header className="border-b-2 border-black dark:border-white pb-8">
@@ -176,7 +176,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* 하단 추천 혜택 박스 (수묵 2px 굵은 먹선) */}
           <div className="pt-6 border-t-2 border-zinc-200 dark:border-zinc-800">
-            <div className="bg-zinc-50 dark:bg-zinc-900 border-2 border-black dark:border-white rounded-none p-6 sm:p-7 mb-8 shadow-[2px_2px_0px_rgba(0,0,0,0.06)]">
+            <div className="bg-zinc-50 dark:bg-zinc-900 border-2 border-black dark:border-white rounded-none p-6 sm:p-7 mb-8">
               <h3 className="font-black text-base mb-3 flex items-center gap-2 text-black dark:text-white">
                 <AppIcon name="shield-check" size={18} strokeWidth={2.5} />
                 <span>의정부 시민들이 함께 확인한 지원 혜택</span>

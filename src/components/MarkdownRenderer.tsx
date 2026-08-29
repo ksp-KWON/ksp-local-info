@@ -20,34 +20,12 @@ const extractTextFromNode = (n: any): string => {
   return '';
 };
 
-// 수묵 헤딩 명도 매핑
-const getHeadingBgClass = (level: number) => {
-  switch (level) {
-    case 2: return 'from-black/[0.08] via-black/[0.02] to-transparent dark:from-white/[0.12] dark:via-white/[0.03] to-transparent border-b-2 border-black dark:border-white';
-    case 3: return 'from-black/[0.05] via-black/[0.015] to-transparent dark:from-white/[0.08] dark:via-white/[0.02] to-transparent border-b-2 border-zinc-700 dark:border-zinc-300';
-    case 4:
-    case 5: return 'from-black/[0.03] to-transparent dark:from-white/[0.05] to-transparent border-b border-zinc-400 dark:border-zinc-600';
-    case 6: return 'from-black/[0.06] to-transparent dark:from-white/[0.09] to-transparent border-b-2 border-black dark:border-white';
-    default: return 'from-black/[0.05] to-transparent dark:from-white/[0.08] to-transparent';
-  }
-};
-
 const UnifiedHeadingRenderer = ({ level, children, id }: { level: 1|2|3|4|5|6, children?: React.ReactNode, id?: string }) => {
-  const styles: Record<number, string> = {
-    2: 'mt-14 mb-6 py-3',
-    3: 'mt-10 mb-5 py-2.5',
-    4: 'mt-8 mb-4 py-2',
-    5: 'mt-6 mb-3 py-1.5',
-    6: 'mt-6 mb-3 py-2',
-  };
-
   return (
     <PremiumHeading 
-      level={level as any} 
+      level={level} 
       id={id} 
-      showLeftBorder 
-      style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }} 
-      className={`${styles[level] || styles[5]} pr-4 rounded-none break-keep bg-gradient-to-r ${getHeadingBgClass(level)} !text-black dark:!text-white font-black`}
+      style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
     >
       {children}
     </PremiumHeading>
@@ -63,7 +41,7 @@ const getToneColor = (node: React.ReactNode): BlogTone => {
 // 표준 마크다운 컴포넌트 맵 (수묵화 墨 & 굵은 라인 SVG 모노톤)
 export const sharedComponents: Components & Record<string, any> = {
   h1: ({ children, id }) => (
-    <PremiumHeading level={1} id={id} style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }} className="mt-16 mb-8 pb-4 border-b-4 border-black dark:border-white break-keep !text-black dark:!text-white font-black">
+    <PremiumHeading level={1} id={id} style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}>
       {children}
     </PremiumHeading>
   ),
@@ -92,7 +70,7 @@ export const sharedComponents: Components & Record<string, any> = {
     );
   },
 
-  // 인용구 / 피드백 박스 (수묵화 2px 굵은 먹선 & 명도 그라데이션)
+  // 인용구 / 피드백 박스 (수묵화 2px 굵은 먹선 & 평면도 분할)
   blockquote: ({ children }: any) => {
     const tone: BlogTone = getToneColor(children);
     const token = BLOG_TONE_TOKENS[tone] || BLOG_TONE_TOKENS.blue;
@@ -111,7 +89,7 @@ export const sharedComponents: Components & Record<string, any> = {
       const bodyElements = childArray.slice(1);
 
       return (
-        <div className={`my-8 bg-white dark:bg-[#181a1d] shadow-[4px_4px_0px_rgba(0,0,0,0.85)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.85)] transition-all duration-200 relative overflow-hidden group border-2 ${token.tailwind.border} rounded-none`}>
+        <div className={`my-8 bg-white dark:bg-[#181a1d] transition-all duration-200 relative overflow-hidden group border-2 ${token.tailwind.border} rounded-none`}>
           {/* 상단 수묵 명도 헤더 바 */}
           <div className={`px-5 sm:px-6 py-3 bg-gradient-to-r ${token.tailwind.headerGradient} relative z-10`}>
             <h3 className={`text-[15.5px] font-black flex items-center gap-2.5 tracking-tight !m-0 !p-0 border-0 bg-transparent ${token.tailwind.titleColor}`}>
@@ -129,7 +107,7 @@ export const sharedComponents: Components & Record<string, any> = {
 
     // 인라인 용어 사전 / 단순 인용구
     return (
-      <div className={`my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 shadow-[4px_4px_0px_rgba(0,0,0,0.85)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.85)] transition-all duration-200 relative overflow-hidden group border-2 ${token.tailwind.border} rounded-none`}>
+      <div className={`my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 transition-all duration-200 relative overflow-hidden group border-2 ${token.tailwind.border} rounded-none`}>
         <div className="relative z-10 text-[14.5px] sm:text-[15px] font-medium text-zinc-800 dark:text-zinc-200 leading-[1.75] tracking-tight [&>p]:mb-4 sm:[&>p]:mb-5 [&>p:last-child]:!mb-0 break-keep">
           {children}
         </div>
@@ -140,7 +118,7 @@ export const sharedComponents: Components & Record<string, any> = {
   // 굵은 2px 먹선 수묵 테이블 (Table)
   table: ({ children }: any) => (
     <div className="my-8">
-      <PremiumCard hoverEffect={false} className="!p-0 overflow-x-auto shadow-[4px_4px_0px_rgba(0,0,0,0.85)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.85)] rounded-none !border-2 !border-black dark:!border-white">
+      <PremiumCard hoverEffect={false} className="!p-0 overflow-x-auto rounded-none !border-2 !border-black dark:!border-white">
         <table className="w-full text-[13.5px] sm:text-[14px] border-collapse min-w-[500px] sm:min-w-full">{children}</table>
       </PremiumCard>
     </div>
@@ -186,7 +164,7 @@ export const sharedComponents: Components & Record<string, any> = {
   ),
 
   pre: ({ children }) => (
-    <pre className="whitespace-pre-wrap break-words bg-zinc-50 dark:bg-zinc-900 p-4 sm:p-5 rounded-none border-2 border-black dark:border-white my-6 text-black dark:text-white font-sans text-[14.5px] sm:text-[15.5px] leading-relaxed shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] overflow-x-hidden">
+    <pre className="whitespace-pre-wrap break-words bg-zinc-50 dark:bg-zinc-900 p-4 sm:p-5 rounded-none border-2 border-black dark:border-white my-6 text-black dark:text-white font-sans text-[14.5px] sm:text-[15.5px] leading-relaxed overflow-x-hidden">
       {children}
     </pre>
   ),
@@ -212,7 +190,7 @@ export const sharedComponents: Components & Record<string, any> = {
   purple: ({ children }: { children?: React.ReactNode }) => <strong className="text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-black">{children}</strong>,
 
   relatedbox: ({ children }: any) => (
-    <PremiumCard borderColor="default" hoverEffect={true} className="my-10 group !border-2 !border-black dark:!border-white shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)]">
+    <PremiumCard borderColor="default" hoverEffect={true} className="my-10 group !border-2 !border-black dark:!border-white">
       <div className="relative z-10">
         <div className="border-b-2 border-black dark:border-white pb-3 mb-4">
           <PremiumHeading level={3} showLeftBorder className="!mb-0 !text-black dark:!text-white font-black">

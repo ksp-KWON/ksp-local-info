@@ -54,7 +54,7 @@ function SearchResults() {
   return (
     <div className="space-y-8 pb-16">
       {/* 1. 검색 인트로 헤더 (모던 수묵 & 굵은 라인 SVG 스타일) */}
-      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[4px_4px_0px_rgba(0,0,0,0.9)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.9)] p-6 sm:p-8 group">
+      <div className="mt-4 relative overflow-hidden rounded-none border-2 border-black dark:border-white bg-white dark:bg-[#181a1d] shadow-[0_1px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.2)] p-6 sm:p-8 group">
         <div className="absolute -right-6 -bottom-6 text-black/[0.04] dark:text-white/[0.06] pointer-events-none group-hover:scale-105 transition-transform duration-500">
           <AppIcon name="search" size={160} strokeWidth={2} />
         </div>
