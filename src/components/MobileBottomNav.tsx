@@ -6,6 +6,16 @@ import { Suspense, useState } from 'react';
 import { Home, Coins, Briefcase, Ambulance, Menu, X } from 'lucide-react';
 import { CATEGORIES, getCategoryTheme } from '@/lib/constants';
 import BottomSheet from '@/components/ui/BottomSheet';
+import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
+
+function getCategoryWatermark(label: string): AppIconName {
+  if (label.includes('지원금') || label.includes('혜택')) return 'bank';
+  if (label.includes('취업') || label.includes('창업')) return 'trending-up';
+  if (label.includes('아이') || label.includes('가족')) return 'heart';
+  if (label.includes('병원') || label.includes('아플 때')) return 'hospital';
+  if (label.includes('생활') || label.includes('즐길거리')) return 'leaf';
+  return 'file-text';
+}
 
 function NavContent() {
   const pathname = usePathname();
@@ -89,7 +99,10 @@ function NavContent() {
       >
         <div className="w-full flex flex-col">
           <div className="flex justify-between items-center mb-5 pb-3 border-b border-gray-100 dark:border-zinc-800">
-            <h3 className="text-base font-extrabold text-gray-900 dark:text-white">의정부 생활정보 전체 카테고리</h3>
+            <h3 className="text-base font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
+              <AppIcon name="compass" size={18} className="text-blue-600 dark:text-blue-400" />
+              <span>의정부 생활정보 전체 카테고리</span>
+            </h3>
             <button
               onClick={() => setIsMenuOpen(false)}
               className="p-1 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
@@ -101,15 +114,15 @@ function NavContent() {
           <div className="space-y-5">
             {[
               {
-                title: '💰 혜택 & 일자리',
+                title: '혜택 & 일자리',
                 items: CATEGORIES.filter((c) => c.label.includes('지원금') || c.label.includes('취업')),
               },
               {
-                title: '👨‍👩‍👧 가족 & 건강',
+                title: '가족 & 건강',
                 items: CATEGORIES.filter((c) => c.label.includes('아이') || c.label.includes('아플 때')),
               },
               {
-                title: '☕ 생활 & 즐길거리',
+                title: '생활 & 즐길거리',
                 items: CATEGORIES.filter(
                   (c) =>
                     !c.label.includes('지원금') &&
@@ -125,6 +138,7 @@ function NavContent() {
                   {group.items.map((cat) => {
                     const theme = getCategoryTheme(cat.label);
                     const Icon = theme.icon;
+                    const watermark = getCategoryWatermark(cat.label);
                     const colorMap: Record<string, string> = {
                       blue: 'text-blue-500',
                       pink: 'text-rose-500',
@@ -140,10 +154,15 @@ function NavContent() {
                         key={cat.id}
                         href={`/blog?category=${encodeURIComponent(cat.label)}`}
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-2 p-2.5 bg-white dark:bg-[#181a1d] rounded-none border border-gray-200/80 dark:border-zinc-800 hover:border-blue-500 dark:hover:border-blue-500 transition-all"
+                        className="relative overflow-hidden flex items-center gap-2 p-3 bg-white dark:bg-[#181a1d] rounded-none border border-gray-200/80 dark:border-zinc-800 hover:border-blue-500 dark:hover:border-blue-500 transition-all group"
                       >
-                        <Icon className={`w-4 h-4 shrink-0 ${colorMap[theme.color] || 'text-gray-500'}`} strokeWidth={2} />
-                        <span className="font-bold text-xs tracking-tight truncate text-gray-800 dark:text-gray-200">
+                        {/* 은은한 W3C 라인 SVG 워터마크 */}
+                        <div className="absolute right-1 bottom-0 opacity-[0.04] dark:opacity-[0.06] text-gray-900 dark:text-white select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
+                          <AppIcon name={watermark} size={42} strokeWidth={1.5} />
+                        </div>
+
+                        <Icon className={`w-4 h-4 shrink-0 relative z-10 ${colorMap[theme.color] || 'text-gray-500'}`} strokeWidth={2} />
+                        <span className="font-bold text-xs tracking-tight truncate text-gray-800 dark:text-gray-200 relative z-10">
                           {cat.label.replace(/^[^\s]+\s/, '')}
                         </span>
                       </Link>
@@ -154,20 +173,30 @@ function NavContent() {
             ))}
           </div>
 
+          {/* 주요 3대 공공서비스 퀵링크 바 (은은한 SVG 워터마크 결합) */}
           <div className="mt-5 grid grid-cols-2 gap-2.5 pt-3 border-t border-gray-100 dark:border-zinc-800">
             <Link
               href="/services/local-currency"
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center justify-center gap-1.5 p-2.5 rounded-none bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/40 text-emerald-700 dark:text-emerald-300 font-bold text-xs"
+              className="relative overflow-hidden flex items-center justify-center gap-1.5 p-3 rounded-none bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/40 text-emerald-700 dark:text-emerald-300 font-bold text-xs group"
             >
-              💳 사랑카드 가맹점
+              <div className="absolute -right-1 -bottom-1 opacity-[0.08] text-emerald-900 dark:text-emerald-100 pointer-events-none group-hover:scale-110 transition-transform">
+                <AppIcon name="bank" size={42} />
+              </div>
+              <AppIcon name="bank" size={14} className="relative z-10" />
+              <span className="relative z-10">사랑카드 가맹점</span>
             </Link>
+
             <Link
               href="/services/health-check"
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center justify-center gap-1.5 p-2.5 rounded-none bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/40 text-blue-700 dark:text-blue-300 font-bold text-xs"
+              className="relative overflow-hidden flex items-center justify-center gap-1.5 p-3 rounded-none bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/40 text-blue-700 dark:text-blue-300 font-bold text-xs group"
             >
-              🏥 건강검진 지정병원
+              <div className="absolute -right-1 -bottom-1 opacity-[0.08] text-blue-900 dark:text-blue-100 pointer-events-none group-hover:scale-110 transition-transform">
+                <AppIcon name="stethoscope" size={42} />
+              </div>
+              <AppIcon name="stethoscope" size={14} className="relative z-10" />
+              <span className="relative z-10">건강검진 지정병원</span>
             </Link>
           </div>
         </div>
