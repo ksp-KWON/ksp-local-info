@@ -82,16 +82,7 @@ body {
   line-height: 1.8 !important;
 }
 
-/* 5. 마크다운 제목 폰트 및 배경 (순수 수묵 모노톤) */
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-  font-family: inherit !important;
-  color: inherit !important;
-  letter-spacing: -0.02em;
-  background: transparent !important;
-  padding: 0 !important;
-}
-
-/* 6. 샤프 모던 스크롤바 */
+/* 5. 샤프 모던 스크롤바 */
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
   height: 5px;
