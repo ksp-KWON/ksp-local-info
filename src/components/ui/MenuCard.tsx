@@ -68,11 +68,11 @@ export default function MenuCard({
             </PremiumBadge>
           )}
         </div>
-        <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed truncate sm:whitespace-normal font-normal">
+        <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed truncate sm:whitespace-normal font-normal">
           {description}
         </p>
         {buttonText && (
-          <div className="mt-3 w-full text-xs sm:text-[12.5px] font-bold text-[#202124] dark:text-[#e8eaed] flex items-center justify-between transition-colors p-2.5 rounded-none bg-gray-50/90 dark:bg-white/5 border border-gray-100 dark:border-zinc-800/80 group-hover:border-zinc-700 dark:group-hover:border-zinc-300">
+          <div className="mt-3 w-full text-xs sm:text-[12.5px] font-bold text-zinc-900 dark:text-zinc-100 flex items-center justify-between transition-colors p-2.5 rounded-none bg-zinc-50/90 dark:bg-white/5 border border-gray-100 dark:border-zinc-800/80 group-hover:border-zinc-700 dark:group-hover:border-zinc-300">
             <div className="flex items-center gap-2 truncate">{buttonText}</div>
             <AppIcon
               name="chevron-right"

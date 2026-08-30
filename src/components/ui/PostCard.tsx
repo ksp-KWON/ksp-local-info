@@ -1,14 +1,14 @@
+import React from 'react';
 import Link from 'next/link';
 import { PostData } from '@/lib/types';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
-import PremiumBadge from '@/components/ui/PremiumBadge';
+import PremiumBadge, { type BadgeColor } from '@/components/ui/PremiumBadge';
+import PremiumCard from '@/components/ui/PremiumCard';
 
 interface PostCardProps {
   post: PostData;
   variant?: 'grid' | 'list';
 }
-
-import { type BadgeColor } from '@/components/ui/PremiumBadge';
 
 function getWatermarkIcon(category: string): AppIconName {
   if (category.includes('지원금') || category.includes('혜택') || category.includes('복지')) return 'bank';
@@ -38,12 +38,11 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
   if (variant === 'list') {
     return (
       <Link href={`/blog/${post.slug}`} className="group flex flex-col w-full">
-        <div className="bg-white dark:bg-[#181a1d] rounded-none p-5 sm:p-6 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] hover:-translate-y-1 transition-all duration-300 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-5 h-full relative overflow-hidden">
-          {/* 워터마크 SVG */}
-          <div className="absolute right-3.5 bottom-2.5 opacity-[0.035] dark:opacity-[0.055] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
-            <AppIcon name={watermarkIcon} size={68} strokeWidth={1.5} />
-          </div>
-
+        <PremiumCard
+          hoverEffect={true}
+          watermarkIcon={watermarkIcon}
+          className="p-5 sm:p-6 !flex-col sm:!flex-row sm:!items-center justify-between gap-5 h-full"
+        >
           <div className="flex-1 min-w-0 z-10 relative">
             <div className="flex flex-wrap items-center gap-2 mb-3">
               <PremiumBadge color={badgeColor}>
@@ -55,10 +54,10 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
               </time>
             </div>
             <div className="min-w-0 space-y-1.5 mt-1">
-              <h3 className="text-lg sm:text-xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-zinc-700 dark:group-hover:text-zinc-200 transition-colors line-clamp-1 leading-snug break-keep">
+              <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-950 dark:text-white group-hover:text-zinc-700 dark:group-hover:text-zinc-200 transition-colors line-clamp-1 leading-snug break-keep">
                 {post.title}
               </h3>
-              <p className="text-sm font-normal text-[#5f6368] dark:text-[#9aa0a6] line-clamp-2 leading-relaxed break-keep">
+              <p className="text-sm font-normal text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed break-keep">
                 {post.summary}
               </p>
             </div>
@@ -70,48 +69,46 @@ export default function PostCard({ post, variant = 'grid' }: PostCardProps) {
               <AppIcon name="chevron-right" size={14} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </div>
-        </div>
+        </PremiumCard>
       </Link>
     );
   }
 
   // Grid variant
   return (
-    <Link
-      href={`/blog/${post.slug}`}
-      className="group flex flex-col justify-between relative bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] hover:-translate-y-1 hover:border-zinc-900 dark:hover:border-zinc-100 p-4 sm:p-5 active:scale-[0.98] transition-all duration-300 overflow-hidden rounded-none outline-none"
-    >
-      {/* 워터마크 SVG */}
-      <div className="absolute right-3.5 bottom-2.5 opacity-[0.035] dark:opacity-[0.055] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-105 transition-all duration-300 z-0">
-        <AppIcon name={watermarkIcon} size={68} strokeWidth={1.5} />
-      </div>
+    <Link href={`/blog/${post.slug}`} className="group flex flex-col h-full">
+      <PremiumCard
+        hoverEffect={true}
+        watermarkIcon={watermarkIcon}
+        className="p-4 sm:p-5 h-full justify-between"
+      >
+        <div className="relative z-10">
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <PremiumBadge color={badgeColor}>
+              {mainCategory.replace(/^[^\s]+\s/, '')}
+            </PremiumBadge>
+            <time className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 flex items-center gap-1">
+              <AppIcon name="calendar" size={13} />
+              {post.date}
+            </time>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-[14.5px] sm:text-[15.5px] font-bold text-zinc-950 dark:text-white leading-snug break-keep line-clamp-2 group-hover:text-zinc-700 dark:group-hover:text-zinc-200 transition-colors">
+              {post.title}
+            </h3>
+            <p className="text-xs sm:text-[13px] text-zinc-600 dark:text-zinc-400 leading-relaxed line-clamp-2 break-keep font-normal">
+              {post.summary}
+            </p>
+          </div>
+        </div>
 
-      <div className="relative z-10">
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <PremiumBadge color={badgeColor}>
-            {mainCategory.replace(/^[^s]+s/, '')}
-          </PremiumBadge>
-          <time className="text-[11px] font-medium text-gray-400 dark:text-gray-500 flex items-center gap-1">
-            <AppIcon name="calendar" size={13} />
-            {post.date}
-          </time>
+        <div className="mt-4 w-full text-xs sm:text-[12.5px] font-bold text-zinc-900 dark:text-zinc-100 flex items-center justify-between transition-colors p-2.5 bg-zinc-50/90 dark:bg-white/5 border border-gray-100 dark:border-zinc-800/80 group-hover:border-zinc-700 dark:group-hover:border-zinc-300 relative z-10">
+          <div className="flex items-center gap-2">
+            <span>글 읽기</span>
+          </div>
+          <AppIcon name="chevron-right" size={14} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
         </div>
-        <div className="space-y-2">
-          <h3 className="text-[14.5px] sm:text-[15.5px] font-bold text-gray-900 dark:text-white leading-snug break-keep line-clamp-2">
-            {post.title}
-          </h3>
-          <p className="text-xs sm:text-[13px] text-[#5f6368] dark:text-[#9aa0a6] leading-relaxed line-clamp-2 break-keep font-normal">
-            {post.summary}
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-4 w-full text-xs sm:text-[12.5px] font-bold text-[#202124] dark:text-[#e8eaed] flex items-center justify-between transition-colors p-2.5 bg-gray-50/90 dark:bg-white/5 border border-gray-100 dark:border-zinc-800/80 group-hover:border-zinc-700 dark:group-hover:border-zinc-300 relative z-10">
-        <div className="flex items-center gap-2">
-          <span>글 읽기</span>
-        </div>
-        <AppIcon name="chevron-right" size={14} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
-      </div>
+      </PremiumCard>
     </Link>
   );
 }
