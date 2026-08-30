@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import TableOfContents from './TableOfContents';
+import CommonBox from './CommonBox';
+import PremiumCard from '@/components/ui/PremiumCard';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import ShareButtons from './ShareButtons';
 import AppIcon from '@/components/ui/AppIcon';
@@ -62,12 +64,12 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
     <div className="space-y-7" data-blog-body>
       {/* ── [무기 1] 행정 핵심 요약 (3줄 브리핑) ── */}
       {keyPoints && keyPoints.length > 0 && (
-        <div className="my-6 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 p-5 sm:p-6 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] transition-all duration-300 relative overflow-hidden group">
-          <div className="flex items-center gap-2 pb-3 mb-3.5 border-b border-gray-100 dark:border-zinc-800 font-bold text-base text-zinc-900 dark:text-zinc-100">
-            <AppIcon name="file-text" size={18} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400" />
-            <span>{keyPointsTitle || '행정 핵심 요약 (3줄 브리핑)'}</span>
-          </div>
-          <ul className="space-y-2.5 text-sm sm:text-[15px] font-normal text-zinc-800 dark:text-zinc-200">
+        <CommonBox
+          tone="green"
+          title={keyPointsTitle || '행정 핵심 요약 (3줄 브리핑)'}
+          icon={<AppIcon name="file-text" size={18} strokeWidth={2.5} />}
+        >
+          <ul className="space-y-2.5 font-normal text-zinc-800 dark:text-zinc-200">
             {keyPoints.map((pt, i) => (
               <li key={i} className="flex items-start gap-2.5">
                 <span className="text-emerald-600 dark:text-emerald-400 font-bold mt-0.5 shrink-0">✓</span>
@@ -77,7 +79,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
               </li>
             ))}
           </ul>
-        </div>
+        </CommonBox>
       )}
 
       {/* ── 오프닝 서술 문단 ── */}
@@ -99,35 +101,36 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
         </div>
       ))}
 
-      {/* ── [무기 4] 신청 자격 / 관람 1분 체크리스트 (인터랙티브 체크리스트) ── */}
+      {/* ── [무기 4] 신청 자격 1분 자가진단 (체크리스트) ── */}
       {checklistItems && checklistItems.length > 0 && (
-        <div className="my-8 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 p-5 sm:p-6 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] transition-all duration-300 relative overflow-hidden group">
-          <div className="flex items-center justify-between pb-3 mb-4 border-b border-gray-100 dark:border-zinc-800">
-            <h3 className="font-bold text-base sm:text-lg text-zinc-900 dark:text-zinc-100 flex items-center gap-2 m-0">
-              <AppIcon
-                name={
-                  checklistTitle?.includes('관람') || checklistTitle?.includes('축제')
-                    ? 'sparkles'
-                    : checklistTitle?.includes('응급') || checklistTitle?.includes('대처')
-                    ? 'shield-alert'
-                    : checklistTitle?.includes('검진')
-                    ? 'stethoscope'
-                    : 'shield-check'
-                }
-                size={18}
-                strokeWidth={2.5}
-                className="text-sky-600 dark:text-sky-400"
-              />
-              <span>{checklistTitle || '신청 자격 1분 자가진단'}</span>
-            </h3>
-            <span className="text-xs font-bold text-sky-800 bg-sky-50 dark:text-sky-300 dark:bg-sky-950/60 px-2.5 py-0.5 border border-sky-200 dark:border-sky-800">
+        <CommonBox
+          tone="blue"
+          title={checklistTitle || '신청 자격 1분 자가진단'}
+          icon={
+            <AppIcon
+              name={
+                checklistTitle?.includes('관람') || checklistTitle?.includes('축제')
+                  ? 'sparkles'
+                  : checklistTitle?.includes('응급') || checklistTitle?.includes('대처')
+                  ? 'shield-alert'
+                  : checklistTitle?.includes('검진')
+                  ? 'stethoscope'
+                  : 'shield-check'
+              }
+              size={18}
+              strokeWidth={2.5}
+            />
+          }
+          headerRight={
+            <span className="text-[11px] font-bold text-sky-800 bg-sky-100/80 dark:text-sky-300 dark:bg-sky-900/60 px-2 py-0.5 border border-sky-200 dark:border-sky-800">
               {checklistTitle?.includes('관람')
                 ? '관람안내'
                 : checklistTitle?.includes('체크리스트')
                 ? '체크리스트'
-                : '자가점검표'}
+                : '자가진단'}
             </span>
-          </div>
+          }
+        >
           <div className="space-y-2.5">
             {checklistItems.map((item, idx) => {
               const isChecked = !!checkedMap[idx];
@@ -152,16 +155,16 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
               );
             })}
           </div>
-        </div>
+        </CommonBox>
       )}
 
-      {/* ── [무기 5] 자주 묻는 질문 (Civic FAQ 아코디언) ── */}
+      {/* ── [무기 5] 자주 묻는 질문 (FAQ 아코디언) ── */}
       {faqItems && faqItems.length > 0 && (
-        <div className="my-8 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 p-5 sm:p-6 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] transition-all duration-300 relative overflow-hidden group">
-          <div className="flex items-center gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-zinc-800 font-bold text-base sm:text-lg text-zinc-900 dark:text-zinc-100">
-            <AppIcon name="chat" size={18} strokeWidth={2.5} className="text-amber-600 dark:text-amber-400" />
-            <span>자주 묻는 질문 (FAQ)</span>
-          </div>
+        <CommonBox
+          tone="yellow"
+          title="자주 묻는 질문 (FAQ)"
+          icon={<AppIcon name="chat" size={18} strokeWidth={2.5} />}
+        >
           <div className="space-y-3">
             {faqItems.map((faq, idx) => {
               const isOpen = openFaqIndex === idx;
@@ -194,12 +197,12 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
               );
             })}
           </div>
-        </div>
+        </CommonBox>
       )}
 
       {/* ── [무기 6] 원스톱 공식 신청처 안내 배너 ── */}
       {sourceLink && (
-        <div className="my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300 rounded-none relative overflow-hidden group">
+        <PremiumCard hoverEffect={true} className="my-8 !flex-row !items-center !justify-between !gap-4">
           <div>
             <span className="font-bold text-zinc-950 dark:text-zinc-100 flex items-center gap-2 mb-1 text-sm sm:text-base">
               <AppIcon name="external-link" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
@@ -218,7 +221,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
             <span>공식 접수처 바로가기</span>
             <AppIcon name="chevron-right" size={14} strokeWidth={2.5} />
           </a>
-        </div>
+        </PremiumCard>
       )}
 
       {/* ── [무기 7] 내 주변 생활 지도 퀵메뉴 ── */}

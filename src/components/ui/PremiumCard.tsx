@@ -36,15 +36,14 @@ export default function PremiumCard({
     default: 'border-gray-200/90 dark:border-zinc-800',
   };
 
-  // 2중 다중 분산 농묵 40% 울트라 딥 섀도우 & 1px 물리적 리프트 인터랙션
   const hoverBorders = 'hover:border-zinc-900 dark:hover:border-zinc-100 hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] hover:-translate-y-1';
 
-  const baseClass = `bg-white dark:bg-[#181a1d] p-4 sm:p-5 border ${baseBorders[borderColor] || baseBorders.default} shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] transition-all duration-300 relative overflow-hidden rounded-none flex flex-col min-h-0 group ${
+  const cardClasses = `bg-white dark:bg-[#181a1d] p-4 sm:p-5 border ${baseBorders[borderColor] || baseBorders.default} shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] transition-all duration-300 relative overflow-hidden rounded-none flex flex-col min-h-0 group ${
     hoverEffect ? `${hoverBorders} cursor-pointer` : ''
   } ${className}`;
 
   return (
-    <div className={`${baseClass} ${className}`} {...props}>
+    <div className={cardClasses} {...props}>
       {/* 호버 시 은은한 워시 배경 (좌측 검은선 배제) */}
       {hoverEffect && (
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/60 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />

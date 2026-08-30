@@ -8,6 +8,7 @@ import rehypeSlug from 'rehype-slug';
 import type { Components } from 'react-markdown';
 import PremiumHeading from '@/components/ui/PremiumHeading';
 import PremiumCard from '@/components/ui/PremiumCard';
+import CommonBox from '@/components/blog/CommonBox';
 import AppIcon from '@/components/ui/AppIcon';
 import { BLOG_TONE_TOKENS, getToneColor as getTokenTone, getKeywordTone, BlogTone } from '@/lib/blog-tokens';
 
@@ -81,7 +82,6 @@ export const sharedComponents: Components & Record<string, any> = {
   blockquote: ({ children }: any) => {
     const childArray = React.Children.toArray(children);
     const tone = getToneColor(children);
-    const token = BLOG_TONE_TOKENS[tone] || BLOG_TONE_TOKENS.blue;
 
     const firstChild = childArray[0];
 
@@ -92,30 +92,28 @@ export const sharedComponents: Components & Record<string, any> = {
 
     if (isFirstChildHeading) {
       const headingElement = firstChild as React.ReactElement<any>;
-      const headingChildren = headingElement.props.children;
+      const headingText = extractTextFromNode(headingElement.props.children);
       const bodyElements = childArray.slice(1);
 
       return (
-        <div className={`my-8 bg-white dark:bg-[#181a1d] transition-all duration-300 relative overflow-hidden group ${token.tailwind.border} ${token.tailwind.hoverBorder} shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] rounded-none`}>
-          <div className={`px-5 sm:px-6 py-3 bg-gradient-to-r ${token.tailwind.headerGradient} relative z-10`}>
-            <h3 className={`text-[15px] font-bold flex items-center gap-2.5 tracking-tight !m-0 !p-0 border-0 bg-transparent ${token.tailwind.titleColor}`}>
-              <AppIcon name="compass" size={16} strokeWidth={2} />
-              <span>{headingChildren}</span>
-            </h3>
-          </div>
-          <div className="p-5 sm:p-6 text-[14.5px] sm:text-[15px] font-normal text-zinc-700 dark:text-zinc-300 leading-[1.8] tracking-tight [&>p]:mb-4 sm:[&>p]:mb-5 [&>p:last-child]:!mb-0 relative z-10 break-keep">
-            {bodyElements}
-          </div>
-        </div>
+        <CommonBox
+          tone={tone}
+          title={headingText}
+          icon={<AppIcon name="compass" size={16} strokeWidth={2} />}
+        >
+          {bodyElements}
+        </CommonBox>
       );
     }
 
     return (
-      <div className={`my-8 bg-white dark:bg-[#181a1d] p-5 sm:p-6 transition-all duration-300 relative overflow-hidden group ${token.tailwind.border} ${token.tailwind.hoverBorder} shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] rounded-none`}>
-        <div className="relative z-10 text-[14.5px] sm:text-[15px] font-normal text-zinc-700 dark:text-zinc-300 leading-[1.8] tracking-tight [&>p]:mb-4 sm:[&>p]:mb-5 [&>p:last-child]:!mb-0 break-keep">
-          {children}
-        </div>
-      </div>
+      <CommonBox
+        tone={tone}
+        title="안내 및 핵심 정보"
+        icon={<AppIcon name="shield-check" size={16} strokeWidth={2} />}
+      >
+        {children}
+      </CommonBox>
     );
   },
 
