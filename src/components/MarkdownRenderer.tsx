@@ -10,7 +10,6 @@ import PremiumHeading from '@/components/ui/PremiumHeading';
 import PremiumCard from '@/components/ui/PremiumCard';
 import CommonBox from '@/components/blog/CommonBox';
 import AppIcon from '@/components/ui/AppIcon';
-import { BLOG_TONE_TOKENS, getToneColor as getTokenTone, getKeywordTone, BlogTone } from '@/lib/blog-tokens';
 
 const SCROLL_OFFSET = 140;
 
@@ -31,11 +30,6 @@ const UnifiedHeadingRenderer = ({ level, children, id }: { level: 1|2|3|4|5|6, c
       {children}
     </PremiumHeading>
   );
-};
-
-const getToneColor = (node: React.ReactNode): BlogTone => {
-  const fullText = extractTextFromNode(node).trim();
-  return getTokenTone(fullText);
 };
 
 export const sharedComponents: Components & Record<string, any> = {
@@ -76,7 +70,6 @@ export const sharedComponents: Components & Record<string, any> = {
 
   blockquote: ({ children }: any) => {
     const childArray = React.Children.toArray(children);
-    const tone = getToneColor(children);
 
     const firstChild = childArray[0];
 
@@ -92,9 +85,8 @@ export const sharedComponents: Components & Record<string, any> = {
 
       return (
         <CommonBox
-          tone={tone}
           title={headingText}
-          icon={<AppIcon name="compass" size={16} strokeWidth={2} />}
+          className="my-6"
         >
           {bodyElements}
         </CommonBox>
@@ -102,13 +94,9 @@ export const sharedComponents: Components & Record<string, any> = {
     }
 
     return (
-      <CommonBox
-        tone={tone}
-        title="안내 및 핵심 정보"
-        icon={<AppIcon name="shield-check" size={16} strokeWidth={2} />}
-      >
+      <blockquote className="my-6 border-l-4 border-zinc-900 dark:border-zinc-100 pl-4 py-2 bg-zinc-50/80 dark:bg-zinc-800/40 text-zinc-700 dark:text-zinc-300 italic text-sm sm:text-base leading-relaxed">
         {children}
-      </CommonBox>
+      </blockquote>
     );
   },
 
@@ -182,11 +170,11 @@ export const sharedComponents: Components & Record<string, any> = {
   },
 
   calculator: () => null,
-  red: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.red.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
-  orange: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.yellow.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
-  green: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.green.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
-  blue: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.blue.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
-  purple: ({ children }: { children?: React.ReactNode }) => <strong className={`${BLOG_TONE_TOKENS.purple.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>{children}</strong>,
+  red: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-950 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold border border-zinc-200 dark:border-zinc-700">{children}</strong>,
+  orange: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-950 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold border border-zinc-200 dark:border-zinc-700">{children}</strong>,
+  green: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-950 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold border border-zinc-200 dark:border-zinc-700">{children}</strong>,
+  blue: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-950 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold border border-zinc-200 dark:border-zinc-700">{children}</strong>,
+  purple: ({ children }: { children?: React.ReactNode }) => <strong className="text-zinc-950 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 mx-0.5 rounded-none font-bold border border-zinc-200 dark:border-zinc-700">{children}</strong>,
 
   relatedbox: ({ children }: any) => (
     <PremiumCard borderColor="charcoal" hoverEffect={true} className="my-10 group">
