@@ -116,7 +116,50 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
         </div>
       </PremiumCard>
 
-      {/* ── 2. 실시간 인기 키워드 태그 카드 ── */}
+      {/* ── 2. [Phase 2] 카카오톡 채널 주간 알림톡 구독 위젯 ── */}
+      <div className="p-4 border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_15px_rgba(0,0,0,0.04)] dark:shadow-[0_0_15px_rgba(0,0,0,0.30)] relative overflow-hidden group">
+        <div className="flex items-center gap-2 mb-2">
+          <AppIcon name="chat" size={15} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />
+          <h4 className="text-xs font-extrabold text-zinc-950 dark:text-white">의정부 주간 핫알림 구독</h4>
+        </div>
+        <p className="text-[11.5px] text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
+          이번 주말 문 여는 소아과 & 이번 달 지원금 공고를 카카오톡으로 받아보세요.
+        </p>
+        <a
+          href="https://pf.kakao.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 flex items-center justify-between w-full py-2 px-3 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-extrabold text-xs transition-colors rounded-none"
+        >
+          <span>카카오톡 알림 받기</span>
+          <AppIcon name="chevron-right" size={12} strokeWidth={3} />
+        </a>
+      </div>
+
+      {/* ── 3. [Phase 3] 보상스쿨 연계 : 의정부 시민 무료 사고·상해 보상 진단 ── */}
+      <div className="p-4 border border-zinc-900 dark:border-zinc-700 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 text-white shadow-sm relative overflow-hidden group">
+        <div className="flex items-center justify-between mb-1.5">
+          <div className="flex items-center gap-1.5">
+            <AppIcon name="scale" size={14} strokeWidth={2.5} className="text-zinc-300" />
+            <span className="text-xs font-extrabold text-white">시민 무료 보상 진단</span>
+          </div>
+          <span className="text-[10px] font-bold text-zinc-300 bg-white/10 px-1.5 py-0.5 border border-white/20">
+            보상스쿨 연계
+          </span>
+        </div>
+        <p className="text-[11px] text-zinc-300 leading-relaxed font-normal mt-1">
+          교통사고, 낙상, 일상 상해 보험금 및 후유장해 1:1 무료 상담
+        </p>
+        <a
+          href="tel:1588-0000"
+          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white transition-colors"
+        >
+          <span>1:1 무료 진단 요청</span>
+          <AppIcon name="chevron-right" size={12} strokeWidth={2.5} />
+        </a>
+      </div>
+
+      {/* ── 4. 실시간 인기 키워드 태그 카드 ── */}
       {tags.length > 0 && (
         <PremiumCard borderColor="default" hoverEffect={true} watermarkIcon="pin" className="!p-4 sm:!p-5">
           <div className="flex items-center justify-between min-w-0 gap-2 mb-3.5 pb-2 border-b border-gray-100 dark:border-zinc-800">
@@ -144,21 +187,21 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
         </PremiumCard>
       )}
 
-      {/* ── 3. 의정부시 공식 행정 직통 안내 배너 ── */}
-      <div className="p-4 border border-gray-200/90 dark:border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 text-white shadow-sm">
-        <div className="flex items-center gap-2 mb-1.5">
-          <AppIcon name="phone" size={14} strokeWidth={2.5} className="text-zinc-300" />
-          <span className="text-xs font-extrabold text-white">의정부시 대표 콜센터</span>
+      {/* ── 5. 의정부시 공식 행정 직통 안내 배너 ── */}
+      <div className="p-4 border border-gray-200/90 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-sm">
+        <div className="flex items-center gap-2 mb-1">
+          <AppIcon name="phone" size={14} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
+          <span className="text-xs font-extrabold text-zinc-950 dark:text-white">의정부시 대표 콜센터</span>
         </div>
-        <p className="text-[11px] text-zinc-400 leading-relaxed font-normal">
+        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed font-normal">
           시정 문의 및 생활 민원 안내 (평일 09:00 ~ 18:00)
         </p>
         <a
           href="tel:031-828-1234"
-          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-bold text-white transition-colors"
+          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 border border-gray-200 dark:border-zinc-700 text-xs font-bold text-zinc-950 dark:text-white transition-colors"
         >
           <span>031-828-1234</span>
-          <span className="text-[10px] text-zinc-300 font-normal">전화연결 &gt;</span>
+          <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-normal">전화연결 &gt;</span>
         </a>
       </div>
     </div>
