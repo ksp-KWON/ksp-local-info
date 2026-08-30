@@ -112,7 +112,7 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
         )}
 
         {selectedMerchant && (
-          <div className="absolute bottom-4 left-4 right-4 bg-white dark:bg-zinc-900 p-4 border border-zinc-200 dark:border-zinc-700 shadow-lg rounded-none z-30 flex justify-between items-start">
+          <div className="absolute bottom-4 left-4 right-4 bg-white dark:bg-[#181a1d] p-4 border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,0.35),0_0_20px_rgba(0,0,0,0.20)] dark:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] rounded-none z-30 flex justify-between items-start">
             <div>
               <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">{selectedMerchant.category}</span>
               <h3 className="text-base font-bold text-zinc-900 dark:text-white">{selectedMerchant.name}</h3>
