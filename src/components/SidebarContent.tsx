@@ -1,5 +1,11 @@
 'use client';
 
+/**
+ * SidebarContent.tsx
+ * 사이드바 컴포넌트 (Client Component)
+ * - 의정부 5대 퀵메뉴 + 보상스쿨 직통 비즈니스 브릿지 + 인기 태그 + 시청 대표 콜센터
+ */
+
 import React from 'react';
 import Link from 'next/link';
 import SidebarTagMore from './SidebarTagMore';
@@ -63,11 +69,11 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
   const hiddenTags = tags.slice(INITIAL_TAG_COUNT);
 
   return (
-    <div className="space-y-3.5">
-      {/* ── 1. 의정부 시민 퀵서비스 허브 + 시청 콜센터 통합 카드 ── */}
-      <PremiumCard borderColor="default" hoverEffect={false} watermarkIcon="compass" className="!p-4">
+    <div className="space-y-4">
+      {/* ── 1. 의정부 시민 퀵서비스 허브 (단일 통합 프리미엄 카드) ── */}
+      <PremiumCard borderColor="default" hoverEffect={false} watermarkIcon="compass" className="!p-4 sm:!p-5">
         {/* 카드 헤더 */}
-        <div className="flex items-center justify-between min-w-0 gap-2 mb-2.5 pb-2 border-b border-gray-100 dark:border-zinc-800">
+        <div className="flex items-center justify-between min-w-0 gap-2 mb-3 pb-2 border-b border-gray-100 dark:border-zinc-800">
           <div className="flex items-center gap-2">
             <AppIcon name="compass" size={16} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />
             <h3 className="text-xs sm:text-sm font-extrabold text-zinc-950 dark:text-white tracking-tight">
@@ -111,58 +117,36 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
             </Link>
           ))}
         </div>
-
-        {/* 하단 시청 대표 콜센터 직통 인라인 바 */}
-        <div className="mt-2.5 pt-2.5 border-t border-gray-100 dark:border-zinc-800 flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400 font-medium">
-            <AppIcon name="phone" size={13} strokeWidth={2.5} className="text-zinc-800 dark:text-zinc-200" />
-            <span>의정부시 콜센터</span>
-          </div>
-          <a
-            href="tel:031-828-1234"
-            className="font-extrabold text-zinc-900 dark:text-zinc-100 hover:underline flex items-center gap-1 text-[11.5px]"
-          >
-            <span>031-828-1234</span>
-            <AppIcon name="chevron-right" size={11} strokeWidth={2.5} />
-          </a>
-        </div>
       </PremiumCard>
 
-      {/* ── 2. [2-in-1] 카카오톡 주간 알림 & 보상스쿨 무료 진단 액션 바 ── */}
-      <div className="grid grid-cols-1 gap-2">
-        {/* 카카오톡 알림 */}
+      {/* ── 2. 보상스쿨 연계 : 의정부 시민 무료 사고·상해 보상 진단 ── */}
+      <div className="p-4 border border-zinc-900 dark:border-zinc-700 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 text-white shadow-sm relative overflow-hidden group">
+        <div className="flex items-center justify-between mb-1.5">
+          <div className="flex items-center gap-1.5">
+            <AppIcon name="scale" size={14} strokeWidth={2.5} className="text-zinc-300" />
+            <span className="text-xs font-extrabold text-white">시민 무료 보상 진단</span>
+          </div>
+          <span className="text-[10px] font-bold text-zinc-300 bg-white/10 px-1.5 py-0.5 border border-white/20">
+            보상스쿨 연계
+          </span>
+        </div>
+        <p className="text-[11px] text-zinc-300 leading-relaxed font-normal mt-1">
+          교통사고, 낙상, 일상 상해 보험금 및 후유장해 1:1 전문 무료 상담
+        </p>
         <a
-          href="https://pf.kakao.com"
+          href="https://claim-works.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between p-2.5 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-extrabold text-xs transition-colors shadow-2xs group"
+          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white transition-colors"
         >
-          <div className="flex items-center gap-2">
-            <AppIcon name="chat" size={14} strokeWidth={2.5} />
-            <span>의정부 주간 핫알림 카톡 구독</span>
-          </div>
-          <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
-        </a>
-
-        {/* 보상스쿨 무료 보상 진단 */}
-        <a
-          href="tel:1588-0000"
-          className="flex items-center justify-between p-2.5 bg-gradient-to-r from-zinc-950 to-zinc-900 hover:from-zinc-900 hover:to-zinc-800 text-white font-bold text-xs border border-zinc-800 transition-colors shadow-2xs group"
-        >
-          <div className="flex items-center gap-2">
-            <AppIcon name="scale" size={14} strokeWidth={2.5} className="text-zinc-300" />
-            <span>시민 무료 사고·상해 보상 진단</span>
-          </div>
-          <span className="text-[10px] text-zinc-300 font-normal flex items-center gap-0.5">
-            <span>보상스쿨</span>
-            <AppIcon name="chevron-right" size={11} strokeWidth={2.5} />
-          </span>
+          <span>보상스쿨 1:1 상담 바로가기</span>
+          <AppIcon name="chevron-right" size={12} strokeWidth={2.5} />
         </a>
       </div>
 
       {/* ── 3. 실시간 인기 키워드 태그 카드 ── */}
       {tags.length > 0 && (
-        <PremiumCard borderColor="default" hoverEffect={true} watermarkIcon="pin" className="!p-3.5">
+        <PremiumCard borderColor="default" hoverEffect={true} watermarkIcon="pin" className="!p-4">
           <div className="flex items-center justify-between min-w-0 gap-2 mb-2 pb-1.5 border-b border-gray-100 dark:border-zinc-800">
             <div className="flex items-center gap-1.5">
               <AppIcon name="pin" size={14} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />
@@ -172,12 +156,12 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
               실시간
             </span>
           </div>
-          <div className="flex flex-wrap gap-1 text-[11px] font-medium">
+          <div className="flex flex-wrap gap-1.5 text-xs font-medium">
             {visibleTags.map((tag) => (
               <Link
                 key={tag}
                 href={`/blog?tag=${encodeURIComponent(tag)}`}
-                className="flex items-center gap-0.5 px-2 py-0.5 rounded-none bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-gray-200/80 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all font-medium"
+                className="flex items-center gap-0.5 px-2.5 py-1 rounded-none bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-gray-200/80 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all font-medium"
               >
                 <span className="text-zinc-400 dark:text-zinc-500">#</span>
                 {tag}
@@ -187,6 +171,24 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
           {hiddenTags.length > 0 && <SidebarTagMore tags={hiddenTags} />}
         </PremiumCard>
       )}
+
+      {/* ── 4. 의정부시 공식 행정 직통 안내 배너 ── */}
+      <div className="p-4 border border-gray-200/90 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-sm">
+        <div className="flex items-center gap-2 mb-1">
+          <AppIcon name="phone" size={14} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
+          <span className="text-xs font-extrabold text-zinc-950 dark:text-white">의정부시 대표 콜센터</span>
+        </div>
+        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed font-normal">
+          시정 문의 및 생활 민원 안내 (평일 09:00 ~ 18:00)
+        </p>
+        <a
+          href="tel:031-828-1234"
+          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 border border-gray-200 dark:border-zinc-700 text-xs font-bold text-zinc-950 dark:text-white transition-colors"
+        >
+          <span>031-828-1234</span>
+          <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-normal">전화연결 &gt;</span>
+        </a>
+      </div>
     </div>
   );
 }
