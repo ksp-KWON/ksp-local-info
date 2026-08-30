@@ -137,7 +137,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
       <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
         <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
-          {/* 아티클 헤더 */}
+          {/* 아티클 헤더 (구역 1: 카테고리/날짜 메타, 구역 2: H1 타이틀, 구역 3: 포스트 요약 리드문) */}
           <header className="border-b border-gray-100 dark:border-zinc-800 pb-8">
             <div className="flex flex-wrap items-center gap-2.5 text-xs mb-4">
               {Array.isArray(post.category) ? (
@@ -163,6 +163,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white leading-[1.3] break-keep">
               {post.title}
             </h1>
+
+            {post.summary && (
+              <p className="text-[15px] sm:text-base text-zinc-600 dark:text-zinc-400 font-normal leading-relaxed mt-4 pt-4 border-t border-gray-100/80 dark:border-zinc-800/80 break-keep">
+                {post.summary}
+              </p>
+            )}
           </header>
 
           {/* 블로그 본문 (TOC & Markdown & ShareButtons 일체화) */}
