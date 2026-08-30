@@ -14,18 +14,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { callGemini } = require('./gemini-helper');
-const { sleep } = require('./pipeline-utils');
-
-// ── 환경변수 로드 (.env.local) ──────────────────────────────────────────────
-const envPath = path.join(process.cwd(), '.env.local');
-if (fs.existsSync(envPath)) {
-  fs.readFileSync(envPath, 'utf8').split('\n').forEach(line => {
-    const m = line.match(/^\s*([\w.-]+)\s*=\s*(.*?)?\s*$/);
-    if (m && !process.env[m[1]]) {
-      process.env[m[1]] = (m[2] ?? '').replace(/(^['"]|['"]$)/g, '').trim();
-    }
-  });
-}
+const { sleep, safeFetch } = require('./pipeline-utils');
 
 // ── 필터링 상수 ─────────────────────────────────────────────────────────────
 // 1순위: 의정부 키워드
@@ -63,7 +52,7 @@ async function main() {
     
     try {
       console.log(`  [API] 공공데이터포털 서비스 목록 수집 중... (페이지 ${page}/${MAX_PAGES})`);
-      const response = await fetch(url);
+      const response = await safeFetch(url, {}, 12000);
       if (!response.ok) {
         throw new Error(`공공데이터 API 오류: HTTP ${response.status}`);
       }

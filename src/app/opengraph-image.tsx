@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const dynamic = 'force-static';
 
-export const alt = '의정부 생활정보 포털';
+export const alt = '의정부 건강·생활 정보 포털';
 export const size = {
   width: 1200,
   height: 630,
@@ -20,9 +20,9 @@ export default async function Image() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#1a73e8',
-          backgroundImage: 'linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%)',
-          padding: '80px',
+          backgroundColor: '#09090b',
+          backgroundImage: 'linear-gradient(135deg, #09090b 0%, #18181b 50%, #27272a 100%)',
+          padding: '48px',
         }}
       >
         <div
@@ -30,35 +30,84 @@ export default async function Image() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            justifyContent: 'space-between',
+            backgroundColor: '#ffffff',
             width: '100%',
             height: '100%',
-            borderRadius: '40px',
-            padding: '60px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+            borderRadius: '0px',
+            border: '2px solid #e4e4e7',
+            padding: '56px 64px',
+            boxShadow: '0 0 50px rgba(0,0,0,0.6)',
           }}
         >
+          {/* 상단 뱃지 영역 */}
           <div
             style={{
-              fontSize: '64px',
-              fontWeight: '900',
-              color: '#1a73e8',
-              marginBottom: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#047857',
+              color: '#ffffff',
+              padding: '10px 24px',
+              fontSize: '20px',
+              fontWeight: '800',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
             }}
           >
-            의정부 생활정보
+            의정부시 공공데이터 포털
           </div>
+
+          {/* 중앙 메인 타이틀 */}
           <div
             style={{
-              fontSize: '48px',
-              fontWeight: 'bold',
-              color: '#111827',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
               textAlign: 'center',
-              letterSpacing: '-0.02em',
             }}
           >
-            시민들을 위한 혜택 및 공공데이터 가이드
+            <div
+              style={{
+                fontSize: '60px',
+                fontWeight: '900',
+                color: '#09090b',
+                letterSpacing: '-0.03em',
+                marginBottom: '16px',
+              }}
+            >
+              의정부 건강·생활 정보 포털
+            </div>
+            <div
+              style={{
+                fontSize: '28px',
+                fontWeight: '600',
+                color: '#52525b',
+                letterSpacing: '-0.01em',
+              }}
+            >
+              달빛어린이병원 · 심야약국 · 사랑카드 · 시정 지원금 큐레이션
+            </div>
+          </div>
+
+          {/* 하단 푸터 바 */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+              borderTop: '1px solid #f4f4f5',
+              paddingTop: '24px',
+            }}
+          >
+            <div style={{ fontSize: '20px', fontWeight: '800', color: '#18181b' }}>
+              ksp-local-info-edg.pages.dev
+            </div>
+            <div style={{ fontSize: '18px', fontWeight: '600', color: '#71717a' }}>
+              의정부 행복특별시 공공데이터 실시간 연동
+            </div>
           </div>
         </div>
       </div>
