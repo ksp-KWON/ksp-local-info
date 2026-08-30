@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
 import AppIcon from '@/components/ui/AppIcon';
 
 export const metadata: Metadata = {
@@ -44,29 +45,20 @@ export default function AboutPage() {
       </nav>
 
       {/* 2. 메인 헤더 배너 */}
-      <div className="relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] p-6 sm:p-10 group transition-all duration-300">
-        <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.03] dark:text-zinc-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
-          <AppIcon name="shield-check" size={180} strokeWidth={1.5} />
-        </div>
-        <div className="relative z-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 text-xs font-bold uppercase tracking-wider border border-emerald-200 dark:border-emerald-800 rounded-none shadow-2xs">
-            <AppIcon name="shield-check" size={14} strokeWidth={2} className="text-emerald-600 dark:text-emerald-400" />
-            <span>투명성과 공공성</span>
+      <PageHeaderBanner
+        badgeText="투명성과 공공성"
+        badgeTone="emerald"
+        badgeIcon="shield-check"
+        title="의정부 건강·생활 정보 포털의 사명"
+        description="시민들에게 꼭 필요한 공공 혜택과 응급의료 정보가 복잡한 행정 사이트에 흩어져 있어 놓치는 일이 없도록, 공공데이터를 실시간으로 연결하여 가장 읽기 쉽고 직관적인 형태로 큐레이션합니다."
+        watermarkIcon="shield-check"
+      >
+        {lastUpdated && (
+          <div className="pt-2 text-xs font-medium text-zinc-500">
+            최근 데이터 동기화: {lastUpdated}
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
-            의정부 건강·생활 정보 포털의 사명
-          </h1>
-          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal leading-relaxed break-keep max-w-2xl">
-            시민들에게 꼭 필요한 공공 혜택과 응급의료 정보가 복잡한 행정 사이트에 흩어져 있어 놓치는 일이 없도록,
-            공공데이터를 실시간으로 연결하여 가장 읽기 쉽고 직관적인 형태로 큐레이션합니다.
-          </p>
-          {lastUpdated && (
-            <div className="pt-2 text-xs font-medium text-zinc-500">
-              최근 데이터 동기화: {lastUpdated}
-            </div>
-          )}
-        </div>
-      </div>
+        )}
+      </PageHeaderBanner>
 
       {/* 3. 3대 핵심 가치 카드 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState, Suspense } from 'react';
 import PostCard from '@/components/ui/PostCard';
 import AppIcon from '@/components/ui/AppIcon';
+import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
 import { PostData } from '@/lib/types';
 
 function SearchResults() {
@@ -54,46 +55,40 @@ function SearchResults() {
   return (
     <div className="space-y-8 pb-16">
       {/* 1. 검색 인트로 헤더 */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] p-6 sm:p-8 group transition-all duration-300">
-        <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.03] dark:text-zinc-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
-          <AppIcon name="search" size={160} strokeWidth={1.5} />
-        </div>
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 text-xs font-bold uppercase tracking-wider mb-3 border border-sky-200 dark:border-sky-800 rounded-none shadow-2xs">
-            <AppIcon name="search" size={14} strokeWidth={2} className="text-sky-600 dark:text-sky-400" />
-            <span>통합 검색 센터</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 dark:text-white tracking-tight">
-            {q ? (
-              <span>
-                ‘<span className="text-sky-700 dark:text-sky-400 underline decoration-2">{q}</span>’ 검색 결과
-              </span>
-            ) : (
-              '의정부 생활정보 검색'
-            )}
-          </h1>
-          <p className="mt-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal">
-            {q ? `총 ${results.length}개의 관련 소식을 찾았습니다.` : '찾으시는 혜택, 병원, 지원금 키워드를 입력해 보세요.'}
-          </p>
-
-          {/* 추천 키워드 칩 */}
-          <div className="mt-5 flex items-center flex-wrap gap-1.5 pt-4 border-t border-gray-100 dark:border-zinc-800">
-            <span className="text-xs font-bold text-zinc-500 mr-1 flex items-center gap-1">
-              <AppIcon name="zap" size={12} strokeWidth={2} className="text-amber-500" />
-              인기 키워드:
+      <PageHeaderBanner
+        className="mt-4"
+        badgeText="통합 검색 센터"
+        badgeTone="sky"
+        badgeIcon="search"
+        title={
+          q ? (
+            <span>
+              ‘<span className="text-sky-700 dark:text-sky-400 underline decoration-2">{q}</span>’ 검색 결과
             </span>
-            {popularKeywords.map((kw) => (
-              <Link
-                key={kw}
-                href={`/search?q=${encodeURIComponent(kw)}`}
-                className="px-2.5 py-1 text-xs font-medium rounded-none bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all shadow-2xs"
-              >
-                #{kw}
-              </Link>
-            ))}
-          </div>
+          ) : (
+            '의정부 생활정보 검색'
+          )
+        }
+        description={q ? `총 ${results.length}개의 관련 소식을 찾았습니다.` : '찾으시는 혜택, 병원, 지원금 키워드를 입력해 보세요.'}
+        watermarkIcon="search"
+      >
+        {/* 추천 키워드 칩 */}
+        <div className="mt-5 flex items-center flex-wrap gap-1.5 pt-4 border-t border-gray-100 dark:border-zinc-800">
+          <span className="text-xs font-bold text-zinc-500 mr-1 flex items-center gap-1">
+            <AppIcon name="zap" size={12} strokeWidth={2} className="text-amber-500" />
+            인기 키워드:
+          </span>
+          {popularKeywords.map((kw) => (
+            <Link
+              key={kw}
+              href={`/search?q=${encodeURIComponent(kw)}`}
+              className="px-2.5 py-1 text-xs font-medium rounded-none bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all shadow-2xs"
+            >
+              #{kw}
+            </Link>
+          ))}
         </div>
-      </div>
+      </PageHeaderBanner>
 
       {/* 2. 결과 목록 */}
       {isLoading ? (

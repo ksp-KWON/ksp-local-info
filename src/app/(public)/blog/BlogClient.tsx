@@ -6,6 +6,7 @@ import PostCard from '@/components/ui/PostCard';
 import { PostData } from '@/lib/types';
 import { CATEGORIES } from '@/lib/constants';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
+import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
 import Link from 'next/link';
 
 function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
@@ -43,23 +44,15 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   return (
     <div className="space-y-8 sm:space-y-10 pb-16">
       {/* 1. 카테고리 헤더 */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] p-6 sm:p-8 group transition-all duration-300">
-        <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.03] dark:text-zinc-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
-          <AppIcon name="compass" size={160} strokeWidth={1.5} />
-        </div>
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 text-xs font-bold uppercase tracking-wider mb-3 border border-sky-200 dark:border-sky-800 rounded-none shadow-2xs">
-            <AppIcon name="list" size={14} strokeWidth={2} className="text-sky-600 dark:text-sky-400" />
-            <span>카테고리 큐레이션</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white mb-2">
-            {categoryTitle}
-          </h1>
-          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal break-keep">
-            {categoryDesc} (총 {posts.length}건)
-          </p>
-        </div>
-      </div>
+      <PageHeaderBanner
+        className="mt-4"
+        badgeText="카테고리 큐레이션"
+        badgeTone="sky"
+        badgeIcon="list"
+        title={categoryTitle}
+        description={`${categoryDesc} (총 ${posts.length}건)`}
+        watermarkIcon="compass"
+      />
 
       {/* 2. 카테고리 필터 탭바 */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
