@@ -3,7 +3,7 @@
 import React from 'react';
 import PostCard from '@/components/ui/PostCard';
 import SectionLayout from '@/components/ui/SectionLayout';
-import AppIcon from '@/components/ui/AppIcon';
+import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 import { PostData } from '@/lib/types';
 
 interface HomePostListProps {
@@ -14,7 +14,8 @@ interface MasterChapter {
   id: string;
   title: string;
   desc: string;
-  icon: string;
+  icon: AppIconName;
+  watermarkIcon: AppIconName;
   categoryLink: string;
   keywords: string[];
 }
@@ -25,6 +26,7 @@ const MASTER_CHAPTERS: MasterChapter[] = [
     title: '숨은 지원금 & 복지 혜택',
     desc: '의정부시 청년, 임산부, 주거, 취업 및 생활안정 지원금 소식입니다.',
     icon: 'bank',
+    watermarkIcon: 'bank',
     categoryLink: '숨은 지원금 찾기',
     keywords: ['지원금', '혜택', '복지', '장려금', '수당', '기본소득', '청년지원', '육아', '출산', '아이', '취업', '창업', '주거', '월세'],
   },
@@ -33,6 +35,7 @@ const MASTER_CHAPTERS: MasterChapter[] = [
     title: '건강 & 안심 응급의료',
     desc: '달빛어린이병원, 공공심야약국 및 국가 무료 건강검진 정보입니다.',
     icon: 'hospital',
+    watermarkIcon: 'hospital',
     categoryLink: '아플 때 든든하게',
     keywords: ['건강', '의료', '병원', '보건', '진료', '약국', '검진', '응급', '달빛어린이병원', '심야약국'],
   },
@@ -41,6 +44,7 @@ const MASTER_CHAPTERS: MasterChapter[] = [
     title: '문화 행사 & 축제 나들이',
     desc: '의정부 예술의전당 공연, 도서관 강좌, 버스킹 및 지역 축제 소식입니다.',
     icon: 'party-popper',
+    watermarkIcon: 'compass',
     categoryLink: '이번주 뭐하지?',
     keywords: ['행사', '축제', '문화', '공연', '콘서트', '전시', '도서관', '극장', '버스킹'],
   },
@@ -49,6 +53,7 @@ const MASTER_CHAPTERS: MasterChapter[] = [
     title: '슬기로운 의정부 생활 백과',
     desc: '의정부사랑카드 가맹점 혜택, 경전철 교통 환승 및 행정복지센터 민원 꿀팁입니다.',
     icon: 'shield-check',
+    watermarkIcon: 'shield-check',
     categoryLink: '알아두면 쓸데있는 팁',
     keywords: ['교통', '환경', '버스', '경전철', '환승', '민원', '생활', '팁', '신청', '주민센터', '사랑카드'],
   },
@@ -78,13 +83,14 @@ export default function HomePostList({ initialPosts }: HomePostListProps) {
   }).filter((ch) => ch.posts.length > 0);
 
   return (
-    <div className="space-y-10 sm:space-y-12">
+    <div className="space-y-8 sm:space-y-10">
       {/* ── [구역 B] ⚡ 최신 의정부 생활 브리핑 ── */}
       {latestPosts.length > 0 && (
         <SectionLayout
           title="최신 의정부 생활 브리핑"
           description="오늘과 이번 주 의정부시에서 새로 발표된 지원금 및 시정 소식입니다."
           icon={<AppIcon name="sparkles" size={20} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />}
+          watermarkIcon="sparkles"
           viewAllLink={{
             href: '/blog',
             text: '전체 소식 보기',
@@ -104,7 +110,8 @@ export default function HomePostList({ initialPosts }: HomePostListProps) {
           key={chapter.id}
           title={chapter.title}
           description={chapter.desc}
-          icon={<AppIcon name={chapter.icon as any} size={20} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />}
+          icon={<AppIcon name={chapter.icon} size={20} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />}
+          watermarkIcon={chapter.watermarkIcon}
           viewAllLink={{
             href: `/blog?category=${encodeURIComponent(chapter.categoryLink)}`,
             text: '더보기',
