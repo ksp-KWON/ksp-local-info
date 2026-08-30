@@ -55,7 +55,7 @@ function SearchResults() {
   const popularKeywords = ['청년', '지원금', '병원', '약국', '사랑카드', '이사비', '건강검진', '출산'];
 
   return (
-    <div className="space-y-8 pb-16">
+    <div className="space-y-8">
       {/* 1. 검색 인트로 헤더 */}
       <PageHeaderBanner
         className="mt-4"

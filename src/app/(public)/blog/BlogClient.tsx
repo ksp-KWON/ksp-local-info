@@ -44,7 +44,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   }
 
   return (
-    <div className="space-y-8 sm:space-y-10 pb-16">
+    <div className="space-y-8 sm:space-y-10">
       {/* 1. 카테고리 헤더 */}
       <PageHeaderBanner
         className="mt-4"

@@ -67,7 +67,7 @@ export default function HealthCheckPage() {
   }, []);
 
   return (
-    <div className="pb-16 space-y-6">
+    <div className="space-y-6">
       {/* 1. 인트로 헤더 */}
       <PageHeaderBanner
         className="mt-4"

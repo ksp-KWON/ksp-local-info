@@ -72,7 +72,7 @@ export default async function EmergencyPlaceDetailPage({ params }: PlacePageProp
   const kakaoMapUrl = `https://map.kakao.com/link/to/${encodeURIComponent(place.name)},${place.lat},${place.lng}`;
 
   return (
-    <div className="space-y-8 pb-16">
+    <div className="space-y-8">
       {/* 구조화 데이터 주입 */}
       <script
         type="application/ld+json"
