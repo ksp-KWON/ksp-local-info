@@ -3,7 +3,10 @@
 /**
  * SidebarContent.tsx
  * 사이드바 컴포넌트 (Client Component)
- * - 의정부 5대 퀵메뉴 + 보상스쿨 직통 비즈니스 브릿지 + 인기 태그 + 시청 대표 콜센터
+ * - 1. 의정부 생활 퀵메뉴
+ * - 2. 실시간 인기 키워드 태그
+ * - 3. 보상스쿨 무료 보상 진단 비즈니스 배너
+ * - 4. 의정부시 대표 콜센터
  */
 
 import React from 'react';
@@ -119,32 +122,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
         </div>
       </PremiumCard>
 
-      {/* ── 2. 보상스쿨 연계 : 의정부 시민 무료 사고·상해 보상 진단 ── */}
-      <div className="p-4 border border-zinc-900 dark:border-zinc-700 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 text-white shadow-sm relative overflow-hidden group">
-        <div className="flex items-center justify-between mb-1.5">
-          <div className="flex items-center gap-1.5">
-            <AppIcon name="scale" size={14} strokeWidth={2.5} className="text-zinc-300" />
-            <span className="text-xs font-extrabold text-white">시민 무료 보상 진단</span>
-          </div>
-          <span className="text-[10px] font-bold text-zinc-300 bg-white/10 px-1.5 py-0.5 border border-white/20">
-            보상스쿨 연계
-          </span>
-        </div>
-        <p className="text-[11px] text-zinc-300 leading-relaxed font-normal mt-1">
-          교통사고, 낙상, 일상 상해 보험금 및 후유장해 1:1 전문 무료 상담
-        </p>
-        <a
-          href="https://claim-works.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white transition-colors"
-        >
-          <span>보상스쿨 1:1 상담 바로가기</span>
-          <AppIcon name="chevron-right" size={12} strokeWidth={2.5} />
-        </a>
-      </div>
-
-      {/* ── 3. 실시간 인기 키워드 태그 카드 ── */}
+      {/* ── 2. 실시간 인기 키워드 태그 카드 ── */}
       {tags.length > 0 && (
         <PremiumCard borderColor="default" hoverEffect={true} watermarkIcon="pin" className="!p-4">
           <div className="flex items-center justify-between min-w-0 gap-2 mb-2 pb-1.5 border-b border-gray-100 dark:border-zinc-800">
@@ -171,6 +149,31 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
           {hiddenTags.length > 0 && <SidebarTagMore tags={hiddenTags} />}
         </PremiumCard>
       )}
+
+      {/* ── 3. 보상스쿨 연계 : 의정부 시민 무료 사고·상해 보상 진단 ── */}
+      <div className="p-4 border border-zinc-900 dark:border-zinc-700 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 text-white shadow-sm relative overflow-hidden group">
+        <div className="flex items-center justify-between mb-1.5">
+          <div className="flex items-center gap-1.5">
+            <AppIcon name="scale" size={14} strokeWidth={2.5} className="text-zinc-300" />
+            <span className="text-xs font-extrabold text-white">시민 무료 보상 진단</span>
+          </div>
+          <span className="text-[10px] font-bold text-zinc-300 bg-white/10 px-1.5 py-0.5 border border-white/20">
+            보상스쿨 연계
+          </span>
+        </div>
+        <p className="text-[11px] text-zinc-300 leading-relaxed font-normal mt-1">
+          교통사고, 낙상, 일상 상해 보험금 및 후유장해 1:1 전문 무료 상담
+        </p>
+        <a
+          href="https://claim-works.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white transition-colors"
+        >
+          <span>보상스쿨 1:1 상담 바로가기</span>
+          <AppIcon name="chevron-right" size={12} strokeWidth={2.5} />
+        </a>
+      </div>
 
       {/* ── 4. 의정부시 공식 행정 직통 안내 배너 ── */}
       <div className="p-4 border border-gray-200/90 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-sm">
