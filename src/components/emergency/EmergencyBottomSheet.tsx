@@ -3,6 +3,7 @@
 import React from 'react';
 import { EmergencyItem, TabType } from '@/lib/api/emergency';
 import AppIcon from '@/components/ui/AppIcon';
+import PremiumButton from '@/components/ui/PremiumButton';
 
 interface BottomSheetProps {
   item: EmergencyItem | null;
@@ -71,22 +72,24 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
           )}
 
           <div className="flex gap-2 pt-1">
-            <a
+            <PremiumButton
               href={`tel:${item.tel}`}
-              className="flex-1 py-2.5 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-opacity hover:opacity-90 shadow-xs"
+              variant="primary"
+              size="md"
+              fullWidth
+              icon="phone"
             >
-              <AppIcon name="phone" size={14} />
-              <span>전화걸기</span>
-            </a>
-            <a
+              전화걸기
+            </PremiumButton>
+            <PremiumButton
               href={`https://map.kakao.com/link/to/${item.name},${item.lat},${item.lng}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 py-2.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-xs font-bold text-center border border-gray-200/90 dark:border-zinc-800 flex items-center justify-center gap-1.5 transition-colors hover:bg-zinc-200 dark:hover:bg-zinc-700 shadow-2xs"
+              variant="secondary"
+              size="md"
+              fullWidth
+              icon="navigation"
             >
-              <AppIcon name="navigation" size={14} />
-              <span>길찾기</span>
-            </a>
+              길찾기
+            </PremiumButton>
           </div>
         </div>
       </div>

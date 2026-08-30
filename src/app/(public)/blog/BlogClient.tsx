@@ -7,6 +7,8 @@ import { PostData } from '@/lib/types';
 import { CATEGORIES } from '@/lib/constants';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
+import PremiumCard from '@/components/ui/PremiumCard';
+import PremiumButton from '@/components/ui/PremiumButton';
 import Link from 'next/link';
 
 function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
@@ -94,19 +96,17 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
           ))}
         </div>
       ) : (
-        <div className="p-12 text-center border border-dashed border-gray-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] rounded-none">
+        <PremiumCard hoverEffect={false} className="p-12 text-center">
           <AppIcon name="info" size={36} strokeWidth={1.5} className="mx-auto mb-3 text-zinc-400" />
           <p className="text-base font-bold text-zinc-800 dark:text-zinc-200">
             해당 조건에 맞는 소식이 아직 등록되지 않았습니다.
           </p>
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-1.5 mt-4 px-5 py-2.5 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs border border-zinc-900 dark:border-white shadow-xs hover:opacity-90 transition-opacity"
-          >
-            <span>전체 글 보기</span>
-            <AppIcon name="chevron-right" size={14} strokeWidth={2} />
-          </Link>
-        </div>
+          <div className="mt-4 flex justify-center">
+            <PremiumButton href="/blog" variant="primary" size="sm" icon="chevron-right" iconPosition="right">
+              전체 글 보기
+            </PremiumButton>
+          </div>
+        </PremiumCard>
       )}
     </div>
   );

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
 import AppIcon from '@/components/ui/AppIcon';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
+import PremiumButton from '@/components/ui/PremiumButton';
 
 // 의정부 주요 동네 좌표
 const neighborhoods = [
@@ -161,15 +162,15 @@ export default function HealthCheckPage() {
                 진료과목: {selectedHospital.TREAT_SBJECT_CONT}
               </p>
               <div className="flex gap-2">
-                <a
+                <PremiumButton
                   href={`https://map.kakao.com/link/to/${encodeURIComponent(selectedHospital.BIZPLC_NM)},${selectedHospital.REFINE_WGS84_LAT},${selectedHospital.REFINE_WGS84_LOGT}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs border border-amber-600 transition-all rounded-none shadow-xs active:scale-[0.98]"
+                  variant="amber"
+                  size="md"
+                  fullWidth
+                  icon="navigation"
                 >
-                  <AppIcon name="navigation" size={14} strokeWidth={2} />
-                  <span>카카오맵 길찾기</span>
-                </a>
+                  카카오맵 길찾기
+                </PremiumButton>
               </div>
             </div>
           )}

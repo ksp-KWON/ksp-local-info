@@ -3,6 +3,7 @@ import path from 'path';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
+import PremiumCard from '@/components/ui/PremiumCard';
 import AppIcon from '@/components/ui/AppIcon';
 
 export const metadata: Metadata = {
@@ -62,10 +63,7 @@ export default function AboutPage() {
 
       {/* 3. 3대 핵심 가치 카드 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-        <div className="p-6 bg-white dark:bg-[#181a1d] border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-500 dark:hover:border-emerald-500 shadow-[0_0_20px_rgba(4,120,87,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(4,120,87,0.45),0_0_20px_rgba(4,120,87,0.25)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
-          <div className="absolute right-2 bottom-1 opacity-[0.05] text-emerald-900 dark:text-emerald-100 pointer-events-none group-hover:scale-110 transition-transform">
-            <AppIcon name="shield" size={60} strokeWidth={1.5} />
-          </div>
+        <PremiumCard hoverEffect={true} watermarkIcon="shield" className="p-6 space-y-2">
           <div className="w-9 h-9 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300 flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
             <AppIcon name="shield-check" size={18} strokeWidth={2} />
           </div>
@@ -73,12 +71,9 @@ export default function AboutPage() {
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
             행정안전부 공공데이터포털, 경기도 공공데이터, 국립중앙의료원(NMC)의 공인된 Open API만을 기반으로 데이터를 정제합니다.
           </p>
-        </div>
+        </PremiumCard>
 
-        <div className="p-6 bg-white dark:bg-[#181a1d] border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-500 dark:hover:border-sky-500 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(3,105,161,0.45),0_0_20px_rgba(3,105,161,0.25)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
-          <div className="absolute right-2 bottom-1 opacity-[0.05] text-sky-900 dark:text-sky-100 pointer-events-none group-hover:scale-110 transition-transform">
-            <AppIcon name="zap" size={60} strokeWidth={1.5} />
-          </div>
+        <PremiumCard hoverEffect={true} watermarkIcon="zap" className="p-6 space-y-2">
           <div className="w-9 h-9 bg-sky-50 text-sky-700 dark:bg-sky-950/70 dark:text-sky-300 flex items-center justify-center border border-sky-200 dark:border-sky-800">
             <AppIcon name="zap" size={18} strokeWidth={2} />
           </div>
@@ -86,12 +81,9 @@ export default function AboutPage() {
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
             의정부시청 공고와 경기지역화폐 혜택, 청년 및 출산 지원금 등 놓치기 쉬운 실생활 복지를 알기 쉽게 요약 제공합니다.
           </p>
-        </div>
+        </PremiumCard>
 
-        <div className="p-6 bg-white dark:bg-[#181a1d] border border-rose-200/80 dark:border-rose-900/40 hover:border-rose-500 dark:hover:border-rose-500 shadow-[0_0_20px_rgba(225,29,72,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(225,29,72,0.45),0_0_20px_rgba(225,29,72,0.25)] hover:-translate-y-1 space-y-2 relative overflow-hidden transition-all duration-300 rounded-none group">
-          <div className="absolute right-2 bottom-1 opacity-[0.05] text-rose-900 dark:text-rose-100 pointer-events-none group-hover:scale-110 transition-transform">
-            <AppIcon name="heart" size={60} strokeWidth={1.5} />
-          </div>
+        <PremiumCard hoverEffect={true} watermarkIcon="heart" className="p-6 space-y-2">
           <div className="w-9 h-9 bg-rose-50 text-rose-700 dark:bg-rose-950/70 dark:text-rose-300 flex items-center justify-center border border-rose-200 dark:border-rose-800">
             <AppIcon name="heart" size={18} strokeWidth={2} />
           </div>
@@ -99,7 +91,7 @@ export default function AboutPage() {
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
             회원가입이나 개인정보 수집 없이 모든 공공지도와 혜택 안내를 누구나 100% 무료로 자유롭게 열람할 수 있습니다.
           </p>
-        </div>
+        </PremiumCard>
       </div>
 
       {/* 4. 데이터 출처 명시 (E-E-A-T) */}

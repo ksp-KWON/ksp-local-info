@@ -6,6 +6,8 @@ import { useEffect, useState, Suspense } from 'react';
 import PostCard from '@/components/ui/PostCard';
 import AppIcon from '@/components/ui/AppIcon';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
+import PremiumCard from '@/components/ui/PremiumCard';
+import PremiumButton from '@/components/ui/PremiumButton';
 import { PostData } from '@/lib/types';
 
 function SearchResults() {
@@ -92,10 +94,10 @@ function SearchResults() {
 
       {/* 2. 결과 목록 */}
       {isLoading ? (
-        <div className="p-16 text-center border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)]">
+        <PremiumCard hoverEffect={false} className="p-16 text-center">
           <AppIcon name="refresh" size={32} strokeWidth={2} className="animate-spin mx-auto text-sky-600 mb-3" />
           <p className="text-sm font-bold text-zinc-600 dark:text-zinc-400">데이터를 검색하고 있습니다...</p>
-        </div>
+        </PremiumCard>
       ) : results.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((post) => (
@@ -103,21 +105,18 @@ function SearchResults() {
           ))}
         </div>
       ) : q ? (
-        <div className="p-16 text-center border border-dashed border-gray-300 dark:border-zinc-700 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)]">
+        <PremiumCard hoverEffect={false} className="p-16 text-center">
           <AppIcon name="search" size={40} strokeWidth={1.5} className="mx-auto text-zinc-400 mb-3" />
-          <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-1">검색 결과가 없습니다</h3>
+          <h3 className="text-lg font-bold text-zinc-950 dark:text-white mb-1">검색 결과가 없습니다</h3>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto break-keep">
             단어의 철자가 정확한지 확인하시거나 다른 유사 검색어로 다시 시도해 보세요.
           </p>
           <div className="mt-6 flex justify-center gap-3">
-            <Link
-              href="/blog"
-              className="px-5 py-2.5 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs border border-zinc-900 dark:border-white shadow-xs hover:opacity-90 transition-opacity"
-            >
+            <PremiumButton href="/blog" variant="primary" size="md">
               전체 소식 보기
-            </Link>
+            </PremiumButton>
           </div>
-        </div>
+        </PremiumCard>
       ) : null}
     </div>
   );
