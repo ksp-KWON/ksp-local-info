@@ -110,15 +110,15 @@ export default function AboutPage() {
         </h3>
         <ul className="space-y-2.5 text-xs sm:text-sm font-normal text-zinc-700 dark:text-zinc-300">
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">✓</span>
+            <AppIcon name="check" size={14} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400 mt-1 shrink-0" />
             <span><strong className="text-zinc-900 dark:text-white">응급의료 및 약국</strong> : 국립중앙의료원(NMC) 중앙응급의료센터 공공 API</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-sky-600 dark:text-sky-400 font-bold shrink-0">✓</span>
+            <AppIcon name="check" size={14} strokeWidth={2.5} className="text-sky-600 dark:text-sky-400 mt-1 shrink-0" />
             <span><strong className="text-zinc-900 dark:text-white">의정부사랑카드</strong> : 경기데이터드림(경기지역화폐 가맹점 현황 Open API)</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-amber-600 dark:text-amber-400 font-bold shrink-0">✓</span>
+            <AppIcon name="check" size={14} strokeWidth={2.5} className="text-amber-600 dark:text-amber-400 mt-1 shrink-0" />
             <span><strong className="text-zinc-900 dark:text-white">국가 건강검진 기관</strong> : 건강보험심사평가원 및 국민건강보험공단 검진기관 데이터</span>
           </li>
         </ul>

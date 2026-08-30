@@ -73,7 +73,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
           <ul className="space-y-2.5 font-normal text-zinc-800 dark:text-zinc-200">
             {keyPoints.map((pt, i) => (
               <li key={i} className="flex items-start gap-2.5">
-                <span className="text-emerald-600 dark:text-emerald-400 font-bold mt-0.5 shrink-0">✓</span>
+                <AppIcon name="check" size={14} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400 mt-1 shrink-0" />
                 <span className="leading-relaxed">
                   <MarkdownRenderer content={pt} inline />
                 </span>
