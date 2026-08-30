@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import TableOfContents from './TableOfContents';
 import CommonBox from './CommonBox';
-import PremiumCard from '@/components/ui/PremiumCard';
-import PremiumButton from '@/components/ui/PremiumButton';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import ShareButtons from './ShareButtons';
 import AppIcon from '@/components/ui/AppIcon';
@@ -66,14 +64,13 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
       {/* ── [무기 1] 행정 핵심 요약 (3줄 브리핑) ── */}
       {keyPoints && keyPoints.length > 0 && (
         <CommonBox
-          tone="green"
           title={keyPointsTitle || '행정 핵심 요약 (3줄 브리핑)'}
           icon={<AppIcon name="file-text" size={18} strokeWidth={2.5} />}
         >
           <ul className="space-y-2.5 font-normal text-zinc-800 dark:text-zinc-200">
             {keyPoints.map((pt, i) => (
               <li key={i} className="flex items-start gap-2.5">
-                <AppIcon name="check" size={14} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400 mt-1 shrink-0" />
+                <AppIcon name="check" size={14} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100 mt-1 shrink-0" />
                 <span className="leading-relaxed">
                   <MarkdownRenderer content={pt} inline />
                 </span>
@@ -105,7 +102,6 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
       {/* ── [무기 4] 신청 자격 1분 자가진단 (체크리스트) ── */}
       {checklistItems && checklistItems.length > 0 && (
         <CommonBox
-          tone="blue"
           title={checklistTitle || '신청 자격 1분 자가진단'}
           icon={
             <AppIcon
@@ -123,7 +119,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
             />
           }
           headerRight={
-            <span className="text-[11px] font-bold text-sky-800 bg-sky-100/80 dark:text-sky-300 dark:bg-sky-900/60 px-2 py-0.5 border border-sky-200 dark:border-sky-800">
+            <span className="text-[11px] font-bold text-zinc-900 bg-zinc-100 dark:text-zinc-100 dark:bg-zinc-800 px-2 py-0.5 border border-zinc-300 dark:border-zinc-700">
               {checklistTitle?.includes('관람')
                 ? '관람안내'
                 : checklistTitle?.includes('체크리스트')
@@ -142,14 +138,14 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
                   onClick={() => toggleCheck(idx)}
                   className={`w-full text-left flex items-start gap-3 p-3 transition-all border rounded-none cursor-pointer ${
                     isChecked
-                      ? 'bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800'
+                      ? 'bg-zinc-100/90 dark:bg-zinc-800/70 border-zinc-400 dark:border-zinc-600'
                       : 'bg-white dark:bg-[#181a1d] border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
                   }`}
                 >
-                  <div className={`w-5 h-5 mt-0.5 shrink-0 flex items-center justify-center border transition-colors ${isChecked ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800'}`}>
+                  <div className={`w-5 h-5 mt-0.5 shrink-0 flex items-center justify-center border transition-colors ${isChecked ? 'bg-zinc-900 border-zinc-900 text-white dark:bg-zinc-100 dark:border-zinc-100 dark:text-zinc-950' : 'border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800'}`}>
                     {isChecked && <AppIcon name="check" size={14} strokeWidth={3} />}
                   </div>
-                  <span className={`text-xs sm:text-sm font-medium break-keep leading-snug ${isChecked ? 'text-emerald-900 dark:text-emerald-200 line-through opacity-75' : 'text-zinc-800 dark:text-zinc-200'}`}>
+                  <span className={`text-xs sm:text-sm font-medium break-keep leading-snug ${isChecked ? 'text-zinc-900 dark:text-zinc-100 font-bold line-through opacity-70' : 'text-zinc-800 dark:text-zinc-200'}`}>
                     {cleanItem}
                   </span>
                 </button>
@@ -162,7 +158,6 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
       {/* ── [무기 5] 자주 묻는 질문 (FAQ 아코디언) ── */}
       {faqItems && faqItems.length > 0 && (
         <CommonBox
-          tone="yellow"
           title="자주 묻는 질문 (FAQ)"
           icon={<AppIcon name="chat" size={18} strokeWidth={2.5} />}
         >
@@ -179,7 +174,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
                     className="w-full text-left flex items-center justify-between p-3.5 bg-zinc-50/70 dark:bg-zinc-900/60 font-bold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 cursor-pointer"
                   >
                     <span className="flex items-center gap-2.5 pr-2">
-                      <span className="px-1.5 py-0.5 bg-amber-100 text-amber-900 dark:bg-amber-950/70 dark:text-amber-300 text-[11px] font-bold border border-amber-200 dark:border-amber-800">Q</span>
+                      <span className="px-1.5 py-0.5 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 text-[11px] font-extrabold border border-zinc-900 dark:border-zinc-100">Q</span>
                       <span className="break-keep">{faq.q}</span>
                     </span>
                     <AppIcon
@@ -201,43 +196,54 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
         </CommonBox>
       )}
 
-      {/* ── [무기 6] 원스톱 공식 신청처 안내 배너 ── */}
+      {/* ── [무기 6] 원스톱 공식 신청처 안내 배너 (흑요석 프리미엄 CTA) ── */}
       {sourceLink && (
-        <PremiumCard hoverEffect={true} className="my-8 !flex-row !items-center !justify-between !gap-4">
-          <div>
-            <span className="font-bold text-zinc-950 dark:text-zinc-100 flex items-center gap-2 mb-1 text-sm sm:text-base">
-              <AppIcon name="external-link" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
-              <span>의정부시 공식 신청처 및 관련 공고</span>
-            </span>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400 font-normal">
-              상세 접수 일정 및 추가 공고 사항은 공식 접수처에서 바로 확인하세요.
-            </p>
+        <div className="my-8 relative overflow-hidden rounded-none border border-zinc-900 dark:border-zinc-700 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 dark:from-zinc-900 dark:via-[#181a1d] dark:to-zinc-950 text-white p-5 sm:p-7 shadow-[0_0_20px_rgba(0,0,0,0.12)] dark:shadow-[0_0_25px_rgba(0,0,0,0.60)] hover:shadow-[0_0_40px_rgba(0,0,0,0.25),0_0_15px_rgba(0,0,0,0.15)] transition-all duration-300 group">
+          <div className="absolute right-3.5 bottom-1.5 opacity-5 text-white pointer-events-none group-hover:scale-105 transition-transform duration-500">
+            <AppIcon name="external-link" size={90} strokeWidth={1.5} />
           </div>
-          <PremiumButton
-            href={sourceLink}
-            isExternal={true}
-            variant="primary"
-            size="sm"
-            icon="chevron-right"
-            iconPosition="right"
-          >
-            공식 접수처 바로가기
-          </PremiumButton>
-        </PremiumCard>
+          <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-white/10 text-zinc-200 text-[11px] font-bold border border-white/20">
+                <AppIcon name="shield-check" size={12} strokeWidth={2.5} />
+                <span>의정부시 공식 접수처</span>
+              </div>
+              <h3 className="text-base sm:text-lg font-extrabold text-white tracking-tight">
+                원스톱 공식 신청 및 상세 공고 안내
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-300 font-normal leading-relaxed">
+                상세 접수 일정 및 추가 구비서류 공고 사항은 공식 접수처에서 바로 확인하세요.
+              </p>
+            </div>
+            <a
+              href={sourceLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-white hover:bg-zinc-100 text-zinc-950 font-extrabold text-xs sm:text-sm transition-all duration-200 shrink-0 w-full sm:w-auto shadow-md hover:shadow-lg rounded-none group/btn"
+            >
+              <span>공식 접수처 바로가기</span>
+              <AppIcon name="chevron-right" size={14} strokeWidth={3} className="group-hover/btn:translate-x-0.5 transition-transform" />
+            </a>
+          </div>
+        </div>
       )}
 
       {/* ── [무기 7] 내 주변 생활 지도 퀵메뉴 ── */}
-      <div className="my-8 pt-4 border-t border-gray-200/80 dark:border-zinc-800">
+      <div className="my-8 pt-6 border-t border-gray-200/80 dark:border-zinc-800">
+        <div className="flex items-center gap-2 mb-3 text-xs font-bold text-zinc-600 dark:text-zinc-400">
+          <AppIcon name="compass" size={15} strokeWidth={2.5} />
+          <span>의정부 시민 내 주변 생활 지도 퀵메뉴</span>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Link
             href="/services/emergency"
-            className="p-4 bg-white dark:bg-[#181a1d] border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/30 dark:hover:bg-emerald-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(4,120,87,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(4,120,87,0.45),0_0_15px_rgba(4,120,87,0.22)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
+            className="p-4 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
           >
-            <div className="flex items-center gap-2 font-bold text-xs text-emerald-950 dark:text-emerald-200">
-              <AppIcon name="hospital" size={16} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400" />
+            <div className="flex items-center gap-2 font-extrabold text-xs text-zinc-950 dark:text-zinc-100">
+              <AppIcon name="hospital" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
               <span>달빛병원·심야약국</span>
             </div>
-            <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400 flex items-center justify-between mt-2">
+            <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-white flex items-center justify-between mt-2 transition-colors">
               <span>야간·휴일 응급의료</span>
               <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
@@ -245,13 +251,13 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
           <Link
             href="/services/local-currency"
-            className="p-4 bg-white dark:bg-[#181a1d] border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-500 dark:hover:border-sky-500 hover:bg-sky-50/30 dark:hover:bg-sky-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(3,105,161,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(3,105,161,0.45),0_0_15px_rgba(3,105,161,0.22)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
+            className="p-4 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
           >
-            <div className="flex items-center gap-2 font-bold text-xs text-sky-950 dark:text-sky-200">
-              <AppIcon name="bank" size={16} strokeWidth={2.5} className="text-sky-600 dark:text-sky-400" />
+            <div className="flex items-center gap-2 font-extrabold text-xs text-zinc-950 dark:text-zinc-100">
+              <AppIcon name="bank" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
               <span>사랑카드 가맹점</span>
             </div>
-            <span className="text-[11px] font-medium text-sky-700 dark:text-sky-400 flex items-center justify-between mt-2">
+            <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-white flex items-center justify-between mt-2 transition-colors">
               <span>지역화폐 가맹점 검색</span>
               <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
@@ -259,13 +265,13 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
           <Link
             href="/services/health-check"
-            className="p-4 bg-white dark:bg-[#181a1d] border border-amber-200/80 dark:border-amber-900/40 hover:border-amber-500 dark:hover:border-amber-500 hover:bg-amber-50/30 dark:hover:bg-amber-950/20 transition-all duration-300 shadow-[0_0_20px_rgba(180,83,9,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(180,83,9,0.45),0_0_15px_rgba(180,83,9,0.22)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
+            className="p-4 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
           >
-            <div className="flex items-center gap-2 font-bold text-xs text-amber-950 dark:text-amber-200">
-              <AppIcon name="stethoscope" size={16} strokeWidth={2.5} className="text-amber-600 dark:text-amber-400" />
+            <div className="flex items-center gap-2 font-extrabold text-xs text-zinc-950 dark:text-zinc-100">
+              <AppIcon name="stethoscope" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
               <span>국가 건강검진 기관</span>
             </div>
-            <span className="text-[11px] font-medium text-amber-700 dark:text-amber-400 flex items-center justify-between mt-2">
+            <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-white flex items-center justify-between mt-2 transition-colors">
               <span>지정 병·의원 지도</span>
               <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
             </span>

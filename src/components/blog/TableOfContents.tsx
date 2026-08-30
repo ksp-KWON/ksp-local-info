@@ -23,16 +23,15 @@ export default function TableOfContents({
     <span className="text-[11px] font-bold text-zinc-500">클릭 시 이동</span>
   );
 
-  const icon = <AppIcon name="list" size={16} strokeWidth={2.5} className="text-black dark:text-white" />;
+  const icon = <AppIcon name="list" size={16} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />;
 
   return (
     <CommonBox
-      tone="blue"
       title="이 글의 목차"
       icon={icon}
       headerRight={headerRight}
     >
-      <ul className="space-y-2 text-xs sm:text-sm">
+      <ul className="space-y-1.5 text-xs sm:text-sm">
         {toc.map((item, idx) => {
           const isActive = activeId === item.id;
           return (
@@ -42,11 +41,11 @@ export default function TableOfContents({
                 onClick={(e) => onItemClick(e, item.id)}
                 className={`flex items-start gap-2 py-1.5 px-2.5 rounded-none transition-all ${
                   isActive
-                    ? 'bg-sky-50 text-sky-950 dark:bg-sky-950/60 dark:text-sky-200 font-bold border border-sky-300 dark:border-sky-800'
-                    : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 hover:text-zinc-950 dark:hover:text-white font-medium'
+                    ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-white font-bold border-l-2 border-zinc-900 dark:border-zinc-100 pl-3'
+                    : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 hover:text-zinc-950 dark:hover:text-white font-medium'
                 }`}
               >
-                <span className={`text-xs ${isActive ? 'font-bold text-sky-700 dark:text-sky-400' : 'text-zinc-400 font-medium'}`}>
+                <span className={`text-xs ${isActive ? 'font-bold text-zinc-900 dark:text-zinc-100' : 'text-zinc-400 font-medium'}`}>
                   0{idx + 1}.
                 </span>
                 <span className="break-keep flex-1 leading-snug">{item.text}</span>

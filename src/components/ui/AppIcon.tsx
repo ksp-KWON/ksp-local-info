@@ -9,7 +9,7 @@ export type AppIconName =
   | 'phone' | 'chat' | 'mail' | 'link' | 'external-link' | 'plus' | 'edit' | 'trash'
   | 'check' | 'warning' | 'info' | 'close' | 'chevron-right' | 'chevron-left' | 'chevron-down' | 'chevron-up'
   | 'list' | 'menu' | 'copy' | 'refresh' | 'lock' | 'coffee' | 'sun' | 'moon' | 'monitor' | 'send' | 'minimize' | 'play' | 'cloud'
-  | 'navigation' | 'sparkles'
+  | 'navigation' | 'sparkles' | 'share'
   // 보상 & 법률 & 통계
   | 'scale' | 'shield' | 'shield-check' | 'shield-alert' | 'file-text' | 'folder'
   | 'calculator' | 'chart' | 'trending-up' | 'award' | 'zap' | 'landmark' | 'book' | 'compass' | 'flame'
@@ -242,6 +242,15 @@ const ICON_PATHS: Record<AppIconName, React.ReactNode> = {
   ),
   flame: (
     <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+  ),
+  share: (
+    <>
+      <circle cx="18" cy="5" r="3" />
+      <circle cx="6" cy="12" r="3" />
+      <circle cx="18" cy="19" r="3" />
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+    </>
   ),
 
   // ── 보상 & 법률 & 금융 ──

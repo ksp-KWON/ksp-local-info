@@ -68,16 +68,11 @@ export const sharedComponents: Components & Record<string, any> = {
   ),
   li: ({ children }) => <li className="pl-1 leading-[1.8] break-keep font-normal">{children}</li>,
 
-  strong: ({ children }) => {
-    const text = extractTextFromNode(children).trim();
-    const tone = getKeywordTone(text);
-    const token = BLOG_TONE_TOKENS[tone] || BLOG_TONE_TOKENS.blue;
-    return (
-      <strong className={`${token.tailwind.highlightClass} px-1.5 py-0.5 mx-0.5 rounded-none font-bold`}>
-        {children}
-      </strong>
-    );
-  },
+  strong: ({ children }) => (
+    <strong className="text-zinc-950 dark:text-white font-extrabold bg-zinc-100/90 dark:bg-zinc-800/80 px-1.5 py-0.5 mx-0.5 border-b-2 border-zinc-900 dark:border-zinc-100">
+      {children}
+    </strong>
+  ),
 
   blockquote: ({ children }: any) => {
     const childArray = React.Children.toArray(children);
