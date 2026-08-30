@@ -118,7 +118,13 @@ export default function LocalCurrencyMapWidget({ isWidget = false }: LocalCurren
               <h3 className="text-base font-bold text-zinc-900 dark:text-white">{selectedMerchant.name}</h3>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">{selectedMerchant.address}</p>
             </div>
-            <button onClick={() => setSelectedMerchant(null)} className="text-zinc-400 hover:text-zinc-700 dark:hover:text-white text-sm font-bold">✕</button>
+            <button
+              onClick={() => setSelectedMerchant(null)}
+              className="p-1 rounded-none text-zinc-400 hover:text-zinc-700 dark:hover:text-white transition-colors cursor-pointer"
+              aria-label="닫기"
+            >
+              <AppIcon name="close" size={16} strokeWidth={2} />
+            </button>
           </div>
         )}
       </div>
