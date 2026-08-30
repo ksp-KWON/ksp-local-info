@@ -36,7 +36,7 @@ export default async function Home() {
   return (
     <div className="space-y-8 sm:space-y-10 pb-16">
       {/* 1. 메인 인트로 헤더 (모던 수묵화 앰비언트 글로우) */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] p-6 sm:p-8 lg:p-10 group transition-all duration-300">
+      <div className="mt-4 relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] p-6 sm:p-8 lg:p-10 group transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/70 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
 
         {/* 우측 배경 수묵 워터마크 (SVG) */}

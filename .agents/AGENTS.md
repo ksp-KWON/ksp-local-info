@@ -41,7 +41,7 @@
 - **3.2 샤프 모던 룩 및 순백색 표준**: 모든 카드와 컨테이너는 샤프 모던 엣지(`rounded-none`), 순백색(`bg-white dark:bg-[#181a1d]`), 표준 1px 보더(`border-gray-200/90 dark:border-zinc-800`), 표준 원형 스피너(`rounded-full animate-spin`)를 일괄 준수합니다.
 - **3.3 평면도(Floor Plan) 360° 사방 균등 2중 울트라 딥 섀도우 & 클린 엣지 표준**:
   - 기본 상태(Resting): **사방 균등 수묵 번짐(`shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)]`)**
-  - 마우스 호버(Hover): **2중 다중 분산 사방 균등 농묵 40% 울트라 딥 섀도우(`hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)]`)** + 1px 리프트(`hover:-translate-y-1`) + 또렷한 보더(`hover:border-zinc-900 dark:hover:border-zinc-100`)
+  - 마우스 호버(Hover): **2중 다중 분산 사방 균등 중묵 18% 앰비언트 글로우(`hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)]`)** + 1px 리프트(`hover:-translate-y-1`) + 또렷한 보더(`hover:border-zinc-900 dark:hover:border-zinc-100`)
 - **3.4 수묵화 4단계 농담(濃淡) 타이포그래피 표준**:
   - **H2 (대주제 / 농묵 濃墨)**: `text-xl sm:text-2xl font-extrabold`, 흑요석 먹빛 그라데이션, 좌측 4px 흑묵 획(`border-l-4 border-zinc-900 dark:border-zinc-100`), 넓은 수묵 번짐 배경.
   - **H3 (중주제 / 중묵 中墨)**: `text-lg sm:text-xl font-bold text-zinc-800 dark:text-zinc-200`, 좌측 2.5px 정밀 먹선(`border-l-[2.5px] border-zinc-600`), 슬림 수묵 번짐 배경.

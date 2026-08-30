@@ -36,7 +36,7 @@ export default function PremiumCard({
     default: 'border-gray-200/90 dark:border-zinc-800',
   };
 
-  const hoverBorders = 'hover:border-zinc-900 dark:hover:border-zinc-100 hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] hover:-translate-y-1';
+  const hoverBorders = 'hover:border-zinc-900 dark:hover:border-zinc-100 hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] hover:-translate-y-1';
 
   const cardClasses = `bg-white dark:bg-[#181a1d] p-4 sm:p-5 border ${baseBorders[borderColor] || baseBorders.default} shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] transition-all duration-300 relative overflow-hidden rounded-none flex flex-col min-h-0 group ${
     hoverEffect ? `${hoverBorders} cursor-pointer` : ''
