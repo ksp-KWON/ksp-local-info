@@ -199,7 +199,7 @@ export const sharedComponents: Components & Record<string, any> = {
     <PremiumCard borderColor="charcoal" hoverEffect={true} className="my-10 group">
       <div className="relative z-10">
         <div className="border-b border-gray-200/80 dark:border-zinc-800 pb-3 mb-4">
-          <PremiumHeading level={3} showLeftBorder className="!mb-0 !text-zinc-900 dark:!text-zinc-100 font-bold">
+          <PremiumHeading level={3} showLeftBorder className="!mb-0 !text-zinc-900 dark:!text-zinc-100 font-bold !bg-transparent !p-0 !border-0 !shadow-none">
             함께 읽으면 유익한 글
           </PremiumHeading>
         </div>

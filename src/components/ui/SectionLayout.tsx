@@ -43,7 +43,7 @@ export default function SectionLayout({
             level={headingLevel}
             gradient="charcoal"
             icon={icon}
-            className="!mb-0 !text-xl sm:!text-2xl"
+            className="!mb-0 !text-xl sm:!text-2xl !bg-transparent !p-0 !border-0 !shadow-none"
             showLeftBorder={false}
           >
             {title}
