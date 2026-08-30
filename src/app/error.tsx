@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
-import Link from 'next/link';
 import AppIcon from '@/components/ui/AppIcon';
+import PremiumCard from '@/components/ui/PremiumCard';
+import PremiumButton from '@/components/ui/PremiumButton';
 
 export default function GlobalError({
   error,
@@ -18,8 +19,8 @@ export default function GlobalError({
 
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center px-5 text-center">
-      <div className="bg-white dark:bg-[#181a1d] p-8 md:p-12 border border-red-200/90 dark:border-red-900/40 shadow-[0_0_20px_rgba(225,29,72,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] rounded-none max-w-lg w-full">
-        <div className="w-14 h-14 bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-none flex items-center justify-center mx-auto mb-6">
+      <PremiumCard hoverEffect={false} className="p-8 md:p-12 max-w-lg w-full">
+        <div className="w-14 h-14 bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-none flex items-center justify-center mx-auto mb-6">
           <AppIcon name="shield-alert" size={28} strokeWidth={2} />
         </div>
         <h2 className="text-xl md:text-2xl font-extrabold mb-3 text-zinc-950 dark:text-white tracking-tight">
@@ -29,25 +30,29 @@ export default function GlobalError({
           일시적인 서버 오류이거나 네트워크 문제일 수 있습니다. <br className="hidden sm:block" />
           아래 버튼을 눌러 다시 시도하시거나 홈으로 이동해 주세요.
           <br /><br />
-          <span className="inline-block px-3 py-1 bg-zinc-50 dark:bg-zinc-900 rounded-none text-xs font-mono text-red-600 dark:text-red-400 border border-zinc-200 dark:border-zinc-800">
+          <span className="inline-block px-3 py-1 bg-zinc-50 dark:bg-zinc-900 rounded-none text-xs font-mono text-rose-600 dark:text-rose-400 border border-zinc-200 dark:border-zinc-800">
             {error.message || '알 수 없는 렌더링 오류'}
           </span>
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button
+          <PremiumButton
             onClick={() => reset()}
-            className="w-full sm:w-auto px-6 py-3 bg-red-600 text-white text-sm font-bold rounded-none hover:bg-red-700 transition-all active:scale-95 cursor-pointer shadow-xs"
+            variant="danger"
+            size="md"
+            className="w-full sm:w-auto"
           >
             화면 다시 불러오기
-          </button>
-          <Link
+          </PremiumButton>
+          <PremiumButton
             href="/"
-            className="w-full sm:w-auto px-6 py-3 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-sm font-bold rounded-none border border-gray-200/90 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all active:scale-95 shadow-xs"
+            variant="outline"
+            size="md"
+            className="w-full sm:w-auto"
           >
             홈으로 돌아가기
-          </Link>
+          </PremiumButton>
         </div>
-      </div>
+      </PremiumCard>
     </div>
   );
 }

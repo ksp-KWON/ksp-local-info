@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import AppIcon from '@/components/ui/AppIcon';
+import PremiumCard from '@/components/ui/PremiumCard';
+import PremiumButton from '@/components/ui/PremiumButton';
 
 interface ShareButtonsProps {
   title: string;
@@ -40,29 +42,36 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
   };
 
   return (
-    <div className="my-8 p-4 sm:p-5 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(0,0,0,0.40),0_0_20px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] transition-all duration-300 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-none">
+    <PremiumCard
+      hoverEffect={true}
+      className="my-8 p-4 sm:p-5 !flex-col sm:!flex-row items-center justify-between gap-4"
+    >
       <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100">
         <AppIcon name="link" size={16} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400" />
         <span>유용한 혜택 정보 지인에게 공유하기</span>
       </div>
 
       <div className="flex items-center gap-2.5 w-full sm:w-auto">
-        <button
+        <PremiumButton
+          variant="kakao"
+          size="sm"
+          icon="chat"
           onClick={handleKakaoShare}
-          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-[#FEE500] hover:bg-[#FADA0A] text-[#191919] text-xs font-bold border border-[#E6CF00] transition-all cursor-pointer rounded-none active:scale-[0.98] shadow-xs"
+          className="flex-1 sm:flex-none"
         >
-          <AppIcon name="chat" size={14} strokeWidth={2.5} />
-          <span>카카오톡 공유</span>
-        </button>
+          카카오톡 공유
+        </PremiumButton>
 
-        <button
+        <PremiumButton
+          variant="primary"
+          size="sm"
+          icon={copied ? 'check' : 'copy'}
           onClick={handleCopy}
-          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-white text-xs font-bold border border-zinc-900 dark:border-zinc-200 transition-all cursor-pointer rounded-none active:scale-[0.98] shadow-xs relative"
+          className="flex-1 sm:flex-none"
         >
-          <AppIcon name={copied ? 'check' : 'copy'} size={14} strokeWidth={2.5} />
-          <span>{copied ? '복사 완료!' : 'URL 링크 복사'}</span>
-        </button>
+          {copied ? '복사 완료!' : 'URL 링크 복사'}
+        </PremiumButton>
       </div>
-    </div>
+    </PremiumCard>
   );
 }

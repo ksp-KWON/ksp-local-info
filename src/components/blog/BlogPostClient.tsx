@@ -5,6 +5,7 @@ import Link from 'next/link';
 import TableOfContents from './TableOfContents';
 import CommonBox from './CommonBox';
 import PremiumCard from '@/components/ui/PremiumCard';
+import PremiumButton from '@/components/ui/PremiumButton';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import ShareButtons from './ShareButtons';
 import AppIcon from '@/components/ui/AppIcon';
@@ -212,15 +213,16 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
               상세 접수 일정 및 추가 공고 사항은 공식 접수처에서 바로 확인하세요.
             </p>
           </div>
-          <a
+          <PremiumButton
             href={sourceLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 font-bold text-xs border border-zinc-900 dark:border-zinc-100 inline-flex items-center gap-1.5 transition-all shadow-xs active:scale-[0.98] shrink-0 cursor-pointer rounded-none"
+            isExternal={true}
+            variant="primary"
+            size="sm"
+            icon="chevron-right"
+            iconPosition="right"
           >
-            <span>공식 접수처 바로가기</span>
-            <AppIcon name="chevron-right" size={14} strokeWidth={2.5} />
-          </a>
+            공식 접수처 바로가기
+          </PremiumButton>
         </PremiumCard>
       )}
 
