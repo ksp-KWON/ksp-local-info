@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
 import AppIcon from '@/components/ui/AppIcon';
+import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
 
 // 의정부 주요 동네 좌표
 const neighborhoods = [
@@ -67,23 +68,15 @@ export default function HealthCheckPage() {
   return (
     <div className="pb-16 space-y-6">
       {/* 1. 인트로 헤더 */}
-      <div className="mt-4 relative overflow-hidden rounded-none border border-amber-200/90 dark:border-amber-900/40 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(180,83,9,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_50px_rgba(180,83,9,0.45),0_0_20px_rgba(180,83,9,0.25)] p-6 sm:p-8 group transition-all duration-300">
-        <div className="absolute -right-6 -bottom-6 text-amber-900/[0.03] dark:text-amber-100/[0.05] pointer-events-none group-hover:scale-105 transition-transform duration-500">
-          <AppIcon name="stethoscope" size={160} strokeWidth={1.5} />
-        </div>
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 text-xs font-bold uppercase tracking-wider mb-3 border border-amber-200 dark:border-amber-800 rounded-none shadow-2xs">
-            <AppIcon name="stethoscope" size={14} strokeWidth={2} className="text-amber-600 dark:text-amber-400" />
-            <span>국민건강보험공단 지정</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 dark:text-white tracking-tight">
-            국가 건강검진 지정 의료기관 지도
-          </h1>
-          <p className="mt-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal">
-            의정부시 관내 국민건강보험 국가검진(일반/암/구강검진) 지정 병·의원 목록을 지도에서 확인하세요.
-          </p>
-        </div>
-      </div>
+      <PageHeaderBanner
+        className="mt-4"
+        badgeText="국민건강보험공단 지정"
+        badgeTone="amber"
+        badgeIcon="stethoscope"
+        title="국가 건강검진 지정 의료기관 지도"
+        description="의정부시 관내 국민건강보험 국가검진(일반/암/구강검진) 지정 병·의원 목록을 지도에서 확인하세요."
+        watermarkIcon="stethoscope"
+      />
 
       {/* 2. 지도 위젯 박스 */}
       <div className="flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden rounded-none shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] border border-gray-200/90 dark:border-zinc-800 h-[650px] max-h-[75vh]">

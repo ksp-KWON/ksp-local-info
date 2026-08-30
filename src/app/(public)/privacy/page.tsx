@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import PremiumCard from '@/components/ui/PremiumCard';
+import PremiumHeading from '@/components/ui/PremiumHeading';
+import AppIcon from '@/components/ui/AppIcon';
 
 export const metadata: Metadata = {
   title: '개인정보처리방침 | 의정부 건강·생활 정보 포털',
@@ -13,27 +16,28 @@ export default function PrivacyPage() {
   return (
     <div className="max-w-4xl mx-auto px-2 sm:px-4 py-8 sm:py-12 space-y-6">
       {/* 브레드크럼 */}
-      <nav className="flex text-xs text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
-        <ol className="inline-flex items-center space-x-1.5">
+      <nav className="flex text-xs text-zinc-500 dark:text-zinc-400" aria-label="Breadcrumb">
+        <ol className="inline-flex items-center space-x-1.5 font-medium">
           <li>
-            <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <Link href="/" className="hover:text-zinc-950 dark:hover:text-white transition-colors flex items-center gap-1">
+              <AppIcon name="home" size={13} strokeWidth={2} />
               홈
             </Link>
           </li>
           <li>
-            <span className="mx-1">/</span>
+            <span className="mx-1 text-zinc-400">/</span>
           </li>
-          <li className="text-gray-900 dark:text-white font-bold" aria-current="page">
+          <li className="text-zinc-900 dark:text-white font-bold" aria-current="page">
             개인정보처리방침
           </li>
         </ol>
       </nav>
 
-      <div className="bg-white dark:bg-[#181a1d] rounded-none p-6 sm:p-10 border border-gray-200/80 dark:border-zinc-800 shadow-md">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mb-6 pb-4 border-b border-gray-100 dark:border-zinc-800">
+      <PremiumCard hoverEffect={false} className="p-6 sm:p-10">
+        <PremiumHeading level={1} showLeftBorder={false} className="!mb-6 !pb-4 border-b border-gray-100 dark:border-zinc-800">
           개인정보처리방침
-        </h1>
-        <div className="text-sm sm:text-[15px] leading-relaxed text-gray-700 dark:text-gray-300 space-y-6 font-medium">
+        </PremiumHeading>
+        <div className="text-sm sm:text-[15px] leading-relaxed text-zinc-700 dark:text-zinc-300 space-y-6 font-normal">
           <p>
             &quot;의정부 건강·생활 정보 포털&quot;(이하 &quot;사이트&quot;)은 이용자의 개인정보를 소중히 다루며, 「개인정보 보호법」 등 관련 법규를 철저히 준수합니다.
           </p>
@@ -42,47 +46,47 @@ export default function PrivacyPage() {
           </p>
 
           <section className="space-y-2">
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+            <PremiumHeading level={3} showLeftBorder={false} className="!mt-4 !mb-2">
               1. 수집하는 로그 항목 및 방법
-            </h2>
+            </PremiumHeading>
             <p>
-              - <strong>자동 수집 항목:</strong> 웹사이트 접속 시 통계 분석 및 보안을 위해 접속 IP, 쿠키(Cookie), 브라우저 종류, 방문 일시 등의 비식별 로그가 자동으로 수집될 수 있습니다.<br />
-              - <strong>수집 방법:</strong> 웹 브라우저의 기본 요청 헤더 및 분석 도구를 통한 자동 수집
+              - <strong>자동 수집 항목 : </strong>웹사이트 접속 시 통계 분석 및 보안을 위해 접속 IP, 쿠키(Cookie), 브라우저 종류, 방문 일시 등의 비식별 로그가 자동으로 수집될 수 있습니다.<br />
+              - <strong>수집 방법 : </strong>웹 브라우저의 기본 요청 헤더 및 분석 도구를 통한 자동 수집
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+            <PremiumHeading level={3} showLeftBorder={false} className="!mt-4 !mb-2">
               2. 개인정보의 이용 목적
-            </h2>
+            </PremiumHeading>
             <p>
               수집된 비식별 통계 정보는 사이트 접속 트래픽 분석, 사용자 환경 최적화, 신규 생활 공공서비스 콘텐츠 발굴을 위한 기초 통계 목적으로만 활용됩니다.
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+            <PremiumHeading level={3} showLeftBorder={false} className="!mt-4 !mb-2">
               3. 제3자 제공 및 위탁
-            </h2>
+            </PremiumHeading>
             <p>
               사이트는 이용자의 개인정보를 외부에 판매하거나 제공하지 않습니다. 다만, 법령에 따른 공식 수사기관의 적법한 요청이 있는 경우에는 예외로 합니다.
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+            <PremiumHeading level={3} showLeftBorder={false} className="!mt-4 !mb-2">
               4. 쿠키(Cookie) 운용 및 거부 방법
-            </h2>
+            </PremiumHeading>
             <p>
               이용자는 웹 브라우저 설정을 통해 쿠키 허용 여부를 언제든지 직접 제어할 수 있습니다. 쿠키 저장을 거부하더라도 사이트의 모든 공공서비스 및 글 열람에 어떠한 제약도 없습니다.
             </p>
           </section>
 
-          <div className="mt-8 text-xs text-gray-400 dark:text-gray-500 border-t border-gray-100 dark:border-zinc-800 pt-4">
+          <div className="mt-8 text-xs text-zinc-400 dark:text-zinc-500 border-t border-gray-100 dark:border-zinc-800 pt-4">
             본 개인정보처리방침은 사이트 개설일부터 적용됩니다.
           </div>
         </div>
-      </div>
+      </PremiumCard>
     </div>
   );
 }
