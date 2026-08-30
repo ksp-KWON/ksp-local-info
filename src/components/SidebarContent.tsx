@@ -63,7 +63,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
   const hiddenTags = tags.slice(INITIAL_TAG_COUNT);
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {/* ── 1. 의정부 시민 퀵서비스 허브 (단일 통합 프리미엄 카드) ── */}
       <PremiumCard borderColor="default" hoverEffect={false} watermarkIcon="compass" className="!p-4 sm:!p-5">
         {/* 카드 헤더 */}
