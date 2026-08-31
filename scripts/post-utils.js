@@ -8,8 +8,7 @@ const matter = require('gray-matter');
 const POSTS_DIR = path.join(process.cwd(), 'src/content/posts');
 
 /**
- * Generate a unique hash (sourceId) for a given text (usually the original title).
- * This acts as an immutable identifier to prevent duplicate posts.
+ * Generate a unique hash (sourceId) for a given text.
  */
 function generateSourceId(text) {
   return crypto.createHash('md5').update(text || '').digest('hex').slice(0, 12);
@@ -34,8 +33,8 @@ function getExistingSourceIds() {
       if (parsed.data.sourceId) {
         sourceIds.add(parsed.data.sourceId);
       }
-    } catch (e) {
-      // Ignore parsing errors for individual files
+    } catch {
+      // Ignore parsing errors
     }
   }
   return sourceIds;
@@ -53,10 +52,10 @@ function makeSlug(title, date, seq = 1) {
     '건강': 'health', '의료': 'medical', '경기': 'gyeonggi', '보육': 'childcare',
     '일자리': 'jobs', '취업': 'employment', '주거': 'housing', '환경': 'environment',
     '안전': 'safety', '교통': 'transport', '스포츠': 'sports', '도서관': 'library',
-    '박물관': 'museum', '공원': 'park', '문화재': 'heritage',
+    '박물관': 'museum', '공원': 'park', '음악극': 'music-theatre', '장려금': 'grant',
   };
 
-  let slug = title || '';
+  let slug = String(title || '');
   for (const [kr, en] of Object.entries(KEYWORD_MAP)) {
     slug = slug.replace(new RegExp(kr, 'g'), `-${en}-`);
   }
@@ -69,7 +68,7 @@ function makeSlug(title, date, seq = 1) {
     .toLowerCase()
     .slice(0, 50);
 
-  if (!slug || slug === '-') slug = `post`;
+  if (!slug || slug === '-') slug = 'post';
 
   const datePrefix = date ? `${date}-` : '';
   const seqSuffix = seq > 1 ? `-${seq}` : '';
@@ -94,27 +93,49 @@ function getUniqueFilePath(baseSlug) {
 
 /**
  * Save post using gray-matter for strict YAML serialization.
+ * Supports both saveMarkdownPost(fileName, frontmatter, content) and saveMarkdownPost(frontmatter, content)
  */
-function saveMarkdownPost(frontmatter, content) {
-  // Use gray-matter to stringify
-  const fileContent = matter.stringify(content || '', frontmatter);
-  
-  const baseSlug = frontmatter.slug || 'post';
-  const { filePath, slug: finalSlug } = getUniqueFilePath(baseSlug);
-  
-  // Re-serialize in case slug changed (though usually slug in frontmatter matches filename)
-  if (finalSlug !== baseSlug) {
-      frontmatter.slug = finalSlug;
-      const updatedContent = matter.stringify(content || '', frontmatter);
-      fs.writeFileSync(filePath, updatedContent, 'utf8');
-  } else {
-      fs.writeFileSync(filePath, fileContent, 'utf8');
+function saveMarkdownPost(arg1, arg2, arg3) {
+  if (!fs.existsSync(POSTS_DIR)) {
+    fs.mkdirSync(POSTS_DIR, { recursive: true });
   }
+
+  let fileName = '';
+  let frontmatter = {};
+  let content = '';
+
+  if (typeof arg1 === 'string' && typeof arg2 === 'object') {
+    fileName = arg1;
+    frontmatter = arg2 || {};
+    content = typeof arg3 === 'string' ? arg3 : '';
+  } else if (typeof arg1 === 'object') {
+    frontmatter = arg1 || {};
+    content = typeof arg2 === 'string' ? arg2 : '';
+  }
+
+  let filePath;
+  let finalSlug;
+
+  if (fileName) {
+    const cleanFileName = fileName.endsWith('.md') ? fileName : `${fileName}.md`;
+    filePath = path.join(POSTS_DIR, cleanFileName);
+    finalSlug = path.basename(filePath, '.md');
+  } else {
+    const baseSlug = frontmatter.slug || makeSlug(frontmatter.title || 'post');
+    const unique = getUniqueFilePath(baseSlug);
+    filePath = unique.filePath;
+    finalSlug = unique.slug;
+  }
+
+  const fileContent = matter.stringify(content || '', frontmatter);
+  fs.writeFileSync(filePath, fileContent, 'utf8');
+  console.log(`  [저장 완료] ${filePath}`);
 
   return { filePath, slug: finalSlug };
 }
 
 module.exports = {
+  POSTS_DIR,
   generateSourceId,
   getExistingSourceIds,
   makeSlug,
