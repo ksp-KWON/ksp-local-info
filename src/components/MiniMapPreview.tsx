@@ -3,7 +3,7 @@
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
 
 interface MiniMapPreviewProps {
-  type: 'emergency' | 'currency';
+  type: 'emergency' | 'currency' | 'health-check';
 }
 
 export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
@@ -28,9 +28,21 @@ export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
   if (loading || error) {
     // 로딩 중이거나 에러 시 무채색 배경색만 표시
     return (
-      <div className={`absolute inset-0 z-0 bg-gray-100 dark:bg-[#2a2a2a]`} />
+      <div className="absolute inset-0 z-0 bg-gray-100 dark:bg-[#2a2a2a]" />
     );
   }
+
+  const getMarkerSrc = () => {
+    switch (type) {
+      case 'emergency':
+        return 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
+      case 'currency':
+        return 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+      case 'health-check':
+      default:
+        return 'https://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png';
+    }
+  };
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none transition-transform duration-700 group-hover:scale-105">
@@ -48,9 +60,7 @@ export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
             key={idx}
             position={pos}
             image={{
-              src: type === 'emergency' 
-                ? 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png' 
-                : 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+              src: getMarkerSrc(),
               size: { width: 24, height: 35 },
             }}
           />
@@ -58,7 +68,7 @@ export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
       </Map>
 
       {/* 가독성을 위한 오버레이 필터 및 흐림 효과(backdrop-blur) */}
-      <div className={`absolute inset-0 z-10 backdrop-blur-[2px] bg-gradient-to-br from-white/95 via-white/80 to-transparent dark:from-[#121212]/95 dark:via-[#121212]/80`} />
+      <div className="absolute inset-0 z-10 backdrop-blur-[2px] bg-gradient-to-br from-white/95 via-white/80 to-transparent dark:from-[#121212]/95 dark:via-[#121212]/80" />
       
       {/* 벤토 박스 테두리와 잘 어울리도록 살짝 어두운 틴트 추가 */}
       <div className="absolute inset-0 z-10 bg-black/5 dark:bg-black/30" />

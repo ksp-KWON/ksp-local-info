@@ -31,7 +31,7 @@ const CIVIC_QUICK_MENUS: CivicQuickMenuItem[] = [
   {
     href: '/services/emergency',
     icon: 'hospital',
-    title: '달빛어린이병원 & 심야약국',
+    title: '야간·휴일 소아진료 & 심야약국',
     subtitle: '야간·휴일 응급의료 실시간 지도',
     badge: '실시간',
   },
