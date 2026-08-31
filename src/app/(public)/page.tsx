@@ -78,28 +78,28 @@ export default async function Home() {
 
       {/* 2. 3대 핵심 공공서비스 퀵메뉴 (고명도 시빅 벤토 박스) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-        {/* 달빛어린이병원 & 심야약국 카드 */}
+        {/* 야간·휴일 소아진료 & 심야약국 카드 */}
         <Link href="/services/emergency" className="group flex flex-col h-full">
           <PremiumCard
             hoverEffect={true}
             watermarkIcon="hospital"
-            className="p-5 sm:p-6 h-full justify-between min-h-[190px]"
+            className="p-5 sm:p-6 h-full flex flex-col justify-between min-h-[210px]"
           >
             <MiniMapPreview type="emergency" />
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 text-[11px] font-bold mb-2 border border-emerald-200 dark:border-emerald-800 rounded-none shadow-2xs">
+            <div className="relative z-10 flex-1">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 text-[11px] font-bold mb-2.5 border border-emerald-200 dark:border-emerald-800 rounded-none shadow-2xs">
                 <AppIcon name="hospital" size={13} strokeWidth={2.5} className="text-emerald-700 dark:text-emerald-400" />
                 <span>야간·응급의료</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-emerald-950 dark:group-hover:text-emerald-200 transition-colors">
+              <h3 className="text-[17px] sm:text-lg font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-emerald-950 dark:group-hover:text-emerald-200 transition-colors break-keep leading-snug">
                 야간·휴일 소아진료 & 심야약국
               </h3>
-              <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed">
-                아이 야간진료(달빛어린이병원) 및 휴일·심야 문 여는 병원·약국을 실시간으로 확인하세요.
+              <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed line-clamp-2">
+                아이 야간진료(달빛어린이병원) 및 휴일·심야 문 여는 병원·약국을 확인하세요.
               </p>
             </div>
 
-            <div className="relative z-10 flex items-center justify-end w-full mt-3">
+            <div className="relative z-10 flex items-center justify-end w-full mt-auto pt-3 border-t border-emerald-100/60 dark:border-emerald-950/40">
               <span className="flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300 group-hover:translate-x-1 transition-transform">
                 <span>지도 보기</span>
                 <AppIcon name="chevron-right" size={13} strokeWidth={2.5} />
@@ -113,23 +113,23 @@ export default async function Home() {
           <PremiumCard
             hoverEffect={true}
             watermarkIcon="bank"
-            className="p-5 sm:p-6 h-full justify-between min-h-[190px]"
+            className="p-5 sm:p-6 h-full flex flex-col justify-between min-h-[210px]"
           >
             <MiniMapPreview type="currency" />
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 text-[11px] font-bold mb-2 border border-sky-200 dark:border-sky-800 rounded-none shadow-2xs">
+            <div className="relative z-10 flex-1">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 text-[11px] font-bold mb-2.5 border border-sky-200 dark:border-sky-800 rounded-none shadow-2xs">
                 <AppIcon name="bank" size={13} strokeWidth={2.5} className="text-sky-700 dark:text-sky-400" />
                 <span>지역화폐 가맹점</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-sky-950 dark:group-hover:text-sky-200 transition-colors">
+              <h3 className="text-[17px] sm:text-lg font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-sky-950 dark:group-hover:text-sky-200 transition-colors break-keep leading-snug">
                 의정부 사랑카드 가맹점
               </h3>
-              <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed">
+              <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed line-clamp-2">
                 내 주변에서 의정부 지역화폐를 쓸 수 있는 가맹점을 찾아보세요.
               </p>
             </div>
 
-            <div className="relative z-10 flex items-center justify-end w-full mt-3">
+            <div className="relative z-10 flex items-center justify-end w-full mt-auto pt-3 border-t border-sky-100/60 dark:border-sky-950/40">
               <span className="flex items-center gap-1 text-xs font-bold text-sky-700 dark:text-sky-300 group-hover:translate-x-1 transition-transform">
                 <span>가맹점 검색</span>
                 <AppIcon name="chevron-right" size={13} strokeWidth={2.5} />
@@ -143,22 +143,23 @@ export default async function Home() {
           <PremiumCard
             hoverEffect={true}
             watermarkIcon="stethoscope"
-            className="p-5 sm:p-6 h-full justify-between min-h-[190px]"
+            className="p-5 sm:p-6 h-full flex flex-col justify-between min-h-[210px]"
           >
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 text-[11px] font-bold mb-2 border border-amber-200 dark:border-amber-800 rounded-none shadow-2xs">
+            <MiniMapPreview type="health-check" />
+            <div className="relative z-10 flex-1">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 text-[11px] font-bold mb-2.5 border border-amber-200 dark:border-amber-800 rounded-none shadow-2xs">
                 <AppIcon name="stethoscope" size={13} strokeWidth={2.5} className="text-amber-700 dark:text-amber-400" />
                 <span>건강검진 기관</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-amber-950 dark:group-hover:text-amber-200 transition-colors">
+              <h3 className="text-[17px] sm:text-lg font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-amber-950 dark:group-hover:text-amber-200 transition-colors break-keep leading-snug">
                 국가 건강검진 지정병원
               </h3>
-              <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed">
+              <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed line-clamp-2">
                 일반검진, 암검진, 구강검진이 가능한 의정부 내 의료기관을 확인하세요.
               </p>
             </div>
 
-            <div className="relative z-10 flex items-center justify-end w-full mt-3">
+            <div className="relative z-10 flex items-center justify-end w-full mt-auto pt-3 border-t border-amber-100/60 dark:border-amber-950/40">
               <span className="flex items-center gap-1 text-xs font-bold text-amber-700 dark:text-amber-300 group-hover:translate-x-1 transition-transform">
                 <span>지정병원 조회</span>
                 <AppIcon name="chevron-right" size={13} strokeWidth={2.5} />
