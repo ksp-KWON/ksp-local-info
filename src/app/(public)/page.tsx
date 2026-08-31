@@ -89,13 +89,13 @@ export default async function Home() {
             <div className="relative z-10">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 text-[11px] font-bold mb-2 border border-emerald-200 dark:border-emerald-800 rounded-none shadow-2xs">
                 <AppIcon name="hospital" size={13} strokeWidth={2.5} className="text-emerald-700 dark:text-emerald-400" />
-                <span>응급의료 지도</span>
+                <span>야간·응급의료</span>
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-emerald-950 dark:group-hover:text-emerald-200 transition-colors">
-                달빛어린이병원 & 심야약국
+                야간·휴일 소아진료 & 심야약국
               </h3>
               <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed">
-                휴일이나 야간에도 문 여는 병원·약국을 실시간으로 확인하세요.
+                아이 야간진료(달빛어린이병원) 및 휴일·심야 문 여는 병원·약국을 실시간으로 확인하세요.
               </p>
             </div>
 
