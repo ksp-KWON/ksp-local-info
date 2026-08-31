@@ -175,7 +175,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
                   >
                     <span className="flex items-center gap-2.5 pr-2">
                       <span className="px-1.5 py-0.5 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 text-[11px] font-extrabold border border-zinc-900 dark:border-zinc-100">Q</span>
-                      <span className="break-keep">{faq.q}</span>
+                      <span className="break-keep"><MarkdownRenderer content={faq.q} inline /></span>
                     </span>
                     <AppIcon
                       name={isOpen ? 'chevron-up' : 'chevron-down'}
@@ -186,7 +186,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
                   </button>
                   {isOpen && (
                     <div className="p-4 bg-white dark:bg-[#181a1d] border-t border-gray-100 dark:border-zinc-800 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-                      <p className="whitespace-pre-wrap">{faq.a}</p>
+                      <MarkdownRenderer content={faq.a} />
                     </div>
                   )}
                 </div>

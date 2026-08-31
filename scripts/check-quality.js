@@ -30,6 +30,14 @@ function processPost(filePath) {
   body = body.replace(/###\s*[💡📋🏆🛡️⭐💎🎯📌🧑‍⚖️⚖️]+\s*/g, '### ');
 
   // 6. 다중 빈 줄 정리
+  // 7. 마크다운 별표(Bold) 문법 정밀 표준화
+  body = body.replace(/\*{3,}([^*]+?)\*{2,}/g, '**$1**');
+  body = body.replace(/\*{2,}([^*]+?)\*{3,}/g, '**$1**');
+  body = body.replace(/^>\s*\*\*([^*:\n]+)\*\s*:/gm, '> **$1** :');
+  body = body.replace(/\*\*\s+([^*]+?)\*\*/g, '**$1**');
+  body = body.replace(/\*\*([^*]+?)\s+\*\*/g, '**$1**');
+
+  // 6. 다중 빈 줄 정리
   body = body.replace(/(?:\r?\n){3,}/g, '\n\n').trim();
 
   const newContent = matter.stringify(body, data);
