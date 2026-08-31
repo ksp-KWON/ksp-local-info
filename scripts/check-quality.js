@@ -30,6 +30,13 @@ function processPost(filePath) {
   body = body.replace(/###\s*[💡📋🏆🛡️⭐💎🎯📌🧑‍⚖️⚖️]+\s*/g, '### ');
 
   // 6. 다중 빈 줄 정리
+  // 6-1. 리스트 및 마크다운 목록 문법 정밀 표준화 (공백 누락 방지)
+  body = body.replace(/(\d+)\.\s*\*\*/g, '$1. **');
+  body = body.replace(/>\s*-\s*\*\*/g, '> - **');
+  body = body.replace(/^>\s*\*\*/gm, '> **');
+  body = body.replace(/\*\*\s*:\s*/g, '** : ');
+  body = body.replace(/(\d+\.\s*\*\*[^*]+\*\*\s*:[^\n]+)(\n)(\d+\.)/g, '$1\n\n$3');
+
   // 7. 마크다운 별표(Bold) 문법 정밀 표준화
   body = body.replace(/\*{3,}([^*]+?)\*{2,}/g, '**$1**');
   body = body.replace(/\*{2,}([^*]+?)\*{3,}/g, '**$1**');
