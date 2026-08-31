@@ -48,13 +48,34 @@ function processPost(filePath) {
   return false;
 }
 
+function normalizeFilename(filename) {
+  const baseName = filename.replace(/\.md$/, '');
+  if (/^[a-z0-9]+(-[a-z0-9]+)*$/.test(baseName)) {
+    return filename;
+  }
+  const clean = baseName
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-|-$/g, '');
+  return `${clean || 'post'}.md`;
+}
+
 function main() {
   if (!fs.existsSync(POSTS_DIR)) return;
   const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md'));
   let modifiedCount = 0;
 
   files.forEach((f) => {
-    const fullPath = path.join(POSTS_DIR, f);
+    let fullPath = path.join(POSTS_DIR, f);
+    const standardName = normalizeFilename(f);
+    if (standardName !== f) {
+      const newPath = path.join(POSTS_DIR, standardName);
+      fs.renameSync(fullPath, newPath);
+      fullPath = newPath;
+      modifiedCount++;
+    }
     if (processPost(fullPath)) {
       modifiedCount++;
     }
