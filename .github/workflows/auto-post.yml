@@ -1,10 +1,10 @@
-name: 로컬인포 자동글쓰기
+﻿name: 濡쒖뺄?명룷 ?먮룞湲?곌린
 
 on:
-  # 매일 오전 8시 (KST) = UTC 23:00 전날
+  # 留ㅼ씪 ?ㅼ쟾 8??(KST) = UTC 23:00 ?꾨궇
   schedule:
     - cron: '0 23 * * *'
-  # 수동 실행 (테스트용)
+  # ?섎룞 ?ㅽ뻾 (?뚯뒪?몄슜)
   workflow_dispatch:
 
 jobs:
@@ -17,62 +17,63 @@ jobs:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
-      - name: 저장소 체크아웃
+      - name: ??μ냼 泥댄겕?꾩썐
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Node.js 설정
+      - name: Node.js ?ㅼ젙
         uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: 'npm'
 
-      - name: 의존성 설치
+      - name: ?섏〈???ㅼ튂
         run: npm ci
 
-      # ── 공공데이터 수집 (실패해도 다음 단계 진행) ──────────────────────
-      - name: 공공데이터 수집
+      # ?? 怨듦났?곗씠???섏쭛 (?ㅽ뙣?대룄 ?ㅼ쓬 ?④퀎 吏꾪뻾) ??????????????????????
+      - name: 怨듦났?곗씠???섏쭛
         id: fetch_data
         env:
           PUBLIC_DATA_API_KEY: ${{ secrets.PUBLIC_DATA_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          echo "🔍 공공데이터 수집 시작 (scripts/fetch-public-data.js)"
+          echo "?뵇 怨듦났?곗씠???섏쭛 ?쒖옉 (scripts/fetch-public-data.js)"
           node scripts/fetch-public-data.js && echo "FETCH_OK=true" >> $GITHUB_OUTPUT || echo "FETCH_OK=false" >> $GITHUB_OUTPUT
 
-      # ── 블로그 글쓰기 (실패해도 커밋 단계 진행) ────────────────────────
-      - name: 블로그 자동글쓰기
+      # ?? 釉붾줈洹?湲?곌린 (?ㅽ뙣?대룄 而ㅻ컠 ?④퀎 吏꾪뻾) ????????????????????????
+      - name: 釉붾줈洹??먮룞湲?곌린
         id: generate_post
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          echo "✍️ 블로그 글쓰기 시작 (scripts/generate-blog-post.js)"
+          echo "?랃툘 釉붾줈洹?湲?곌린 ?쒖옉 (scripts/generate-blog-post.js)"
           node scripts/generate-blog-post.js && echo "GENERATE_OK=true" >> $GITHUB_OUTPUT || echo "GENERATE_OK=false" >> $GITHUB_OUTPUT
 
-      # ── 생성된 파일 커밋 & 푸시 ─────────────────────────────────────────
-      - name: 변경사항 커밋 & 푸시
+      # ?? ?앹꽦???뚯씪 而ㅻ컠 & ?몄떆 ?????????????????????????????????????????
+      - name: 蹂寃쎌궗??而ㅻ컠 & ?몄떆
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # 자동 작성 결과물 스테이징
+          # ?먮룞 ?묒꽦 寃곌낵臾??ㅽ뀒?댁쭠
           git add public/data/local-info.json src/content/posts/ || true
 
-          # 변경사항이 있을 때만 커밋
+          # 蹂寃쎌궗??씠 ?덉쓣 ?뚮쭔 而ㅻ컠
           if ! git diff --cached --quiet; then
-            git commit -m "auto: 자동글쓰기 업데이트 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+            git commit -m "auto: ?먮룞湲?곌린 ?낅뜲?댄듃 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
             git pull --rebase origin main
             git push origin main
-            echo "✅ 커밋 & 푸시 완료"
+            echo "??而ㅻ컠 & ?몄떆 ?꾨즺"
           else
-            echo "ℹ️ 변경사항 없음 — 커밋 건너뜀"
+            echo "?뱄툘 蹂寃쎌궗???놁쓬 ??而ㅻ컠 嫄대꼫?"
           fi
 
-      # ── 실행 결과 요약 ───────────────────────────────────────────────────
-      - name: 실행 결과 요약
+      # ?? ?ㅽ뻾 寃곌낵 ?붿빟 ???????????????????????????????????????????????????
+      - name: ?ㅽ뻾 寃곌낵 ?붿빟
         if: always()
         run: |
-          echo "📊 실행 결과 요약"
-          echo "  - 데이터 수집 : ${{ steps.fetch_data.outputs.FETCH_OK == 'true' && '✅ 성공' || '⚠️ 실패/데이터없음' }}"
-          echo "  - 블로그 글쓰기: ${{ steps.generate_post.outputs.GENERATE_OK == 'true' && '✅ 성공' || '⚠️ 실패/글없음' }}"
+          echo "?뱤 ?ㅽ뻾 寃곌낵 ?붿빟"
+          echo "  - ?곗씠???섏쭛 : ${{ steps.fetch_data.outputs.FETCH_OK == 'true' && '???깃났' || '?좑툘 ?ㅽ뙣/?곗씠?곗뾾?? }}"
+          echo "  - 釉붾줈洹?湲?곌린: ${{ steps.generate_post.outputs.GENERATE_OK == 'true' && '???깃났' || '?좑툘 ?ㅽ뙣/湲?놁쓬' }}"
+

@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 const fs = require('fs');
 const path = require('path');
@@ -45,14 +45,14 @@ function getExistingSourceIds() {
  */
 function makeSlug(title, date, seq = 1) {
   const KEYWORD_MAP = {
-    '의정부': 'uijeongbu', '버스킹': 'busking', '행복로': 'haengbokro',
-    '청년': 'youth', '어르신': 'senior', '노인': 'senior', '장애인': 'disabled',
-    '지원': 'support', '교육': 'education', '문화': 'culture', '축제': 'festival',
-    '행사': 'event', '혜택': 'benefit', '창업': 'startup', '복지': 'welfare',
-    '건강': 'health', '의료': 'medical', '경기': 'gyeonggi', '보육': 'childcare',
-    '일자리': 'jobs', '취업': 'employment', '주거': 'housing', '환경': 'environment',
-    '안전': 'safety', '교통': 'transport', '스포츠': 'sports', '도서관': 'library',
-    '박물관': 'museum', '공원': 'park', '음악극': 'music-theatre', '장려금': 'grant',
+    '?섏젙遺': 'uijeongbu', '踰꾩뒪??: 'busking', '?됰났濡?: 'haengbokro',
+    '泥?뀈': 'youth', '?대Ⅴ??: 'senior', '?몄씤': 'senior', '?μ븷??: 'disabled',
+    '吏??: 'support', '援먯쑁': 'education', '臾명솕': 'culture', '異뺤젣': 'festival',
+    '?됱궗': 'event', '?쒗깮': 'benefit', '李쎌뾽': 'startup', '蹂듭?': 'welfare',
+    '嫄닿컯': 'health', '?섎즺': 'medical', '寃쎄린': 'gyeonggi', '蹂댁쑁': 'childcare',
+    '?쇱옄由?: 'jobs', '痍⑥뾽': 'employment', '二쇨굅': 'housing', '?섍꼍': 'environment',
+    '?덉쟾': 'safety', '援먰넻': 'transport', '?ㅽ룷痢?: 'sports', '?꾩꽌愿': 'library',
+    '諛뺣Ъ愿': 'museum', '怨듭썝': 'park', '?뚯븙洹?: 'music-theatre', '?λ젮湲?: 'grant',
   };
 
   let slug = String(title || '');
@@ -129,9 +129,25 @@ function saveMarkdownPost(arg1, arg2, arg3) {
 
   const fileContent = matter.stringify(content || '', frontmatter);
   fs.writeFileSync(filePath, fileContent, 'utf8');
-  console.log(`  [저장 완료] ${filePath}`);
+  console.log(`  [????꾨즺] ${filePath}`);
 
   return { filePath, slug: finalSlug };
+}
+
+
+/**
+ * 정확한 한국 표준시(KST, UTC+9) 날짜 문자열 생성기 (전 세계 서버 완벽 호환)
+ * GitHub Actions Ubuntu 러너의 UTC 환경에서도 항상 KST 기준 날짜 반환
+ */
+function getKSTDateString(date) {
+  date = date || new Date();
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  return formatter.format(date); // 'YYYY-MM-DD' 형식
 }
 
 module.exports = {
@@ -141,3 +157,4 @@ module.exports = {
   makeSlug,
   saveMarkdownPost
 };
+
