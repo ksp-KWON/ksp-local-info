@@ -23,13 +23,13 @@ const MODEL_TIERS = [
     tier: 'flash',
     // "flash"는 있으나 "lite"는 없는 모델 = Flash 계열
     match: name => /gemini/i.test(name) && /flash/i.test(name) && !/lite/i.test(name),
-    maxTokensFallback: 32768,
+    maxTokensFallback: 65536,
   },
   {
     tier: 'lite',
     // "flash"와 "lite" 모두 포함 = Flash-Lite 계열
     match: name => /gemini/i.test(name) && /flash/i.test(name) && /lite/i.test(name),
-    maxTokensFallback: 16384,
+    maxTokensFallback: 32768,
   },
 ];
 
@@ -90,8 +90,8 @@ async function discoverModels() {
     // 탐색 실패 시 안전한 하드코딩 기본값으로 폴백
     _discoveredModels = [
 
-      { name: 'gemini-2.5-flash',     maxTokens: 32768 },
-      { name: 'gemini-2.0-flash-lite', maxTokens: 16384 },
+      { name: 'gemini-2.5-flash',     maxTokens: 65536 },
+      { name: 'gemini-2.0-flash-lite', maxTokens: 32768 },
     ];
     return _discoveredModels;
   }
@@ -226,6 +226,15 @@ async function callGemini(prompt, schema = null, targetTier = 'auto') {
       }
 
       const candidate    = data?.candidates?.[0];
+      const finishReason = candidate?.finishReason;
+
+      // Google 공식 표준: 정상 완료('STOP')가 아니면(예: 'MAX_TOKENS', 'SAFETY') 미완결로 판정하고 릴레이 전환
+      if (finishReason && finishReason !== 'STOP') {
+        lastError = `[${model}] 생성 미완결 (finishReason: ${finishReason})`;
+        console.warn(`  [절단 감지] ${model} 비정상 종료 (${finishReason}) — 차순위 최적 모델로 릴레이 전환합니다.`);
+        if (attempt < RETRY_CONFIG.maxRetries) { await sleep(1500); continue; }
+        continue modelLoop;
+      }
       const finishReason = candidate?.finishReason ?? 'UNKNOWN';
       const text         = (candidate?.content?.parts ?? []).map(p => p.text ?? '').join('');
 
