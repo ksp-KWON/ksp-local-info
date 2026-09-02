@@ -13,10 +13,13 @@ function processPost(filePath) {
   // 1. 핵심 요약 헤더 표준화
   body = body.replace(/##\s*(?:\[[^\]]+\]\s*)?(?:핵심\s*요약|행정\s*핵심\s*요약|3줄\s*요약|요약)[^\n]*/gi, '## 행정 핵심 요약');
 
+  // 1-1. 핵심 요약 불릿 유착 자동 분리 (> - 항목 > - 항목 -> 줄바꿈 분리)
+  body = body.replace(/(>\s*-[^\n>]+)>\s*-/g, '$1\n> -');
+
   // 2. 자주 묻는 질문 표준화
   body = body.replace(/##\s*(?:[1-9]\.\s*)?(?:자주\s*묻는\s*질문|FAQ|시민\s*FAQ)[^\n]*/gi, '## 자주 묻는 질문');
 
-  // 3. 자가진단 체크리스트 표준화 (체크리스트 전용 헤더만 정밀 매칭)
+  // 3. 자가진단 체크리스트 표준화
   body = body.replace(/##\s*(?:\[[^\]]+\]\s*)?(?:신청\s*자격\s*1분\s*자가진단|1분\s*자가진단|자가진단\s*체크리스트|1분\s*체크리스트|신청\s*자격\s*체크리스트)[^\n]*/gi, '## 신청 자격 1분 자가진단');
 
   // 4. 시그니처 박스 표준화
@@ -25,27 +28,49 @@ function processPost(filePath) {
     '> ### 의정부 생활 꿀팁 & 행정 인사이트'
   );
 
-  // 5. 이모지 및 불필요한 대괄호 제거
+  // 5. 이모지 제거
   body = body.replace(/##\s*[💡📋🏆🛡️⭐💎🎯📌🧑‍⚖️⚖️]+\s*/g, '## ');
   body = body.replace(/###\s*[💡📋🏆🛡️⭐💎🎯📌🧑‍⚖️⚖️]+\s*/g, '### ');
 
-  // 6. 다중 빈 줄 정리
-  // 6-1. 리스트 및 마크다운 목록 문법 정밀 표준화 (공백 누락 방지)
+  // 6. 마크다운 표(Table) 문법 정밀 표준화 및 오염 완벽 교정
+  // 6-1. 표 구분선 끝의 불필요한 인용부호(>) 제거: |---|---|---|> -> |---|---|---|
+  body = body.replace(/(\|[-: ]+)\|>\s*$/gm, '$1|');
+  body = body.replace(/(\|[-: ]+)>\s*$/gm, '$1|');
+
+  // 6-2. 표 헤더와 구분선, 데이터 행 자동 정돈
+  body = body.replace(/\|\s*\n\s*\|/g, '|\n|');
+
+  // 7. 헤딩 뒤 본문 유착 방지 (## 제목**본문** -> ## 제목\n\n**본문**)
+  body = body.replace(/^(##+[^\n*]+)(\*\*[^*]+\*\*)/gm, '$1\n\n$2');
+
+  // 8. 볼드 및 리스트 문법 정밀 표준화
   body = body.replace(/(\d+)\.\s*\*\*/g, '$1. **');
   body = body.replace(/>\s*-\s*\*\*/g, '> - **');
   body = body.replace(/^>\s*\*\*/gm, '> **');
   body = body.replace(/\*\*\s*:\s*/g, '** : ');
-  body = body.replace(/(\d+\.\s*\*\*[^*]+\*\*\s*:[^\n]+)(\n)(\d+\.)/g, '$1\n\n$3');
-
-  // 7. 마크다운 별표(Bold) 문법 정밀 표준화
   body = body.replace(/\*{3,}([^*]+?)\*{2,}/g, '**$1**');
   body = body.replace(/\*{2,}([^*]+?)\*{3,}/g, '**$1**');
   body = body.replace(/^>\s*\*\*([^*:\n]+)\*\s*:/gm, '> **$1** :');
   body = body.replace(/\*\*\s+([^*]+?)\*\*/g, '**$1**');
   body = body.replace(/\*\*([^*]+?)\s+\*\*/g, '**$1**');
 
-  // 6. 다중 빈 줄 정리
+  // 9. 다중 빈 줄 정리
   body = body.replace(/(?:\r?\n){3,}/g, '\n\n').trim();
+
+  // 10. 카테고리 4대 공식 카테고리 검증 및 정규화
+  if (data.category) {
+    const cats = Array.isArray(data.category) ? data.category : [data.category];
+    const catStr = cats.join(' ');
+    if (catStr.includes('병원') || catStr.includes('건강') || catStr.includes('의료') || catStr.includes('약국')) {
+      data.category = ['건강·의료'];
+    } else if (catStr.includes('문화') || catStr.includes('축제') || catStr.includes('행사') || catStr.includes('공연')) {
+      data.category = ['문화·축제'];
+    } else if (catStr.includes('교통') || catStr.includes('사랑카드') || catStr.includes('민원') || catStr.includes('생활')) {
+      data.category = ['생활·교통'];
+    } else {
+      data.category = ['지원금·복지'];
+    }
+  }
 
   const newContent = matter.stringify(body, data);
   if (newContent !== fileRaw) {
@@ -66,7 +91,7 @@ function normalizeFilename(filename) {
     .replace(/[\s_]+/g, '-')
     .replace(/-{2,}/g, '-')
     .replace(/^-|-$/g, '');
-  return `${clean || 'post'}.md`;
+  return (clean || 'post') + '.md';
 }
 
 function main() {
@@ -89,7 +114,7 @@ function main() {
   });
 
   if (modifiedCount > 0) {
-    console.log(`🛠️ CQF 의정부 품질 검증 엔진 자동 교정 완료 (적용 파일: ${modifiedCount}개).`);
+    console.log('🛠️ CQF 의정부 품질 검증 엔진 자동 교정 완료 (적용 파일: ' + modifiedCount + '개).');
   }
   console.log('✅ All Uijeongbu blog posts passed quality checks (Rock-Solid Verified).');
 }
