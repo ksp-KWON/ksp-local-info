@@ -1,10 +1,10 @@
-﻿/**
+/**
  * scripts/generate-blog-post.js
- * ?섏젙遺 嫄닿컯쨌?앺솢 ?뺣낫 ?ы꽭 [?섏씠釉뚮━???먮룞 ?ъ뒪???ㅽ넗 ?뚯씪???붿쭊]
+ * 의정부 건강·생활 정보 포털 [하이브리드 자동 포스팅 파이프라인 엔진]
  * 
- * ?뚮쾿 以??(.agents/AGENTS.md)
- * Tier 1: ?뺣?24 怨듦났?곗씠???ы꽭 API (?좉퇋 蹂듭?쨌吏?먭툑 怨듦퀬 理쒖슦???묒꽦)
- * Tier 2: ?ㅼ떆媛??섏젙遺 ?댁뒪 Google RSS ?뚰꽣 (?ㅼ떆媛??섏젙遺 ?쒖젙/?됱궗/異뺤젣/吏?먭툑 ?댁뒪 ?ъ링 諛쒓뎬)
+ * 헌법 준수 (.agents/AGENTS.md)
+ * Tier 1: 경기24 공공데이터 포털 API (신규 복지·지원금 공고 최우선 포스팅)
+ * Tier 2: 실시간 의정부 뉴스 Google RSS 레이더 (실시간 의정부 시정/행사/축제/지원금 뉴스 심층 발굴)
  */
 
 'use strict';
@@ -28,7 +28,7 @@ const {
 const xmlParser = new XMLParser({ ignoreAttributes: false, parseTagValue: false });
 const LOCAL_INFO_PATH = path.join(process.cwd(), 'public/data/local-info.json');
 
-// [怨듯넻] 湲곗〈 諛쒗뻾???쒕ぉ 紐⑸줉 ?섏쭛
+// [공통] 기존 발행된 제목 목록 수집
 function getExistingTitles() {
   if (!fs.existsSync(POSTS_DIR)) return [];
   const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'));
@@ -40,11 +40,11 @@ function getExistingTitles() {
   }).filter(Boolean);
 }
 
-// ??? [Tier 1] 怨듦났?곗씠??local-info.json) 湲곕컲 ?ъ뒪???????????????????????
+// ── [Tier 1] 공공데이터(local-info.json) 기반 포스팅 ─────────────────
 async function runTier1() {
-  console.log('\n[Tier 1] ?뺣?24 怨듦났?곗씠??誘몃컻????ぉ 寃??以?..');
+  console.log('\n[Tier 1] 경기24 공공데이터 미발행 항목 검색 중...');
   if (!fs.existsSync(LOCAL_INFO_PATH)) {
-    console.log('  -> local-info.json ?뚯씪???놁뒿?덈떎.');
+    console.log('  -> local-info.json 파일이 없습니다.');
     return null;
   }
 
@@ -59,13 +59,13 @@ async function runTier1() {
   });
 
   if (pending.length === 0) {
-    console.log('  -> 怨듦났?곗씠?곗뿉 誘몃컻?됰맂 ?좉퇋 怨듦퀬媛 ?놁뒿?덈떎.');
+    console.log('  -> 공공데이터에 미발행된 신규 공고가 없습니다.');
     return null;
   }
 
   const targetItem = pending[0];
   const sourceId = generateSourceId(targetItem.title);
-  console.log(`  -> Tier 1 ?寃??좎젙: "${targetItem.title}" (Source ID: ${sourceId})`);
+  console.log(`  -> Tier 1 타깃 선정: "${targetItem.title}" (Source ID: ${sourceId})`);
 
   const angle = getRandomAngle();
   const plan = await callGemini(buildPlanPrompt(targetItem), PLAN_SCHEMA);
@@ -89,7 +89,7 @@ async function runTier1() {
   return fileName;
 }
 
-// ??? [Tier 2] ?ㅼ떆媛?Google News RSS ?뚰꽣 (?ㅺ컖???먯깋 媛뺥솕) ??????????????
+// ── [Tier 2] 실시간 Google News RSS 레이더 (다각도 탐색 강화) ─────────
 async function fetchNews(query) {
   const url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=ko&gl=KR&ceid=KR:ko`;
   try {
@@ -105,26 +105,26 @@ async function fetchNews(query) {
       pubDate: String(item.pubDate || '').trim(),
     })).filter(item => item.title && item.title.length > 5);
   } catch (error) {
-    console.error(`  -> RSS Fetch ?먮윭 (${query}): ${error.message}`);
+    console.error(`  -> RSS Fetch 에러 (${query}): ${error.message}`);
     return [];
   }
 }
 
 async function runTier2() {
-  console.log('\n[Tier 2] ?ㅼ떆媛??섏젙遺 ?댁뒪 Google RSS ?뚰꽣 媛??以?..');
+  console.log('\n[Tier 2] 실시간 의정부 뉴스 Google RSS 레이더 가동 중...');
   const existingTitles = getExistingTitles();
 
-  // 1. AI?먭쾶 理쒖쟻 寃?됱뼱 ?앹꽦 ?붿껌
-  const queryPrompt = `?뱀떊? ?섏젙遺?쒖쓽 理쒖떊 ?뚯떇??諛쒓뎬?섎뒗 濡쒖뺄 ?섏꽍 ?먮뵒?곗엯?덈떎.
-湲곗〈???묒꽦??湲 ?쒕ぉ 紐⑸줉:
+  // 1. AI에게 최적 검색어 생성 요청
+  const queryPrompt = `당신은 의정부시의 최신 소식을 발굴하는 로컬 수석 에디터입니다.
+기존에 작성된 글 제목 목록:
 ${existingTitles.slice(-25).join('\n')}
 
-湲곗〈 湲?ㅺ낵 寃뱀튂吏 ?딅뒗, ?섏젙遺?쒖쓽 理쒖떊 ?쒗깮, 異뺤젣/?됱궗, 吏?먭툑, ?쇱옄由? 臾명솕, 蹂듭?, 援먰넻 愿??援ш? ?댁뒪 寃?됱뼱 1媛쒕? ?앹꽦?섏꽭?? (?? "?섏젙遺 泥?뀈 ?쒗깮", "?섏젙遺 異뺤젣 怨듭뿰", "?섏젙遺?щ옉移대뱶 ?쒗깮", "?섏젙遺 ?쇱옄由?諛뺣엺??)`;
+기존 글들과 겹치지 않는, 의정부시의 최신 혜택, 축제/행사, 지원금, 일자리, 문화, 복지, 교통 관련 구글 뉴스 검색어 1개를 생성하세요. (예: "의정부 청년 혜택", "의정부 축제 공연", "의정부사랑카드 혜택", "의정부 일자리 박람회")`;
 
   const querySchema = {
     type: 'OBJECT',
     properties: {
-      query: { type: 'STRING', description: '援ш? ?댁뒪 寃?됱뼱 (?섏젙遺 ?ы븿)' }
+      query: { type: 'STRING', description: '구글 뉴스 검색어 (의정부 포함)' }
     },
     required: ['query']
   };
@@ -132,32 +132,32 @@ ${existingTitles.slice(-25).join('\n')}
   let searchQueries = [];
   try {
     const { query } = await callGemini(queryPrompt, querySchema);
-    if (query) searchQueries.push(query.includes('?섏젙遺') ? query : `?섏젙遺 ${query}`);
+    if (query) searchQueries.push(query.includes('의정부') ? query : `의정부 ${query}`);
   } catch (e) {
-    console.error(`  -> AI 寃?됱뼱 ?앹꽦 ?ㅽ뙣: ${e.message}`);
+    console.error(`  -> AI 검색어 생성 실패: ${e.message}`);
   }
 
-  // 2. ?ㅺ컖??諛깆뾽 荑쇰━ ? (Fallback Queries)
+  // 2. 다각도 백업 쿼리 풀 (Fallback Queries)
   const FALLBACK_QUERIES = [
-    '?섏젙遺??吏?먭툑',
-    '?섏젙遺 異뺤젣 臾명솕 ?됱궗',
-    '?섏젙遺 泥?뀈 蹂듭?',
-    '?섏젙遺?щ옉移대뱶 ?쒗깮',
-    '?섏젙遺 援먰넻 ?쇱옄由?,
-    '?섏젙遺 ?앺솢 誘쇱썝 ?쒗깮'
+    '의정부시 지원금',
+    '의정부 축제 문화 행사',
+    '의정부 청년 복지',
+    '의정부사랑카드 혜택',
+    '의정부 교통 일자리',
+    '의정부 생활 민원 혜택'
   ];
   for (const fq of FALLBACK_QUERIES) {
     if (!searchQueries.includes(fq)) searchQueries.push(fq);
   }
 
-  // 3. ?쒖감 寃?됱쑝濡?理쒖쟻??湲곗궗 諛쒓뎬
+  // 3. 순차 검색으로 최적의 기사 발굴
   let candidate = null;
   for (const q of searchQueries) {
-    console.log(`  -> RSS ?먯깋 荑쇰━: "${q}"`);
+    console.log(`  -> RSS 검색 쿼리: "${q}"`);
     const newsItems = await fetchNews(q);
     if (newsItems.length === 0) continue;
 
-    // 湲곗〈 湲?ㅺ낵 ?쒕ぉ??寃뱀튂吏 ?딅뒗 ?좎꽑??湲곗궗 李얘린
+    // 기존 글들과 제목이 겹치지 않는 신선한 기사 찾기
     const freshItem = newsItems.find(item => {
       const cleanT = item.title.slice(0, 15);
       return !existingTitles.some(title => title.includes(cleanT));
@@ -165,49 +165,49 @@ ${existingTitles.slice(-25).join('\n')}
 
     if (freshItem) {
       candidate = freshItem;
-      console.log(`  -> 理쒖쟻???좉퇋 ?댁뒪 諛쒓뎬: "${candidate.title}"`);
+      console.log(`  -> 최적의 신규 뉴스 발굴: "${candidate.title}"`);
       break;
     }
   }
 
   if (!candidate) {
-    console.log('  -> 愿???좉퇋 ?댁뒪瑜?李얠? 紐삵뻽?듬땲??');
+    console.log('  -> 관련 신규 뉴스를 찾지 못했습니다.');
     return null;
   }
 
-  console.log(`  -> ?ъ뒪???묒꽦 ???湲곗궗: "${candidate.title}" (${candidate.pubDate})`);
+  console.log(`  -> 포스팅 생성 대상 기사: "${candidate.title}" (${candidate.pubDate})`);
 
-  const planPrompt = `?뱀떊? ?섏젙遺 嫄닿컯쨌?앺솢 ?뺣낫 ?ы꽭???섏꽍 ?먮뵒?곗엯?덈떎.
-?꾨옒 ?ㅼ떆媛??댁뒪 湲곗궗瑜?諛뷀깢?쇰줈 ?섏젙遺 ?쒕??ㅼ뿉寃??ㅼ쭏?곸씤 ?꾩????섎뒗 怨좏뭹吏?釉붾줈洹?湲고쉷??JSON)???묒꽦?섏꽭??
+  const planPrompt = `당신은 의정부 건강·생활 정보 포털의 수석 에디터입니다.
+아래 실시간 뉴스 기사를 바탕으로 의정부 시민들에게 실질적인 도움이 되는 고품질 블로그 기획안(JSON)을 작성하세요.
 
-[湲곗궗 ?뺣낫]
-?쒕ぉ: ${candidate.title}
-留곹겕: ${candidate.link}
-諛쒗뻾?? ${candidate.pubDate}
+[기사 정보]
+제목: ${candidate.title}
+링크: ${candidate.link}
+발행일: ${candidate.pubDate}
 
-[?묒꽦 ?붽뎄?ы빆]
-- ?섏젙遺 ?쒕????ㅼ깮???쒗깮, 李몄뿬 諛⑸쾿, ?좎껌 ?덉감瑜?以묒떖?쇰줈 湲고쉷?덉쓣 ?묒꽦?섏꽭??
-- 援ш? 寃??理쒖쟻??SEO)瑜?怨좊젮???좊ː???믪? ?쒕ぉ怨?150???대궡??紐낆풄???붿빟臾몄쓣 留뚮뱶?몄슂.`;
+[작성 요구사항]
+- 의정부 시민의 실생활 혜택, 참여 방법, 신청 절차를 중심으로 기획안을 작성하세요.
+- 구글 검색 최적화(SEO)를 고려하여 신뢰도 높은 제목과 150자 내외의 명쾌한 요약문을 만드세요.`;
 
   const plan = await callGemini(planPrompt, PLAN_SCHEMA);
   await sleep(2000);
 
   const angle = getRandomAngle();
-  const contentPrompt = `?뱀떊? ?섏젙遺 ?쒕? ?ы꽭???섏꽍 怨듦났 ?먮뵒?곗엯?덈떎.
-?꾨옒 湲고쉷?덉쓣 諛뷀깢?쇰줈 ?뚮쾿??100% 以?섑븯???덇꺽 ?덈뒗 留덊겕?ㅼ슫 蹂몃Ц???묒꽦?섏꽭??
+  const contentPrompt = `당신은 의정부 시정 포털의 수석 공공 에디터입니다.
+아래 기획안을 바탕으로 헌법을 100% 준수하여 품격 있는 마크다운 본문을 작성하세요.
 
-[湲고쉷??
-- ?쒕ぉ: ${plan.frontmatter.title}
-- 移댄뀒怨좊━: ${plan.frontmatter.category}
-- ?붿빟: ${plan.frontmatter.summary}
+[기획안]
+- 제목: ${plan.frontmatter.title}
+- 카테고리: ${plan.frontmatter.category}
+- 요약: ${plan.frontmatter.summary}
 
-# ?룢截??섏젙遺 ?ы꽭 怨듯넻 湲?곌린 ?뚮쾿 洹쒖튃 (STRICT WRITING RULES)
+# 의정부 포털 공통 글쓰기 헌법 규칙 (STRICT WRITING RULES)
 ${STRICT_RULES}
 
-[?ㅻ뒛??湲?곌린 愿??
-- 愿??Angle): [${angle.name}] ${angle.instruction}
+[오늘의 글쓰기 관점]
+- 관점(Angle): [${angle.name}] ${angle.instruction}
 
-??湲고쉷?덇낵 ?뚮쾿 洹쒖튃???꾨꼍??諛섏쁺?섏뿬 蹂몃Ц(markdownContent)留?JSON?쇰줈 諛섑솚?섏꽭??`;
+위 기획안과 헌법 규칙을 완벽히 반영하여 본문(markdownContent)을 JSON으로 반환하세요.`;
 
   const content = await callGemini(contentPrompt, CONTENT_SCHEMA);
 
@@ -227,34 +227,33 @@ ${STRICT_RULES}
   return fileName;
 }
 
-// ??? [硫붿씤 ?ㅽ뻾 ?붿쭊] ??????????????????????????????????????????????????
+// ── [메인 실행 엔진] ───────────────────────────────────────────────
 async function main() {
   console.log('======================================================');
-  console.log('?룢截?[?섏젙遺 ?ы꽭] 2-Tier ?섏씠釉뚮━???ㅽ넗 ?뚯씪???붿쭊 ?쒖옉');
-  console.log('?ㅽ뻾 ?쒓컖:', new Date().toISOString());
+  console.log('🚀 [의정부 포털] 2-Tier 하이브리드 오토 포스팅 엔진 시작');
+  console.log('실행 시각:', new Date().toISOString());
   console.log('======================================================');
 
   try {
-    // 1?④퀎: ?뺣?24 怨듦났?곗씠???곗꽑
+    // 1단계: 경기24 공공데이터 우선
     const tier1Result = await runTier1();
     if (tier1Result) {
-      console.log(`\n?럦 [Tier 1 ?깃났] ?좉퇋 怨듦났?곗씠???ъ뒪???꾨즺: ${tier1Result}`);
+      console.log(`\n🎉 [Tier 1 성공] 신규 공공데이터 포스팅 완료: ${tier1Result}`);
       return;
     }
 
-    // 2?④퀎: ?ㅼ떆媛??섏젙遺 ?댁뒪 Google RSS ?뚰꽣
+    // 2단계: 실시간 의정부 뉴스 Google RSS 레이더
     const tier2Result = await runTier2();
     if (tier2Result) {
-      console.log(`\n?럦 [Tier 2 ?깃났] ?ㅼ떆媛??댁뒪 RSS ?ъ뒪???꾨즺: ${tier2Result}`);
+      console.log(`\n🎉 [Tier 2 성공] 실시간 뉴스 RSS 포스팅 완료: ${tier2Result}`);
       return;
     }
 
-    console.log('\n?좑툘 [?뚮┝] 湲덉씪 諛쒗뻾?????덈뒗 ?덈줈????ぉ???놁뒿?덈떎.');
+    console.log('\n⚠️ [알림] 금일 발행할 수 있는 새로운 이슈가 없습니다.');
   } catch (error) {
-    console.error('\n?뮙 [移섎챸???ㅻ쪟] ?ㅽ넗 ?뚯씪???붿쭊 ?ㅽ뻾 ?ㅽ뙣:', error.message);
+    console.error('\n❌ [치명적 오류] 오토 포스팅 엔진 실행 실패:', error.message);
     process.exit(1);
   }
 }
 
 main();
-
