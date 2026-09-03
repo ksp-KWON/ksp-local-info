@@ -235,7 +235,6 @@ async function callGemini(prompt, schema = null, targetTier = 'auto') {
         if (attempt < RETRY_CONFIG.maxRetries) { await sleep(1500); continue; }
         continue modelLoop;
       }
-      const finishReason = candidate?.finishReason ?? 'UNKNOWN';
       const text         = (candidate?.content?.parts ?? []).map(p => p.text ?? '').join('');
 
       if (!text) {
