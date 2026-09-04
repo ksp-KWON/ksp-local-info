@@ -2,6 +2,7 @@ import { getPostData, getSortedPostsData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import BlogPostClient from '@/components/blog/BlogPostClient';
+import BlogSidebar from '@/components/blog/BlogSidebar';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
 import AppIcon from '@/components/ui/AppIcon';
@@ -41,6 +42,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     notFound();
   }
 
+  const allPosts = getSortedPostsData();
+  const recentPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 4);
   const sourceLink = post.sourceLink || '';
 
   // 1. Google E-E-A-T BlogPosting & GovernmentService 스키마
@@ -117,7 +120,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   }
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-10">
+    <div className="mx-auto w-[92vw] xl:w-[85vw] max-w-7xl px-2 sm:px-5 py-6 sm:py-10">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {faqSchema && (
@@ -135,54 +138,63 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </Link>
       </nav>
 
-      <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
-        <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
-          {/* 아티클 헤더 (구역 1: 카테고리/날짜 메타, 구역 2: H1 타이틀, 구역 3: 포스트 요약 리드문) */}
-          <header className="border-b border-gray-100 dark:border-zinc-800 pb-8">
-            <div className="flex flex-wrap items-center gap-2.5 text-xs mb-4">
-              {Array.isArray(post.category) ? (
-                post.category.map((cat) => (
-                  <span
-                    key={cat}
-                    className="px-2.5 py-1 rounded-none bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800 shadow-2xs"
-                  >
-                    {cat.replace(/^[^\s]+\s/, '')}
-                  </span>
-                ))
-              ) : post.category ? (
-                <span className="px-2.5 py-1 rounded-none bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800 shadow-2xs">
-                  {(post.category as string).replace(/^[^\s]+\s/, '')}
-                </span>
-              ) : null}
-              <time dateTime={post.date} className="text-zinc-500 dark:text-zinc-400 font-medium tracking-wide flex items-center gap-1 ml-auto">
-                <AppIcon name="calendar" size={14} strokeWidth={2} />
-                <span>{post.date}</span>
-              </time>
+      {/* 본문과 사이드바 2단 flex 레이아웃 (보상스쿨 완벽 일치 구조) */}
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+        {/* 메인 칼럼 영역 (73%) */}
+        <main className="w-full lg:w-[73%] flex-1 min-w-0 transition-all duration-300">
+          <article className="bg-white dark:bg-[#181a1d] rounded-none shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
+            <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
+              {/* 아티클 헤더 (구역 1: 카테고리/날짜 메타, 구역 2: H1 타이틀, 구역 3: 포스트 요약 리드문) */}
+              <header className="border-b border-gray-100 dark:border-zinc-800 pb-8">
+                <div className="flex flex-wrap items-center gap-2.5 text-xs mb-4">
+                  {Array.isArray(post.category) ? (
+                    post.category.map((cat) => (
+                      <span
+                        key={cat}
+                        className="px-2.5 py-1 rounded-none bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800 shadow-2xs"
+                      >
+                        {cat.replace(/^[^\s]+\s/, '')}
+                      </span>
+                    ))
+                  ) : post.category ? (
+                    <span className="px-2.5 py-1 rounded-none bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800 shadow-2xs">
+                      {(post.category as string).replace(/^[^\s]+\s/, '')}
+                    </span>
+                  ) : null}
+                  <time dateTime={post.date} className="text-zinc-500 dark:text-zinc-400 font-medium tracking-wide flex items-center gap-1 ml-auto">
+                    <AppIcon name="calendar" size={14} strokeWidth={2} />
+                    <span>{post.date}</span>
+                  </time>
+                </div>
+
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white leading-[1.3] break-keep">
+                  {post.title}
+                </h1>
+
+                {post.summary && (
+                  <p className="text-[15px] sm:text-base text-zinc-600 dark:text-zinc-400 font-normal leading-relaxed mt-4 pt-4 border-t border-gray-100/80 dark:border-zinc-800/80 break-keep">
+                    {post.summary}
+                  </p>
+                )}
+              </header>
+
+              {/* 블로그 본문 (TOC & Markdown & ShareButtons 일체화) */}
+              <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} />
+
+              {/* 하단 광고 배너 */}
+              <div className="pt-6 border-t border-gray-100 dark:border-zinc-800">
+                <div className="my-6">
+                  <AdBanner slot="blog-bottom-ad" />
+                </div>
+                <CoupangBanner />
+              </div>
             </div>
+          </article>
+        </main>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white leading-[1.3] break-keep">
-              {post.title}
-            </h1>
-
-            {post.summary && (
-              <p className="text-[15px] sm:text-base text-zinc-600 dark:text-zinc-400 font-normal leading-relaxed mt-4 pt-4 border-t border-gray-100/80 dark:border-zinc-800/80 break-keep">
-                {post.summary}
-              </p>
-            )}
-          </header>
-
-          {/* 블로그 본문 (TOC & Markdown & ShareButtons 일체화) */}
-          <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} />
-
-          {/* 하단 광고 배너 */}
-          <div className="pt-6 border-t border-gray-100 dark:border-zinc-800">
-            <div className="my-6">
-              <AdBanner slot="blog-bottom-ad" />
-            </div>
-            <CoupangBanner />
-          </div>
-        </div>
-      </article>
+        {/* 우측 의정부 생활 퀵메뉴 스티키 사이드바 (27%) */}
+        <BlogSidebar recentPosts={recentPosts} />
+      </div>
     </div>
   );
 }
