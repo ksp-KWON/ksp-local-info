@@ -210,12 +210,36 @@ export const sharedComponents: Components & Record<string, any> = {
   },
 };
 
+/**
+ * 한국어 마크다운 볼드(**) 미변환 버그 영구 방어 전처리기
+ * - 마침표, 조사, 따옴표가 공백 없이 붙어 있는 경우 CommonMark/GFM 파서가 볼드를 인식하지 못하는 버그를 완벽히 해결합니다.
+ * - 코드 블록(```...```) 및 인라인 코드(`...`)는 원형 그대로 완벽 보존합니다.
+ */
+export function preprocessMarkdownBold(content: string): string {
+  if (!content) return '';
+
+  const codeBlocks: string[] = [];
+  // 1. 코드 블록 및 인라인 코드 임시 격리
+  let protectedContent = content.replace(/(```[\s\S]*?```|`[^`\n]+?`)/g, (match) => {
+    codeBlocks.push(match);
+    return `__CODE_BLOCK_${codeBlocks.length - 1}__`;
+  });
+
+  // 2. **텍스트**를 <strong>텍스트</strong>로 직접 안전 변환 (rehypeRaw와 연동)
+  protectedContent = protectedContent.replace(/\*\*([^*\n\r]+?)\*\*/g, '<strong>$1</strong>');
+
+  // 3. 코드 블록 복원
+  return protectedContent.replace(/__CODE_BLOCK_(\d+)__/g, (_, idx) => codeBlocks[Number(idx)] || '');
+}
+
 interface MarkdownRendererProps {
   content: string;
   inline?: boolean;
 }
 
 export default function MarkdownRenderer({ content, inline = false }: MarkdownRendererProps) {
+  const processedContent = preprocessMarkdownBold(content);
+
   if (inline) {
     return (
       <ReactMarkdown
@@ -228,7 +252,7 @@ export default function MarkdownRenderer({ content, inline = false }: MarkdownRe
           code: sharedComponents.code,
         }}
       >
-        {content}
+        {processedContent}
       </ReactMarkdown>
     );
   }
@@ -239,7 +263,7 @@ export default function MarkdownRenderer({ content, inline = false }: MarkdownRe
       rehypePlugins={[rehypeRaw, rehypeSlug]}
       components={sharedComponents}
     >
-      {content}
+      {processedContent}
     </ReactMarkdown>
   );
 }
