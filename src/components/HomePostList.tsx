@@ -4,10 +4,10 @@ import React from 'react';
 import PostCard from '@/components/ui/PostCard';
 import SectionLayout from '@/components/ui/SectionLayout';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
-import { PostData } from '@/lib/types';
+import { PostData, PostMeta } from '@/lib/types';
 
 interface HomePostListProps {
-  initialPosts: PostData[];
+  initialPosts: (PostMeta | PostData)[];
 }
 
 interface MasterChapter {

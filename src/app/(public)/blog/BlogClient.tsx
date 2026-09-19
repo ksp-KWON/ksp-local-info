@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import PostCard from '@/components/ui/PostCard';
-import { PostData } from '@/lib/types';
+import { PostData, PostMeta } from '@/lib/types';
 import { CATEGORIES } from '@/lib/constants';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
@@ -11,7 +11,7 @@ import PremiumCard from '@/components/ui/PremiumCard';
 import PremiumButton from '@/components/ui/PremiumButton';
 import Link from 'next/link';
 
-function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
+function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostData)[] }) {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
   const tagParam = searchParams.get('tag');
@@ -112,7 +112,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: PostData[] }) {
   );
 }
 
-export default function BlogClient({ initialPosts }: { initialPosts: PostData[] }) {
+export default function BlogClient({ initialPosts }: { initialPosts: (PostMeta | PostData)[] }) {
   return (
     <Suspense fallback={<div className="p-12 text-center text-sm font-bold text-zinc-500">목록을 불러오는 중입니다...</div>}>
       <BlogClientContent initialPosts={initialPosts} />

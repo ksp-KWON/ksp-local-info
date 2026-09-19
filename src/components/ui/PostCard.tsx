@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { PostData } from '@/lib/types';
+import { PostData, PostMeta } from '@/lib/types';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 import PremiumBadge from '@/components/ui/PremiumBadge';
 import PremiumCard from '@/components/ui/PremiumCard';
 
 interface PostCardProps {
-  post: PostData;
+  post: PostMeta | PostData;
   variant?: 'grid' | 'list';
 }
 

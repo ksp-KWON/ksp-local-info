@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import AppIcon from '@/components/ui/AppIcon';
-import { PostData } from '@/lib/types';
+import { PostData, PostMeta } from '@/lib/types';
 
 interface BlogSidebarProps {
-  recentPosts?: PostData[];
+  recentPosts?: (PostMeta | PostData)[];
 }
 
 export default function BlogSidebar({ recentPosts = [] }: BlogSidebarProps) {
