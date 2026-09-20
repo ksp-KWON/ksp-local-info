@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
-import AdBanner from '@/components/AdBanner';
 import { getSortedPostsData } from '@/lib/posts';
 import HomePostList from '@/components/HomePostList';
 import { Metadata } from 'next';
@@ -171,9 +170,6 @@ export default async function Home() {
 
       {/* 3. 블로그 콘텐츠 큐레이션 리스트 */}
       <HomePostList initialPosts={posts} />
-
-      {/* 광고 영역 */}
-      <AdBanner slot="home-middle-ad" />
     </div>
   );
 }

@@ -82,9 +82,6 @@ export default function RootLayout({
     ],
   };
 
-  const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
-  const isAdsenseEnabled = adsenseId && adsenseId !== "나중에_입력" && adsenseId.trim() !== "";
-
   return (
     <html lang="ko" className="h-full antialiased overflow-x-hidden" suppressHydrationWarning>
       <head>
@@ -109,13 +106,6 @@ export default function RootLayout({
             `,
           }}
         />
-        {isAdsenseEnabled && (
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
-            crossOrigin="anonymous"
-          />
-        )}
       </head>
       <body className="min-h-full flex flex-col bg-white text-zinc-900 dark:bg-[#121417] dark:text-[#e8eaed] transition-colors duration-300 overflow-x-clip">
         {children}

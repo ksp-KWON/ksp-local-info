@@ -3,8 +3,6 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import BlogPostClient from '@/components/blog/BlogPostClient';
 import BlogSidebar from '@/components/blog/BlogSidebar';
-import AdBanner from '@/components/AdBanner';
-import CoupangBanner from '@/components/CoupangBanner';
 import AppIcon from '@/components/ui/AppIcon';
 import Link from 'next/link';
 
@@ -180,14 +178,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
               {/* 블로그 본문 (TOC & Markdown & ShareButtons 일체화) */}
               <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} />
-
-              {/* 하단 광고 배너 */}
-              <div className="pt-6 border-t border-gray-100 dark:border-zinc-800">
-                <div className="my-6">
-                  <AdBanner slot="blog-bottom-ad" />
-                </div>
-                <CoupangBanner />
-              </div>
             </div>
           </article>
         </main>
