@@ -7,7 +7,7 @@ import PremiumCard from '@/components/ui/PremiumCard';
 import AppIcon from '@/components/ui/AppIcon';
 
 export const metadata: Metadata = {
-  title: '사이트 소개 및 운영 철학 | 의정부 건강·생활 정보 포털',
+  title: '사이트 소개 및 운영 철학',
   description: '의정부 시민을 위한 공공데이터 기반 생활 복지, 의료, 지역화폐 정보 허브의 운영 목적과 데이터 출처를 투명하게 안내합니다.',
   alternates: {
     canonical: '/about',

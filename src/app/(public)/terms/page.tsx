@@ -5,7 +5,7 @@ import PremiumHeading from '@/components/ui/PremiumHeading';
 import AppIcon from '@/components/ui/AppIcon';
 
 export const metadata: Metadata = {
-  title: '이용약관 | 의정부 건강·생활 정보 포털',
+  title: '이용약관',
   description: '의정부 건강·생활 정보 포털 서비스 이용에 관한 권리와 의무, 면책 조항을 규정합니다.',
   alternates: {
     canonical: '/terms',

@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://ksp-local-info-edg.pages.dev"),
   title: {
     default: "의정부 건강·생활 정보 포털 | 달빛병원·사랑카드·시정혜택 안내",
-    template: "%s | 의정부 건강·생활 포털",
+    template: "%s | 의정부 건강·생활 정보 포털",
   },
   description: "의정부시 시민을 위한 달빛어린이병원, 심야약국, 사랑카드 가맹점 지도 및 놓치기 쉬운 시정 지원금과 복지 혜택을 큐레이션합니다.",
   keywords: ["의정부", "의정부달빛어린이병원", "의정부심야약국", "의정부사랑카드", "의정부지원금", "의정부건강검진", "의정부복지"],

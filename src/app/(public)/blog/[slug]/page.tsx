@@ -19,12 +19,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!post) {
     return {
-      title: '페이지를 찾을 수 없습니다 | 의정부 건강·생활 정보 포털',
+      title: '페이지를 찾을 수 없습니다',
     };
   }
 
   return {
-    title: `${post.title} | 의정부 건강·생활 정보 포털`,
+    title: post.title,
     description: post.summary || `${post.title}에 관한 상세 안내입니다.`,
     alternates: {
       canonical: `https://ksp-local-info-edg.pages.dev/blog/${slug}`,

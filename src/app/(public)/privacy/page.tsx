@@ -5,7 +5,7 @@ import PremiumHeading from '@/components/ui/PremiumHeading';
 import AppIcon from '@/components/ui/AppIcon';
 
 export const metadata: Metadata = {
-  title: '개인정보처리방침 | 의정부 건강·생활 정보 포털',
+  title: '개인정보처리방침',
   description: '의정부 건강·생활 정보 포털의 이용자 개인정보 보호 및 처리 방침입니다.',
   alternates: {
     canonical: '/privacy',

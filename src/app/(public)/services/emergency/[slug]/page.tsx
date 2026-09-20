@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PlacePageProps): Promise<Meta
 
   if (!place) {
     return {
-      title: '응급의료 기관 안내 | 의정부 건강·생활 정보 포털',
+      title: '응급의료 기관 안내',
     };
   }
 
   return {
-    title: `${place.name} - 진료시간·응급실·주차 안내 | 의정부 건강·생활 포털`,
+    title: `${place.name} - 진료시간·응급실·주차 안내`,
     description: `${place.name}의 위치(${place.address}), 전화번호(${place.tel}), 야간 및 휴일 진료시간, 주차 안내 및 응급 처치 정보입니다.`,
     alternates: {
       canonical: `/services/emergency/${place.slug}`,

@@ -4,7 +4,7 @@ import { getSortedPostsData } from '@/lib/posts';
 import BlogClient from './BlogClient';
 
 export const metadata: Metadata = {
-  title: '의정부 생활 소식 & 시정 혜택 백과 | 의정부 건강·생활 포털',
+  title: '의정부 생활 소식 & 시정 혜택 백과',
   description: '의정부시 지원금·복지 혜택, 달빛어린이병원·심야약국 의료 안내, 문화 축제 행사, 의정부사랑카드 가맹점 꿀팁을 전해드립니다.',
   alternates: {
     canonical: 'https://ksp-local-info-edg.pages.dev/blog',
