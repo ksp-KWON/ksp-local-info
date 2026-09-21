@@ -46,7 +46,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
               <AppIcon name="hospital" size={22} strokeWidth={2} />
               <span>
                 {hideTabs 
-                  ? (defaultTab === 'er' ? '실시간 응급실 상황' : '심야/휴일 약국')
+                  ? (defaultTab === 'er' ? '응급실 안내' : '심야/휴일 약국')
                   : '달빛병원 & 심야약국'}
               </span>
             </h1>
@@ -79,7 +79,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
                 }`}
               >
                 <AppIcon name="hospital" size={15} />
-                <span>응급실 ({currentData.length})</span>
+                <span>병원 ({currentData.length})</span>
               </button>
               <button
                 onClick={() => setActiveTab('pharmacy')}
@@ -94,6 +94,29 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
               </button>
             </div>
           )}
+
+          <div className="mt-2.5 pt-2 border-t border-gray-100 dark:border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+            <span>실시간 병상·운영 여부는 아래 공식 사이트에서 확인하세요</span>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.e-gen.or.kr/egen/main.do"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white underline underline-offset-2"
+              >
+                응급의료정보제공(E-GEN)
+              </a>
+              <span className="text-zinc-300 dark:text-zinc-700">|</span>
+              <a
+                href="https://www.pharm114.or.kr/main.asp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white underline underline-offset-2"
+              >
+                휴일지킴이약국
+              </a>
+            </div>
+          </div>
         </div>
       </header>
 

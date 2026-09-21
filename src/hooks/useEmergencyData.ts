@@ -1,49 +1,22 @@
-import { useState, useEffect } from 'react';
-import { EmergencyItem, TabType, fetchEmergencyData, mockERs, mockPharmacies } from '@/lib/api/emergency';
+import { useState } from 'react';
+import { EmergencyItem, TabType, getEmergencyItems } from '@/lib/api/emergency';
 
 export function useEmergencyData(initialTab: TabType = 'er') {
-  const [activeTab, setActiveTab] = useState<TabType>(initialTab);
+  const [activeTab, setActiveTabState] = useState<TabType>(initialTab);
   const [selectedItem, setSelectedItem] = useState<EmergencyItem | null>(null);
-  const [isDataLoading, setIsDataLoading] = useState(false);
-  const [realData, setRealData] = useState<EmergencyItem[]>([]);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+  const setActiveTab = (tab: TabType) => {
+    setActiveTabState(tab);
     setSelectedItem(null);
-     
-    setIsDataLoading(true);
-     
-    setRealData([]);
+  };
 
-    const loadData = async () => {
-      try {
-        const apiKey = process.env.NEXT_PUBLIC_PUBLIC_DATA_API_KEY;
-        if (!apiKey) throw new Error('No API Key');
-
-        const items = await fetchEmergencyData(activeTab, apiKey);
-        if (items && items.length > 0) {
-          setRealData(items);
-        }
-      } catch (err) {
-        console.error('Failed to fetch real API, falling back to mock:', err);
-      } finally {
-        setIsDataLoading(false);
-      }
-    };
-
-    loadData();
-  }, [activeTab]);
-
-  const currentData = realData.length > 0 
-    ? realData 
-    : (activeTab === 'er' ? mockERs : mockPharmacies);
+  const currentData = getEmergencyItems(activeTab);
 
   return {
     activeTab,
     setActiveTab,
     selectedItem,
     setSelectedItem,
-    isDataLoading,
-    currentData
+    currentData,
   };
 }

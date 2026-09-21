@@ -11,15 +11,6 @@ interface BottomSheetProps {
   onClose: () => void;
 }
 
-const getStatusText = (status?: string) => {
-  switch (status) {
-    case 'good': return '여유';
-    case 'normal': return '보통';
-    case 'busy': return '혼잡';
-    default: return '확인요망';
-  }
-};
-
 export default function EmergencyBottomSheet({ item, activeTab, onClose }: BottomSheetProps) {
   if (!item) return null;
 
@@ -52,24 +43,6 @@ export default function EmergencyBottomSheet({ item, activeTab, onClose }: Botto
               <a href={`tel:${item.tel}`} className="hover:underline">{item.tel}</a>
             </div>
           </div>
-
-          {activeTab === 'er' && item.availableBeds !== undefined && (
-            <div className="bg-zinc-50 dark:bg-zinc-800/50 p-3 rounded-none border border-zinc-200/80 dark:border-zinc-700 flex justify-between items-center">
-              <div>
-                <span className="text-xs text-zinc-500 dark:text-zinc-400">응급실 가용 병상</span>
-                <div className="font-bold text-base text-zinc-900 dark:text-white mt-0.5">
-                  {item.availableBeds} / {item.totalBeds} 석
-                </div>
-              </div>
-              <span className={`text-xs font-bold px-2 py-0.5 rounded-none border ${
-                item.status === 'good' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400' :
-                item.status === 'normal' ? 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400' :
-                'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/40 dark:text-rose-400'
-              }`}>
-                {getStatusText(item.status)}
-              </span>
-            </div>
-          )}
 
           <div className="flex gap-2 pt-1">
             <PremiumButton
