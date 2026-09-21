@@ -133,12 +133,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </Link>
       </nav>
 
-      {/* 메인 칼럼 아티클 (부모 SmartStickyLayout 72% 본문 폭에 100% 핏) */}
+      {/* 메인 칼럼 아티클 (부모 SmartStickyLayout 73% 본문 폭에 100% 핏, 보상스쿨 동기화) */}
       <article className="w-full bg-white dark:bg-[#181a1d] rounded-none shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
-        <div className="px-5 py-8 sm:px-10 sm:py-12 space-y-8">
+        <div className="px-3.5 py-6 sm:px-8 sm:py-9 space-y-7">
           {/* 아티클 헤더 (구역 1: 카테고리/날짜 메타, 구역 2: H1 타이틀, 구역 3: 포스트 요약 리드문) */}
-          <header className="border-b border-gray-100 dark:border-zinc-800 pb-8">
-            <div className="flex flex-wrap items-center gap-2.5 text-xs mb-4">
+          <header className="border-b border-gray-100 dark:border-zinc-800 pb-7">
+            <div className="flex flex-wrap items-center gap-2.5 text-xs mb-3.5">
               {Array.isArray(post.category) ? (
                 post.category.map((cat) => (
                   <span
@@ -159,12 +159,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               </time>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white leading-[1.3] break-keep">
+            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-extrabold tracking-tight text-zinc-950 dark:text-white leading-snug break-keep">
               {post.title}
             </h1>
 
             {post.summary && (
-              <p className="text-[15px] sm:text-base text-zinc-600 dark:text-zinc-400 font-normal leading-relaxed mt-4 pt-4 border-t border-gray-100/80 dark:border-zinc-800/80 break-keep">
+              <p className="text-[14.5px] sm:text-[15.5px] text-zinc-600 dark:text-zinc-400 font-normal leading-relaxed mt-3.5 pt-3.5 border-t border-gray-100/80 dark:border-zinc-800/80 break-keep">
                 {post.summary}
               </p>
             )}

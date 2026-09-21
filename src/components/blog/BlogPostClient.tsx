@@ -83,9 +83,9 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
         </CommonBox>
       )}
 
-      {/* ── 오프닝 서술 문단 ── */}
+      {/* ── 오프닝 서술 문단 (보상스쿨 표준: 순수 커스텀 마크다운 렌더링) ── */}
       {opening && (
-        <div className="prose prose-slate dark:prose-invert max-w-none text-[15px] sm:text-base leading-relaxed text-zinc-900 dark:text-zinc-100">
+        <div className="my-5 text-zinc-800 dark:text-zinc-200 text-[15px] sm:text-[15.5px] leading-[1.85] [&>p]:mb-4 [&>p:last-child]:!mb-0">
           <MarkdownRenderer content={opening} />
         </div>
       )}
@@ -95,12 +95,14 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
         <TableOfContents toc={toc} activeId={activeId} onItemClick={handleTOCClick} />
       )}
 
-      {/* ── 본문 챕터 섹션들 ── */}
-      {sections.map((section, idx) => (
-        <div key={idx} className="prose prose-slate dark:prose-invert max-w-none text-[15px] sm:text-base leading-relaxed text-zinc-900 dark:text-zinc-100">
-          <MarkdownRenderer content={section} />
-        </div>
-      ))}
+      {/* ── 본문 챕터 섹션들 (보상스쿨 표준: 외부 prose 간섭 전면 배제) ── */}
+      <div className="space-y-6">
+        {sections.map((section, idx) => (
+          <div key={idx}>
+            <MarkdownRenderer content={section} />
+          </div>
+        ))}
+      </div>
 
       {/* ── [무기 4] 신청 자격 1분 자가진단 (체크리스트) ── */}
       {checklistItems && checklistItems.length > 0 && (

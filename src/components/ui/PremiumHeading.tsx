@@ -22,19 +22,19 @@ export default function PremiumHeading({
 
   let baseClass = 'not-prose w-full tracking-tight flex items-center gap-2.5 break-keep transition-all rounded-none';
 
-  // 4단계 수묵 농담(濃淡) 타이포그래피 위계 & 완전 개방형 좌➔우 배경 수묵 그라데이션
+  // 4단계 수묵 농담(濃淡) 타이포그래피 위계 & 완전 개방형 좌➔우 배경 수묵 그라데이션 (보상스쿨 표준 스케일 동기화)
   if (level === 1) {
-    baseClass += ' text-2xl sm:text-3xl font-extrabold pb-3.5 mb-6 border-b border-gray-200/90 dark:border-zinc-800';
+    baseClass += ' text-xl sm:text-2xl font-extrabold pb-3 mb-5 border-b border-gray-200/90 dark:border-zinc-800';
   } else if (level === 2) {
-    baseClass += ' text-xl sm:text-2xl font-extrabold mt-12 mb-5 py-3 pl-4 pr-2 bg-gradient-to-r from-zinc-300/80 via-zinc-200/40 to-transparent dark:from-zinc-800 dark:via-zinc-800/40 dark:to-transparent';
+    baseClass += ' text-lg sm:text-xl font-extrabold mt-10 mb-4 py-2.5 pl-3.5 pr-2 bg-gradient-to-r from-zinc-300/80 via-zinc-200/40 to-transparent dark:from-zinc-800 dark:via-zinc-800/40 dark:to-transparent';
   } else if (level === 3) {
-    baseClass += ' text-lg sm:text-xl font-bold mt-8 mb-4 py-2.5 pl-3.5 pr-2 bg-gradient-to-r from-zinc-200 via-zinc-100/50 to-transparent dark:from-zinc-800/80 dark:via-zinc-800/25 dark:to-transparent';
+    baseClass += ' text-base sm:text-lg font-bold mt-7 mb-3.5 py-2 pl-3 pr-2 bg-gradient-to-r from-zinc-200 via-zinc-100/50 to-transparent dark:from-zinc-800/80 dark:via-zinc-800/25 dark:to-transparent';
   } else if (level === 4) {
-    baseClass += ' text-base sm:text-lg font-bold mt-6 mb-3 py-2 pl-3 pr-2 bg-gradient-to-r from-zinc-200/80 via-zinc-100/30 to-transparent dark:from-zinc-800/60 dark:via-zinc-800/15 dark:to-transparent';
+    baseClass += ' text-sm sm:text-base font-bold mt-5 mb-2.5 py-1.5 pl-2.5 pr-2 bg-gradient-to-r from-zinc-200/80 via-zinc-100/30 to-transparent dark:from-zinc-800/60 dark:via-zinc-800/15 dark:to-transparent';
   } else if (level === 5) {
-    baseClass += ' text-sm sm:text-base font-semibold mt-5 mb-2 py-1.5 pl-2.5 pr-2 bg-gradient-to-r from-zinc-100 via-zinc-50/40 to-transparent dark:from-zinc-800/40 dark:to-transparent';
+    baseClass += ' text-xs sm:text-sm font-semibold mt-4 mb-2 py-1.5 pl-2 pr-2 bg-gradient-to-r from-zinc-100 via-zinc-50/40 to-transparent dark:from-zinc-800/40 dark:to-transparent';
   } else if (level === 6) {
-    baseClass += ' text-xs sm:text-sm font-medium mt-4 mb-2 py-1 pl-2 pr-2 text-zinc-600 dark:text-zinc-400';
+    baseClass += ' text-xs sm:text-sm font-medium mt-3.5 mb-2 py-1 pl-2 pr-2 text-zinc-600 dark:text-zinc-400';
   }
 
   // 좌측 수묵 획(Stroke) 차등
