@@ -52,7 +52,7 @@ function SearchResults() {
     fetchPosts();
   }, [q]);
 
-  const popularKeywords = ['청년', '지원금', '병원', '약국', '사랑카드', '이사비', '건강검진', '출산'];
+  const popularKeywords = ['응급실', '병원', '건강검진', '민원'];
 
   return (
     <div className="space-y-8">
@@ -71,7 +71,7 @@ function SearchResults() {
             '의정부 생활정보 검색'
           )
         }
-        description={q ? `총 ${results.length}개의 관련 소식을 찾았습니다.` : '찾으시는 혜택, 병원, 지원금 키워드를 입력해 보세요.'}
+        description={q ? `총 ${results.length}개의 관련 소식을 찾았습니다.` : '찾으시는 병원, 민원 키워드를 입력해 보세요.'}
         watermarkIcon="search"
       >
         {/* 추천 키워드 칩 */}

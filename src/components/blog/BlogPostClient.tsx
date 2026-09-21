@@ -241,7 +241,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
           >
             <div className="flex items-center gap-2 font-extrabold text-xs text-zinc-950 dark:text-zinc-100">
               <AppIcon name="hospital" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
-              <span>달빛병원·심야약국</span>
+              <span>응급실 안내</span>
             </div>
             <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-white flex items-center justify-between mt-2 transition-colors">
               <span>야간·휴일 응급의료</span>

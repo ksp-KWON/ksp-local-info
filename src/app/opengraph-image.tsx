@@ -55,7 +55,7 @@ export default async function Image() {
               textTransform: 'uppercase',
             }}
           >
-            의정부시 공공데이터 포털
+            의정부시 생활·의료 정보 포털
           </div>
 
           {/* 중앙 메인 타이틀 */}
@@ -87,7 +87,7 @@ export default async function Image() {
                 letterSpacing: '-0.01em',
               }}
             >
-              달빛어린이병원 · 심야약국 · 사랑카드 · 시정 지원금 큐레이션
+              응급실 · 국가건강검진 · 민원 안내
             </div>
           </div>
 

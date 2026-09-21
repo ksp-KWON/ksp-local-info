@@ -50,7 +50,7 @@ export const CATEGORIES: CategoryItem[] = [
     watermarkIcon: 'hospital',
     keywords: ['의료', '건강', '병원', '보건', '진료', '약국', '검진', '응급'],
     title: '건강·의료 생활 정보',
-    desc: '달빛어린이병원, 심야약국, 무료 건강검진 등 필수 응급의료 안내입니다.',
+    desc: '응급실, 국가건강검진 등 필수 의료 안내입니다.',
   },
   {
     id: 'jobs',

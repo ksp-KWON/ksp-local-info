@@ -48,14 +48,14 @@ export default async function Home() {
           <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 text-xs font-bold uppercase tracking-wider mb-4 border border-zinc-200/80 dark:border-zinc-700 rounded-none shadow-xs">
               <AppIcon name="shield-check" size={14} strokeWidth={2} />
-              <span>의정부시 공공데이터 생활 포털</span>
+              <span>의정부시 생활·의료 정보 포털</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2] text-zinc-950 dark:text-white">
               의정부 <br className="hidden sm:block lg:hidden" />
               <span className="bg-gradient-to-r from-zinc-950 via-zinc-800 to-zinc-600 dark:from-white dark:via-zinc-200 dark:to-zinc-400 bg-clip-text text-transparent">건강·생활 정보 포털</span>
             </h1>
             <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal break-keep max-w-xl leading-relaxed">
-              야간·휴일 소아진료(달빛어린이병원), 심야약국, 의정부사랑카드 가맹점 지도부터 놓치기 쉬운 시정 지원금과 복지 혜택까지 한눈에 확인하세요.
+              의정부 응급실 위치와 전화번호, 국가건강검진·민원 안내를 한눈에 확인하세요.
             </p>
           </div>
 
@@ -91,10 +91,10 @@ export default async function Home() {
                 <span>야간·응급의료</span>
               </div>
               <h3 className="text-[17px] sm:text-lg font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-emerald-950 dark:group-hover:text-emerald-200 transition-colors break-keep leading-snug">
-                야간·휴일 소아진료 & 심야약국
+                응급실 안내
               </h3>
               <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed line-clamp-2">
-                아이 야간진료(달빛어린이병원) 및 휴일·심야 문 여는 병원·약국을 확인하세요.
+                의정부 응급실의 위치와 전화번호를 지도에서 확인하세요.
               </p>
             </div>
 

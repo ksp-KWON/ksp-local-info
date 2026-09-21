@@ -19,7 +19,7 @@ export default function SearchBar() {
     }
   };
 
-  const popularKeywords = ['청년 이사비', '사랑카드 가맹점', '달빛어린이병원', '심야약국', '국가건강검진', '출산축하금'];
+  const popularKeywords = ['응급실', '국가건강검진', '민원'];
 
   return (
     <>
@@ -45,7 +45,7 @@ export default function SearchBar() {
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="혜택, 병원, 지원금 키워드를 입력하세요"
+                  placeholder="병원, 민원 키워드를 입력하세요"
                   autoFocus
                   className="w-full bg-transparent text-zinc-900 dark:text-white placeholder-zinc-400 font-bold text-base focus:outline-none"
                 />
@@ -62,7 +62,7 @@ export default function SearchBar() {
               <div className="p-4 bg-zinc-50/70 dark:bg-zinc-900/60">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-zinc-600 dark:text-zinc-400 mb-2.5">
                   <AppIcon name="trending-up" size={14} strokeWidth={2} />
-                  <span>실시간 추천 검색어</span>
+                  <span>추천 검색어</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {popularKeywords.map((kw) => (

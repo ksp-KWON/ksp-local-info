@@ -49,9 +49,9 @@ export default function AboutPage() {
           <div className="w-9 h-9 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300 flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
             <AppIcon name="shield-check" size={18} strokeWidth={2} />
           </div>
-          <h3 className="text-base font-bold text-zinc-950 dark:text-white pt-2">공식 데이터 검증</h3>
+          <h3 className="text-base font-bold text-zinc-950 dark:text-white pt-2">공식 출처 안내</h3>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-            경기데이터드림(경기도 공공데이터)의 공개 자료와 각 기관의 공식 안내를 기반으로 정보를 정리합니다.
+            각 기관의 공식 안내와 공개 자료를 기반으로 정보를 정리하며, 실시간 병상·운영 여부는 공식 사이트 링크로 안내합니다.
           </p>
         </PremiumCard>
 
@@ -59,9 +59,9 @@ export default function AboutPage() {
           <div className="w-9 h-9 bg-sky-50 text-sky-700 dark:bg-sky-950/70 dark:text-sky-300 flex items-center justify-center border border-sky-200 dark:border-sky-800">
             <AppIcon name="zap" size={18} strokeWidth={2} />
           </div>
-          <h3 className="text-base font-bold text-zinc-950 dark:text-white pt-2">혜택 큐레이션</h3>
+          <h3 className="text-base font-bold text-zinc-950 dark:text-white pt-2">생활 정보 안내</h3>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-            의정부시청 공고와 경기지역화폐 혜택, 청년 및 출산 지원금 등 놓치기 쉬운 실생활 복지를 알기 쉽게 요약 제공합니다.
+            응급실 위치·전화 안내와 국가건강검진·민원 등 생활 필수 안내를 알기 쉽게 정리합니다.
           </p>
         </PremiumCard>
 
@@ -80,12 +80,12 @@ export default function AboutPage() {
       <div className="p-6 sm:p-8 bg-zinc-50/70 dark:bg-zinc-900/60 border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] space-y-4 rounded-none">
         <h3 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-white flex items-center gap-2">
           <AppIcon name="file-text" size={18} strokeWidth={2} className="text-zinc-600 dark:text-zinc-400" />
-          <span>공식 데이터 출처 및 API 연동 명세</span>
+          <span>공식 정보 출처</span>
         </h3>
         <ul className="space-y-2.5 text-xs sm:text-sm font-normal text-zinc-700 dark:text-zinc-300">
           <li className="flex items-start gap-2">
             <AppIcon name="check" size={14} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400 mt-1 shrink-0" />
-            <span><strong className="text-zinc-900 dark:text-white">응급의료 및 약국</strong> : 관내 의료기관 공개 정보를 직접 정리했으며, 실시간 병상·운영 여부는 응급의료정보제공(E-GEN)·휴일지킴이약국 공식 사이트에서 확인</span>
+            <span><strong className="text-zinc-900 dark:text-white">응급의료</strong> : 관내 의료기관 공개 정보를 직접 정리했으며, 실시간 병상·운영 여부는 응급의료정보제공(E-GEN)·휴일지킴이약국 공식 사이트에서 확인</span>
           </li>
         </ul>
       </div>

@@ -31,7 +31,7 @@ export default function NotFound() {
             className="p-3.5 bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-900/40 hover:border-emerald-400 dark:hover:border-emerald-600 transition-all rounded-none shadow-2xs group/card"
           >
             <AppIcon name="hospital" size={18} strokeWidth={2} className="mb-2 text-emerald-600 dark:text-emerald-400" />
-            <div className="text-xs font-bold text-emerald-950 dark:text-emerald-200">달빛병원·약국</div>
+            <div className="text-xs font-bold text-emerald-950 dark:text-emerald-200">응급실</div>
             <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">응급의료 지도</div>
           </Link>
 
@@ -41,8 +41,8 @@ export default function NotFound() {
             className="p-3.5 bg-amber-50/40 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/40 hover:border-amber-400 dark:hover:border-amber-600 transition-all rounded-none shadow-2xs group/card"
           >
             <AppIcon name="list" size={18} strokeWidth={2} className="mb-2 text-amber-600 dark:text-amber-400" />
-            <div className="text-xs font-bold text-amber-950 dark:text-amber-200">생활 혜택 소식</div>
-            <div className="text-[11px] text-amber-700 dark:text-amber-400 font-medium">지원금 가이드</div>
+            <div className="text-xs font-bold text-amber-950 dark:text-amber-200">생활 가이드</div>
+            <div className="text-[11px] text-amber-700 dark:text-amber-400 font-medium">의료·민원 안내</div>
           </Link>
         </div>
       </PageHeaderBanner>

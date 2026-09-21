@@ -4,11 +4,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://ksp-local-info-edg.pages.dev"),
   title: {
-    default: "의정부 건강·생활 정보 포털 | 달빛병원·사랑카드·시정혜택 안내",
+    default: "의정부 건강·생활 정보 포털 | 응급실·건강·생활 안내",
     template: "%s | 의정부 건강·생활 정보 포털",
   },
-  description: "의정부시 시민을 위한 달빛어린이병원, 심야약국, 사랑카드 가맹점 지도 및 놓치기 쉬운 시정 지원금과 복지 혜택을 큐레이션합니다.",
-  keywords: ["의정부", "의정부달빛어린이병원", "의정부심야약국", "의정부사랑카드", "의정부지원금", "의정부건강검진", "의정부복지"],
+  description: "의정부시 응급실 위치·전화 안내와 국가건강검진, 민원 등 생활 가이드를 정리합니다.",
+  keywords: ["의정부", "의정부응급실", "의정부건강검진", "의정부민원"],
   authors: [{ name: "의정부 건강·생활 정보 포털", url: "https://ksp-local-info-edg.pages.dev/about" }],
   creator: "의정부 건강·생활 정보 포털",
   publisher: "의정부 건강·생활 정보 포털",
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     canonical: "https://ksp-local-info-edg.pages.dev",
   },
   openGraph: {
-    title: "의정부 건강·생활 정보 포털 | 달빛병원·사랑카드·시정혜택 안내",
-    description: "의정부시 시민을 위한 달빛어린이병원, 심야약국, 사랑카드 가맹점 지도 및 놓치기 쉬운 시정 지원금과 복지 혜택을 큐레이션합니다.",
+    title: "의정부 건강·생활 정보 포털 | 응급실·건강·생활 안내",
+    description: "의정부시 응급실 위치·전화 안내와 국가건강검진, 민원 등 생활 가이드를 정리합니다.",
     url: "https://ksp-local-info-edg.pages.dev",
     siteName: "의정부 건강·생활 정보 포털",
     locale: "ko_KR",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "의정부 건강·생활 정보 포털",
-    description: "의정부시 시민을 위한 달빛어린이병원, 심야약국, 사랑카드 가맹점 지도 및 놓치기 쉬운 시정 혜택 큐레이션",
+    description: "의정부시 응급실 안내와 건강·생활 가이드",
   },
 };
 

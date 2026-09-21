@@ -48,7 +48,7 @@ const MASTER_CHAPTERS: MasterChapter[] = [
     id: 'living',
     categoryName: '생활·교통',
     title: '슬기로운 의정부 생활 백과',
-    desc: '의정부사랑카드 가맹점 혜택, 경전철 교통 환승 및 행정복지센터 민원 꿀팁입니다.',
+    desc: '경전철 교통 환승 및 행정복지센터 민원 꿀팁입니다.',
     icon: 'shield-check',
     watermarkIcon: 'shield-check',
   },
@@ -80,7 +80,7 @@ export default function HomePostList({ initialPosts }: HomePostListProps) {
       {latestPosts.length > 0 && (
         <SectionLayout
           title="최신 의정부 생활 브리핑"
-          description="오늘과 이번 주 의정부시에서 새로 발표된 지원금 및 시정 소식입니다."
+          description="의정부 생활·의료 안내 글을 모았습니다."
           icon={<AppIcon name="sparkles" size={20} strokeWidth={2.5} />}
           watermarkIcon="sparkles"
           viewAllLink={{

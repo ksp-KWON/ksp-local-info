@@ -51,7 +51,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
                   ? '응급실 안내'
                   : hideTabs 
                   ? (defaultTab === 'er' ? '응급실 안내' : '심야/휴일 약국')
-                  : '달빛병원 & 심야약국'}
+                  : '병원 & 약국 안내'}
               </span>
             </h1>
           </div>

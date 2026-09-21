@@ -116,7 +116,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               ksp-local-info-edg.pages.dev
             </div>
             <div style={{ fontSize: '16px', fontWeight: '600', color: '#047857' }}>
-              공식 행정·복지 E-E-A-T 검증 콘텐츠
+              의정부 생활·의료 안내
             </div>
           </div>
         </div>

@@ -80,7 +80,7 @@ export default function PublicLayout({
                 href="/blog"
                 className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all rounded-none flex items-center justify-center group cursor-pointer"
                 aria-label="생활소식"
-                title="생활소식 및 지원금"
+                title="생활 가이드"
               >
                 <AppIcon name="list" size={20} />
               </Link>

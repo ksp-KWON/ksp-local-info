@@ -4,14 +4,14 @@ import { getSortedPostsData } from '@/lib/posts';
 import BlogClient from './BlogClient';
 
 export const metadata: Metadata = {
-  title: '의정부 생활 소식 & 시정 혜택 백과',
-  description: '의정부시 지원금·복지 혜택, 달빛어린이병원·심야약국 의료 안내, 문화 축제 행사, 의정부사랑카드 가맹점 꿀팁을 전해드립니다.',
+  title: '의정부 생활 가이드',
+  description: '응급실 안내와 국가건강검진, 민원 등 의정부 생활 가이드를 전해드립니다.',
   alternates: {
     canonical: 'https://ksp-local-info-edg.pages.dev/blog',
   },
   openGraph: {
     title: '의정부 생활 소식 & 시정 혜택 백과 | 의정부 건강·생활 포털',
-    description: '의정부시 지원금·복지 혜택, 달빛어린이병원·심야약국 의료 안내, 문화 축제 행사, 의정부사랑카드 가맹점 꿀팁을 전해드립니다.',
+    description: '응급실 안내와 국가건강검진, 민원 등 의정부 생활 가이드를 전해드립니다.',
     url: 'https://ksp-local-info-edg.pages.dev/blog',
     siteName: '의정부 건강·생활 정보 포털',
     locale: 'ko_KR',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '의정부 생활 소식 & 시정 혜택 백과 | 의정부 건강·생활 포털',
-    description: '의정부시 맞춤 지원금, 응급의료, 문화행사, 생활교통 종합 가이드',
+    description: '응급의료, 국가건강검진, 민원 등 의정부 생활 가이드',
   },
 };
 

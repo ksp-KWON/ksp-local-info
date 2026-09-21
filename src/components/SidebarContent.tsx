@@ -34,7 +34,7 @@ const CIVIC_QUICK_MENUS: CivicQuickMenuItem[] = [
   {
     href: '/services/emergency',
     icon: 'hospital',
-    title: '야간·휴일 소아진료 & 심야약국',
+    title: '응급실 안내',
     subtitle: '야간·휴일 응급의료 지도',
     badge: '안내',
   },
