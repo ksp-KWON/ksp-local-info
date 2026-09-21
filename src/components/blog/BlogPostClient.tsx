@@ -234,7 +234,7 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
           <AppIcon name="compass" size={15} strokeWidth={2.5} />
           <span>의정부 시민 내 주변 생활 지도 퀵메뉴</span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3">
           <Link
             href="/services/emergency"
             className="p-4 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
@@ -249,19 +249,6 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
             </span>
           </Link>
 
-          <Link
-            href="/services/local-currency"
-            className="p-4 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
-          >
-            <div className="flex items-center gap-2 font-extrabold text-xs text-zinc-950 dark:text-zinc-100">
-              <AppIcon name="bank" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
-              <span>사랑카드 가맹점</span>
-            </div>
-            <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-white flex items-center justify-between mt-2 transition-colors">
-              <span>지역화폐 가맹점 검색</span>
-              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
-            </span>
-          </Link>
         </div>
       </div>
 

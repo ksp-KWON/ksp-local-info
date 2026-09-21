@@ -16,7 +16,7 @@ export default function NotFound() {
         watermarkIcon="warning"
       >
         {/* 4대 주요 퀵링크 그리드 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-gray-100 dark:border-zinc-800 text-left">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-gray-100 dark:border-zinc-800 text-left">
           <Link
             href="/"
             className="p-3.5 bg-zinc-50/70 dark:bg-zinc-900/60 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all rounded-none shadow-2xs group/card"
@@ -35,14 +35,6 @@ export default function NotFound() {
             <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">응급의료 지도</div>
           </Link>
 
-          <Link
-            href="/services/local-currency"
-            className="p-3.5 bg-sky-50/40 dark:bg-sky-950/20 border border-sky-200/80 dark:border-sky-900/40 hover:border-sky-400 dark:hover:border-sky-600 transition-all rounded-none shadow-2xs group/card"
-          >
-            <AppIcon name="bank" size={18} strokeWidth={2} className="mb-2 text-sky-600 dark:text-sky-400" />
-            <div className="text-xs font-bold text-sky-950 dark:text-sky-200">사랑카드 가맹점</div>
-            <div className="text-[11px] text-sky-700 dark:text-sky-400 font-medium">지역화폐 지도</div>
-          </Link>
 
           <Link
             href="/blog"

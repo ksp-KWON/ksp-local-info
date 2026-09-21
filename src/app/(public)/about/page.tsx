@@ -6,7 +6,7 @@ import AppIcon from '@/components/ui/AppIcon';
 
 export const metadata: Metadata = {
   title: '사이트 소개 및 운영 철학',
-  description: '의정부 시민을 위한 공공데이터 기반 생활 복지, 의료, 지역화폐 정보 허브의 운영 목적과 데이터 출처를 투명하게 안내합니다.',
+  description: '의정부 시민을 위한 생활 복지·의료 정보의 운영 목적과 정보 출처를 투명하게 안내합니다.',
   alternates: {
     canonical: '/about',
   },
@@ -86,10 +86,6 @@ export default function AboutPage() {
           <li className="flex items-start gap-2">
             <AppIcon name="check" size={14} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400 mt-1 shrink-0" />
             <span><strong className="text-zinc-900 dark:text-white">응급의료 및 약국</strong> : 관내 의료기관 공개 정보를 직접 정리했으며, 실시간 병상·운영 여부는 응급의료정보제공(E-GEN)·휴일지킴이약국 공식 사이트에서 확인</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <AppIcon name="check" size={14} strokeWidth={2.5} className="text-sky-600 dark:text-sky-400 mt-1 shrink-0" />
-            <span><strong className="text-zinc-900 dark:text-white">의정부사랑카드</strong> : 경기데이터드림(경기지역화폐 가맹점 현황 Open API)</span>
           </li>
         </ul>
       </div>

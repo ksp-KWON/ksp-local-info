@@ -76,7 +76,7 @@ export default async function Home() {
       </div>
 
       {/* 2. 3대 핵심 공공서비스 퀵메뉴 (고명도 시빅 벤토 박스) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+      <div className="grid grid-cols-1 gap-4 sm:gap-5">
         {/* 야간·휴일 소아진료 & 심야약국 카드 */}
         <Link href="/services/emergency" className="group flex flex-col h-full">
           <PremiumCard
@@ -107,35 +107,6 @@ export default async function Home() {
           </PremiumCard>
         </Link>
 
-        {/* 의정부 사랑카드 가맹점 지도 카드 */}
-        <Link href="/services/local-currency" className="group flex flex-col h-full">
-          <PremiumCard
-            hoverEffect={true}
-            watermarkIcon="bank"
-            className="p-5 sm:p-6 h-full flex flex-col justify-between min-h-[210px]"
-          >
-            <MiniMapPreview type="currency" />
-            <div className="relative z-10 flex-1">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 text-[11px] font-bold mb-2.5 border border-sky-200 dark:border-sky-800 rounded-none shadow-2xs">
-                <AppIcon name="bank" size={13} strokeWidth={2.5} className="text-sky-700 dark:text-sky-400" />
-                <span>지역화폐 가맹점</span>
-              </div>
-              <h3 className="text-[17px] sm:text-lg font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-sky-950 dark:group-hover:text-sky-200 transition-colors break-keep leading-snug">
-                의정부 사랑카드 가맹점
-              </h3>
-              <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed line-clamp-2">
-                내 주변에서 의정부 지역화폐를 쓸 수 있는 가맹점을 찾아보세요.
-              </p>
-            </div>
-
-            <div className="relative z-10 flex items-center justify-end w-full mt-auto pt-3 border-t border-sky-100/60 dark:border-sky-950/40">
-              <span className="flex items-center gap-1 text-xs font-bold text-sky-700 dark:text-sky-300 group-hover:translate-x-1 transition-transform">
-                <span>가맹점 검색</span>
-                <AppIcon name="chevron-right" size={13} strokeWidth={2.5} />
-              </span>
-            </div>
-          </PremiumCard>
-        </Link>
       </div>
 
       {/* 3. 블로그 콘텐츠 큐레이션 리스트 */}

@@ -36,13 +36,6 @@ const CIVIC_QUICK_MENUS: CivicQuickMenuItem[] = [
     badge: '안내',
   },
   {
-    href: '/services/local-currency',
-    icon: 'bank',
-    title: '의정부사랑카드 가맹점',
-    subtitle: '지역화폐 가맹점 지도',
-    badge: '가맹점',
-  },
-  {
     href: `/blog?category=${encodeURIComponent('숨은 지원금 찾기')}`,
     icon: 'shield-check',
     title: '의정부 숨은 지원금 공고',
