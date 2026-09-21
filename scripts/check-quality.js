@@ -10,11 +10,31 @@ function processPost(filePath) {
 
   let body = content;
 
-  // 1. 핵심 요약 헤더 표준화
-  body = body.replace(/##\s*(?:\[[^\]]+\]\s*)?(?:핵심\s*요약|행정\s*핵심\s*요약|3줄\s*요약|요약)[^\n]*/gi, '## 행정 핵심 요약');
+  // 1. 핵심 요약 헤더 및 불릿 3줄 완전 표준화 (보상스쿨 단일 표준 SSOT)
+  body = body.replace(/##\s*(?:\[[^\]]+\]\s*)?(?:핵심\s*요약|행정\s*핵심\s*요약|시정\s*핵심\s*요약|3줄\s*요약|요약)[^\n]*/gi, '## 시정 핵심 요약');
 
-  // 1-1. 핵심 요약 불릿 유착 자동 분리 (> - 항목 > - 항목 -> 줄바꿈 분리)
-  body = body.replace(/(>\s*-[^\n>]+)>\s*-/g, '$1\n> -');
+  // 1-1. 핵심 요약 바로 뒤에 이어지는 인용구(>) 또는 불릿(-) 블록 정밀 매칭 및 \n\n 분리 강제
+  body = body.replace(
+    /(##\s*시정\s*핵심\s*요약\s*\r?\n+)((?:[ \t]*(?:>|[-*+]).*(?:\r?\n|$)|[ \t]*\r?\n(?=[ \t]*(?:>|[-*+])))*)/gi,
+    (_m, head, bulletsBlock) => {
+      const lines = bulletsBlock.split(/\r?\n/);
+      const cleanBullets = lines
+        .map((l) => l.trim())
+        .filter((l) => /^>|[-*+]/.test(l))
+        .map((l) => {
+          let text = l.replace(/^(?:>\s*)?[-*+]\s*/, '').replace(/^>\s*/, '').trim();
+          if (!text) return '';
+          text = text.replace(/^[💡🎯📌⭐🛡️✅☑️✔]+\s*/, '');
+          text = text.replace(/^\*\*\[\s*([^\]]+?)\s*\]\*\*/, '**$1**');
+          text = text.replace(/^\[\s*([^\]]+?)\s*\]\s*:\s*/, '**$1** : ');
+          return `- ${text.trim()}`;
+        })
+        .filter(Boolean)
+        .slice(0, 3)
+        .join('\n');
+      return `${head.trim()}\n\n${cleanBullets}\n\n`;
+    }
+  );
 
   // 2. 자주 묻는 질문 표준화
   body = body.replace(/##\s*(?:[1-9]\.\s*)?(?:자주\s*묻는\s*질문|FAQ|시민\s*FAQ)[^\n]*/gi, '## 자주 묻는 질문');
