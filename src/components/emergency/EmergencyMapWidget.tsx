@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useEmergencyData } from '@/hooks/useEmergencyData';
+import { getEmergencyItems } from '@/lib/api/emergency';
 import EmergencyMap from '@/components/emergency/EmergencyMap';
 import EmergencyBottomSheet from '@/components/emergency/EmergencyBottomSheet';
 import AppIcon from '@/components/ui/AppIcon';
@@ -26,6 +27,7 @@ const neighborhoods = [
 export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er', hideTabs = false }: EmergencyMapWidgetProps) {
   const [mapCenter, setMapCenter] = useState(neighborhoods[0]);
   const { activeTab, setActiveTab, selectedItem, setSelectedItem, currentData } = useEmergencyData(defaultTab);
+  const hasPharmacy = getEmergencyItems('pharmacy').length > 0;
 
   const [loading, error] = useKakaoLoader({
     appkey: "c60e479ca3c78009474b748414de3a1b",
@@ -45,7 +47,9 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
               <AppIcon name="hospital" size={22} strokeWidth={2} />
               <span>
-                {hideTabs 
+                {!hasPharmacy
+                  ? '응급실 안내'
+                  : hideTabs 
                   ? (defaultTab === 'er' ? '응급실 안내' : '심야/휴일 약국')
                   : '달빛병원 & 심야약국'}
               </span>
@@ -68,7 +72,7 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
             ))}
           </div>
 
-          {!hideTabs && (
+          {!hideTabs && hasPharmacy && (
             <div className="flex border-b border-gray-200/80 dark:border-zinc-800 mt-3">
               <button
                 onClick={() => setActiveTab('er')}

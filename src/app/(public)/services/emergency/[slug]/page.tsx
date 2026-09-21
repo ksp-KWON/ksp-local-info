@@ -175,37 +175,39 @@ export default async function EmergencyPlaceDetailPage({ params }: PlacePageProp
       </div>
 
       {/* ── [구역 3] 주요 특장점 및 진료과목 ── */}
-      <CommonBox
-        title="기관 주요 특장점 및 이용 안내"
-        icon={<AppIcon name="shield-check" size={18} strokeWidth={2.5} />}
-      >
-        <div className="space-y-4">
-          <ul className="space-y-2">
-            {place.features.map((feature, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-zinc-800 dark:text-zinc-200">
-                <AppIcon name="check" size={14} strokeWidth={3} className="text-zinc-900 dark:text-zinc-100 mt-1 shrink-0" />
-                <span className="font-medium leading-relaxed">{feature}</span>
-              </li>
-            ))}
-          </ul>
+      {(place.features.length > 0 || (place.departments && place.departments.length > 0)) && (
+        <CommonBox
+          title="기관 주요 특장점 및 이용 안내"
+          icon={<AppIcon name="shield-check" size={18} strokeWidth={2.5} />}
+        >
+          <div className="space-y-4">
+            <ul className="space-y-2">
+              {place.features.map((feature, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-zinc-800 dark:text-zinc-200">
+                  <AppIcon name="check" size={14} strokeWidth={3} className="text-zinc-900 dark:text-zinc-100 mt-1 shrink-0" />
+                  <span className="font-medium leading-relaxed">{feature}</span>
+                </li>
+              ))}
+            </ul>
 
-          {place.departments && place.departments.length > 0 && (
-            <div className="pt-3 border-t border-gray-100 dark:border-zinc-800">
-              <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400 block mb-2">주요 진료과목</span>
-              <div className="flex flex-wrap gap-1.5">
-                {place.departments.map((dept, idx) => (
-                  <span
-                    key={idx}
-                    className="px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium border border-zinc-200 dark:border-zinc-700"
-                  >
-                    {dept}
-                  </span>
-                ))}
+            {place.departments && place.departments.length > 0 && (
+              <div className="pt-3 border-t border-gray-100 dark:border-zinc-800">
+                <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400 block mb-2">주요 진료과목</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {place.departments.map((dept, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium border border-zinc-200 dark:border-zinc-700"
+                    >
+                      {dept}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      </CommonBox>
+            )}
+          </div>
+        </CommonBox>
+      )}
 
       {/* ── [구역 4] 의정부 다른 응급기관 바로가기 ── */}
       <div className="pt-4 border-t border-gray-200/80 dark:border-zinc-800">
