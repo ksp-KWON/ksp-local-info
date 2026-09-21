@@ -1,11 +1,11 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense } from 'react';
 import PostCard from '@/components/ui/PostCard';
 import { PostData, PostMeta } from '@/lib/types';
-import { CATEGORIES } from '@/lib/constants';
-import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
+import { getCategoryIcon } from '@/lib/constants';
+import AppIcon from '@/components/ui/AppIcon';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
 import PremiumCard from '@/components/ui/PremiumCard';
 import PremiumButton from '@/components/ui/PremiumButton';
@@ -15,15 +15,29 @@ function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostDat
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
   const tagParam = searchParams.get('tag');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   let posts = initialPosts;
   let categoryTitle = '유용한 소식 및 생활 정보';
   let categoryDesc = '의정부 시민들을 위한 공공 혜택, 행사, 병원 및 생활 정보 가이드입니다.';
+
+  const categoryCounts: Record<string, number> = {};
+  for (const post of initialPosts) {
+    if (post.category) {
+      const cats = Array.isArray(post.category)
+        ? post.category
+        : typeof post.category === 'string'
+        ? (post.category as string).split(',').map((s) => s.trim()).filter(Boolean)
+        : [];
+      for (const cat of cats) {
+        categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+      }
+    }
+  }
+  const actualCategories = Object.keys(categoryCounts).sort((a, b) => {
+    const diff = categoryCounts[b] - categoryCounts[a];
+    if (diff !== 0) return diff;
+    return a.localeCompare(b, 'ko');
+  });
 
   if (categoryParam) {
     posts = initialPosts.filter((post) => {
@@ -69,20 +83,20 @@ function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostDat
           <AppIcon name="list" size={14} strokeWidth={2} />
           <span>전체보기</span>
         </Link>
-        {CATEGORIES.map((cat) => {
-          const isSelected = categoryParam === cat.name || categoryParam?.includes(cat.name);
+        {actualCategories.map((catName) => {
+          const isSelected = categoryParam === catName;
           return (
             <Link
-              key={cat.id}
-              href={`/blog?category=${encodeURIComponent(cat.name)}`}
+              key={catName}
+              href={`/blog?category=${encodeURIComponent(catName)}`}
               className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold whitespace-nowrap transition-all border rounded-none shadow-2xs ${
                 isSelected
                   ? 'bg-sky-50 text-sky-950 dark:bg-sky-950/70 dark:text-sky-200 border-sky-300 dark:border-sky-800'
                   : 'bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
               }`}
             >
-              <AppIcon name={cat.iconName} size={14} strokeWidth={2} className={isSelected ? 'text-sky-600 dark:text-sky-400' : 'text-zinc-500'} />
-              <span>{cat.name}</span>
+              <AppIcon name={getCategoryIcon(catName)} size={14} strokeWidth={2} className={isSelected ? 'text-sky-600 dark:text-sky-400' : 'text-zinc-500'} />
+              <span>{catName}</span>
             </Link>
           );
         })}

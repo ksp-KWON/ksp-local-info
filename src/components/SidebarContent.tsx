@@ -14,12 +14,14 @@ import Link from 'next/link';
 import SidebarTagMore from './SidebarTagMore';
 import PremiumCard from '@/components/ui/PremiumCard';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
+import { getCategoryIcon } from '@/lib/constants';
 
 import { PostData, PostMeta } from '@/lib/types';
 
 interface SidebarContentProps {
   tags?: string[];
   recentPosts?: (PostMeta | PostData)[];
+  categories?: string[];
 }
 
 interface CivicQuickMenuItem {
@@ -38,25 +40,11 @@ const CIVIC_QUICK_MENUS: CivicQuickMenuItem[] = [
     subtitle: '야간·휴일 응급의료 지도',
     badge: '안내',
   },
-  {
-    href: `/blog?category=${encodeURIComponent('숨은 지원금 찾기')}`,
-    icon: 'shield-check',
-    title: '의정부 숨은 지원금 공고',
-    subtitle: '청년·출산·주거·생활안정 지원',
-    badge: '핵심복지',
-  },
-  {
-    href: `/blog?category=${encodeURIComponent('취업과 창업')}`,
-    icon: 'trending-up',
-    title: '일자리 & 청년 면접정장',
-    subtitle: '취업박람회 및 무료 정장 대여',
-    badge: '취업지원',
-  },
 ];
 
 const INITIAL_TAG_COUNT = 6;
 
-export default function SidebarContent({ tags = [], recentPosts = [] }: SidebarContentProps) {
+export default function SidebarContent({ tags = [], recentPosts = [], categories = [] }: SidebarContentProps) {
   const visibleTags = tags.slice(0, INITIAL_TAG_COUNT);
   const hiddenTags = tags.slice(INITIAL_TAG_COUNT);
 
@@ -98,6 +86,35 @@ export default function SidebarContent({ tags = [], recentPosts = [] }: SidebarC
               <div className="flex items-center gap-1 shrink-0">
                 <span className="text-[9.5px] font-semibold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/80 px-1 py-0.2">
                   {item.badge}
+                </span>
+                <AppIcon
+                  name="chevron-right"
+                  size={12}
+                  strokeWidth={2.5}
+                  className="text-zinc-400 group-hover/item:text-zinc-900 dark:group-hover/item:text-white group-hover/item:translate-x-0.5 transition-all"
+                />
+              </div>
+            </Link>
+          ))}
+          {categories.map((catName) => (
+            <Link
+              key={catName}
+              href={`/blog?category=${encodeURIComponent(catName)}`}
+              className="flex items-center justify-between gap-2 py-2 group/item hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 -mx-1.5 px-1.5 transition-colors"
+            >
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <div className="p-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 group-hover/item:bg-zinc-900 group-hover/item:text-white dark:group-hover/item:bg-white dark:group-hover/item:text-zinc-950 transition-colors shrink-0">
+                  <AppIcon name={getCategoryIcon(catName)} size={13} strokeWidth={2.5} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover/item:text-zinc-950 dark:group-hover/item:white truncate block">
+                    {catName}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 shrink-0">
+                <span className="text-[9.5px] font-semibold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/80 px-1 py-0.2">
+                  글
                 </span>
                 <AppIcon
                   name="chevron-right"

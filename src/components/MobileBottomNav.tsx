@@ -3,11 +3,15 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
-import { CATEGORIES } from '@/lib/constants';
+import { getCategoryIcon } from '@/lib/constants';
 import BottomSheet from '@/components/ui/BottomSheet';
 import AppIcon from '@/components/ui/AppIcon';
 
-function NavContent() {
+interface MobileBottomNavProps {
+  categories?: string[];
+}
+
+function NavContent({ categories = [] }: { categories?: string[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
@@ -22,22 +26,8 @@ function NavContent() {
       iconName: 'home' as const,
     },
     {
-      id: 'benefits',
-      label: '지원금',
-      href: `/blog?category=${encodeURIComponent('숨은 지원금 찾기')}`,
-      isActive: categoryParam === '숨은 지원금 찾기' || categoryParam?.includes('지원금'),
-      iconName: 'bank' as const,
-    },
-    {
-      id: 'jobs',
-      label: '취업·창업',
-      href: `/blog?category=${encodeURIComponent('취업과 창업')}`,
-      isActive: categoryParam === '취업과 창업' || categoryParam?.includes('취업'),
-      iconName: 'trending-up' as const,
-    },
-    {
       id: 'emergency',
-      label: '응급·약국',
+      label: '응급실',
       href: '/services/emergency',
       isActive: pathname === '/services/emergency',
       iconName: 'hospital' as const,
@@ -101,26 +91,31 @@ function NavContent() {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5">
-            {CATEGORIES.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/blog?category=${encodeURIComponent(cat.name)}`}
-                onClick={() => setIsMenuOpen(false)}
-                className="relative overflow-hidden flex items-center gap-2.5 p-3 bg-white dark:bg-[#181a1d] rounded-none border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all group shadow-2xs"
-              >
-                {/* 은은한 워터마크 */}
-                <div className="absolute right-1 bottom-0 opacity-[0.045] dark:opacity-[0.07] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
-                  <AppIcon name={cat.watermarkIcon} size={44} strokeWidth={1.5} />
-                </div>
+          {categories.length > 0 && (
+            <div className="grid grid-cols-2 gap-2.5">
+              {categories.map((catName) => {
+                const icon = getCategoryIcon(catName);
+                return (
+                  <Link
+                    key={catName}
+                    href={`/blog?category=${encodeURIComponent(catName)}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="relative overflow-hidden flex items-center gap-2.5 p-3 bg-white dark:bg-[#181a1d] rounded-none border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all group shadow-2xs"
+                  >
+                    {/* 은은한 워터마크 */}
+                    <div className="absolute right-1 bottom-0 opacity-[0.045] dark:opacity-[0.07] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
+                      <AppIcon name={icon} size={44} strokeWidth={1.5} />
+                    </div>
 
-                <AppIcon name={cat.iconName} size={15} strokeWidth={2} className="text-zinc-700 dark:text-zinc-300 relative z-10 shrink-0" />
-                <span className="font-bold text-xs tracking-tight truncate text-zinc-900 dark:text-zinc-100 relative z-10">
-                  {cat.name}
-                </span>
-              </Link>
-            ))}
-          </div>
+                    <AppIcon name={icon} size={15} strokeWidth={2} className="text-zinc-700 dark:text-zinc-300 relative z-10 shrink-0" />
+                    <span className="font-bold text-xs tracking-tight truncate text-zinc-900 dark:text-zinc-100 relative z-10">
+                      {catName}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
 
         </div>
       </BottomSheet>
@@ -128,14 +123,14 @@ function NavContent() {
   );
 }
 
-export default function MobileBottomNav() {
+export default function MobileBottomNav({ categories = [] }: MobileBottomNavProps) {
   return (
     <Suspense
       fallback={
         <div className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 z-[100]"></div>
       }
     >
-      <NavContent />
+      <NavContent categories={categories} />
     </Suspense>
   );
 }

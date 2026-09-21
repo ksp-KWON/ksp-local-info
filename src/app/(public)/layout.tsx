@@ -9,7 +9,7 @@ import SmartStickyLayout from '@/components/SmartStickyLayout';
 import SidebarContent from '@/components/SidebarContent';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import AppIcon from '@/components/ui/AppIcon';
-import { getSortedPostsData } from '@/lib/posts';
+import { getSortedPostsData, getActiveCategories } from '@/lib/posts';
 
 export default function PublicLayout({
   children,
@@ -18,6 +18,7 @@ export default function PublicLayout({
 }>) {
   // 서버에서 전체 태그 목록 사전 계산 → 사이드바에 정적 주입 (초고속 렌더링)
   const posts = getSortedPostsData();
+  const categories = getActiveCategories();
   const tagCounts: Record<string, number> = {};
   for (const post of posts) {
     if (post.tags) {
@@ -95,7 +96,7 @@ export default function PublicLayout({
       {/* 2. 의정부 포털 스마트 2열 스티키 레이아웃 (본문 72% + 사이드바 28%) */}
       <SmartStickyLayout
         mainContent={children}
-        sidebarContent={<SidebarContent tags={sortedTags} recentPosts={posts.slice(0, 4)} />}
+        sidebarContent={<SidebarContent tags={sortedTags} recentPosts={posts.slice(0, 4)} categories={categories} />}
       />
 
       {/* 3. 푸터 */}
@@ -121,7 +122,7 @@ export default function PublicLayout({
       </footer>
 
       {/* 모바일 하단 네비게이션 */}
-      <MobileBottomNav />
+      <MobileBottomNav categories={categories} />
     </ThemeProvider>
   );
 }

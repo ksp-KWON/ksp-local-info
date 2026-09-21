@@ -155,3 +155,29 @@ export const getSortedTagsData = cache((): string[] => {
     .sort((a, b) => b[1] - a[1])
     .map(([tag]) => tag);
 });
+
+/**
+ * 전체 블로그 글의 실제 카테고리 목록을 글 수가 많은 순, 같으면 이름 순으로 집계하여 반환하는 함수
+ */
+export function getActiveCategories(): string[] {
+  const posts = getSortedPostsData(false);
+  const countMap: Record<string, number> = {};
+  for (const post of posts) {
+    if (post.category) {
+      const cats = Array.isArray(post.category)
+        ? post.category
+        : typeof post.category === 'string'
+        ? (post.category as string).split(',').map((s) => s.trim()).filter(Boolean)
+        : [];
+      for (const cat of cats) {
+        countMap[cat] = (countMap[cat] || 0) + 1;
+      }
+    }
+  }
+  return Object.keys(countMap).sort((a, b) => {
+    const diff = countMap[b] - countMap[a];
+    if (diff !== 0) return diff;
+    return a.localeCompare(b, 'ko');
+  });
+}
+
