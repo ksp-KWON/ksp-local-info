@@ -52,16 +52,23 @@ export const sharedComponents: Components & Record<string, any> = {
   ),
 
   ul: ({ children }) => (
-    <ul className="list-disc ml-5 sm:ml-6 my-5 space-y-2 text-[14.5px] sm:text-[15px] text-zinc-800 dark:text-zinc-200 marker:text-zinc-500">
+    <ul className="list-none ml-0 pl-0 my-4 space-y-2.5 text-[15px] sm:text-[15.5px] text-zinc-800 dark:text-zinc-200">
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="list-decimal ml-5 sm:ml-6 my-5 space-y-2 text-[14.5px] sm:text-[15px] text-zinc-800 dark:text-zinc-200 marker:font-bold marker:text-zinc-600 dark:marker:text-zinc-400">
+    <ol className="list-decimal ml-5 sm:ml-6 my-4 space-y-2 text-[15px] sm:text-[15.5px] text-zinc-800 dark:text-zinc-200 marker:font-bold marker:text-zinc-600 dark:marker:text-zinc-400">
       {children}
     </ol>
   ),
-  li: ({ children }) => <li className="pl-1 leading-[1.8] break-keep font-normal">{children}</li>,
+  li: ({ children }) => (
+    <li className="flex items-start gap-2 pl-0 leading-[1.8] break-keep font-normal text-zinc-800 dark:text-zinc-200">
+      <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400 mt-1.5 shrink-0 select-none leading-none font-bold">
+        ▪
+      </span>
+      <span className="flex-1 min-w-0">{children}</span>
+    </li>
+  ),
 
   strong: ({ children }) => {
     const text = extractTextFromNode(children);

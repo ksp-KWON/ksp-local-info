@@ -68,11 +68,13 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
           title={keyPointsTitle || '행정 핵심 요약 (3줄 브리핑)'}
           icon={<AppIcon name="file-text" size={18} strokeWidth={2.5} />}
         >
-          <ul className="space-y-2.5 font-normal text-zinc-800 dark:text-zinc-200">
+          <ul className="space-y-2.5 font-normal text-zinc-800 dark:text-zinc-200 list-none ml-0 pl-0">
             {keyPoints.map((pt, i) => (
-              <li key={i} className="flex items-start gap-2.5">
-                <AppIcon name="check" size={14} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100 mt-1 shrink-0" />
-                <span className="leading-relaxed">
+              <li key={i} className="flex items-start gap-2 pl-0">
+                <span className="text-[10px] sm:text-[11px] text-zinc-900 dark:text-zinc-100 mt-1.5 shrink-0 select-none leading-none font-bold">
+                  ▪
+                </span>
+                <span className="leading-relaxed flex-1 min-w-0">
                   <MarkdownRenderer content={pt} inline />
                 </span>
               </li>
