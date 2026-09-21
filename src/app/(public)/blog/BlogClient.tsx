@@ -102,11 +102,11 @@ function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostDat
         })}
       </div>
 
-      {/* 3. 게시물 그리드 리스트 */}
+      {/* 3. 게시물 리스트 (보상스쿨 표준: 가로 1개 풀 와이드 리스트) */}
       {posts.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-4">
           {posts.map((post) => (
-            <PostCard key={post.slug} post={post} variant="grid" />
+            <PostCard key={post.slug} post={post} variant="list" />
           ))}
         </div>
       ) : (

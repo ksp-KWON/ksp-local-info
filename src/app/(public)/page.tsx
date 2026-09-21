@@ -75,38 +75,39 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 3대 핵심 공공서비스 퀵메뉴 (고명도 시빅 벤토 박스) */}
-      <div className="grid grid-cols-1 gap-4 sm:gap-5">
-        {/* 야간·휴일 소아진료 & 심야약국 카드 */}
-        <Link href="/services/emergency" className="group flex flex-col h-full">
+      {/* 2. 핵심 공공서비스 퀵메뉴 (슬림 와이드 바) */}
+      <div className="w-full">
+        <Link href="/services/emergency" className="group block w-full">
           <PremiumCard
             hoverEffect={true}
             watermarkIcon="hospital"
-            className="p-5 sm:p-6 h-full flex flex-col justify-between min-h-[210px]"
+            className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-h-0"
           >
-            <MiniMapPreview type="emergency" />
-            <div className="relative z-10 flex-1">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 text-[11px] font-bold mb-2.5 border border-emerald-200 dark:border-emerald-800 rounded-none shadow-2xs">
-                <AppIcon name="hospital" size={13} strokeWidth={2.5} className="text-emerald-700 dark:text-emerald-400" />
-                <span>야간·응급의료</span>
+            <div className="relative z-10 flex items-center gap-3.5 min-w-0">
+              <div className="w-10 h-10 rounded-none bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center shrink-0 shadow-2xs">
+                <AppIcon name="hospital" size={20} strokeWidth={2.5} className="text-emerald-700 dark:text-emerald-400" />
               </div>
-              <h3 className="text-[17px] sm:text-lg font-bold text-zinc-900 dark:text-white mb-1.5 block group-hover:text-emerald-950 dark:group-hover:text-emerald-200 transition-colors break-keep leading-snug">
-                응급실 안내
-              </h3>
-              <p className="text-[13px] font-normal text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed line-clamp-2">
-                의정부 응급실의 위치와 전화번호를 지도에서 확인하세요.
-              </p>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 bg-emerald-100/80 text-emerald-900 dark:bg-emerald-900/60 dark:text-emerald-200 text-[11px] font-bold rounded-none">
+                    야간·응급의료
+                  </span>
+                  <h3 className="text-sm sm:text-base font-extrabold text-zinc-950 dark:text-white group-hover:text-emerald-950 dark:group-hover:text-emerald-200 transition-colors truncate">
+                    의정부시 24시간 응급실 안내
+                  </h3>
+                </div>
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 font-normal truncate mt-0.5">
+                  의정부성모병원·을지대병원 응급실 위치, 비상전화번호, 진료과목을 지도에서 확인하세요.
+                </p>
+              </div>
             </div>
 
-            <div className="relative z-10 flex items-center justify-end w-full mt-auto pt-3 border-t border-emerald-100/60 dark:border-emerald-950/40">
-              <span className="flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300 group-hover:translate-x-1 transition-transform">
-                <span>지도 보기</span>
-                <AppIcon name="chevron-right" size={13} strokeWidth={2.5} />
-              </span>
+            <div className="relative z-10 flex items-center gap-1.5 px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shrink-0 self-end sm:self-center shadow-xs transition-colors rounded-none">
+              <span>지도 보기</span>
+              <AppIcon name="chevron-right" size={13} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
             </div>
           </PremiumCard>
         </Link>
-
       </div>
 
       {/* 3. 블로그 콘텐츠 큐레이션 리스트 */}
