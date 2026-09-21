@@ -10,6 +10,7 @@ import PremiumHeading from '@/components/ui/PremiumHeading';
 import PremiumCard from '@/components/ui/PremiumCard';
 import CommonBox from '@/components/blog/CommonBox';
 import AppIcon from '@/components/ui/AppIcon';
+import HighlightBadge, { getKeywordHighlightVariant } from '@/components/ui/HighlightBadge';
 
 const SCROLL_OFFSET = 140;
 
@@ -62,11 +63,11 @@ export const sharedComponents: Components & Record<string, any> = {
   ),
   li: ({ children }) => <li className="pl-1 leading-[1.8] break-keep font-normal">{children}</li>,
 
-  strong: ({ children }) => (
-    <strong className="text-zinc-950 dark:text-white font-bold bg-zinc-100/90 dark:bg-zinc-800/80 px-1.5 py-0.5 mx-0.5 rounded-none">
-      {children}
-    </strong>
-  ),
+  strong: ({ children }) => {
+    const text = extractTextFromNode(children);
+    const variant = getKeywordHighlightVariant(text);
+    return <HighlightBadge variant={variant}>{children}</HighlightBadge>;
+  },
 
   blockquote: ({ children }: any) => {
     const childArray = React.Children.toArray(children);

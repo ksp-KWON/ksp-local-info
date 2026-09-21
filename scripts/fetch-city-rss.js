@@ -53,7 +53,44 @@ const RSS_CONFIGS = [
 ];
 
 /**
- * 초경량 XML 아이템 파서
+ * 기한 만료 및 과거 연도 정보 자동 배제 필터 (2026년 기준)
+ */
+function isItemExpired(title, description) {
+  const fullText = title + ' ' + (description || '');
+
+  // 1) 2025년 이전 과거 연도 단독 포함 시 배제
+  const oldYearMatch = fullText.match(/\b(201[0-9]|202[0-5])\b/);
+  if (oldYearMatch && !fullText.includes('2026')) {
+    return true;
+  }
+
+  // 2) KST 오늘 자정 기준 만료일 검사
+  const now = new Date();
+  const kstNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const todayThreshold = new Date(Date.UTC(kstNow.getUTCFullYear(), kstNow.getUTCMonth(), kstNow.getUTCDate(), 0, 0, 0));
+
+  const regex = /(?:20)?(2[0-9])\s*[.\-/년]\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})/g;
+  const dates = [];
+  let m;
+  while ((m = regex.exec(fullText)) !== null) {
+    const year = 2000 + parseInt(m[1], 10);
+    const month = parseInt(m[2], 10) - 1;
+    const day = parseInt(m[3], 10);
+    dates.push(new Date(Date.UTC(year, month, day, 23, 59, 59)));
+  }
+
+  if (dates.length > 0) {
+    const maxDate = new Date(Math.max(...dates.map(d => d.getTime())));
+    if (maxDate < todayThreshold) {
+      return true; // 기한 만료
+    }
+  }
+
+  return false;
+}
+
+/**
+ * 초경량 XML 아이템 파서 (기한 만료 자동 배제)
  */
 function parseRssXml(xmlText, defaultCategory, feedName) {
   const items = [];
@@ -73,6 +110,11 @@ function parseRssXml(xmlText, defaultCategory, feedName) {
     const pubDate = dateMatch ? dateMatch[1].trim() : '';
 
     if (!title || title === feedName || title.includes('RSS서비스')) {
+      continue;
+    }
+
+    // ── 기한 만료 및 과거 정보 자동 배제 ──
+    if (isItemExpired(title, description)) {
       continue;
     }
 
@@ -158,8 +200,17 @@ async function main() {
     await sleep(500);
   }
 
-  // 큐 병합 (신규 수집 항목을 기존 미발행 큐 앞에 배치)
-  const finalQueue = [...allCollectedItems, ...existingRssQueue].filter(item => !existingSourceIds.has(item.sourceId));
+  // 큐 병합 및 만료 데이터 전면 정화 (신규 수집 항목 + 기존 미발행 항목 중 유효한 것만 유지)
+  const mergedQueue = [...allCollectedItems, ...existingRssQueue];
+  const finalQueue = [];
+  const recordedIds = new Set(existingSourceIds);
+
+  for (const item of mergedQueue) {
+    if (!item || !item.sourceId || recordedIds.has(item.sourceId)) continue;
+    if (isItemExpired(item.title, item.description)) continue;
+    recordedIds.add(item.sourceId);
+    finalQueue.push(item);
+  }
 
   // 저장 디렉토리 보장 및 저장
   const dir = path.dirname(CITY_RSS_FILE);
@@ -169,7 +220,7 @@ async function main() {
 
   console.log('\n======================================================');
   console.log(`✅ [수집 완료] 신규 아이템: ${newCollectedCount}개`);
-  console.log(`📦 [발행 대기 큐 총량]: ${finalQueue.length}개 (파일: public/data/city-rss.json)`);
+  console.log(`📦 [발행 대기 큐 총량 (만료 항목 전면 배제)]: ${finalQueue.length}개 (파일: public/data/city-rss.json)`);
   console.log('======================================================');
 }
 
