@@ -32,7 +32,7 @@ const MASTER_CHAPTERS: MasterChapter[] = [
     id: 'health',
     categoryName: '건강·의료',
     title: '건강 & 안심 응급의료',
-    desc: '달빛어린이병원, 공공심야약국 및 생애 무료 건강검진 정보입니다.',
+    desc: '응급실, 국가건강검진 등 필수 의료 안내입니다.',
     icon: 'hospital',
     watermarkIcon: 'hospital',
   },

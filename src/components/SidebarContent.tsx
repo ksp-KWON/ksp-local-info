@@ -160,7 +160,7 @@ export default function SidebarContent({ tags = [], recentPosts = [] }: SidebarC
               <h3 className="text-xs font-extrabold text-zinc-950 dark:text-white tracking-tight">인기 키워드 태그</h3>
             </div>
             <span className="bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 text-[9.5px] font-bold px-1.5 py-0.2 border border-zinc-200 dark:border-zinc-700">
-              실시간
+              추천
             </span>
           </div>
           <div className="flex flex-wrap gap-1.5 text-xs font-medium">
