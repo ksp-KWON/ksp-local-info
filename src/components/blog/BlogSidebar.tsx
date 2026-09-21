@@ -20,25 +20,6 @@ export default function BlogSidebar({ recentPosts = [] }: BlogSidebarProps) {
             </h3>
           </div>
           <div className="space-y-2">
-            <Link
-              href="/services/health-check"
-              className="flex items-center justify-between p-2.5 bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-gray-200/70 dark:border-zinc-700/70 hover:border-zinc-900 dark:hover:border-zinc-100 transition-all group"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="p-1.5 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700">
-                  <AppIcon name="hospital" size={15} strokeWidth={2} className="text-rose-600 dark:text-rose-400" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white">
-                    달빛어린이병원
-                  </div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                    야간·휴일 소아청소년과
-                  </div>
-                </div>
-              </div>
-              <AppIcon name="chevron-right" size={14} strokeWidth={2.5} className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
-            </Link>
 
             <Link
               href="/blog?category=의료·건강"
@@ -61,26 +42,6 @@ export default function BlogSidebar({ recentPosts = [] }: BlogSidebarProps) {
             </Link>
 
             <Link
-              href="/services/health-check"
-              className="flex items-center justify-between p-2.5 bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-gray-200/70 dark:border-zinc-700/70 hover:border-zinc-900 dark:hover:border-zinc-100 transition-all group"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="p-1.5 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700">
-                  <AppIcon name="stethoscope" size={15} strokeWidth={2} className="text-emerald-600 dark:text-emerald-400" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white">
-                    국민건강검진기관
-                  </div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                    일반·암검진 지정병원 찾기
-                  </div>
-                </div>
-              </div>
-              <AppIcon name="chevron-right" size={14} strokeWidth={2.5} className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-
-            <Link
               href="/blog?category=생활·환경"
               className="flex items-center justify-between p-2.5 bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-gray-200/70 dark:border-zinc-700/70 hover:border-zinc-900 dark:hover:border-zinc-100 transition-all group"
             >
@@ -93,7 +54,7 @@ export default function BlogSidebar({ recentPosts = [] }: BlogSidebarProps) {
                     의정부사랑카드 가맹점
                   </div>
                   <div className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                    지역화폐 인센티브 혜택
+                    지역화폐 가맹점 지도
                   </div>
                 </div>
               </div>

@@ -106,7 +106,7 @@ export default async function Image() {
               ksp-local-info-edg.pages.dev
             </div>
             <div style={{ fontSize: '18px', fontWeight: '600', color: '#71717a' }}>
-              의정부 행복특별시 공공데이터 실시간 연동
+              의정부시 생활·의료 정보 안내
             </div>
           </div>
         </div>

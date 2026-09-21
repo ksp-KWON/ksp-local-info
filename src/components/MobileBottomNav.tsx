@@ -123,7 +123,7 @@ function NavContent() {
           </div>
 
           {/* 주요 3대 공공서비스 퀵링크 바 */}
-          <div className="mt-5 grid grid-cols-2 gap-2.5 pt-3 border-t border-gray-100 dark:border-zinc-800">
+          <div className="mt-5 grid grid-cols-1 gap-2.5 pt-3 border-t border-gray-100 dark:border-zinc-800">
             <Link
               href="/services/local-currency"
               onClick={() => setIsMenuOpen(false)}
@@ -131,15 +131,6 @@ function NavContent() {
             >
               <AppIcon name="bank" size={14} strokeWidth={2} className="relative z-10 text-sky-700 dark:text-sky-400" />
               <span className="relative z-10">사랑카드 가맹점</span>
-            </Link>
-
-            <Link
-              href="/services/health-check"
-              onClick={() => setIsMenuOpen(false)}
-              className="relative overflow-hidden flex items-center justify-center gap-1.5 p-3 rounded-none bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 hover:border-amber-400 dark:hover:border-amber-600 text-amber-950 dark:text-amber-200 font-bold text-xs group transition-all"
-            >
-              <AppIcon name="stethoscope" size={14} strokeWidth={2} className="relative z-10 text-amber-700 dark:text-amber-400" />
-              <span className="relative z-10">건강검진 지정병원</span>
             </Link>
           </div>
         </div>

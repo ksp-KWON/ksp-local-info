@@ -39,15 +39,8 @@ const CIVIC_QUICK_MENUS: CivicQuickMenuItem[] = [
     href: '/services/local-currency',
     icon: 'bank',
     title: '의정부사랑카드 가맹점',
-    subtitle: '지역화폐 6~10% 인센티브 사용처',
+    subtitle: '지역화폐 가맹점 지도',
     badge: '가맹점',
-  },
-  {
-    href: '/services/health-check',
-    icon: 'stethoscope',
-    title: '국가 무료 건강검진 기관',
-    subtitle: '일반·암·구강검진 지정병원 안내',
-    badge: '지정병원',
   },
   {
     href: `/blog?category=${encodeURIComponent('숨은 지원금 찾기')}`,

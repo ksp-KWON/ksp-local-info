@@ -3,7 +3,7 @@
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
 
 interface MiniMapPreviewProps {
-  type: 'emergency' | 'currency' | 'health-check';
+  type: 'emergency' | 'currency';
 }
 
 export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
@@ -37,10 +37,8 @@ export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
       case 'emergency':
         return 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
       case 'currency':
-        return 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
-      case 'health-check':
       default:
-        return 'https://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png';
+        return 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
     }
   };
 

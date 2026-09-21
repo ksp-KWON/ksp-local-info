@@ -28,10 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/services/local-currency`,
       lastModified: SITE_LAUNCH_DATE,
     },
-    {
-      url: `${baseUrl}/services/health-check`,
-      lastModified: SITE_LAUNCH_DATE,
-    },
     // Google E-E-A-T 신뢰도 & 투명성 필수 페이지
     {
       url: `${baseUrl}/about`,

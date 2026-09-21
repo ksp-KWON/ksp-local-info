@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
@@ -15,17 +13,6 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const localInfoPath = path.join(process.cwd(), 'public/data/local-info.json');
-  let lastUpdated = '';
-
-  try {
-    if (fs.existsSync(localInfoPath)) {
-      const data = JSON.parse(fs.readFileSync(localInfoPath, 'utf8'));
-      lastUpdated = data.lastUpdated || '';
-    }
-  } catch {
-    // Ignore errors
-  }
 
   return (
     <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-10 space-y-8">
@@ -51,14 +38,9 @@ export default function AboutPage() {
         badgeTone="emerald"
         badgeIcon="shield-check"
         title="의정부 건강·생활 정보 포털의 사명"
-        description="시민들에게 꼭 필요한 공공 혜택과 응급의료 정보가 복잡한 행정 사이트에 흩어져 있어 놓치는 일이 없도록, 공공데이터를 실시간으로 연결하여 가장 읽기 쉽고 직관적인 형태로 큐레이션합니다."
+        description="시민들에게 꼭 필요한 공공 혜택과 응급의료 정보가 복잡한 행정 사이트에 흩어져 있어 놓치는 일이 없도록, 공공데이터와 각 기관의 공식 안내를 바탕으로 가장 읽기 쉽고 직관적인 형태로 큐레이션합니다."
         watermarkIcon="shield-check"
       >
-        {lastUpdated && (
-          <div className="pt-2 text-xs font-medium text-zinc-500">
-            최근 데이터 동기화: {lastUpdated}
-          </div>
-        )}
       </PageHeaderBanner>
 
       {/* 3. 3대 핵심 가치 카드 */}
@@ -69,7 +51,7 @@ export default function AboutPage() {
           </div>
           <h3 className="text-base font-bold text-zinc-950 dark:text-white pt-2">공식 데이터 검증</h3>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-            행정안전부 공공데이터포털, 경기도 공공데이터, 국립중앙의료원(NMC)의 공인된 Open API만을 기반으로 데이터를 정제합니다.
+            경기데이터드림(경기도 공공데이터)의 공개 자료와 각 기관의 공식 안내를 기반으로 정보를 정리합니다.
           </p>
         </PremiumCard>
 
@@ -77,7 +59,7 @@ export default function AboutPage() {
           <div className="w-9 h-9 bg-sky-50 text-sky-700 dark:bg-sky-950/70 dark:text-sky-300 flex items-center justify-center border border-sky-200 dark:border-sky-800">
             <AppIcon name="zap" size={18} strokeWidth={2} />
           </div>
-          <h3 className="text-base font-bold text-zinc-950 dark:text-white pt-2">실시간 혜택 큐레이션</h3>
+          <h3 className="text-base font-bold text-zinc-950 dark:text-white pt-2">혜택 큐레이션</h3>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
             의정부시청 공고와 경기지역화폐 혜택, 청년 및 출산 지원금 등 놓치기 쉬운 실생활 복지를 알기 쉽게 요약 제공합니다.
           </p>
@@ -103,15 +85,11 @@ export default function AboutPage() {
         <ul className="space-y-2.5 text-xs sm:text-sm font-normal text-zinc-700 dark:text-zinc-300">
           <li className="flex items-start gap-2">
             <AppIcon name="check" size={14} strokeWidth={2.5} className="text-emerald-600 dark:text-emerald-400 mt-1 shrink-0" />
-            <span><strong className="text-zinc-900 dark:text-white">응급의료 및 약국</strong> : 국립중앙의료원(NMC) 중앙응급의료센터 공공 API</span>
+            <span><strong className="text-zinc-900 dark:text-white">응급의료 및 약국</strong> : 관내 의료기관 공개 정보를 직접 정리했으며, 실시간 병상·운영 여부는 응급의료정보제공(E-GEN)·휴일지킴이약국 공식 사이트에서 확인</span>
           </li>
           <li className="flex items-start gap-2">
             <AppIcon name="check" size={14} strokeWidth={2.5} className="text-sky-600 dark:text-sky-400 mt-1 shrink-0" />
             <span><strong className="text-zinc-900 dark:text-white">의정부사랑카드</strong> : 경기데이터드림(경기지역화폐 가맹점 현황 Open API)</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <AppIcon name="check" size={14} strokeWidth={2.5} className="text-amber-600 dark:text-amber-400 mt-1 shrink-0" />
-            <span><strong className="text-zinc-900 dark:text-white">국가 건강검진 기관</strong> : 건강보험심사평가원 및 국민건강보험공단 검진기관 데이터</span>
           </li>
         </ul>
       </div>
