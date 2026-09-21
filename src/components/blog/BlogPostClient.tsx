@@ -15,9 +15,10 @@ interface BlogPostClientProps {
   content: string;
   title: string;
   sourceLink?: string;
+  tags?: string[];
 }
 
-export default function BlogPostClient({ content, title, sourceLink }: BlogPostClientProps) {
+export default function BlogPostClient({ content, title, sourceLink, tags = [] }: BlogPostClientProps) {
   const [activeId, setActiveId] = useState('');
   const { opening, keyPoints, keyPointsTitle, checklistItems, checklistTitle, faqItems, toc, sections } = parseBlogPost(content);
 
@@ -251,6 +252,28 @@ export default function BlogPostClient({ content, title, sourceLink }: BlogPostC
 
         </div>
       </div>
+
+      {/* ── 게시글 핵심 키워드 태그 클라우드 ── */}
+      {tags && tags.length > 0 && (
+        <div className="my-8 pt-6 border-t border-gray-100 dark:border-zinc-800">
+          <div className="flex items-center gap-1.5 mb-3 text-xs font-extrabold text-zinc-500 dark:text-zinc-400">
+            <AppIcon name="pin" size={13} strokeWidth={2.5} />
+            <span>이 글의 핵심 키워드 태그</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <Link
+                key={tag}
+                href={`/blog?tag=${encodeURIComponent(tag)}`}
+                className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold bg-zinc-100/90 hover:bg-zinc-900 text-zinc-700 hover:text-white dark:bg-zinc-800/90 dark:hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-zinc-950 border border-zinc-200/90 dark:border-zinc-700 transition-all rounded-none group cursor-pointer shadow-2xs"
+              >
+                <span className="text-zinc-400 group-hover:text-zinc-300 dark:group-hover:text-zinc-600 font-bold">#</span>
+                <span>{tag}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ── 원클릭 공유 & 링크 복사 바 ── */}
       <ShareButtons title={title} />

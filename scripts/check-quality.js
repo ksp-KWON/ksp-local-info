@@ -71,18 +71,20 @@ function processPost(filePath) {
   // 9. 다중 빈 줄 정리
   body = body.replace(/(?:\r?\n){3,}/g, '\n\n').trim();
 
-  // 10. 카테고리 4대 공식 카테고리 검증 및 정규화
+  // 10. 5대 직관형 공식 카테고리 검증 및 정규화
   if (data.category) {
     const cats = Array.isArray(data.category) ? data.category : [data.category];
     const catStr = cats.join(' ');
     if (catStr.includes('병원') || catStr.includes('건강') || catStr.includes('의료') || catStr.includes('약국')) {
-      data.category = ['건강·의료'];
-    } else if (catStr.includes('문화') || catStr.includes('축제') || catStr.includes('행사') || catStr.includes('공연')) {
-      data.category = ['문화·축제'];
-    } else if (catStr.includes('교통') || catStr.includes('사랑카드') || catStr.includes('민원') || catStr.includes('생활')) {
-      data.category = ['생활·교통'];
+      data.category = ['병원·약국'];
+    } else if (catStr.includes('축제') || catStr.includes('나들이') || catStr.includes('문화') || catStr.includes('행사') || catStr.includes('공연')) {
+      data.category = ['축제·나들이'];
+    } else if (catStr.includes('일자리') || catStr.includes('소상공인') || catStr.includes('기업') || catStr.includes('입찰') || catStr.includes('채용')) {
+      data.category = ['일자리·소상공인'];
+    } else if (catStr.includes('민원') || catStr.includes('생활') || catStr.includes('교통') || catStr.includes('주차') || catStr.includes('폐기물')) {
+      data.category = ['생활·민원'];
     } else {
-      data.category = ['지원금·복지'];
+      data.category = ['복지·지원금'];
     }
   }
 

@@ -170,8 +170,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             )}
           </header>
 
-          {/* 블로그 본문 (TOC & Markdown & ShareButtons 일체화) */}
-          <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} />
+          {/* 블로그 본문 (TOC & Markdown & ShareButtons & Tags 일체화) */}
+          <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} tags={post.tags} />
         </div>
       </article>
     </div>
