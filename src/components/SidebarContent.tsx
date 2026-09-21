@@ -15,8 +15,11 @@ import SidebarTagMore from './SidebarTagMore';
 import PremiumCard from '@/components/ui/PremiumCard';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 
+import { PostData, PostMeta } from '@/lib/types';
+
 interface SidebarContentProps {
   tags?: string[];
+  recentPosts?: (PostMeta | PostData)[];
 }
 
 interface CivicQuickMenuItem {
@@ -53,7 +56,7 @@ const CIVIC_QUICK_MENUS: CivicQuickMenuItem[] = [
 
 const INITIAL_TAG_COUNT = 6;
 
-export default function SidebarContent({ tags = [] }: SidebarContentProps) {
+export default function SidebarContent({ tags = [], recentPosts = [] }: SidebarContentProps) {
   const visibleTags = tags.slice(0, INITIAL_TAG_COUNT);
   const hiddenTags = tags.slice(INITIAL_TAG_COUNT);
 
@@ -108,7 +111,47 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
         </div>
       </PremiumCard>
 
-      {/* ── 2. 실시간 인기 키워드 태그 카드 ── */}
+      {/* ── 2. 주목할 의정부 소식 (보상스쿨 인기 칼럼 스타일 벤치마킹) ── */}
+      {recentPosts.length > 0 && (
+        <PremiumCard borderColor="default" hoverEffect={false} watermarkIcon="file-text" className="!p-4 sm:!p-5">
+          <div className="flex items-center justify-between min-w-0 gap-2 mb-3 pb-2 border-b border-gray-100 dark:border-zinc-800">
+            <div className="flex items-center gap-2">
+              <AppIcon name="file-text" size={16} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />
+              <h3 className="text-xs sm:text-sm font-extrabold text-zinc-950 dark:text-white tracking-tight">
+                주목할 의정부 소식
+              </h3>
+            </div>
+            <Link
+              href="/blog"
+              className="text-[10px] font-bold text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-colors"
+            >
+              전체보기 &gt;
+            </Link>
+          </div>
+          <ul className="divide-y divide-gray-100 dark:divide-zinc-800/70">
+            {recentPosts.map((post, idx) => (
+              <li key={post.slug} className="py-2.5 first:pt-0 last:pb-0">
+                <Link href={`/blog/${post.slug}`} className="group block space-y-1">
+                  <div className="flex items-start gap-2">
+                    <span className="text-xs font-black text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-white w-3.5 shrink-0 pt-0.5 transition-colors">
+                      {idx + 1}
+                    </span>
+                    <h4 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-zinc-950 dark:group-hover:text-white line-clamp-2 leading-snug break-keep transition-colors flex-1">
+                      {post.title}
+                    </h4>
+                  </div>
+                  <div className="flex items-center gap-1 text-[10px] text-zinc-400 pl-5.5">
+                    <AppIcon name="calendar" size={10} strokeWidth={2} />
+                    <span>{post.date}</span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </PremiumCard>
+      )}
+
+      {/* ── 3. 실시간 인기 키워드 태그 카드 ── */}
       {tags.length > 0 && (
         <PremiumCard borderColor="default" hoverEffect={true} watermarkIcon="pin" className="!p-4">
           <div className="flex items-center justify-between min-w-0 gap-2 mb-2 pb-1.5 border-b border-gray-100 dark:border-zinc-800">
@@ -136,7 +179,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
         </PremiumCard>
       )}
 
-      {/* ── 3. 보상스쿨 연계 : 의정부 시민 무료 사고·상해 보상 진단 ── */}
+      {/* ── 4. 보상스쿨 연계 : 의정부 시민 무료 사고·상해 보상 진단 ── */}
       <div className="p-4 border border-zinc-900 dark:border-zinc-700 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 text-white shadow-sm relative overflow-hidden group">
         <div className="flex items-center justify-between mb-1.5">
           <div className="flex items-center gap-1.5">
@@ -161,7 +204,7 @@ export default function SidebarContent({ tags = [] }: SidebarContentProps) {
         </a>
       </div>
 
-      {/* ── 4. 의정부시 공식 행정 직통 안내 배너 ── */}
+      {/* ── 5. 의정부시 공식 행정 직통 안내 배너 ── */}
       <div className="p-4 border border-gray-200/90 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-sm">
         <div className="flex items-center gap-2 mb-1">
           <AppIcon name="phone" size={14} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />

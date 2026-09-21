@@ -92,10 +92,10 @@ export default function PublicLayout({
         </div>
       </header>
 
-      {/* 2. 의정부 포털 스마트 2열 스티키 레이아웃 (본문 73% + 사이드바 27%) */}
+      {/* 2. 의정부 포털 스마트 2열 스티키 레이아웃 (본문 72% + 사이드바 28%) */}
       <SmartStickyLayout
         mainContent={children}
-        sidebarContent={<SidebarContent tags={sortedTags} />}
+        sidebarContent={<SidebarContent tags={sortedTags} recentPosts={posts.slice(0, 4)} />}
       />
 
       {/* 3. 푸터 */}
