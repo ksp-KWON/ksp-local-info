@@ -45,7 +45,7 @@ export const UIJEONGBU_PERFORMANCES_2026: CivicPerformance[] = [
     target: '초등학생 이상',
     price: 'R석 50,000원 / S석 30,000원',
     highlight: '국악 스타 송소희와 국악인 김준수, 에스닉 밴드 두번째달의 신명나는 하모니',
-    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01.php',
+    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202607021305489',
     status: '마감',
   },
   {
@@ -60,7 +60,7 @@ export const UIJEONGBU_PERFORMANCES_2026: CivicPerformance[] = [
     target: '전연령 관람가',
     price: '무료 (사전예약)',
     highlight: '책과 음악이 어우러지는 의정부 아트캠프 대표 살롱 콘서트',
-    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01.php',
+    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202609011049056',
     status: '예매중',
   },
   {
@@ -75,7 +75,7 @@ export const UIJEONGBU_PERFORMANCES_2026: CivicPerformance[] = [
     target: '만 5세 이상',
     price: '전석 5,000원',
     highlight: '시립소년소녀합창단 제49회 정기연주회로 펼쳐지는 환상의 가족 뮤지컬',
-    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01.php',
+    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202608211121153',
     status: '예매중',
   },
 
@@ -108,7 +108,7 @@ export const UIJEONGBU_PERFORMANCES_2026: CivicPerformance[] = [
     target: '초등학생 이상',
     price: '전석 20,000원',
     highlight: '의정부의 역사적 인물 의순공주의 비화를 국악 뮤지컬로 재조명한 감동작',
-    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01.php',
+    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202609180927339',
     status: '예정',
   },
   {
@@ -123,7 +123,7 @@ export const UIJEONGBU_PERFORMANCES_2026: CivicPerformance[] = [
     target: '만 7세 이상',
     price: '전석 25,000원',
     highlight: '한국인이 사랑하는 세계 명작 영화 오리지널 사운드트랙 라이브 연주',
-    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01.php',
+    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202606161715156',
     status: '예정',
   },
   {
