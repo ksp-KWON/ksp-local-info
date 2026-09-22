@@ -54,8 +54,9 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
           </span>
         </div>
 
-        {/* 최상단 응급의료 고정 바로가기 */}
-        <div className="mb-2">
+        {/* 의정부 5대 핵심 생활 퀵메뉴 (가로형 컬러 배너 스택) */}
+        <div className="space-y-1.5 mb-3">
+          {/* 1. 24시간 응급실·병원 지도 (에메랄드) */}
           <Link
             href="/services/emergency"
             className="flex items-center justify-between gap-2 p-2 bg-emerald-50/80 hover:bg-emerald-100/80 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 border border-emerald-200/80 dark:border-emerald-800/80 transition-colors group/em"
@@ -68,52 +69,94 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
                 24시간 응급실·병원 지도
               </span>
             </div>
-            <AppIcon
-              name="chevron-right"
-              size={12}
-              strokeWidth={2.5}
-              className="text-emerald-600 dark:text-emerald-400 group-hover/em:translate-x-0.5 transition-transform shrink-0"
-            />
+            <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100/80 dark:bg-emerald-900/60 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
+              <span>실시간</span>
+              <AppIcon name="chevron-right" size={10} strokeWidth={2.5} />
+            </span>
           </Link>
-        </div>
 
-        {/* 의정부시청 4대 특화포털 다이렉트 게이트웨이 (문화관광 / 보건소 / 동주민센터 / 평생교육) */}
-        <div className="grid grid-cols-2 gap-1.5 mb-2.5">
+          {/* 2. 문화관광 포털 (인디고) */}
           <a
             href="https://www.ui4u.go.kr/tour/main.do"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 p-1.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800/40 dark:hover:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700/60 transition-colors group/sp"
+            className="flex items-center justify-between gap-2 p-2 bg-indigo-50/80 hover:bg-indigo-100/80 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/50 border border-indigo-200/80 dark:border-indigo-800/80 transition-colors group/tour"
           >
-            <AppIcon name="compass" size={12} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400 shrink-0 group-hover/sp:text-zinc-950 dark:group-hover/sp:text-white" />
-            <span className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate">문화관광</span>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="p-1 bg-indigo-600 text-white rounded-none shrink-0">
+                <AppIcon name="compass" size={13} strokeWidth={2.5} />
+              </div>
+              <span className="text-xs font-bold text-indigo-950 dark:text-indigo-200 truncate">
+                문화관광 포털
+              </span>
+            </div>
+            <span className="text-[10px] font-medium text-indigo-700 dark:text-indigo-300 bg-indigo-100/70 dark:bg-indigo-900/50 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
+              <span>축제·명소</span>
+              <AppIcon name="external-link" size={9} strokeWidth={2} />
+            </span>
           </a>
+
+          {/* 3. 의정부시 보건소 (로즈) */}
           <a
             href="https://www.ui4u.go.kr/health/main.do"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 p-1.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800/40 dark:hover:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700/60 transition-colors group/sp"
+            className="flex items-center justify-between gap-2 p-2 bg-rose-50/80 hover:bg-rose-100/80 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 border border-rose-200/80 dark:border-rose-800/80 transition-colors group/health"
           >
-            <AppIcon name="hospital" size={12} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400 shrink-0 group-hover/sp:text-zinc-950 dark:group-hover/sp:text-white" />
-            <span className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate">보건소</span>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="p-1 bg-rose-600 text-white rounded-none shrink-0">
+                <AppIcon name="heart" size={13} strokeWidth={2.5} />
+              </div>
+              <span className="text-xs font-bold text-rose-950 dark:text-rose-200 truncate">
+                의정부시 보건소
+              </span>
+            </div>
+            <span className="text-[10px] font-medium text-rose-700 dark:text-rose-300 bg-rose-100/70 dark:bg-rose-900/50 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
+              <span>예방·진료</span>
+              <AppIcon name="external-link" size={9} strokeWidth={2} />
+            </span>
           </a>
+
+          {/* 4. 동 행정복지센터 (스카이) */}
           <a
             href="https://www.ui4u.go.kr/cscportal/main.do"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 p-1.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800/40 dark:hover:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700/60 transition-colors group/sp"
+            className="flex items-center justify-between gap-2 p-2 bg-sky-50/80 hover:bg-sky-100/80 dark:bg-sky-950/40 dark:hover:bg-sky-900/50 border border-sky-200/80 dark:border-sky-800/80 transition-colors group/csc"
           >
-            <AppIcon name="landmark" size={12} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400 shrink-0 group-hover/sp:text-zinc-950 dark:group-hover/sp:text-white" />
-            <span className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate">동주민센터</span>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="p-1 bg-sky-600 text-white rounded-none shrink-0">
+                <AppIcon name="landmark" size={13} strokeWidth={2.5} />
+              </div>
+              <span className="text-xs font-bold text-sky-950 dark:text-sky-200 truncate">
+                동 행정복지센터
+              </span>
+            </div>
+            <span className="text-[10px] font-medium text-sky-700 dark:text-sky-300 bg-sky-100/70 dark:bg-sky-900/50 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
+              <span>생활민원</span>
+              <AppIcon name="external-link" size={9} strokeWidth={2} />
+            </span>
           </a>
+
+          {/* 5. 평생학습포털 (앰버) */}
           <a
             href="https://www.ull.or.kr/lifeedu/index.do"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 p-1.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800/40 dark:hover:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700/60 transition-colors group/sp"
+            className="flex items-center justify-between gap-2 p-2 bg-amber-50/80 hover:bg-amber-100/80 dark:bg-amber-950/40 dark:hover:bg-amber-900/50 border border-amber-200/80 dark:border-amber-800/80 transition-colors group/edu"
           >
-            <AppIcon name="book" size={12} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400 shrink-0 group-hover/sp:text-zinc-950 dark:group-hover/sp:text-white" />
-            <span className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate">평생교육</span>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="p-1 bg-amber-600 text-white rounded-none shrink-0">
+                <AppIcon name="book" size={13} strokeWidth={2.5} />
+              </div>
+              <span className="text-xs font-bold text-amber-950 dark:text-amber-200 truncate">
+                평생학습포털
+              </span>
+            </div>
+            <span className="text-[10px] font-medium text-amber-700 dark:text-amber-400 bg-amber-100/70 dark:bg-amber-900/50 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
+              <span>시민강좌</span>
+              <AppIcon name="external-link" size={9} strokeWidth={2} />
+            </span>
           </a>
         </div>
 
