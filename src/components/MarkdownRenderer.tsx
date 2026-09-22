@@ -185,8 +185,20 @@ export const sharedComponents: Components & Record<string, any> = {
   },
 
   table: ({ children }: any) => (
-    <div className="not-prose my-8 overflow-x-auto border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#202124] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
-      <table className="w-full text-[13.5px] sm:text-[14px] border-collapse min-w-[500px] sm:min-w-full m-0">{children}</table>
+    <div className="not-prose my-8 border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#202124] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] overflow-hidden">
+      {/* 📱 모바일 전용 좌우 스크롤 안내 가이드 바 (보상스쿨 UX 표준) */}
+      <div className="flex sm:hidden items-center justify-between px-3 py-1.5 bg-blue-50/70 dark:bg-blue-950/30 border-b border-blue-100 dark:border-blue-900/40 text-[11px] font-bold text-[var(--google-blue)] dark:text-[#8ab4f8] select-none">
+        <div className="flex items-center gap-1.5">
+          <AppIcon name="chevron-left" size={12} strokeWidth={2.5} />
+          <span>표를 좌우로 밀어서 전체 내용을 확인하세요</span>
+        </div>
+        <AppIcon name="chevron-right" size={12} strokeWidth={2.5} />
+      </div>
+
+      {/* 좌우 터치 스크롤 컨테이너 */}
+      <div className="overflow-x-auto touch-pan-x scrollbar-thin">
+        <table className="w-full text-[13.5px] sm:text-[14px] border-collapse min-w-[580px] m-0">{children}</table>
+      </div>
     </div>
   ),
   thead: ({ children }: any) => (
@@ -198,7 +210,7 @@ export const sharedComponents: Components & Record<string, any> = {
   th: ({ children, style, ...props }: any) => (
     <th
       style={style}
-      className="p-3 sm:p-3.5 font-bold text-zinc-900 dark:text-zinc-100 tracking-tight whitespace-nowrap text-center"
+      className="p-3 sm:p-3.5 font-bold text-zinc-900 dark:text-zinc-100 tracking-tight whitespace-nowrap text-center bg-gray-50/90 dark:bg-[#303134]"
       {...props}
     >
       {children}
@@ -207,7 +219,7 @@ export const sharedComponents: Components & Record<string, any> = {
   td: ({ children, style, ...props }: any) => (
     <td
       style={style}
-      className="p-3 sm:p-3.5 align-middle text-zinc-700 dark:text-zinc-300 leading-relaxed text-left font-normal"
+      className="p-3 sm:p-3.5 align-middle text-zinc-700 dark:text-zinc-300 leading-relaxed text-left font-normal break-keep"
       {...props}
     >
       {children}

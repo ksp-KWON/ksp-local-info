@@ -341,21 +341,6 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
                 </div>
               </PremiumCard>
             )}
-
-            {/* 4. 전체보기 추가 버튼 (카테고리에 포스트가 2개 초과이고 '전체' 탭일 때) */}
-            {currentTab === '전체' && categoryPosts.length > 2 && (
-              <div className="pt-1 flex justify-center">
-                <PremiumButton
-                  href={`/blog?category=${encodeURIComponent(catDef.name)}`}
-                  variant="outline"
-                  size="sm"
-                  icon="chevron-right"
-                  iconPosition="right"
-                >
-                  ‘{catDef.name}’ 가이드 포스트 {categoryPosts.length - 2}건 더보기
-                </PremiumButton>
-              </div>
-            )}
           </section>
         );
       })}
