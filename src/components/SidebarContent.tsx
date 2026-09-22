@@ -77,6 +77,46 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
           </Link>
         </div>
 
+        {/* 의정부시청 4대 특화포털 다이렉트 게이트웨이 (문화관광 / 보건소 / 동주민센터 / 평생교육) */}
+        <div className="grid grid-cols-2 gap-1.5 mb-2.5">
+          <a
+            href="https://www.ui4u.go.kr/tour/main.do"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 p-1.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800/40 dark:hover:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700/60 transition-colors group/sp"
+          >
+            <AppIcon name="compass" size={12} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400 shrink-0 group-hover/sp:text-zinc-950 dark:group-hover/sp:text-white" />
+            <span className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate">문화관광</span>
+          </a>
+          <a
+            href="https://www.ui4u.go.kr/health/main.do"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 p-1.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800/40 dark:hover:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700/60 transition-colors group/sp"
+          >
+            <AppIcon name="hospital" size={12} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400 shrink-0 group-hover/sp:text-zinc-950 dark:group-hover/sp:text-white" />
+            <span className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate">보건소</span>
+          </a>
+          <a
+            href="https://www.ui4u.go.kr/cscportal/main.do"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 p-1.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800/40 dark:hover:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700/60 transition-colors group/sp"
+          >
+            <AppIcon name="landmark" size={12} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400 shrink-0 group-hover/sp:text-zinc-950 dark:group-hover/sp:text-white" />
+            <span className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate">동주민센터</span>
+          </a>
+          <a
+            href="https://www.ull.or.kr/lifeedu/index.do"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 p-1.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800/40 dark:hover:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700/60 transition-colors group/sp"
+          >
+            <AppIcon name="book" size={12} strokeWidth={2.5} className="text-zinc-600 dark:text-zinc-400 shrink-0 group-hover/sp:text-zinc-950 dark:group-hover/sp:text-white" />
+            <span className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate">평생교육</span>
+          </a>
+        </div>
+
         {/* 9대 행정 분야 아코디언 리스트 */}
         <div className="divide-y divide-gray-100 dark:divide-zinc-800/60">
           {UIJEONGBU_TAXONOMY.map((cat) => {
