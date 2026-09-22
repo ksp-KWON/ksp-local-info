@@ -5,6 +5,7 @@ const CHECKLIST_PATTERNS = /^(?:#+\s*)?(?:[📋✅☑️\s]*)(?:신청\s*자격\
 const INSIGHT_PATTERNS = /^(?:#+\s*)?(?:[🛡️💡🏛️\s]*)(?:의정부\s*생활\s*꿀팁\s*&\s*행정\s*인사이트|의정부\s*생활\s*꿀팁\s*&\s*시정\s*인사이트|의정부\s*생활\s*꿀팁\s*행정\s*인사이트|시정\s*인사이트|알짜\s*혜택\s*및\s*생활\s*꿀팁)(?:[\s:]*)/i;
 const FAQ_PATTERNS = /^(?:#+\s*)?(?:[💬❓🗨️\s]*)(?:시민\s*자주\s*묻는\s*질문|자주\s*묻는\s*질문|FAQ|Q&A|질의응답)(?:[\s:]*)/i;
 const ACTION_PATTERNS = /^(?:#+\s*)?(?:[🚀🔗📍👉📞\s]*)(?:공식\s*신청처\s*안내|온라인\s*신청\s*바로가기|관련\s*공공기관\s*안내|신청\s*안내)(?:[\s:]*)/i;
+const TOC_PATTERNS = /^(?:#+\s*)?(?:[📜📋📑\s]*)(?:이\s*글의\s*목차\s*내비게이션|이\s*글의\s*목차|목차\s*내비게이션|목차|Table\s*of\s*Contents|TOC)(?:[\s:]*)/i;
 
 export interface ParsedBlogPost {
   opening: string;
@@ -40,7 +41,7 @@ export function parseBlogPost(content: string): ParsedBlogPost {
     sections: [],
   };
 
-  let currentSectionType: 'NONE' | 'KEY_POINTS' | 'CHECKLIST' | 'FAQ' | 'CTA' = 'NONE';
+  let currentSectionType: 'NONE' | 'KEY_POINTS' | 'CHECKLIST' | 'FAQ' | 'CTA' | 'TOC' = 'NONE';
   let currentSectionLines: string[] = [];
   let currentQ = '';
   let currentA = '';
@@ -112,6 +113,9 @@ export function parseBlogPost(content: string): ParsedBlogPost {
       } else if (ACTION_PATTERNS.test(rawText)) {
         currentSectionType = 'CTA';
         isSpecial = true;
+      } else if (TOC_PATTERNS.test(rawText)) {
+        currentSectionType = 'TOC';
+        isSpecial = true;
       }
 
       if (isSpecial) continue;
@@ -179,6 +183,16 @@ export function parseBlogPost(content: string): ParsedBlogPost {
       if (!hasFirstHeading) {
         currentSectionLines.push(line);
       }
+      continue;
+    }
+
+    if (currentSectionType === 'TOC') {
+      const isTocLine = /^[-*+]\s*/.test(trimmed) || /^\d+[\.\)]\s*/.test(trimmed) || !trimmed;
+      if (isTocLine) {
+        continue;
+      }
+      currentSectionType = 'NONE';
+      currentSectionLines.push(line);
       continue;
     }
 
