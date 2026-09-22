@@ -108,6 +108,7 @@ export function getSortedPostsData(includeUnpublished = false): PostMeta[] {
       updatedAt: post.updatedAt,
       summary: post.summary,
       category: post.category,
+      subCategory: post.subCategory,
       tags: post.tags,
       sourceLink: post.sourceLink,
       published: post.published,
