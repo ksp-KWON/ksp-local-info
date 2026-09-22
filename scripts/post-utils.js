@@ -111,8 +111,10 @@ function saveMarkdownPost(arg1, arg2, arg3) {
     finalSlug = unique.slug;
   }
 
-  const fileContent = matter.stringify(content || '', frontmatter);
-  fs.writeFileSync(filePath, fileContent, 'utf8');
+  const { normalizePost } = require('../src/lib/markdown-standard');
+  const rawFileContent = matter.stringify(content || '', frontmatter);
+  const normalized = normalizePost(rawFileContent);
+  fs.writeFileSync(filePath, normalized.fullContent, 'utf8');
   console.log('  [저장 완료] ' + filePath);
 
   return { filePath, slug: finalSlug };

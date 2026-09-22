@@ -1,123 +1,23 @@
+/**
+ * scripts/check-quality.js
+ * 글로벌 마크다운(GFM) & W3C 시맨틱 표준 CQF 품질 검증 엔진
+ * 
+ * [헌법 원칙: 표준 · 콤팩트 · 통합 · 공유 · 공통]
+ * - 자체 중복 정규식을 전면 철폐하고, 전사 단일 표준 엔진(src/lib/markdown-standard.ts)에 직결
+ * - 빌드 파이프라인에서 필수 무결성 검증 및 초고속 동기화 수행
+ */
+
+'use strict';
+
 const fs = require('fs');
 const path = require('path');
-const matter = require('gray-matter');
+const { normalizePost } = require('../src/lib/markdown-standard');
 
 const POSTS_DIR = path.join(__dirname, '../src/content/posts');
 
-function processPost(filePath) {
-  const fileRaw = fs.readFileSync(filePath, 'utf8');
-  const { data, content } = matter(fileRaw);
-
-  let body = content;
-
-  // 1. 핵심 요약 헤더 및 불릿 3줄 완전 표준화 (보상스쿨 단일 표준 SSOT)
-  body = body.replace(/##\s*(?:\[[^\]]+\]\s*)?(?:핵심\s*요약|행정\s*핵심\s*요약|시정\s*핵심\s*요약|3줄\s*요약|요약)[^\n]*/gi, '## 시정 핵심 요약');
-
-  // 1-1. 핵심 요약 바로 뒤에 이어지는 인용구(>) 또는 불릿(-) 블록 정밀 매칭 및 \n\n 분리 강제
-  body = body.replace(
-    /(##\s*시정\s*핵심\s*요약\s*\r?\n+)((?:[ \t]*(?:>|[-*+]).*(?:\r?\n|$)|[ \t]*\r?\n(?=[ \t]*(?:>|[-*+])))*)/gi,
-    (_m, head, bulletsBlock) => {
-      const lines = bulletsBlock.split(/\r?\n/);
-      const cleanBullets = lines
-        .map((l) => l.trim())
-        .filter((l) => /^>|[-*+]/.test(l))
-        .map((l) => {
-          let text = l.replace(/^(?:>\s*)?[-*+]\s*/, '').replace(/^>\s*/, '').trim();
-          if (!text) return '';
-          text = text.replace(/^[💡🎯📌⭐🛡️✅☑️✔]+\s*/, '');
-          text = text.replace(/^\*\*\[\s*([^\]]+?)\s*\]\*\*/, '**$1**');
-          text = text.replace(/^\[\s*([^\]]+?)\s*\]\s*:\s*/, '**$1** : ');
-          return `- ${text.trim()}`;
-        })
-        .filter(Boolean)
-        .slice(0, 3)
-        .join('\n');
-      return `${head.trim()}\n\n${cleanBullets}\n\n`;
-    }
-  );
-
-  // 2. 자주 묻는 질문 표준화
-  body = body.replace(/##\s*(?:[1-9]\.\s*)?(?:자주\s*묻는\s*질문|FAQ|시민\s*FAQ)[^\n]*/gi, '## 자주 묻는 질문');
-
-  // 3. 자가진단 체크리스트 표준화
-  body = body.replace(/##\s*(?:\[[^\]]+\]\s*)?(?:신청\s*자격\s*1분\s*자가진단|1분\s*자가진단|자가진단\s*체크리스트|1분\s*체크리스트|신청\s*자격\s*체크리스트)[^\n]*/gi, '## 신청 자격 1분 자가진단');
-
-  // 4. 시그니처 박스 표준화
-  body = body.replace(
-    />\s*###\s*(?:의정부\s*생활\s*꿀팁|의정부\s*생활포털|행정\s*인사이트|실무\s*팁|실무TIP)[^\n]*/gi,
-    '> ### 의정부 생활 꿀팁 & 행정 인사이트'
-  );
-
-  // 5. 이모지 제거
-  body = body.replace(/##\s*[💡📋🏆🛡️⭐💎🎯📌🧑‍⚖️⚖️]+\s*/g, '## ');
-  body = body.replace(/###\s*[💡📋🏆🛡️⭐💎🎯📌🧑‍⚖️⚖️]+\s*/g, '### ');
-
-  // 6. 마크다운 표(Table) 문법 정밀 표준화 및 오염 완벽 교정
-  // 6-1. 표 구분선 끝의 불필요한 인용부호(>) 제거: |---|---|---|> -> |---|---|---|
-  body = body.replace(/(\|[-: ]+)\|>\s*$/gm, '$1|');
-  body = body.replace(/(\|[-: ]+)>\s*$/gm, '$1|');
-
-  // 6-2. 표 헤더와 구분선, 데이터 행 자동 정돈
-  body = body.replace(/\|\s*\n\s*\|/g, '|\n|');
-
-  // 7. 헤딩 뒤 본문 유착 방지 (## 제목**본문** -> ## 제목\n\n**본문**)
-  body = body.replace(/^(##+[^\n*]+)(\*\*[^*]+\*\*)/gm, '$1\n\n$2');
-
-  // 8. 볼드 및 리스트 문법 정밀 표준화 (한국어 조사/구두점 유착 완벽 분리)
-  body = body.replace(/(\d+)\.\s*\*\*/g, '$1. **');
-  body = body.replace(/^([*-])\s*\*\*/gm, '$1 **');
-  body = body.replace(/>\s*-\s*\*\*/g, '> - **');
-  body = body.replace(/^>\s*\*\*/gm, '> **');
-  body = body.replace(/\*\*\s*:\s*/g, '** : ');
-  body = body.replace(/\*{3,}([^*]+?)\*{2,}/g, '**$1**');
-  body = body.replace(/\*{2,}([^*]+?)\*{3,}/g, '**$1**');
-  body = body.replace(/^>\s*\*\*([^*:\n]+)\*\s*:/gm, '> **$1** :');
-  body = body.replace(/\*\*\s+([^*]+?)\*\*/g, '**$1**');
-  body = body.replace(/\*\*([^*]+?)\s+\*\*/g, '**$1**');
-
-  // 8-1. 마크다운 표(Table) 셀 내부 볼드 패딩 (|**단어**| -> | **단어** |)
-  body = body.replace(/\|\s*(\*\*[^*]+?\*\*)/g, '| $1');
-  body = body.replace(/(\*\*[^*]+?\*\*)\s*\|/g, '$1 |');
-
-  // 8-2. 볼드 앞글자 유착 분리 (일반 글자 뒤 공백 없이 **가 오는 경우: '없이**전화', '합니다.**선지원')
-  body = body.replace(/([^\s\n([<*_|~`])\*\*([^*:\n]+?)\*\*/g, '$1 **$2**');
-
-  // 8-3. 볼드 뒷글자 유착 분리 (볼드 뒤 공백 없이 다른 글자/조사가 오는 경우: '**단어**또는' -> '**단어** 또는')
-  body = body.replace(/\*\*([^*:\n]+?)\*\*([^\s\n)\]>*,.:!?~|`])/g, '**$1** $2');
-
-  // 8-4. 불필요한 이중 공백 정돈
-  body = body.replace(/([^\n ]) {2,}([^\n ])/g, '$1 $2');
-
-  // 9. 다중 빈 줄 정리
-  body = body.replace(/(?:\r?\n){3,}/g, '\n\n').trim();
-
-  // 10. 5대 직관형 공식 카테고리 검증 및 정규화
-  if (data.category) {
-    const cats = Array.isArray(data.category) ? data.category : [data.category];
-    const catStr = cats.join(' ');
-    if (catStr.includes('병원') || catStr.includes('건강') || catStr.includes('의료') || catStr.includes('약국')) {
-      data.category = ['병원·약국'];
-    } else if (catStr.includes('축제') || catStr.includes('나들이') || catStr.includes('문화') || catStr.includes('행사') || catStr.includes('공연')) {
-      data.category = ['축제·나들이'];
-    } else if (catStr.includes('일자리') || catStr.includes('소상공인') || catStr.includes('기업') || catStr.includes('입찰') || catStr.includes('채용')) {
-      data.category = ['일자리·소상공인'];
-    } else if (catStr.includes('민원') || catStr.includes('생활') || catStr.includes('교통') || catStr.includes('주차') || catStr.includes('폐기물')) {
-      data.category = ['생활·민원'];
-    } else {
-      data.category = ['복지·지원금'];
-    }
-  }
-
-  const newContent = matter.stringify(body, data);
-  if (newContent !== fileRaw) {
-    fs.writeFileSync(filePath, newContent, 'utf8');
-    return true;
-  }
-  return false;
-}
-
 function normalizeFilename(filename) {
   const baseName = filename.replace(/\.md$/, '');
+  // 구글 SEO 표준: 소문자 영문, 숫자, 하이픈만 허용
   if (/^[a-z0-9]+(-[a-z0-9]+)*$/.test(baseName)) {
     return filename;
   }
@@ -128,6 +28,16 @@ function normalizeFilename(filename) {
     .replace(/-{2,}/g, '-')
     .replace(/^-|-$/g, '');
   return (clean || 'post') + '.md';
+}
+
+function processPost(filePath) {
+  const fileRaw = fs.readFileSync(filePath, 'utf8');
+  const result = normalizePost(fileRaw);
+  if (result.isChanged) {
+    fs.writeFileSync(filePath, result.fullContent, 'utf8');
+    return true;
+  }
+  return false;
 }
 
 function main() {

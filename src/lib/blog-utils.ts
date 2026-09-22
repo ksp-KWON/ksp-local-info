@@ -252,21 +252,21 @@ export function parseBlogPost(content: string): ParsedBlogPost {
     pushCurrentSection();
   }
 
-  const normalizeMarkdownBold = (str: string): string => {
+  const sanitizeMarkdownInline = (str: string): string => {
     if (!str) return '';
     let normalized = str;
-    normalized = normalized.replace(/\*{3,}([^*]+?)\*{2,}/g, '**$1**');
-    normalized = normalized.replace(/\*{2,}([^*]+?)\*{3,}/g, '**$1**');
-    normalized = normalized.replace(/\*\*\s+([^*]+?)\*\*/g, '**$1**');
-    normalized = normalized.replace(/\*\*([^*]+?)\s+\*\*/g, '**$1**');
-    normalized = normalized.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+    // 3개 이상 과도한 별표 오타만 마크다운 표준 볼드(**)로 정돈 (한 줄 내 격리)
+    normalized = normalized.replace(/\*{3,}([^\r\n*]+?)\*{2,}/g, '**$1**');
+    normalized = normalized.replace(/\*{2,}([^\r\n*]+?)\*{3,}/g, '**$1**');
+    // 괄호 내 볼드 + 한글 조사 결합 시 볼드 파싱 훼손 방지 (CommonMark 6.2 사양 대응)
+    normalized = normalized.replace(/\*\*([^*\r\n()]+)\(([^)\r\n]+)\)\*\*([가-힣])/g, '**$1**($2)$3');
     return normalized;
   };
   
-  result.sections = result.sections.map(normalizeMarkdownBold);
-  result.keyPoints = result.keyPoints.map(normalizeMarkdownBold);
-  result.checklistItems = result.checklistItems.map(normalizeMarkdownBold);
-  result.faqItems = result.faqItems.map(faq => ({ q: normalizeMarkdownBold(faq.q), a: normalizeMarkdownBold(faq.a) }));
+  result.sections = result.sections.map(sanitizeMarkdownInline);
+  result.keyPoints = result.keyPoints.map(sanitizeMarkdownInline);
+  result.checklistItems = result.checklistItems.map(sanitizeMarkdownInline);
+  result.faqItems = result.faqItems.map(faq => ({ q: sanitizeMarkdownInline(faq.q), a: sanitizeMarkdownInline(faq.a) }));
 
   const groupRelatedLinks = (text: string) => {
     return text.replace(/(<calloutlink[^>]+>\s*<\/calloutlink>\s*)+/g, (match) => {
@@ -275,12 +275,12 @@ export function parseBlogPost(content: string): ParsedBlogPost {
   };
 
   if (result.opening) {
-    result.opening = groupRelatedLinks(normalizeMarkdownBold(result.opening));
+    result.opening = groupRelatedLinks(sanitizeMarkdownInline(result.opening));
   }
   result.sections = result.sections.map(groupRelatedLinks);
 
   if (!result.opening && result.sections.length === 0 && content.trim()) {
-    result.sections = [groupRelatedLinks(normalizeMarkdownBold(content.trim()))];
+    result.sections = [groupRelatedLinks(sanitizeMarkdownInline(content.trim()))];
   }
 
   return result;
