@@ -66,12 +66,13 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
       {keyPoints && keyPoints.length > 0 && (
         <CommonBox
           title={keyPointsTitle || '행정 핵심 요약 (3줄 브리핑)'}
+          tone="red"
           icon={<AppIcon name="file-text" size={18} strokeWidth={2.5} />}
         >
           <ul className="space-y-2.5 font-normal text-zinc-800 dark:text-zinc-200 list-none ml-0 pl-0">
             {keyPoints.map((pt, i) => (
               <li key={i} className="flex items-start gap-2 pl-0">
-                <span className="text-[10px] sm:text-[11px] text-zinc-900 dark:text-zinc-100 mt-1.5 shrink-0 select-none leading-none font-bold">
+                <span className="text-[10px] sm:text-[11px] text-red-600 dark:text-red-400 mt-1.5 shrink-0 select-none leading-none font-bold">
                   ▪
                 </span>
                 <span className="leading-relaxed flex-1 min-w-0">
@@ -108,6 +109,7 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
       {checklistItems && checklistItems.length > 0 && (
         <CommonBox
           title={checklistTitle || '신청 자격 1분 자가진단'}
+          tone="green"
           icon={
             <AppIcon
               name={
@@ -124,7 +126,7 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
             />
           }
           headerRight={
-            <span className="text-[11px] font-bold text-zinc-900 bg-zinc-100 dark:text-zinc-100 dark:bg-zinc-800 px-2 py-0.5 border border-zinc-300 dark:border-zinc-700">
+            <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 dark:text-emerald-200 dark:bg-emerald-950/60 px-2 py-0.5 border border-emerald-200 dark:border-emerald-800">
               {checklistTitle?.includes('관람')
                 ? '관람안내'
                 : checklistTitle?.includes('체크리스트')
@@ -143,11 +145,11 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
                   onClick={() => toggleCheck(idx)}
                   className={`w-full text-left flex items-start gap-3 p-3 transition-all border rounded-none cursor-pointer ${
                     isChecked
-                      ? 'bg-zinc-100/90 dark:bg-zinc-800/70 border-zinc-400 dark:border-zinc-600'
-                      : 'bg-white dark:bg-[#202124] border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
+                      ? 'bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-700'
+                      : 'bg-white dark:bg-[#202124] border-gray-200/90 dark:border-zinc-800 hover:border-emerald-400 dark:hover:border-emerald-600'
                   }`}
                 >
-                  <div className={`w-5 h-5 mt-0.5 shrink-0 flex items-center justify-center border transition-colors ${isChecked ? 'bg-zinc-900 border-zinc-900 text-white dark:bg-zinc-100 dark:border-zinc-100 dark:text-zinc-950' : 'border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800'}`}>
+                  <div className={`w-5 h-5 mt-0.5 shrink-0 flex items-center justify-center border transition-colors ${isChecked ? 'bg-[var(--google-green)] border-[var(--google-green)] text-white dark:bg-emerald-500 dark:border-emerald-500' : 'border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800'}`}>
                     {isChecked && <AppIcon name="check" size={14} strokeWidth={3} />}
                   </div>
                   <span className={`text-xs sm:text-sm font-medium break-keep leading-snug ${isChecked ? 'text-zinc-900 dark:text-zinc-100 font-bold line-through opacity-70' : 'text-zinc-800 dark:text-zinc-200'}`}>
@@ -164,6 +166,7 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
       {faqItems && faqItems.length > 0 && (
         <CommonBox
           title="자주 묻는 질문 (FAQ)"
+          tone="purple"
           icon={<AppIcon name="chat" size={18} strokeWidth={2.5} />}
         >
           <div className="space-y-3">
@@ -172,21 +175,21 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
               return (
                 <div
                   key={idx}
-                  className="border border-gray-200/80 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all overflow-hidden rounded-none"
+                  className="border border-purple-100 dark:border-purple-950/60 hover:border-purple-300 dark:hover:border-purple-700 transition-all overflow-hidden rounded-none"
                 >
                   <button
                     onClick={() => toggleFaq(idx)}
-                    className="w-full text-left flex items-center justify-between p-3.5 bg-zinc-50/70 dark:bg-zinc-900/60 font-bold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 cursor-pointer"
+                    className="w-full text-left flex items-center justify-between p-3.5 bg-purple-50/40 dark:bg-purple-950/20 font-bold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 cursor-pointer"
                   >
                     <span className="flex items-center gap-2.5 pr-2">
-                      <span className="px-1.5 py-0.5 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 text-[11px] font-extrabold border border-zinc-900 dark:border-zinc-100">Q</span>
+                      <span className="px-1.5 py-0.5 bg-purple-600 text-white dark:bg-purple-700 text-[11px] font-extrabold border border-purple-600 dark:border-purple-700">Q</span>
                       <span className="break-keep"><MarkdownRenderer content={faq.q} inline /></span>
                     </span>
                     <AppIcon
                       name={isOpen ? 'chevron-up' : 'chevron-down'}
                       size={16}
                       strokeWidth={2.5}
-                      className="shrink-0 text-zinc-600 dark:text-zinc-400"
+                      className="shrink-0 text-purple-600 dark:text-purple-400"
                     />
                   </button>
                   {isOpen && (

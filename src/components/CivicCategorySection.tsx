@@ -86,6 +86,19 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
     '체육·공원': 'green',
   };
 
+  // 카테고리별 제목 글씨 텍스트 컬러
+  const CATEGORY_TEXT_COLORS: Record<string, string> = {
+    '문화·예술': 'text-rose-600 dark:text-rose-400',
+    '일자리·생활': 'text-indigo-600 dark:text-indigo-400',
+    '복지·돌봄': 'text-indigo-600 dark:text-indigo-400',
+    '교통·주차': 'text-[var(--google-blue)] dark:text-[#8ab4f8]',
+    '기업경제·농업': 'text-amber-600 dark:text-amber-400',
+    '청소·환경': 'text-teal-600 dark:text-teal-400',
+    '주택·재개발': 'text-orange-600 dark:text-orange-400',
+    '재난·민방위': 'text-[var(--google-red)] dark:text-[#f28b82]',
+    '체육·공원': 'text-[var(--google-green)] dark:text-[#81c995]',
+  };
+
   return (
     <div className="space-y-10 sm:space-y-12">
       {/* 🚀 [최상단] 최신 의정부 생활 브리핑 위젯 (보상스쿨 Google Blue 스타일) */}
@@ -98,55 +111,68 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-base sm:text-lg font-extrabold text-[#202124] dark:text-white tracking-tight truncate">
-                    최신 의정부 생활 브리핑
-                  </h2>
-                  <span className="hidden sm:inline-block px-2 py-0.5 text-[11px] font-bold bg-[#e8f0fe] text-[var(--google-blue)] dark:bg-[#174ea6]/30 dark:text-[#8ab4f8] rounded-none border border-[#d2e3fc] dark:border-[#174ea6]/40">
-                    전체 {posts.length}건
+                  <span className="text-[15px] sm:text-[16px] font-extrabold text-[var(--google-blue)] dark:text-[#8ab4f8] tracking-tight">
+                    실시간 의정부 생활 핵심 브리핑
+                  </span>
+                  <span className="text-[10px] bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200 px-1.5 py-0.2 font-bold uppercase tracking-wider">
+                    NEW
                   </span>
                 </div>
-                <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] font-normal truncate mt-0.5">
-                  의정부 시민이 지금 가장 많이 찾는 최신 생활·의료 소식입니다.
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 hidden sm:block">
+                  시민 여러분께 지금 가장 유용한 신규 행정·문화·복지 소식 3선
                 </p>
               </div>
             </div>
-
-            <Link
+            <PremiumButton
               href="/blog"
-              className="inline-flex items-center gap-1 px-3 py-1.5 bg-[var(--google-blue)] hover:bg-blue-700 text-white text-xs font-bold rounded-none shadow-md hover:shadow-lg transition-all shrink-0 group/btn"
+              variant="outline"
+              size="xs"
+              icon="chevron-right"
+              iconPosition="right"
+              className="shrink-0"
             >
-              <span>전체 소식</span>
-              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover/btn:translate-x-0.5 transition-transform" />
-            </Link>
+              전체 보기
+            </PremiumButton>
           </div>
 
-          <div className="divide-y divide-gray-100 dark:divide-zinc-800/80 relative z-10">
+          <div className="divide-y divide-gray-100 dark:divide-zinc-800/80 bg-white dark:bg-[#202124]">
             {latestPosts.map((post) => {
-              const mainCat = Array.isArray(post.category) ? post.category[0] : post.category || '일자리·생활';
+              const postCategory = Array.isArray(post.category) ? post.category[0] : post.category || '생활안내';
+              const cleanCategory = postCategory.replace(/^[^\s]+\s/, '');
               return (
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group/row flex items-center justify-between gap-3 p-3.5 sm:p-4 hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition-all border-l-4 border-l-transparent hover:border-l-[var(--google-blue)]"
+                  className="p-3.5 sm:p-4.5 flex items-center justify-between gap-3 hover:bg-zinc-50/80 dark:hover:bg-zinc-800/40 transition-colors group cursor-pointer"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                    <span className="shrink-0 px-2 py-0.5 text-[11px] font-bold bg-[#e8f0fe] text-[var(--google-blue)] dark:bg-[#174ea6]/30 dark:text-[#8ab4f8] border border-[#d2e3fc] dark:border-[#174ea6]/40">
-                      {mainCat}
-                    </span>
-                    <h3 className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-zinc-100 group-hover/row:text-[var(--google-blue)] dark:group-hover/row:text-[#8ab4f8] truncate leading-snug">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[11px] font-bold text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/60 px-2 py-0.5 border border-sky-200 dark:border-sky-800">
+                        {cleanCategory}
+                      </span>
+                      {post.subCategory && (
+                        <span className="text-[11px] text-zinc-600 dark:text-zinc-400">
+                          › {post.subCategory}
+                        </span>
+                      )}
+                      <span className="text-[11px] text-zinc-600 dark:text-zinc-400 ml-auto sm:ml-0">
+                        {post.date}
+                      </span>
+                    </div>
+                    <h4 className="text-sm sm:text-[15px] font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-[var(--google-blue)] dark:group-hover:text-[#8ab4f8] transition-colors truncate">
                       {post.title}
-                    </h3>
+                    </h4>
+                    {post.summary && (
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 truncate mt-0.5 font-normal">
+                        {post.summary}
+                      </p>
+                    )}
                   </div>
-
-                  <div className="flex items-center gap-2 shrink-0">
-                    <time className="text-[11.5px] sm:text-xs font-medium text-zinc-400 dark:text-zinc-500">
-                      {post.date.substring(5)}
-                    </time>
+                  <div className="shrink-0 text-zinc-600 dark:text-zinc-400 group-hover:text-[var(--google-blue)] group-hover:translate-x-1 transition-all">
                     <AppIcon
                       name="chevron-right"
-                      size={14}
-                      strokeWidth={2}
-                      className="text-zinc-400 group-hover/row:text-[var(--google-blue)] dark:group-hover/row:text-[#8ab4f8] group-hover/row:translate-x-0.5 transition-transform"
+                      size={18}
+                      strokeWidth={2.5}
                     />
                   </div>
                 </Link>
@@ -155,10 +181,13 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
           </div>
         </PremiumCard>
       )}
+
+      {/* 🏛️ 카테고리별 섹션 렌더링 (각 카테고리별 2개 포스트 고정 노출) */}
       {activeCategories.map((catDef) => {
         const categoryPosts = categoryPostsMap[catDef.name] || [];
         const currentTab = activeTabs[catDef.name] || '전체';
         const categoryGradient = CATEGORY_GRADIENTS[catDef.name] || 'blue';
+        const titleTextColor = CATEGORY_TEXT_COLORS[catDef.name] || 'text-zinc-900 dark:text-white';
 
         // 현재 선택된 탭에 따라 노출할 포스트 결정 (섹션별 2개 고정)
         const displayPosts = (
@@ -184,8 +213,8 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
                   icon={<AppIcon name={catDef.icon} size={22} strokeWidth={2.5} />}
                   className="!my-0 !py-1"
                 >
-                  <span className="flex items-center gap-2">
-                    <span>{catDef.name}</span>
+                  <span className="flex items-center gap-2 flex-wrap">
+                    <span className={titleTextColor}>{catDef.name}</span>
                     <span className="text-xs font-normal text-[#5f6368] dark:text-[#9aa0a6] hidden sm:inline-block">
                       — {catDef.tagline}
                     </span>

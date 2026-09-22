@@ -9,7 +9,7 @@ import type { Components } from 'react-markdown';
 import PremiumHeading from '@/components/ui/PremiumHeading';
 import PremiumCard from '@/components/ui/PremiumCard';
 import CommonBox from '@/components/blog/CommonBox';
-import AppIcon from '@/components/ui/AppIcon';
+import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 import HighlightBadge, { getKeywordHighlightVariant } from '@/components/ui/HighlightBadge';
 
 const SCROLL_OFFSET = 140;
@@ -21,12 +21,68 @@ const extractTextFromNode = (n: any): string => {
   return '';
 };
 
+/**
+ * 챕터 제목 텍스트 및 위계(level) 기반 테마 컬러(tone) 및 W3C 라인 아이콘 매핑
+ * - 7대 정통 시빅 가이드 아키텍처에 따라 일관된 색상 식별력을 부여합니다.
+ */
+function getHeadingToneAndIcon(level: number, text: string): { tone: 'rose' | 'blue' | 'indigo' | 'teal' | 'yellow' | 'purple' | 'green' | 'charcoal'; iconName?: AppIconName } {
+  const clean = text.toLowerCase().trim();
+
+  // 1. 핵심 요약 / 3줄 브리핑 / 주요 골자 ➔ Rose
+  if (/요약|3줄|핵심\s*브리핑|주요\s*골자/.test(clean)) {
+    return { tone: 'rose', iconName: 'file-text' };
+  }
+
+  // 2. 지원 대상 / 신청 자격 / 참여 대상 ➔ Blue
+  if (/자격|대상|조건|기준|누가|누구/.test(clean)) {
+    return { tone: 'blue', iconName: 'shield-check' };
+  }
+
+  // 3. 지원 혜택 / 감면 기준 / 지원 금액 / 주요 내용 ➔ Indigo
+  if (/혜택|감면|지원|금액|보조|보상|내용|서비스/.test(clean)) {
+    return { tone: 'indigo', iconName: 'award' };
+  }
+
+  // 4. 신청 방법 / 구비 서류 / 신청 절차 / 접수 ➔ Teal
+  if (/신청|방법|절차|서류|접수|제출|방법과\s*일정/.test(clean)) {
+    return { tone: 'teal', iconName: 'edit' };
+  }
+
+  // 5. 생활 꿀팁 / 로컬 노하우 / 행정 인사이트 / 주의사항 ➔ Yellow (Amber)
+  if (/꿀팁|노하우|인사이트|주의|참고|유의|포인트|팁/.test(clean)) {
+    return { tone: 'yellow', iconName: 'compass' };
+  }
+
+  // 6. 자주 묻는 질문 / 시민 FAQ / Q&A ➔ Purple
+  if (/질문|faq|q&a|궁금|묻고\s*답하기/.test(clean)) {
+    return { tone: 'purple', iconName: 'chat' };
+  }
+
+  // 7. 문의처 / 오시는 길 / 위치 / 지도 / 담당 부서 ➔ Green
+  if (/문의|담당|연락|오시는\s*길|위치|지도|마무리|안내/.test(clean)) {
+    return { tone: 'green', iconName: 'pin' };
+  }
+
+  // 기본 레벨별 톤 (위계별 표준)
+  if (level === 2) return { tone: 'blue', iconName: 'book' };
+  if (level === 3) return { tone: 'teal', iconName: 'chevron-right' };
+  if (level === 4) return { tone: 'yellow' };
+  return { tone: 'charcoal' };
+}
+
 const UnifiedHeadingRenderer = ({ level, children, id }: { level: 1|2|3|4|5|6, children?: React.ReactNode, id?: string }) => {
+  const text = extractTextFromNode(children);
+  const { tone, iconName } = getHeadingToneAndIcon(level, text);
+
   return (
     <PremiumHeading 
       level={level} 
       id={id} 
+      gradient={tone}
+      strip={level === 2}
+      icon={iconName ? <AppIcon name={iconName} size={level === 2 ? 18 : 15} strokeWidth={2.5} /> : undefined}
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
+      className={level === 2 ? '!my-6' : level === 3 ? '!my-5' : '!my-4'}
     >
       {children}
     </PremiumHeading>
@@ -91,9 +147,29 @@ export const sharedComponents: Components & Record<string, any> = {
       const headingText = extractTextFromNode(headingElement.props.children);
       const bodyElements = childArray.slice(1);
 
+      // 인용문 박스 톤 및 아이콘 판별
+      let boxTone = 'yellow';
+      if (/요약|브리핑|주의|경고/.test(headingText)) boxTone = 'red';
+      else if (/자격|진단|체크|검진/.test(headingText)) boxTone = 'green';
+      else if (/질문|faq/.test(headingText)) boxTone = 'purple';
+      else if (/혜택|지원/.test(headingText)) boxTone = 'indigo';
+      else if (/신청|절차|서류/.test(headingText)) boxTone = 'teal';
+      else if (/꿀팁|노하우|인사이트/.test(headingText)) boxTone = 'yellow';
+
+      const iconMap: Record<string, any> = {
+        yellow: <AppIcon name="compass" size={18} strokeWidth={2.5} />,
+        red: <AppIcon name="shield-alert" size={18} strokeWidth={2.5} />,
+        green: <AppIcon name="shield-check" size={18} strokeWidth={2.5} />,
+        purple: <AppIcon name="chat" size={18} strokeWidth={2.5} />,
+        indigo: <AppIcon name="award" size={18} strokeWidth={2.5} />,
+        teal: <AppIcon name="edit" size={18} strokeWidth={2.5} />,
+      };
+
       return (
         <CommonBox
           title={headingText}
+          tone={boxTone}
+          icon={iconMap[boxTone]}
           className="my-6"
         >
           {bodyElements}

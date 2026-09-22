@@ -114,6 +114,36 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     };
   }
 
+  // 카테고리별 테마 뱃지 스타일
+  const getCategoryBadgeClass = (categoryName: string) => {
+    const clean = categoryName.replace(/^[^\s]+\s/, '');
+    if (clean.includes('문화') || clean.includes('공연') || clean.includes('축제')) {
+      return 'bg-rose-50 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border-rose-200 dark:border-rose-800';
+    }
+    if (clean.includes('일자리') || clean.includes('복지') || clean.includes('돌봄')) {
+      return 'bg-indigo-50 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800';
+    }
+    if (clean.includes('교통') || clean.includes('주차')) {
+      return 'bg-blue-50 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800';
+    }
+    if (clean.includes('기업') || clean.includes('경제') || clean.includes('농업')) {
+      return 'bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-800';
+    }
+    if (clean.includes('청소') || clean.includes('환경')) {
+      return 'bg-teal-50 text-teal-800 dark:bg-teal-950/60 dark:text-teal-300 border-teal-200 dark:border-teal-800';
+    }
+    if (clean.includes('주택') || clean.includes('재개발')) {
+      return 'bg-orange-50 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300 border-orange-200 dark:border-orange-800';
+    }
+    if (clean.includes('재난') || clean.includes('안전') || clean.includes('민방위')) {
+      return 'bg-red-50 text-red-800 dark:bg-red-950/60 dark:text-red-300 border-red-200 dark:border-red-800';
+    }
+    if (clean.includes('체육') || clean.includes('공원')) {
+      return 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+    }
+    return 'bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 border-sky-200 dark:border-sky-800';
+  };
+
   return (
     <div className="w-full space-y-4">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
@@ -126,7 +156,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       <nav className="mb-2">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:white transition-colors"
         >
           <AppIcon name="chevron-left" size={16} strokeWidth={2} />
           <span>전체 생활 소식 목록</span>
@@ -143,13 +173,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 post.category.map((cat) => (
                   <span
                     key={cat}
-                    className="px-2.5 py-1 rounded-none bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800 shadow-2xs"
+                    className={`px-2.5 py-1 rounded-none font-bold border shadow-2xs ${getCategoryBadgeClass(cat)}`}
                   >
                     {cat.replace(/^[^\s]+\s/, '')}
                   </span>
                 ))
               ) : post.category ? (
-                <span className="px-2.5 py-1 rounded-none bg-sky-50 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800 shadow-2xs">
+                <span className={`px-2.5 py-1 rounded-none font-bold border shadow-2xs ${getCategoryBadgeClass(post.category as string)}`}>
                   {(post.category as string).replace(/^[^\s]+\s/, '')}
                 </span>
               ) : null}
