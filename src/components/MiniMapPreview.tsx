@@ -60,7 +60,7 @@ export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
       </Map>
 
       {/* 가독성을 위한 수묵 앰비언트 오버레이 필터: 좌측 텍스트 영역은 또렷하게, 우측은 지도가 은은하게 비치도록 투명도 조절 */}
-      <div className="absolute inset-0 z-10 backdrop-blur-[1.5px] bg-gradient-to-r from-white/95 via-white/80 to-white/30 dark:from-[#181a1d]/95 dark:via-[#181a1d]/85 dark:to-[#181a1d]/35" />
+      <div className="absolute inset-0 z-10 backdrop-blur-[1.5px] bg-gradient-to-r from-white/95 via-white/80 to-white/30 dark:from-[#202124]/95 dark:via-[#202124]/85 dark:to-[#202124]/35" />
       
       {/* 테두리와 자연스럽게 결합되는 은은한 틴트 */}
       <div className="absolute inset-0 z-10 bg-black/[0.03] dark:bg-black/20" />

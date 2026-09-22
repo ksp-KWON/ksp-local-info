@@ -98,8 +98,8 @@ function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostDat
             href="/blog"
             className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold whitespace-nowrap transition-all border rounded-none shadow-2xs ${
               !categoryParam && !tagParam && !subCategoryParam
-                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100'
-                : 'bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
+                ? 'bg-[var(--google-blue)] text-white border-[var(--google-blue)]'
+                : 'bg-white dark:bg-[#202124] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-[var(--google-blue)] hover:text-[var(--google-blue)]'
             }`}
           >
             <AppIcon name="list" size={14} strokeWidth={2} />
@@ -113,11 +113,11 @@ function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostDat
                 href={`/blog?category=${encodeURIComponent(catName)}`}
                 className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold whitespace-nowrap transition-all border rounded-none shadow-2xs ${
                   isSelected
-                    ? 'bg-sky-50 text-sky-950 dark:bg-sky-950/70 dark:text-sky-200 border-sky-300 dark:border-sky-800'
-                    : 'bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
+                    ? 'bg-[#e8f0fe] text-[var(--google-blue)] dark:bg-[#174ea6]/20 dark:text-[#8ab4f8] border-[#d2e3fc] dark:border-[#174ea6]/40'
+                    : 'bg-white dark:bg-[#202124] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-[var(--google-blue)] hover:text-[var(--google-blue)]'
                 }`}
               >
-                <AppIcon name={getCategoryIcon(catName)} size={14} strokeWidth={2} className={isSelected ? 'text-sky-600 dark:text-sky-400' : 'text-zinc-500'} />
+                <AppIcon name={getCategoryIcon(catName)} size={14} strokeWidth={2} className={isSelected ? 'text-[var(--google-blue)] dark:text-[#8ab4f8]' : 'text-zinc-500'} />
                 <span>{catName}</span>
               </Link>
             );
@@ -134,7 +134,7 @@ function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostDat
               href={`/blog?category=${encodeURIComponent(categoryParam!)}`}
               className={`px-2.5 py-1 text-[11px] font-bold whitespace-nowrap border rounded-none shadow-2xs transition-colors ${
                 !subCategoryParam
-                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100'
+                  ? 'bg-[var(--google-blue)] text-white border-[var(--google-blue)]'
                   : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-700'
               }`}
             >
@@ -152,8 +152,8 @@ function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostDat
                   href={`/blog?category=${encodeURIComponent(categoryParam!)}&subCategory=${encodeURIComponent(sub.name)}`}
                   className={`flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold whitespace-nowrap border rounded-none shadow-2xs transition-colors ${
                     isSubSelected
-                      ? 'bg-sky-100 text-sky-950 dark:bg-sky-900 dark:text-sky-100 border-sky-300 dark:border-sky-700'
-                      : 'bg-white dark:bg-[#181a1d] text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
+                      ? 'bg-[#e8f0fe] text-[var(--google-blue)] dark:bg-[#174ea6]/30 dark:text-[#8ab4f8] border-[#d2e3fc] dark:border-[#174ea6]/40'
+                      : 'bg-white dark:bg-[#202124] text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-[var(--google-blue)] hover:text-[var(--google-blue)]'
                   }`}
                 >
                   <span>{sub.name}</span>

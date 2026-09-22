@@ -102,19 +102,19 @@ export const sharedComponents: Components & Record<string, any> = {
     }
 
     return (
-      <blockquote className="my-6 border-l-4 border-zinc-900 dark:border-zinc-100 pl-4 py-2 bg-zinc-50/80 dark:bg-zinc-800/40 text-zinc-700 dark:text-zinc-300 italic text-sm sm:text-base leading-relaxed">
+      <blockquote className="my-6 border-l-4 border-[var(--google-blue)] pl-4 py-2 bg-blue-50/40 dark:bg-blue-950/20 text-zinc-800 dark:text-zinc-200 text-sm sm:text-base leading-relaxed not-italic">
         {children}
       </blockquote>
     );
   },
 
   table: ({ children }: any) => (
-    <div className="not-prose my-8 overflow-x-auto border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)]">
+    <div className="not-prose my-8 overflow-x-auto border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#202124] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
       <table className="w-full text-[13.5px] sm:text-[14px] border-collapse min-w-[500px] sm:min-w-full m-0">{children}</table>
     </div>
   ),
   thead: ({ children }: any) => (
-    <thead className="bg-zinc-50 dark:bg-zinc-800 border-b border-gray-200/90 dark:border-zinc-800">{children}</thead>
+    <thead className="bg-gray-50 dark:bg-[#303134] border-b border-gray-200/90 dark:border-zinc-700">{children}</thead>
   ),
   tbody: ({ children }: any) => (
     <tbody className="divide-y divide-gray-100 dark:divide-zinc-800/80">{children}</tbody>

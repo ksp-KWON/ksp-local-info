@@ -35,8 +35,8 @@ export default function EmergencyMapWidget({ isWidget = false, defaultTab = 'er'
   });
 
   return (
-    <div className={`flex flex-col w-full bg-white dark:bg-[#181a1d] overflow-hidden mt-2 rounded-none shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] border border-gray-200/90 dark:border-zinc-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
-      <header className="bg-white dark:bg-[#181a1d] z-20 shrink-0 border-b border-gray-200/80 dark:border-zinc-800">
+    <div className={`flex flex-col w-full bg-white dark:bg-[#202124] overflow-hidden mt-2 rounded-none shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] border border-gray-200/90 dark:border-zinc-800 ${isWidget ? 'h-[500px]' : 'h-[700px] max-h-[80vh]'}`}>
+      <header className="bg-white dark:bg-[#202124] z-20 shrink-0 border-b border-gray-200/80 dark:border-zinc-800">
         <div className="p-4 pb-3">
           <div className="flex items-center gap-2">
             {!isWidget && (

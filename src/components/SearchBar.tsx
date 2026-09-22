@@ -38,7 +38,7 @@ export default function SearchBar() {
         typeof document !== 'undefined' &&
         createPortal(
           <div className="fixed inset-0 z-[200] flex items-start justify-center pt-20 px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="w-full max-w-xl bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,0.35),0_0_20px_rgba(0,0,0,0.20)] dark:shadow-[0_0_60px_rgba(0,0,0,1),0_0_30px_rgba(0,0,0,0.92)] rounded-none overflow-hidden">
+            <div className="w-full max-w-xl bg-white dark:bg-[#202124] border border-gray-200/90 dark:border-zinc-800 shadow-2xl rounded-none overflow-hidden">
               <form onSubmit={handleSearch} className="flex items-center p-4 border-b border-gray-100 dark:border-zinc-800">
                 <AppIcon name="search" size={20} strokeWidth={2} className="text-zinc-600 dark:text-zinc-400 mr-3 shrink-0" />
                 <input
@@ -74,7 +74,7 @@ export default function SearchBar() {
                         setIsOpen(false);
                         setQuery('');
                       }}
-                      className="px-2.5 py-1 text-xs font-medium bg-white dark:bg-[#181a1d] text-zinc-800 dark:text-zinc-200 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 rounded-none transition-all cursor-pointer shadow-2xs"
+                      className="px-2.5 py-1 text-xs font-medium bg-white dark:bg-[#202124] text-zinc-800 dark:text-zinc-200 border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 rounded-none transition-all cursor-pointer shadow-2xs"
                     >
                       #{kw}
                     </button>

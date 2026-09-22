@@ -220,7 +220,7 @@ export default async function EmergencyPlaceDetailPage({ params }: PlacePageProp
             <Link
               key={other.slug}
               href={`/services/emergency/${other.slug}`}
-              className="p-3.5 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 shadow-[0_0_15px_rgba(0,0,0,0.04)] dark:shadow-[0_0_15px_rgba(0,0,0,0.30)] hover:-translate-y-0.5 transition-all group flex flex-col justify-between"
+              className="p-3.5 bg-white dark:bg-[#202124] border border-gray-200/90 dark:border-zinc-800 hover:border-[var(--google-blue)] hover:shadow-[0_12px_40px_rgba(26,115,232,0.18)] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 transition-all group flex flex-col justify-between"
             >
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 border border-zinc-200 dark:border-zinc-700">

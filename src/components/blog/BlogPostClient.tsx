@@ -144,7 +144,7 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
                   className={`w-full text-left flex items-start gap-3 p-3 transition-all border rounded-none cursor-pointer ${
                     isChecked
                       ? 'bg-zinc-100/90 dark:bg-zinc-800/70 border-zinc-400 dark:border-zinc-600'
-                      : 'bg-white dark:bg-[#181a1d] border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
+                      : 'bg-white dark:bg-[#202124] border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600'
                   }`}
                 >
                   <div className={`w-5 h-5 mt-0.5 shrink-0 flex items-center justify-center border transition-colors ${isChecked ? 'bg-zinc-900 border-zinc-900 text-white dark:bg-zinc-100 dark:border-zinc-100 dark:text-zinc-950' : 'border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800'}`}>
@@ -190,7 +190,7 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
                     />
                   </button>
                   {isOpen && (
-                    <div className="p-4 bg-white dark:bg-[#181a1d] border-t border-gray-100 dark:border-zinc-800 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
+                    <div className="p-4 bg-white dark:bg-[#202124] border-t border-gray-100 dark:border-zinc-800 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
                       <MarkdownRenderer content={faq.a} />
                     </div>
                   )}
@@ -201,15 +201,15 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
         </CommonBox>
       )}
 
-      {/* ── [무기 6] 원스톱 공식 신청처 안내 배너 (흑요석 프리미엄 CTA) ── */}
+      {/* ── [무기 6] 원스톱 공식 신청처 안내 배너 (Google Material 블루 프리미엄 CTA) ── */}
       {sourceLink && (
-        <div className="my-8 relative overflow-hidden rounded-none border border-zinc-900 dark:border-zinc-700 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 dark:from-zinc-900 dark:via-[#181a1d] dark:to-zinc-950 text-white p-5 sm:p-7 shadow-[0_0_20px_rgba(0,0,0,0.12)] dark:shadow-[0_0_25px_rgba(0,0,0,0.60)] hover:shadow-[0_0_40px_rgba(0,0,0,0.25),0_0_15px_rgba(0,0,0,0.15)] transition-all duration-300 group">
-          <div className="absolute right-3.5 bottom-1.5 opacity-5 text-white pointer-events-none group-hover:scale-105 transition-transform duration-500">
+        <div className="my-8 relative overflow-hidden rounded-none border border-blue-200 dark:border-blue-900/50 bg-gradient-to-br from-blue-900 via-indigo-950 to-zinc-950 text-white p-5 sm:p-7 shadow-md hover:shadow-lg transition-all duration-300 group">
+          <div className="absolute right-3.5 bottom-1.5 opacity-10 text-white pointer-events-none group-hover:scale-105 transition-transform duration-500">
             <AppIcon name="external-link" size={90} strokeWidth={1.5} />
           </div>
           <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-white/10 text-zinc-200 text-[11px] font-bold border border-white/20">
+              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-blue-500/20 text-blue-200 text-[11px] font-bold border border-blue-400/30">
                 <AppIcon name="shield-check" size={12} strokeWidth={2.5} />
                 <span>의정부시 공식 접수처</span>
               </div>
@@ -224,7 +224,7 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
               href={sourceLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-white hover:bg-zinc-100 text-zinc-950 font-extrabold text-xs sm:text-sm transition-all duration-200 shrink-0 w-full sm:w-auto shadow-md hover:shadow-lg rounded-none group/btn"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[var(--google-blue)] hover:bg-blue-600 text-white font-extrabold text-xs sm:text-sm transition-all duration-200 shrink-0 w-full sm:w-auto shadow-md hover:shadow-lg rounded-none group/btn"
             >
               <span>공식 접수처 바로가기</span>
               <AppIcon name="chevron-right" size={14} strokeWidth={3} className="group-hover/btn:translate-x-0.5 transition-transform" />
@@ -242,13 +242,13 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
         <div className="grid grid-cols-1 gap-3">
           <Link
             href="/services/emergency"
-            className="p-4 bg-white dark:bg-[#181a1d] border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] hover:-translate-y-1 group flex flex-col justify-between min-h-[95px] rounded-none"
+            className="p-4 bg-white dark:bg-[#202124] border border-blue-200/90 dark:border-blue-900/50 hover:border-[var(--google-blue)] hover:shadow-[0_12px_40px_rgba(26,115,232,0.18)] transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 group flex flex-col justify-between min-h-[95px] rounded-none"
           >
-            <div className="flex items-center gap-2 font-extrabold text-xs text-zinc-950 dark:text-zinc-100">
-              <AppIcon name="hospital" size={16} strokeWidth={2.5} className="text-zinc-700 dark:text-zinc-300" />
+            <div className="flex items-center gap-2 font-extrabold text-xs text-[var(--google-blue)] dark:text-[#8ab4f8]">
+              <AppIcon name="hospital" size={16} strokeWidth={2.5} className="text-[var(--google-blue)] dark:text-[#8ab4f8]" />
               <span>응급실 안내</span>
             </div>
-            <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-white flex items-center justify-between mt-2 transition-colors">
+            <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 group-hover:text-[var(--google-blue)] dark:group-hover:text-[#8ab4f8] flex items-center justify-between mt-2 transition-colors">
               <span>야간·휴일 응급의료</span>
               <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
             </span>

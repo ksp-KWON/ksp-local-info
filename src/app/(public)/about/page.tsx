@@ -77,7 +77,7 @@ export default function AboutPage() {
       </div>
 
       {/* 4. 데이터 출처 명시 (E-E-A-T) */}
-      <div className="p-6 sm:p-8 bg-zinc-50/70 dark:bg-zinc-900/60 border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] space-y-4 rounded-none">
+      <div className="p-6 sm:p-8 bg-zinc-50/70 dark:bg-[#202124] border border-gray-200/90 dark:border-zinc-800 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] space-y-4 rounded-none">
         <h3 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-white flex items-center gap-2">
           <AppIcon name="file-text" size={18} strokeWidth={2} className="text-zinc-600 dark:text-zinc-400" />
           <span>공식 정보 출처</span>

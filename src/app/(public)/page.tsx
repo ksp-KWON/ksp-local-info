@@ -34,9 +34,9 @@ export default async function Home() {
 
   return (
     <div className="space-y-8 sm:space-y-10">
-      {/* 1. 메인 인트로 헤더 (모던 수묵화 앰비언트 글로우) */}
-      <div className="relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#181a1d] shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] p-6 sm:p-8 lg:p-10 group transition-all duration-300">
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-100/70 via-zinc-50/20 to-transparent dark:from-zinc-800/40 dark:via-zinc-800/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
+      {/* 1. 메인 인트로 헤더 (보상스쿨 Google Material 스타일) */}
+      <div className="relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#202124] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-md p-6 sm:p-8 lg:p-10 group transition-all duration-300">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-blue-50/10 to-transparent dark:from-blue-950/20 dark:via-blue-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
 
         {/* 우측 배경 수묵 워터마크 (SVG) */}
         <div className="absolute -right-6 -bottom-6 text-zinc-900/[0.035] dark:text-zinc-100/[0.055] pointer-events-none transition-transform duration-500 group-hover:scale-105 z-0">
@@ -46,13 +46,13 @@ export default async function Home() {
         <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-8 lg:gap-12">
           {/* 텍스트 영역 */}
           <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 text-xs font-bold uppercase tracking-wider mb-4 border border-zinc-200/80 dark:border-zinc-700 rounded-none shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#e8f0fe] text-[var(--google-blue)] dark:bg-[#174ea6]/20 dark:text-[#8ab4f8] text-xs font-bold uppercase tracking-wider mb-4 border border-[#d2e3fc]/60 dark:border-[#174ea6]/40 rounded-none shadow-xs">
               <AppIcon name="shield-check" size={14} strokeWidth={2} />
               <span>의정부시 생활·의료 정보 포털</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2] text-zinc-950 dark:text-white">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2] text-[#202124] dark:text-white">
               의정부 <br className="hidden sm:block lg:hidden" />
-              <span className="bg-gradient-to-r from-zinc-950 via-zinc-800 to-zinc-600 dark:from-white dark:via-zinc-200 dark:to-zinc-400 bg-clip-text text-transparent">건강·생활 정보 포털</span>
+              <span className="bg-gradient-to-r from-[#0d47a1] to-[#1a73e8] dark:from-[#8ab4f8] dark:to-[#aecbfa] bg-clip-text text-transparent">건강·생활 정보 포털</span>
             </h1>
             <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal break-keep max-w-xl leading-relaxed">
               의정부 응급실 위치와 전화번호, 국가건강검진·민원 안내를 한눈에 확인하세요.

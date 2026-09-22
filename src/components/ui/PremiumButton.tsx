@@ -36,14 +36,14 @@ export default function PremiumButton({
   };
 
   const variantClasses: Record<ButtonVariant, string> = {
-    primary: 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-white border-zinc-900 dark:border-zinc-200 shadow-xs',
+    primary: 'bg-[var(--google-blue)] text-white hover:bg-blue-700 dark:bg-[var(--google-blue)] dark:hover:bg-blue-600 border-[var(--google-blue)] shadow-md hover:shadow-lg hover:shadow-[0_4px_14px_0_rgba(26,115,232,0.39)]',
     secondary: 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-700 border-zinc-200/90 dark:border-zinc-700 shadow-xs',
-    outline: 'bg-white dark:bg-[#181a1d] text-zinc-800 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-500 shadow-xs',
+    outline: 'bg-white dark:bg-[#202124] text-zinc-800 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800 border-gray-200/90 dark:border-zinc-700 hover:border-zinc-500 shadow-xs',
     ghost: 'bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 border-transparent',
-    emerald: 'bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 border-emerald-600 dark:border-emerald-500 shadow-xs',
-    amber: 'bg-amber-600 text-white hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 border-amber-600 dark:border-amber-500 shadow-xs',
+    emerald: 'bg-[var(--google-green)] text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 border-[var(--google-green)] shadow-md hover:shadow-lg hover:shadow-[0_4px_14px_0_rgba(52,168,83,0.39)]',
+    amber: 'bg-[var(--google-yellow)] text-zinc-900 hover:bg-amber-500 dark:bg-amber-500 dark:text-zinc-900 border-[var(--google-yellow)] shadow-xs',
     kakao: 'bg-[#FEE500] hover:bg-[#FADA0A] text-[#191919] border-[#E6CF00] shadow-xs',
-    danger: 'bg-rose-600 text-white hover:bg-rose-700 dark:bg-rose-500 dark:hover:bg-rose-600 border-rose-600 dark:border-rose-500 shadow-xs',
+    danger: 'bg-[var(--google-red)] text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 border-[var(--google-red)] shadow-md hover:shadow-lg hover:shadow-[0_4px_14px_0_rgba(234,67,53,0.39)]',
   };
 
   const baseClasses = `inline-flex items-center justify-center font-bold rounded-none border transition-all duration-200 active:scale-[0.98] cursor-pointer ${fullWidth ? 'w-full' : ''} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`;

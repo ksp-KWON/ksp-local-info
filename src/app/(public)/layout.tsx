@@ -36,7 +36,7 @@ export default function PublicLayout({
       <ScrollProgressBar />
 
       {/* 1. 프리미엄 패밀리룩 헤더 */}
-      <header className="sticky top-0 z-50 w-full h-[64px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-b border-gray-200/80 dark:border-zinc-800 transition-colors shadow-[0_0_20px_rgba(0,0,0,0.04)] dark:shadow-[0_0_20px_rgba(0,0,0,0.40)]">
+      <header className="sticky top-0 z-50 w-full h-[64px] bg-white/95 dark:bg-[#202124]/95 backdrop-blur-md border-b border-gray-200/80 dark:border-zinc-800 transition-colors shadow-xs">
         <div className="mx-auto flex h-full w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5">
           {/* 로고/제목 영역 */}
           <div className="flex items-center min-w-0 flex-1 mr-1 sm:mr-2">
@@ -100,7 +100,7 @@ export default function PublicLayout({
       />
 
       {/* 3. 푸터 */}
-      <footer className="mt-auto w-full bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-t border-gray-200/80 dark:border-zinc-800 pb-[calc(64px+env(safe-area-inset-bottom))] lg:pb-0">
+      <footer className="mt-auto w-full bg-white dark:bg-[#202124] text-zinc-700 dark:text-zinc-300 border-t border-gray-200/80 dark:border-zinc-800 pb-[calc(64px+env(safe-area-inset-bottom))] lg:pb-0">
         <div className="mx-auto flex flex-col md:flex-row h-auto md:h-[70px] w-[92vw] xl:w-[85vw] max-w-7xl items-center justify-between px-2 sm:px-5 py-5 md:py-0 text-xs font-medium gap-3">
           <p className="copyright text-center md:text-left flex items-center gap-1.5">
             © {new Date().getFullYear()} 의정부 건강·생활 정보 포털. All rights reserved.

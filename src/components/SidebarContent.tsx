@@ -171,13 +171,13 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
                 <button
                   type="button"
                   onClick={() => toggleCategory(cat.name)}
-                  className="w-full flex items-center justify-between gap-2 py-1.5 px-1 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors text-left group/btn"
+                  className="w-full flex items-center justify-between gap-2 py-1.5 px-1 hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition-colors text-left group/btn"
                 >
                   <div className="flex items-center gap-2 min-w-0 flex-1">
-                    <div className="p-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 group-hover/btn:bg-zinc-900 group-hover/btn:text-white dark:group-hover/btn:bg-white dark:group-hover/btn:text-zinc-950 transition-colors shrink-0">
+                    <div className="p-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 group-hover/btn:bg-[var(--google-blue)] group-hover/btn:text-white transition-colors shrink-0">
                       <AppIcon name={cat.icon} size={13} strokeWidth={2.5} />
                     </div>
-                    <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover/btn:text-zinc-950 dark:group-hover/btn:white truncate block">
+                    <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover/btn:text-[var(--google-blue)] dark:group-hover/btn:text-[#8ab4f8] truncate block">
                       {cat.name}
                     </span>
                   </div>
@@ -202,9 +202,9 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
                       >
                         <Link
                           href={`/blog?category=${encodeURIComponent(cat.name)}&subCategory=${encodeURIComponent(sub.name)}`}
-                          className="font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white truncate flex-1 flex items-center gap-1.5"
+                          className="font-bold text-zinc-700 dark:text-zinc-300 hover:text-[var(--google-blue)] dark:hover:text-[#8ab4f8] truncate flex-1 flex items-center gap-1.5"
                         >
-                          <span className="w-1 h-1 bg-zinc-400 dark:bg-zinc-500 rounded-none shrink-0" />
+                          <span className="w-1 h-1 bg-[var(--google-blue)] rounded-none shrink-0" />
                           <span className="truncate">{sub.shortName}</span>
                         </Link>
                         <a
@@ -222,7 +222,7 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
                     <div className="pt-1.5 mt-1 border-t border-zinc-200/60 dark:border-zinc-800 flex items-center justify-between text-[11px]">
                       <Link
                         href={`/blog?category=${encodeURIComponent(cat.name)}`}
-                        className="font-extrabold text-zinc-900 dark:text-zinc-100 hover:underline flex items-center gap-1"
+                        className="font-extrabold text-[var(--google-blue)] dark:text-[#8ab4f8] hover:underline flex items-center gap-1"
                       >
                         <span>{cat.name} 전체 글 보기</span>
                         <AppIcon name="chevron-right" size={10} strokeWidth={2.5} />
@@ -247,17 +247,17 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
 
       {/* ── 2. 주목할 의정부 소식 (보상스쿨 인기 칼럼 스타일 벤치마킹) ── */}
       {recentPosts.length > 0 && (
-        <PremiumCard borderColor="default" hoverEffect={false} watermarkIcon="file-text" className="!p-4 sm:!p-5">
+        <PremiumCard borderColor="blue" hoverEffect={false} watermarkIcon="file-text" className="!p-4 sm:!p-5">
           <div className="flex items-center justify-between min-w-0 gap-2 mb-3 pb-2 border-b border-gray-100 dark:border-zinc-800">
             <div className="flex items-center gap-2">
-              <AppIcon name="file-text" size={16} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />
+              <AppIcon name="file-text" size={16} strokeWidth={2.5} className="text-[var(--google-blue)]" />
               <h3 className="text-xs sm:text-sm font-extrabold text-zinc-950 dark:text-white tracking-tight">
                 주목할 의정부 소식
               </h3>
             </div>
             <Link
               href="/blog"
-              className="text-[10px] font-bold text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-colors"
+              className="text-[10px] font-bold text-zinc-500 hover:text-[var(--google-blue)] dark:text-zinc-400 dark:hover:text-[#8ab4f8] transition-colors"
             >
               전체보기 &gt;
             </Link>
@@ -267,10 +267,10 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
               <li key={post.slug} className="py-2.5 first:pt-0 last:pb-0">
                 <Link href={`/blog/${post.slug}`} className="group block space-y-1">
                   <div className="flex items-start gap-2">
-                    <span className="text-xs font-black text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-white w-3.5 shrink-0 pt-0.5 transition-colors">
+                    <span className="text-xs font-black text-zinc-400 group-hover:text-[var(--google-blue)] dark:group-hover:text-[#8ab4f8] w-3.5 shrink-0 pt-0.5 transition-colors">
                       {idx + 1}
                     </span>
-                    <h4 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-zinc-950 dark:group-hover:text-white line-clamp-2 leading-snug break-keep transition-colors flex-1">
+                    <h4 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-[var(--google-blue)] dark:group-hover:text-[#8ab4f8] line-clamp-2 leading-snug break-keep transition-colors flex-1">
                       {post.title}
                     </h4>
                   </div>
@@ -287,7 +287,7 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
 
       {/* ── 3. 실시간 인기 키워드 태그 카드 ── */}
       {tags.length > 0 && (
-        <PremiumCard borderColor="default" hoverEffect={true} watermarkIcon="pin" className="!p-4">
+        <PremiumCard borderColor="default" hoverEffect={false} watermarkIcon="pin" className="!p-4">
           <div className="flex items-center justify-between min-w-0 gap-2 mb-2 pb-1.5 border-b border-gray-100 dark:border-zinc-800">
             <div className="flex items-center gap-1.5">
               <AppIcon name="pin" size={14} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />
@@ -302,7 +302,7 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
               <Link
                 key={tag}
                 href={`/blog?tag=${encodeURIComponent(tag)}`}
-                className="flex items-center gap-0.5 px-2.5 py-1 rounded-none bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-gray-200/80 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all font-medium"
+                className="flex items-center gap-0.5 px-2.5 py-1 rounded-none bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-gray-200/80 dark:border-zinc-800 hover:border-[var(--google-blue)] hover:text-[var(--google-blue)] hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition-all font-medium"
               >
                 <span className="text-zinc-400 dark:text-zinc-500">#</span>
                 {tag}
@@ -314,13 +314,13 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
       )}
 
       {/* ── 4. 보상스쿨 연계 : 의정부 시민 무료 사고·상해 보상 진단 ── */}
-      <div className="p-4 border border-zinc-900 dark:border-zinc-700 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 text-white shadow-sm relative overflow-hidden group">
+      <div className="p-4 border border-blue-200 dark:border-blue-900/50 bg-gradient-to-br from-blue-900 via-indigo-950 to-zinc-950 text-white shadow-sm relative overflow-hidden group">
         <div className="flex items-center justify-between mb-1.5">
           <div className="flex items-center gap-1.5">
-            <AppIcon name="scale" size={14} strokeWidth={2.5} className="text-zinc-300" />
+            <AppIcon name="scale" size={14} strokeWidth={2.5} className="text-blue-300" />
             <span className="text-xs font-extrabold text-white">시민 무료 보상 진단</span>
           </div>
-          <span className="text-[10px] font-bold text-zinc-300 bg-white/10 px-1.5 py-0.5 border border-white/20">
+          <span className="text-[10px] font-bold text-blue-200 bg-blue-500/20 px-1.5 py-0.5 border border-blue-400/30">
             보상스쿨 연계
           </span>
         </div>
@@ -331,7 +331,7 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
           href="https://claim-works.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white transition-colors"
+          className="mt-2.5 inline-flex items-center justify-between w-full p-2 bg-[var(--google-blue)] hover:bg-blue-600 border border-blue-400/40 text-xs font-bold text-white transition-colors"
         >
           <span>보상스쿨 1:1 상담 바로가기</span>
           <AppIcon name="chevron-right" size={12} strokeWidth={2.5} />

@@ -73,26 +73,39 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
     }));
   };
 
+  // 카테고리별 테마 그라데이션 (보상스쿨 규격 매핑)
+  const CATEGORY_GRADIENTS: Record<string, 'rose' | 'indigo' | 'blue' | 'yellow' | 'teal' | 'orange' | 'red' | 'green'> = {
+    '문화·예술': 'rose',
+    '일자리·생활': 'indigo',
+    '복지·돌봄': 'indigo',
+    '교통·주차': 'blue',
+    '기업경제·농업': 'yellow',
+    '청소·환경': 'teal',
+    '주택·재개발': 'orange',
+    '재난·민방위': 'red',
+    '체육·공원': 'green',
+  };
+
   return (
     <div className="space-y-10 sm:space-y-12">
-      {/* 🚀 [최상단] 최신 의정부 생활 브리핑 위젯 */}
+      {/* 🚀 [최상단] 최신 의정부 생활 브리핑 위젯 (보상스쿨 Google Blue 스타일) */}
       {latestPosts.length > 0 && (
-        <PremiumCard hoverEffect={false} watermarkIcon="sparkles" className="!p-0 overflow-hidden">
-          <div className="p-4 sm:p-5 bg-gradient-to-r from-zinc-200/90 via-zinc-100/40 to-transparent dark:from-zinc-800/80 dark:via-zinc-800/20 dark:to-transparent border-b border-gray-200/90 dark:border-zinc-800 flex items-center justify-between gap-3 relative z-10">
+        <PremiumCard borderColor="blue" hoverEffect={false} watermarkIcon="sparkles" className="!p-0 overflow-hidden">
+          <div className="p-4 sm:p-5 bg-gradient-to-r from-blue-50/90 via-blue-50/30 to-transparent dark:from-blue-900/30 dark:via-blue-900/10 dark:to-transparent border-b border-blue-100 dark:border-blue-900/40 flex items-center justify-between gap-3 relative z-10">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-none bg-white dark:bg-zinc-800 border border-gray-200/90 dark:border-zinc-700 flex items-center justify-center shrink-0 shadow-2xs">
-                <AppIcon name="sparkles" size={17} strokeWidth={2.5} className="text-zinc-900 dark:text-zinc-100" />
+              <div className="w-8 h-8 rounded-none bg-[var(--google-blue)] text-white flex items-center justify-center shrink-0 shadow-xs">
+                <AppIcon name="sparkles" size={17} strokeWidth={2.5} />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-base sm:text-lg font-extrabold text-zinc-950 dark:text-white tracking-tight truncate">
+                  <h2 className="text-base sm:text-lg font-extrabold text-[#202124] dark:text-white tracking-tight truncate">
                     최신 의정부 생활 브리핑
                   </h2>
-                  <span className="hidden sm:inline-block px-2 py-0.5 text-[11px] font-bold bg-zinc-200/80 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-200 rounded-none">
+                  <span className="hidden sm:inline-block px-2 py-0.5 text-[11px] font-bold bg-[#e8f0fe] text-[var(--google-blue)] dark:bg-[#174ea6]/30 dark:text-[#8ab4f8] rounded-none border border-[#d2e3fc] dark:border-[#174ea6]/40">
                     전체 {posts.length}건
                   </span>
                 </div>
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 font-normal truncate mt-0.5">
+                <p className="text-xs text-[#5f6368] dark:text-[#9aa0a6] font-normal truncate mt-0.5">
                   의정부 시민이 지금 가장 많이 찾는 최신 생활·의료 소식입니다.
                 </p>
               </div>
@@ -100,7 +113,7 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
 
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-950 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-950 text-xs font-bold rounded-none shadow-xs hover:shadow transition-all shrink-0 group/btn"
+              className="inline-flex items-center gap-1 px-3 py-1.5 bg-[var(--google-blue)] hover:bg-blue-700 text-white text-xs font-bold rounded-none shadow-md hover:shadow-lg transition-all shrink-0 group/btn"
             >
               <span>전체 소식</span>
               <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover/btn:translate-x-0.5 transition-transform" />
@@ -114,13 +127,13 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group/row flex items-center justify-between gap-3 p-3.5 sm:p-4 hover:bg-zinc-50/90 dark:hover:bg-zinc-800/40 transition-all border-l-4 border-l-transparent hover:border-l-zinc-900 dark:hover:border-l-zinc-100"
+                  className="group/row flex items-center justify-between gap-3 p-3.5 sm:p-4 hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition-all border-l-4 border-l-transparent hover:border-l-[var(--google-blue)]"
                 >
                   <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                    <span className="shrink-0 px-2 py-0.5 text-[11px] font-bold bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700">
+                    <span className="shrink-0 px-2 py-0.5 text-[11px] font-bold bg-[#e8f0fe] text-[var(--google-blue)] dark:bg-[#174ea6]/30 dark:text-[#8ab4f8] border border-[#d2e3fc] dark:border-[#174ea6]/40">
                       {mainCat}
                     </span>
-                    <h3 className="text-[14px] sm:text-[15px] font-bold text-zinc-900 dark:text-zinc-100 group-hover/row:text-zinc-950 dark:group-hover/row:white truncate leading-snug">
+                    <h3 className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-zinc-100 group-hover/row:text-[var(--google-blue)] dark:group-hover/row:text-[#8ab4f8] truncate leading-snug">
                       {post.title}
                     </h3>
                   </div>
@@ -133,7 +146,7 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
                       name="chevron-right"
                       size={14}
                       strokeWidth={2}
-                      className="text-zinc-400 group-hover/row:text-zinc-900 dark:group-hover/row:text-zinc-100 group-hover/row:translate-x-0.5 transition-transform"
+                      className="text-zinc-400 group-hover/row:text-[var(--google-blue)] dark:group-hover/row:text-[#8ab4f8] group-hover/row:translate-x-0.5 transition-transform"
                     />
                   </div>
                 </Link>
@@ -145,6 +158,7 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
       {activeCategories.map((catDef) => {
         const categoryPosts = categoryPostsMap[catDef.name] || [];
         const currentTab = activeTabs[catDef.name] || '전체';
+        const categoryGradient = CATEGORY_GRADIENTS[catDef.name] || 'blue';
 
         // 현재 선택된 탭에 따라 노출할 포스트 결정 (섹션별 2개 고정)
         const displayPosts = (
@@ -161,17 +175,18 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
 
         return (
           <section key={catDef.name} className="space-y-4">
-            {/* 1. 카테고리별 대제목 (공통 컴포넌트 PremiumHeading) */}
+            {/* 1. 카테고리별 대제목 (공통 컴포넌트 PremiumHeading with Gradient) */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1 border-b border-gray-200/90 dark:border-zinc-800">
               <div className="min-w-0">
                 <PremiumHeading
                   level={2}
+                  gradient={categoryGradient}
                   icon={<AppIcon name={catDef.icon} size={22} strokeWidth={2.5} />}
-                  className="!my-0 !py-1 !bg-transparent !border-l-4 !border-l-zinc-950 dark:!border-l-white pl-3"
+                  className="!my-0 !py-1"
                 >
                   <span className="flex items-center gap-2">
                     <span>{catDef.name}</span>
-                    <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400 hidden sm:inline-block">
+                    <span className="text-xs font-normal text-[#5f6368] dark:text-[#9aa0a6] hidden sm:inline-block">
                       — {catDef.tagline}
                     </span>
                   </span>
@@ -192,7 +207,7 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
               </div>
             </div>
 
-            {/* 2. 대제목 밑 하위 카테고리 탭버튼 (네이버 뉴스·라이프 판 스타일) */}
+            {/* 2. 대제목 밑 하위 카테고리 탭버튼 (보상스쿨 Google 탭 스타일) */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
               {/* 전체 탭 */}
               <button
@@ -200,15 +215,15 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
                 onClick={() => handleTabChange(catDef.name, '전체')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-none border transition-all cursor-pointer whitespace-nowrap shadow-2xs ${
                   currentTab === '전체'
-                    ? 'bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950 border-zinc-950 dark:border-zinc-100 font-extrabold'
-                    : 'bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 font-bold'
+                    ? 'bg-[var(--google-blue)] text-white border-[var(--google-blue)] font-extrabold shadow-xs'
+                    : 'bg-white dark:bg-[#202124] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-[var(--google-blue)] hover:text-[var(--google-blue)] font-bold'
                 }`}
               >
                 <span>전체보기</span>
                 <span
                   className={`text-[10px] px-1 py-0.2 rounded-none font-bold ${
                     currentTab === '전체'
-                      ? 'bg-white/20 text-white dark:bg-zinc-900/20 dark:text-zinc-900'
+                      ? 'bg-white/20 text-white'
                       : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                   }`}
                 >
@@ -229,8 +244,8 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
                     onClick={() => handleTabChange(catDef.name, sub.name)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-none border transition-all cursor-pointer whitespace-nowrap shadow-2xs ${
                       isSelected
-                        ? 'bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950 border-zinc-950 dark:border-zinc-100 font-extrabold'
-                        : 'bg-white dark:bg-[#181a1d] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 font-bold'
+                        ? 'bg-[var(--google-blue)] text-white border-[var(--google-blue)] font-extrabold shadow-xs'
+                        : 'bg-white dark:bg-[#202124] text-zinc-700 dark:text-zinc-300 border-gray-200/90 dark:border-zinc-800 hover:border-[var(--google-blue)] hover:text-[var(--google-blue)] font-bold'
                     }`}
                   >
                     <span>{sub.shortName}</span>
@@ -238,7 +253,7 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
                       <span
                         className={`text-[10px] px-1 py-0.2 rounded-none font-bold ${
                           isSelected
-                            ? 'bg-white/20 text-white dark:bg-zinc-900/20 dark:text-zinc-900'
+                            ? 'bg-white/20 text-white'
                             : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                         }`}
                       >

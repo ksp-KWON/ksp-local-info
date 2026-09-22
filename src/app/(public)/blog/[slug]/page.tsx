@@ -134,7 +134,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       </nav>
 
       {/* 메인 칼럼 아티클 (부모 SmartStickyLayout 73% 본문 폭에 100% 핏, 보상스쿨 동기화) */}
-      <article className="w-full bg-white dark:bg-[#181a1d] rounded-none shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
+      <article className="w-full bg-white dark:bg-[#202124] rounded-none shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] border border-gray-200/90 dark:border-zinc-800 overflow-hidden relative">
         <div className="px-3.5 py-6 sm:px-8 sm:py-9 space-y-7">
           {/* 아티클 헤더 (구역 1: 카테고리/날짜 메타, 구역 2: H1 타이틀, 구역 3: 포스트 요약 리드문) */}
           <header className="border-b border-gray-100 dark:border-zinc-800 pb-7">

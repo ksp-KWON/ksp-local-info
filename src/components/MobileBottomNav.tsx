@@ -36,7 +36,7 @@ function NavContent({ categories = [] }: { categories?: string[] }) {
 
   return (
     <>
-      <nav className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 flex items-center justify-around px-1 z-[100] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 shadow-[0_0_20px_rgba(0,0,0,0.06)] dark:shadow-[0_0_20px_rgba(0,0,0,0.40)]">
+      <nav className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#202124]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 flex items-center justify-around px-1 z-[100] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 shadow-md">
         {navItems.map((item) => (
           <Link
             key={item.id}
@@ -100,7 +100,7 @@ function NavContent({ categories = [] }: { categories?: string[] }) {
                     key={catName}
                     href={`/blog?category=${encodeURIComponent(catName)}`}
                     onClick={() => setIsMenuOpen(false)}
-                    className="relative overflow-hidden flex items-center gap-2.5 p-3 bg-white dark:bg-[#181a1d] rounded-none border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all group shadow-2xs"
+                    className="relative overflow-hidden flex items-center gap-2.5 p-3 bg-white dark:bg-[#202124] rounded-none border border-gray-200/90 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all group shadow-2xs"
                   >
                     {/* 은은한 워터마크 */}
                     <div className="absolute right-1 bottom-0 opacity-[0.045] dark:opacity-[0.07] text-zinc-900 dark:text-zinc-100 select-none pointer-events-none group-hover:scale-110 transition-transform duration-300 z-0">
@@ -127,7 +127,7 @@ export default function MobileBottomNav({ categories = [] }: MobileBottomNavProp
   return (
     <Suspense
       fallback={
-        <div className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#181a1d]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 z-[100]"></div>
+        <div className="lg:hidden fixed bottom-0 left-0 w-full h-[60px] bg-white/95 dark:bg-[#202124]/95 backdrop-blur-md border-t border-gray-200/90 dark:border-zinc-800 z-[100]"></div>
       }
     >
       <NavContent categories={categories} />
