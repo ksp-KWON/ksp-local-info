@@ -9,6 +9,7 @@ import MiniMapPreview from '@/components/MiniMapPreview';
 import AppIcon from '@/components/ui/AppIcon';
 import PremiumCard from '@/components/ui/PremiumCard';
 import CivicCategoryGrid from '@/components/CivicCategoryGrid';
+import CivicPerformanceSchedule from '@/components/CivicPerformanceSchedule';
 
 interface LocalData {
   lastUpdated: string;
@@ -114,7 +115,10 @@ export default async function Home() {
         </Link>
       </div>
 
-      {/* 4. 블로그 콘텐츠 큐레이션 리스트 */}
+      {/* 4. 의정부예술의전당 2026 하반기 월별 공연·축제 인터랙티브 뷰어 */}
+      <CivicPerformanceSchedule />
+
+      {/* 5. 블로그 콘텐츠 큐레이션 리스트 */}
       <HomePostList initialPosts={posts} />
     </div>
   );
