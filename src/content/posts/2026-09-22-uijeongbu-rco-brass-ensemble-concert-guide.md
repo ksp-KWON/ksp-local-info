@@ -17,6 +17,7 @@ tags:
 sourceId: artsrco02c
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202609011701196
+subCategory: 예술의전당 기획공연
 ---
 세계 유수의 음악 전문지 그라모폰(Gramophone)이 세계 3대 교향악단으로 꼽은 네덜란드 암스테르담의 전설적인 명문 악단, 로열 콘세르트헤바우 오케스트라(RCO)의 금관악기 수석 및 단원들이 내한하여 **<11월의 크리스마스 콘서트 : RCO BRASS>**를 2026년 11월 27일(금) 오후 7시 30분 의정부예술의전당 대극장에서 선보입니다.
 

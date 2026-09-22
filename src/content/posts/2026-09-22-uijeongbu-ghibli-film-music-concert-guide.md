@@ -17,6 +17,7 @@ tags:
 sourceId: artsghibli03b
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202607011745212
+subCategory: 예술의전당 기획공연
 ---
 스튜디오 지브리와 미야자키 하야오 감독, 음악 거장 히사이시 조가 빚어낸 따뜻하고 서정적인 애니메이션 오리지널 사운드트랙(OST)을 감미로운 클래식 앙상블로 만나볼 수 있는 **<지브리와 사랑에 빠지다 : 지브리 영화음악 콘서트 2026 - 의정부 앙코르>**가 2026년 12월 5일(토) 의정부예술의전당 소극장에서 성황리에 펼쳐집니다.
 

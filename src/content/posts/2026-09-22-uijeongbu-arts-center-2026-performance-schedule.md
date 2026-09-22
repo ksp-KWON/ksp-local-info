@@ -16,6 +16,7 @@ tags:
   - 지브리영화음악
 sourceId: arts02e7a3
 sourceLink: 'https://www.uac.or.kr/newuac/performance/performance_03.php'
+subCategory: 예술의전당 기획공연
 ---
 경기 북부 문화예술의 산실인 의정부예술의전당(재단법인 의정부문화관광재단)에서 2026년 가을과 겨울을 풍성하게 채워줄 하반기 기획공연 및 야외 축제 일정을 확정하여 운영하고 있습니다.
 

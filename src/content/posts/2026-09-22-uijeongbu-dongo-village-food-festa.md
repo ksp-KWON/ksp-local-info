@@ -15,6 +15,7 @@ tags:
   - 동오역
 sourceId: 772c3d9161bc
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 도심 페스티벌 & 거리공연
 ---
 ## 시정 핵심 요약
 

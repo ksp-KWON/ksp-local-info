@@ -5,6 +5,7 @@ export type PostData = {
   updatedAt?: string;
   summary: string;
   category?: string | string[];
+  subCategory?: string;
   tags?: string[];
   sourceLink?: string;
   content: string;

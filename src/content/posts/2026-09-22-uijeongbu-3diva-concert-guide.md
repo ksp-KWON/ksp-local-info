@@ -19,6 +19,7 @@ tags:
 sourceId: arts3diva04a
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202609011659077
+subCategory: 예술의전당 기획공연
 ---
 대한민국 뮤지컬 역사에서 독보적인 가창력과 카리스마로 무대를 장악해 온 최고의 여배우 3인, 신영숙·차지연·정선아가 한 무대에 오르는 **<2026 송년 특별 기획 : 3DIVA CONCERT (Queens of musical)>**가 2026년 12월 19일(토) 오후 3시 의정부예술의전당 대극장에서 펼쳐집니다.
 

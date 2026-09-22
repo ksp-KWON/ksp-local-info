@@ -15,6 +15,7 @@ tags:
   - 의정부도시관리공사
 sourceId: traffic01e7a3
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 공영주차장 & 요금감면
 ---
 의정부시 중심 상권인 의정부역 일대와 행복로, 신시가지, 민락2지구 등은 상시 주차 수요가 많아 불법 주정차 단속 및 견인 조치가 엄격하게 이루어지는 지역입니다.
 

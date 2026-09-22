@@ -15,6 +15,7 @@ tags:
   - 의정부가족나들이
 sourceId: 882a10b471ca
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 도심 페스티벌 & 거리공연
 ---
 ## 시정 핵심 요약
 

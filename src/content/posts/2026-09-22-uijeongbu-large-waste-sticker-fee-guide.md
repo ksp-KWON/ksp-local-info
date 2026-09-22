@@ -15,6 +15,7 @@ tags:
   - 종량제봉투
 sourceId: clean01a9b2
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 종량제봉투 & 대형폐기물
 ---
 의정부시에서 이사, 봄맞이 대청소, 인테리어 공사 등으로 인해 종량제봉투에 담기지 않는 가구나 대형 생활용품을 버릴 때는 반드시 공식 대형폐기물 스티커를 발급받아야 합니다.
 

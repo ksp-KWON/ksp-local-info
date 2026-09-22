@@ -18,6 +18,7 @@ tags:
 sourceId: artscinema02b
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202606161715156
+subCategory: 예술의전당 기획공연
 ---
 스크린 너머 전 세계 관객들의 가슴을 울린 불멸의 영화 사운드트랙을 감미롭고 역동적인 클래식 실내악 앙상블로 재해석한 **<우리가 사랑한 시네마 뮤직 콘서트 2026 (스테이지엠 시네마 시리즈)>**가 2026년 10월 17일(토) 오후 3시 의정부예술의전당 소극장에서 화려하게 펼쳐집니다.
 

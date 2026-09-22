@@ -15,6 +15,7 @@ tags:
   - 의정부안심귀갓길
 sourceId: 761d84a101f3
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 안심귀가 & 생활안전
 ---
 ## 시정 핵심 요약
 

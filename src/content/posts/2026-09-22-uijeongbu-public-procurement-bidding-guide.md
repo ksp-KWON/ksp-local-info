@@ -15,6 +15,7 @@ tags:
   - 시청발주공사
 sourceId: 773b19a01f99
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 공공입찰 & 수의계약
 ---
 ## 시정 핵심 요약
 

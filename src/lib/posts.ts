@@ -54,6 +54,7 @@ function parsePostMetadata(slug: string, matterResult: matter.GrayMatterFile<str
     updatedAt: updatedAtStr,
     summary: matterResult.data.summary || '',
     category: categoryArray,
+    subCategory: matterResult.data.subCategory ? String(matterResult.data.subCategory) : undefined,
     tags: Array.isArray(matterResult.data.tags)
       ? matterResult.data.tags.filter((t): t is string => typeof t === 'string')
       : [],

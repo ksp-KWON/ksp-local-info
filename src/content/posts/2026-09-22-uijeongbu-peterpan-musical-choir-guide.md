@@ -17,6 +17,7 @@ tags:
 sourceId: artspeter01a
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202608211121153
+subCategory: 예술의전당 기획공연
 ---
 1998년 창단 이래 국내외 유수의 합창대회에서 우수한 성과를 거두며 의정부시의 문화적 위상을 널리 알려온 의정부시립소년소녀합창단이 제49회 정기연주회로 온 가족이 함께 즐기는 합창 뮤지컬 **Musical <피터팬과 후크선장>**을 선보였습니다.
 

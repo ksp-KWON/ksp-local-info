@@ -15,6 +15,7 @@ tags:
   - 의정부행정복지센터
 sourceId: 91bc77210e4a
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 생활안정 & 공공요금 감면
 ---
 ## 시정 핵심 요약
 

@@ -18,6 +18,7 @@ tags:
 sourceId: artsgcon01a
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202609011049056
+subCategory: 아트캠프 & 인문학 북토크
 ---
 책과 음악을 통해 일상의 깊은 사유와 따뜻한 위로를 전하는 의정부문화관광재단의 대표 복합 문화 프로젝트 **<음악이 흐르는 북토크 : 의정부 ㄱ콘서트>**가 2026년 9월부터 12월까지 매월 1회 의정부아트캠프 블랙 무대에서 펼쳐집니다.
 

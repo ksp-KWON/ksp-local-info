@@ -15,6 +15,7 @@ tags:
   - 과태료예방
 sourceId: 9639d9845e36
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 공동주택 관리 & 아파트
 ---
 ## 시정 핵심 요약
 

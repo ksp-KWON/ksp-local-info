@@ -15,6 +15,7 @@ tags:
   - 과태료예방
 sourceId: a69ae1e852e7
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 소상공인 지원 & 계량기검사
 ---
 ## 시정 핵심 요약
 

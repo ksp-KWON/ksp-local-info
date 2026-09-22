@@ -17,6 +17,7 @@ tags:
 sourceId: artssong01a
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202607021305489
+subCategory: 예술의전당 기획공연
 ---
 전통 경기민요의 독보적인 소리꾼 송소희와 국립창극단 최연소 입단에 빛나는 판소리 스타 김준수, 그리고 드라마 <궁>과 <구르미 그린 달빛> OST로 대중의 사랑을 받아온 에스닉 퓨전 밴드 두번째달이 의정부에서 역사적인 크로스오버 무대 **<모던민요>**를 선보였습니다.
 

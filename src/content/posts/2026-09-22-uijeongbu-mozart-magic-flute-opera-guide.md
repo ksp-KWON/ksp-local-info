@@ -17,6 +17,7 @@ tags:
 sourceId: arts05e7a3
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202608261323599
+subCategory: 예술의전당 기획공연
 ---
 모차르트 불후의 명작이자 전 세계인이 가장 사랑하는 3대 오페라 중 하나인 **콘서트 오페라 <마술피리(Die Zauberflöte)>**가 2026년 10월 31일(토) 오후 4시, 의정부예술의전당 대극장에서 단 1회 특별 무대로 펼쳐집니다.
 

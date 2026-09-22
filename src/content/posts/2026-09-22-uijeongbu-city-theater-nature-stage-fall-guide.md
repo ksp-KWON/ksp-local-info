@@ -17,6 +17,7 @@ tags:
 sourceId: arts03e7a3
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202608290853063
+subCategory: 도심 페스티벌 & 거리공연
 ---
 의정부시와 재단법인 의정부문화관광재단 문화도시지원센터에서는 지역 예술인들의 창작 활동을 지원하고 시민들에게 일상 속 문화 향유 기회를 제공하기 위해 **2026 예술인 활동 지원사업 「도시가 극장, 자연이 무대 (가을)」**를 개최합니다.
 

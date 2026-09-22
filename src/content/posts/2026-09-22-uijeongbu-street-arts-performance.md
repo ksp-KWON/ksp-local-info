@@ -15,6 +15,7 @@ tags:
   - 주말무료공연
 sourceId: 12b84c901e12
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 도심 페스티벌 & 거리공연
 ---
 ## 시정 핵심 요약
 

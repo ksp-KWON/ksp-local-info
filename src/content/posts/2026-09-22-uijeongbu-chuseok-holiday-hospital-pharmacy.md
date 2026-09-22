@@ -15,6 +15,7 @@ tags:
   - EGen포털
 sourceId: 984b2c1590ab
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 응급의료 & 심야약국
 ---
 ## 시정 핵심 요약
 

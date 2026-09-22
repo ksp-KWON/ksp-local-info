@@ -15,6 +15,7 @@ tags:
   - 의정부독서문화
 sourceId: 228a4c1901ab
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 시민 생활민원 & 작은도서관
 ---
 ## 시정 핵심 요약
 

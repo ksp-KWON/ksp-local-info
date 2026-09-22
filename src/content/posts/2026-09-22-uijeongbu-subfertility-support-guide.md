@@ -15,6 +15,7 @@ tags:
   - 임산부지원금
 sourceId: 990f14a6012b
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 여성·임신출산 & 모자보건
 ---
 ## 시정 핵심 요약
 

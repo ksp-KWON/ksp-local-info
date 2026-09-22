@@ -15,6 +15,7 @@ tags:
   - 의정부일자리센터
 sourceId: 19a6f02adaab
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 일자리 유관기관 & 취업지원
 ---
 ## 시정 핵심 요약
 

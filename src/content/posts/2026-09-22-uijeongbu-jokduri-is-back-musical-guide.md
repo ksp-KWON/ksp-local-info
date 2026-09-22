@@ -17,6 +17,7 @@ tags:
 sourceId: artsjokduri01a
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202609180927339
+subCategory: 예술의전당 기획공연
 ---
 조선 효종 대 병자호란의 참화 속에서 왕실의 양녀로 입적되어 청나라 구왕 도르곤에게 시집가야 했던 비운의 여인, 의순공주(이애숙)의 역사적 실화를 바탕으로 한 창작 가무극 **우리소리 뮤지컬 <족두리가 돌아왔다 : 의순공주와 북벌이야기>**가 2026년 10월 16일(금) 오후 7시 30분 의정부예술의전당 소극장에서 막을 올립니다.
 

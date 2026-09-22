@@ -17,6 +17,7 @@ tags:
 sourceId: arts04e7a3
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202608191525388
+subCategory: 도심 페스티벌 & 거리공연
 ---
 경기 북부 대표 야외 힙합·알앤비 축제인 **2026 제8회 의정부 블랙뮤직페스티벌**(BMF, Black Music Festival)이 2026년 10월 16일(금)부터 10월 17일(토)까지 양일간 의정부예술의전당 야외특설무대에서 화려하게 개최됩니다.
 

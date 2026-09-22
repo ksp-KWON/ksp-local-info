@@ -16,6 +16,7 @@ tags:
 sourceId: artscon01f
 sourceLink: >-
   https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202609011656266
+subCategory: 예술의전당 기획공연
 ---
 국내 주요 서점 종합 베스트셀러 1위이자 누적 판매 부수 150만 부 신화를 기록한 김호연 작가의 명작 장편 소설을 무대화한 뮤직드라마 **<불편한 편의점>**이 2026년 11월 21일(토) 의정부예술의전당 대극장에서 관객들을 찾아옵니다.
 

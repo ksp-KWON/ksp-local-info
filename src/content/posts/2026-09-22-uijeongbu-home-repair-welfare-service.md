@@ -15,6 +15,7 @@ tags:
   - 주거복지서비스
 sourceId: 341a90b1e421
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 주거복지 & 취약계층 집수리
 ---
 ## 시정 핵심 요약
 

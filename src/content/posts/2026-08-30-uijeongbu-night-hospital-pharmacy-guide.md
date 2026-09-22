@@ -13,6 +13,7 @@ tags:
   - 의정부응급의료
   - 달빛병원진료비
 sourceLink: 'https://www.ui4u.go.kr'
+subCategory: 응급의료 & 심야약국
 ---
 ## 시정 핵심 요약
 
