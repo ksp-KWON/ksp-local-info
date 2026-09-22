@@ -130,16 +130,26 @@ export default function CivicPerformanceSchedule() {
 
             {/* 하단 액션 버튼 영역 */}
             <div className="mt-4 pt-3 border-t border-gray-100 dark:border-zinc-800/80 flex items-center justify-between gap-2">
-              <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                재단 공식 누리집 예매
-              </span>
+              {perf.guideSlug ? (
+                <Link
+                  href={`/blog/${perf.guideSlug}`}
+                  className="inline-flex items-center gap-1 text-[11.5px] font-extrabold text-zinc-900 dark:text-zinc-100 hover:underline"
+                >
+                  <span>포털 심층 가이드</span>
+                  <AppIcon name="chevron-right" size={12} strokeWidth={2.5} />
+                </Link>
+              ) : (
+                <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                  재단 공식 누리집 직통
+                </span>
+              )}
               <a
                 href={perf.bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 hover:bg-black text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-950 text-xs font-bold rounded-none shadow-2xs transition-colors"
               >
-                <span>예매·상세보기</span>
+                <span>공식 예매·안내</span>
                 <AppIcon name="external-link" size={13} strokeWidth={2.5} />
               </a>
             </div>

@@ -11,6 +11,7 @@ export interface CivicPerformance {
   price: string;
   highlight: string;
   bookingUrl: string;
+  guideSlug?: string;
   status: '예매중' | '예정' | '마감';
 }
 
@@ -28,7 +29,8 @@ export const UIJEONGBU_PERFORMANCES_2026: CivicPerformance[] = [
     target: '전연령 관람가',
     price: '전석 무료',
     highlight: '의정부 도심 공원과 광장에서 펼쳐지는 시민 밀착형 가을 거리예술제',
-    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01.php',
+    bookingUrl: 'https://www.uac.or.kr/newuac/performance/performance_01D.php?PFM_CODE=202608290853063',
+    guideSlug: '2026-09-22-uijeongbu-city-theater-nature-stage-fall-guide',
     status: '예매중',
   },
   {
