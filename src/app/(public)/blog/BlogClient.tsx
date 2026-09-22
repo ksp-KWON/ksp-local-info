@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import PostCard from '@/components/ui/PostCard';
 import { PostData, PostMeta } from '@/lib/types';
-import { getCategoryIcon } from '@/lib/constants';
+import { CIVIC_CATEGORIES, getCategoryIcon } from '@/lib/constants';
 import AppIcon from '@/components/ui/AppIcon';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
 import PremiumCard from '@/components/ui/PremiumCard';
@@ -34,6 +34,12 @@ function BlogClientContent({ initialPosts }: { initialPosts: (PostMeta | PostDat
     }
   }
   const actualCategories = Object.keys(categoryCounts).sort((a, b) => {
+    // 8대 공식 카테고리 순서 우선 정렬
+    const indexA = (CIVIC_CATEGORIES as readonly string[]).indexOf(a);
+    const indexB = (CIVIC_CATEGORIES as readonly string[]).indexOf(b);
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    if (indexA !== -1) return -1;
+    if (indexB !== -1) return 1;
     const diff = categoryCounts[b] - categoryCounts[a];
     if (diff !== 0) return diff;
     return a.localeCompare(b, 'ko');

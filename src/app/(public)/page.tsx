@@ -8,6 +8,7 @@ import Image from 'next/image';
 import MiniMapPreview from '@/components/MiniMapPreview';
 import AppIcon from '@/components/ui/AppIcon';
 import PremiumCard from '@/components/ui/PremiumCard';
+import CivicCategoryGrid from '@/components/CivicCategoryGrid';
 
 interface LocalData {
   lastUpdated: string;
@@ -75,7 +76,10 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 핵심 공공서비스 퀵메뉴 (슬림 와이드 바) */}
+      {/* 2. 의정부시 공식 8대 시정 분야 퀵 허브 그리드 */}
+      <CivicCategoryGrid posts={posts} />
+
+      {/* 3. 핵심 공공서비스 퀵메뉴 (슬림 와이드 바) */}
       <div className="w-full">
         <Link href="/services/emergency" className="group block w-full">
           <PremiumCard
@@ -110,7 +114,7 @@ export default async function Home() {
         </Link>
       </div>
 
-      {/* 3. 블로그 콘텐츠 큐레이션 리스트 */}
+      {/* 4. 블로그 콘텐츠 큐레이션 리스트 */}
       <HomePostList initialPosts={posts} />
     </div>
   );

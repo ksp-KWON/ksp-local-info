@@ -43,23 +43,29 @@ export function normalizeFrontmatter(data: FrontmatterData = {}): FrontmatterDat
       .trim();
   }
 
-  // 1-2. 5대 직관형 공식 카테고리 정규화
+  // 1-2. 의정부시 공식 8대 분야 카테고리 정규화
   if (cleanData.category) {
     const cats = Array.isArray(cleanData.category) ? cleanData.category : [cleanData.category];
     const catStr = cats.join(' ');
-    if (catStr.includes('병원') || catStr.includes('건강') || catStr.includes('의료') || catStr.includes('약국')) {
-      cleanData.category = ['병원·약국'];
-    } else if (catStr.includes('축제') || catStr.includes('나들이') || catStr.includes('문화') || catStr.includes('행사') || catStr.includes('공연')) {
-      cleanData.category = ['축제·나들이'];
-    } else if (catStr.includes('일자리') || catStr.includes('소상공인') || catStr.includes('기업') || catStr.includes('입찰') || catStr.includes('채용')) {
-      cleanData.category = ['일자리·소상공인'];
-    } else if (catStr.includes('민원') || catStr.includes('생활') || catStr.includes('교통') || catStr.includes('주차') || catStr.includes('폐기물')) {
-      cleanData.category = ['생활·민원'];
+    if (catStr.includes('교통') || catStr.includes('주차') || catStr.includes('버스') || catStr.includes('지하철')) {
+      cleanData.category = ['교통·주차'];
+    } else if (catStr.includes('청소') || catStr.includes('폐기물') || catStr.includes('쓰레기') || catStr.includes('환경') || catStr.includes('종량제')) {
+      cleanData.category = ['청소·환경'];
+    } else if (catStr.includes('주택') || catStr.includes('재개발') || catStr.includes('건축') || catStr.includes('집수리') || catStr.includes('아파트') || catStr.includes('관리인')) {
+      cleanData.category = ['주택·재개발'];
+    } else if (catStr.includes('재난') || catStr.includes('민방위') || catStr.includes('안전') || catStr.includes('귀가') || catStr.includes('대피')) {
+      cleanData.category = ['재난·민방위'];
+    } else if (catStr.includes('체육') || catStr.includes('공원') || catStr.includes('축제') || catStr.includes('나들이') || catStr.includes('문화') || catStr.includes('공연')) {
+      cleanData.category = ['체육·공원'];
+    } else if (catStr.includes('경제') || catStr.includes('기업') || catStr.includes('농업') || catStr.includes('입찰') || catStr.includes('계약') || catStr.includes('계량기')) {
+      cleanData.category = ['기업경제·농업'];
+    } else if (catStr.includes('일자리') || catStr.includes('소상공인') || catStr.includes('취업') || catStr.includes('채용') || catStr.includes('민원') || catStr.includes('도서관')) {
+      cleanData.category = ['일자리·생활'];
     } else {
-      cleanData.category = ['복지·지원금'];
+      cleanData.category = ['복지·돌봄'];
     }
   } else {
-    cleanData.category = ['복지·지원금'];
+    cleanData.category = ['일자리·생활'];
   }
 
   // 1-3. tags 정규화 (string[] 표준)

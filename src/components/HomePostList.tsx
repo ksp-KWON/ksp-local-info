@@ -22,41 +22,65 @@ interface MasterChapter {
 const MASTER_CHAPTERS: MasterChapter[] = [
   {
     id: 'welfare',
-    categoryName: '복지·지원금',
-    title: '복지 & 맞춤 지원금',
-    desc: '의정부시 난임·산모 지원, 청년·어르신 복지 혜택 소식입니다.',
+    categoryName: '복지·돌봄',
+    title: '복지 & 돌봄 지원',
+    desc: '의정부시 영유아·난임, 어르신 노인복지 및 안심 병원·의료 혜택 안내입니다.',
+    icon: 'heart',
+    watermarkIcon: 'heart',
+  },
+  {
+    id: 'traffic',
+    categoryName: '교통·주차',
+    title: '교통정보 & 공영주차',
+    desc: '공영주차장 요금 감면, 거주자우선주차 및 시내버스·지하철 노선 안내입니다.',
+    icon: 'car',
+    watermarkIcon: 'car',
+  },
+  {
+    id: 'environment',
+    categoryName: '청소·환경',
+    title: '청소 & 자원순환',
+    desc: '대형폐기물 스티커 수수료, 종량제봉투 배출 및 재활용 분리수거 기준입니다.',
+    icon: 'trash',
+    watermarkIcon: 'trash',
+  },
+  {
+    id: 'housing',
+    categoryName: '주택·재개발',
+    title: '주택 & 도시재개발',
+    desc: '공동주택 관리인 신고, 주거환경 개선 집수리 및 주택정비사업 안내입니다.',
+    icon: 'home',
+    watermarkIcon: 'home',
+  },
+  {
+    id: 'safety',
+    categoryName: '재난·민방위',
+    title: '재난안전 & 민방위',
+    desc: '의정부시민 안전보험 보상금, 안심귀가 동행 및 비상대피시설 안내입니다.',
+    icon: 'shield-alert',
+    watermarkIcon: 'shield-alert',
+  },
+  {
+    id: 'sports',
+    categoryName: '체육·공원',
+    title: '체육시설 & 힐링공원',
+    desc: '직동·추동공원 산책로, 공공체육시설 대관 및 문화예술 버스킹 축제 소식입니다.',
+    icon: 'leaf',
+    watermarkIcon: 'leaf',
+  },
+  {
+    id: 'economy',
+    categoryName: '기업경제·농업',
+    title: '기업경제 & 상공농업',
+    desc: '소상공인 지원금, 공공입찰·수의계약 등록 및 법정계량기 정기검사 안내입니다.',
     icon: 'bank',
     watermarkIcon: 'bank',
   },
   {
-    id: 'health',
-    categoryName: '병원·약국',
-    title: '병원 & 안심 응급의료',
-    desc: '응급실 위치, 달빛어린이병원, 심야약국 및 국가검진 안내입니다.',
-    icon: 'hospital',
-    watermarkIcon: 'hospital',
-  },
-  {
-    id: 'living',
-    categoryName: '생활·민원',
-    title: '슬기로운 생활 & 행정민원',
-    desc: '상하수도 요금 감면, 종량제봉투, 야간민원 및 교통 꿀팁입니다.',
-    icon: 'compass',
-    watermarkIcon: 'compass',
-  },
-  {
-    id: 'culture',
-    categoryName: '축제·나들이',
-    title: '문화 행사 & 축제 나들이',
-    desc: '거리예술제, 도서관 콘서트, 가족 숲체험 및 전시 공연 소식입니다.',
-    icon: 'party-popper',
-    watermarkIcon: 'party-popper',
-  },
-  {
     id: 'jobs',
-    categoryName: '일자리·소상공인',
-    title: '일자리 & 소상공인 지원',
-    desc: '청년 구직지원금, 취업역량 강화 및 소상공인 특례보증 안내입니다.',
+    categoryName: '일자리·생활',
+    title: '일자리 & 시민생활',
+    desc: '의정부 일자리센터 채용공고, 맞춤 취업지원 및 야간민원실 생활 편의입니다.',
     icon: 'file-text',
     watermarkIcon: 'file-text',
   },
@@ -126,7 +150,7 @@ export default function HomePostList({ initialPosts }: HomePostListProps) {
           {/* 슬림 칸(Row) 분할 리스트 */}
           <div className="divide-y divide-gray-100 dark:divide-zinc-800/80 relative z-10">
             {latestPosts.map((post) => {
-              const mainCat = Array.isArray(post.category) ? post.category[0] : post.category || '생활·민원';
+              const mainCat = Array.isArray(post.category) ? post.category[0] : post.category || '일자리·생활';
               return (
                 <Link
                   key={post.slug}
