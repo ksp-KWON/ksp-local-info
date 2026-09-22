@@ -43,7 +43,7 @@ export function normalizeFrontmatter(data: FrontmatterData = {}): FrontmatterDat
       .trim();
   }
 
-  // 1-2. 의정부시 공식 8대 분야 카테고리 정규화
+  // 1-2. 의정부시 공식 9대 분야 카테고리 정규화
   if (cleanData.category) {
     const cats = Array.isArray(cleanData.category) ? cleanData.category : [cleanData.category];
     const catStr = cats.join(' ');
@@ -55,7 +55,9 @@ export function normalizeFrontmatter(data: FrontmatterData = {}): FrontmatterDat
       cleanData.category = ['주택·재개발'];
     } else if (catStr.includes('재난') || catStr.includes('민방위') || catStr.includes('안전') || catStr.includes('귀가') || catStr.includes('대피')) {
       cleanData.category = ['재난·민방위'];
-    } else if (catStr.includes('체육') || catStr.includes('공원') || catStr.includes('축제') || catStr.includes('나들이') || catStr.includes('문화') || catStr.includes('공연')) {
+    } else if (catStr.includes('문화') || catStr.includes('예술') || catStr.includes('공연') || catStr.includes('전시') || catStr.includes('페스티벌') || catStr.includes('콘서트') || catStr.includes('뮤지컬') || catStr.includes('오페라') || catStr.includes('음악') || catStr.includes('축제')) {
+      cleanData.category = ['문화·예술'];
+    } else if (catStr.includes('체육') || catStr.includes('공원') || catStr.includes('운동') || catStr.includes('나들이') || catStr.includes('산책') || catStr.includes('등산')) {
       cleanData.category = ['체육·공원'];
     } else if (catStr.includes('경제') || catStr.includes('기업') || catStr.includes('농업') || catStr.includes('입찰') || catStr.includes('계약') || catStr.includes('계량기')) {
       cleanData.category = ['기업경제·농업'];

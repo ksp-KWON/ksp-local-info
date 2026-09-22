@@ -35,9 +35,15 @@ const CATEGORY_METAS: CategoryMeta[] = [
     icon: 'bank',
   },
   {
+    name: '문화·예술',
+    tagline: '공연전시 & 도심축제',
+    subKeywords: '예술의전당 · BMF축제 · 기획공연',
+    icon: 'sparkles',
+  },
+  {
     name: '체육·공원',
-    tagline: '문화체육 & 힐링공원',
-    subKeywords: '예술의전당 · 직동공원 · 거리예술제',
+    tagline: '공공체육 & 힐링공원',
+    subKeywords: '직동근린공원 · 공공체육관 · 산책로',
     icon: 'leaf',
   },
   {
@@ -85,7 +91,7 @@ export default function CivicCategoryGrid({ posts }: CivicCategoryGridProps) {
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 bg-zinc-900 dark:bg-zinc-100 rounded-none shadow-2xs" />
           <h2 className="text-base sm:text-lg font-extrabold text-zinc-950 dark:text-white tracking-tight">
-            의정부시 공식 8대 분야 바로가기
+            의정부시 공식 9대 분야 바로가기
           </h2>
         </div>
         <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">
@@ -93,8 +99,8 @@ export default function CivicCategoryGrid({ posts }: CivicCategoryGridProps) {
         </span>
       </div>
 
-      {/* 8대 분야 2x4 그리드 */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      {/* 9대 분야 3x3 그리드 */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
         {CATEGORY_METAS.map((item) => {
           const count = countMap[item.name] || 0;
           return (
