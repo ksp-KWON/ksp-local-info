@@ -75,43 +75,51 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 네이버형 분야별 대제목-하위탭-포스팅 허브 (최상단 브리핑 + 1순위 공연 섹션) */}
-      <CivicCategorySection posts={posts} />
-
-      {/* 3. 핵심 공공서비스 퀵메뉴 (24시간 응급실 안내 슬림 와이드 바) */}
+      {/* 2. 핵심 공공서비스 퀵메뉴 (의정부시 24시간 응급실 안내 - 배경 지도 비침 & 우측 지도보기 버튼) */}
       <div className="w-full">
         <Link href="/services/emergency" className="group block w-full">
           <PremiumCard
             hoverEffect={true}
-            watermarkIcon="hospital"
-            className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-h-0"
+            className="p-4 sm:p-5 min-h-0 relative overflow-hidden"
           >
-            <div className="relative z-10 flex items-center gap-3.5 min-w-0">
-              <div className="w-10 h-10 rounded-none bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center shrink-0 shadow-2xs">
-                <AppIcon name="hospital" size={20} strokeWidth={2.5} className="text-emerald-700 dark:text-emerald-400" />
-              </div>
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 bg-emerald-100/80 text-emerald-900 dark:bg-emerald-900/60 dark:text-emerald-200 text-[11px] font-bold rounded-none">
-                    야간·응급의료
-                  </span>
-                  <h3 className="text-sm sm:text-base font-extrabold text-zinc-950 dark:text-white group-hover:text-emerald-950 dark:group-hover:text-emerald-200 transition-colors truncate">
-                    의정부시 24시간 응급실 안내
-                  </h3>
-                </div>
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 font-normal truncate mt-0.5">
-                  의정부성모병원·을지대병원 응급실 위치, 비상전화번호, 진료과목을 지도에서 확인하세요.
-                </p>
-              </div>
-            </div>
+            {/* 배경 은은한 카카오맵 지도 비침 레이어 */}
+            <MiniMapPreview type="emergency" />
 
-            <div className="relative z-10 flex items-center gap-1.5 px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shrink-0 self-end sm:self-center shadow-xs transition-colors rounded-none">
-              <span>지도 보기</span>
-              <AppIcon name="chevron-right" size={13} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
+            {/* 카드 전면 콘텐츠 (텍스트 좌측, 버튼 우측 분할 배치) */}
+            <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 w-full">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="w-10 h-10 rounded-none bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center shrink-0 shadow-2xs backdrop-blur-xs">
+                  <AppIcon name="hospital" size={20} strokeWidth={2.5} className="text-emerald-700 dark:text-emerald-400" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 bg-emerald-100/90 text-emerald-900 dark:bg-emerald-900/80 dark:text-emerald-200 text-[11px] font-bold rounded-none">
+                      야간·응급의료
+                    </span>
+                    <h3 className="text-sm sm:text-base font-extrabold text-zinc-950 dark:text-white group-hover:text-emerald-950 dark:group-hover:text-emerald-200 transition-colors truncate">
+                      의정부시 24시간 응급실 안내
+                    </h3>
+                  </div>
+                  <p className="text-xs text-zinc-600 dark:text-zinc-300 font-medium truncate mt-0.5">
+                    의정부성모병원·을지대병원 응급실 위치, 비상전화번호, 진료과목을 지도에서 확인하세요.
+                  </p>
+                </div>
+              </div>
+
+              {/* 우측 정렬 지도보기 버튼 */}
+              <div className="flex justify-end sm:justify-center shrink-0">
+                <div className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-700 group-hover:bg-emerald-800 text-white text-xs font-bold shrink-0 shadow-xs transition-colors rounded-none">
+                  <span>지도 보기</span>
+                  <AppIcon name="chevron-right" size={13} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </div>
             </div>
           </PremiumCard>
         </Link>
       </div>
+
+      {/* 3. 네이버형 분야별 대제목-하위탭-포스팅 허브 (최상단 브리핑 + 1순위 공연 섹션) */}
+      <CivicCategorySection posts={posts} />
     </div>
   );
 }

@@ -59,11 +59,11 @@ export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
         ))}
       </Map>
 
-      {/* 가독성을 위한 오버레이 필터 및 흐림 효과(backdrop-blur) */}
-      <div className="absolute inset-0 z-10 backdrop-blur-[2px] bg-gradient-to-br from-white/95 via-white/80 to-transparent dark:from-[#121212]/95 dark:via-[#121212]/80" />
+      {/* 가독성을 위한 수묵 앰비언트 오버레이 필터: 좌측 텍스트 영역은 또렷하게, 우측은 지도가 은은하게 비치도록 투명도 조절 */}
+      <div className="absolute inset-0 z-10 backdrop-blur-[1.5px] bg-gradient-to-r from-white/95 via-white/80 to-white/30 dark:from-[#181a1d]/95 dark:via-[#181a1d]/85 dark:to-[#181a1d]/35" />
       
-      {/* 벤토 박스 테두리와 잘 어울리도록 살짝 어두운 틴트 추가 */}
-      <div className="absolute inset-0 z-10 bg-black/5 dark:bg-black/30" />
+      {/* 테두리와 자연스럽게 결합되는 은은한 틴트 */}
+      <div className="absolute inset-0 z-10 bg-black/[0.03] dark:bg-black/20" />
     </div>
   );
 }
