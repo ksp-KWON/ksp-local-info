@@ -37,7 +37,7 @@ const CATEGORY_METAS: CategoryMeta[] = [
   {
     name: '체육·공원',
     tagline: '문화체육 & 힐링공원',
-    subKeywords: '직동공원 · 체육시설 · 거리예술제',
+    subKeywords: '예술의전당 · 직동공원 · 거리예술제',
     icon: 'leaf',
   },
   {
