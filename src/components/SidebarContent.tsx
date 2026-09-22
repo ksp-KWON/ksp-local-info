@@ -9,13 +9,13 @@
  * - 4. 의정부시 대표 콜센터
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import SidebarTagMore from './SidebarTagMore';
 import PremiumCard from '@/components/ui/PremiumCard';
 import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
 import { getCategoryIcon } from '@/lib/constants';
-
+import { UIJEONGBU_TAXONOMY } from '@/data/uijeongbu-taxonomy';
 import { PostData, PostMeta } from '@/lib/types';
 
 interface SidebarContentProps {
@@ -24,33 +24,22 @@ interface SidebarContentProps {
   categories?: string[];
 }
 
-interface CivicQuickMenuItem {
-  href: string;
-  icon: AppIconName;
-  title: string;
-  subtitle: string;
-  badge: string;
-}
-
-const CIVIC_QUICK_MENUS: CivicQuickMenuItem[] = [
-  {
-    href: '/services/emergency',
-    icon: 'hospital',
-    title: '응급실 안내',
-    subtitle: '야간·휴일 응급의료 지도',
-    badge: '안내',
-  },
-];
-
 const INITIAL_TAG_COUNT = 6;
 
 export default function SidebarContent({ tags = [], recentPosts = [], categories = [] }: SidebarContentProps) {
   const visibleTags = tags.slice(0, INITIAL_TAG_COUNT);
   const hiddenTags = tags.slice(INITIAL_TAG_COUNT);
 
+  // 사이드바 생활 퀵메뉴 아코디언 상태
+  const [openCategory, setOpenCategory] = useState<string | null>(null);
+
+  const toggleCategory = (catName: string) => {
+    setOpenCategory((prev) => (prev === catName ? null : catName));
+  };
+
   return (
     <div className="space-y-4">
-      {/* ── 1. 의정부 시민 퀵서비스 허브 (단일 통합 프리미엄 카드) ── */}
+      {/* ── 1. 의정부 시민 퀵서비스 허브 (생활 퀵메뉴 아코디언) ── */}
       <PremiumCard borderColor="default" hoverEffect={false} watermarkIcon="compass" className="!p-4 sm:!p-5">
         {/* 카드 헤더 */}
         <div className="flex items-center justify-between min-w-0 gap-2 mb-3 pb-2 border-b border-gray-100 dark:border-zinc-800">
@@ -61,70 +50,115 @@ export default function SidebarContent({ tags = [], recentPosts = [], categories
             </h3>
           </div>
           <span className="bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 text-[10px] font-bold px-1.5 py-0.5 border border-zinc-200 dark:border-zinc-700">
-            바로가기
+            분야별 탐색
           </span>
         </div>
 
-        {/* 5대 퀵메뉴 타일 리스트 */}
+        {/* 최상단 응급의료 고정 바로가기 */}
+        <div className="mb-2">
+          <Link
+            href="/services/emergency"
+            className="flex items-center justify-between gap-2 p-2 bg-emerald-50/80 hover:bg-emerald-100/80 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 border border-emerald-200/80 dark:border-emerald-800/80 transition-colors group/em"
+          >
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="p-1 bg-emerald-600 text-white rounded-none shrink-0">
+                <AppIcon name="hospital" size={13} strokeWidth={2.5} />
+              </div>
+              <span className="text-xs font-bold text-emerald-950 dark:text-emerald-200 truncate">
+                24시간 응급실·병원 지도
+              </span>
+            </div>
+            <AppIcon
+              name="chevron-right"
+              size={12}
+              strokeWidth={2.5}
+              className="text-emerald-600 dark:text-emerald-400 group-hover/em:translate-x-0.5 transition-transform shrink-0"
+            />
+          </Link>
+        </div>
+
+        {/* 9대 행정 분야 아코디언 리스트 */}
         <div className="divide-y divide-gray-100 dark:divide-zinc-800/60">
-          {CIVIC_QUICK_MENUS.map((item, idx) => (
-            <Link
-              key={idx}
-              href={item.href}
-              className="flex items-center justify-between gap-2 py-2 group/item hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 -mx-1.5 px-1.5 transition-colors"
-            >
-              <div className="flex items-center gap-2 min-w-0 flex-1">
-                <div className="p-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 group-hover/item:bg-zinc-900 group-hover/item:text-white dark:group-hover/item:bg-white dark:group-hover/item:text-zinc-950 transition-colors shrink-0">
-                  <AppIcon name={item.icon} size={13} strokeWidth={2.5} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover/item:text-zinc-950 dark:group-hover/item:white truncate block">
-                    {item.title}
-                  </span>
-                </div>
+          {UIJEONGBU_TAXONOMY.map((cat) => {
+            const isOpen = openCategory === cat.name;
+
+            return (
+              <div key={cat.name} className="py-1">
+                {/* 아코디언 헤더 버튼 */}
+                <button
+                  type="button"
+                  onClick={() => toggleCategory(cat.name)}
+                  className="w-full flex items-center justify-between gap-2 py-1.5 px-1 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors text-left group/btn"
+                >
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <div className="p-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 group-hover/btn:bg-zinc-900 group-hover/btn:text-white dark:group-hover/btn:bg-white dark:group-hover/btn:text-zinc-950 transition-colors shrink-0">
+                      <AppIcon name={cat.icon} size={13} strokeWidth={2.5} />
+                    </div>
+                    <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover/btn:text-zinc-950 dark:group-hover/btn:white truncate block">
+                      {cat.name}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span className="text-[9.5px] text-zinc-400 dark:text-zinc-500 font-medium">
+                      {cat.subCategories.length}개 분야
+                    </span>
+                    <div className={`text-zinc-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
+                      <AppIcon name="chevron-down" size={13} strokeWidth={2.5} />
+                    </div>
+                  </div>
+                </button>
+
+                {/* 아코디언 확장 영역 (하위 카테고리 칩 및 링크) */}
+                {isOpen && (
+                  <div className="mt-1 mb-2 p-2 bg-zinc-50 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 space-y-1">
+                    {cat.subCategories.map((sub) => (
+                      <div
+                        key={sub.id}
+                        className="flex items-center justify-between gap-1.5 py-1 px-1.5 hover:bg-white dark:hover:bg-zinc-800 transition-colors text-[11.5px]"
+                      >
+                        <Link
+                          href={`/blog?category=${encodeURIComponent(cat.name)}&subCategory=${encodeURIComponent(sub.name)}`}
+                          className="font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white truncate flex-1 flex items-center gap-1.5"
+                        >
+                          <span className="w-1 h-1 bg-zinc-400 dark:bg-zinc-500 rounded-none shrink-0" />
+                          <span className="truncate">{sub.shortName}</span>
+                        </Link>
+                        <a
+                          href={sub.officialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="시청 공식 누리집 새창열림"
+                          className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 shrink-0 p-0.5"
+                        >
+                          <AppIcon name="external-link" size={10} strokeWidth={2} />
+                        </a>
+                      </div>
+                    ))}
+
+                    <div className="pt-1.5 mt-1 border-t border-zinc-200/60 dark:border-zinc-800 flex items-center justify-between text-[11px]">
+                      <Link
+                        href={`/blog?category=${encodeURIComponent(cat.name)}`}
+                        className="font-extrabold text-zinc-900 dark:text-zinc-100 hover:underline flex items-center gap-1"
+                      >
+                        <span>{cat.name} 전체 글 보기</span>
+                        <AppIcon name="chevron-right" size={10} strokeWidth={2.5} />
+                      </Link>
+                      <a
+                        href={cat.officialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10.5px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 flex items-center gap-0.5"
+                      >
+                        <span>시청 직결</span>
+                        <AppIcon name="external-link" size={9} strokeWidth={2} />
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center gap-1 shrink-0">
-                <span className="text-[9.5px] font-semibold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/80 px-1 py-0.2">
-                  {item.badge}
-                </span>
-                <AppIcon
-                  name="chevron-right"
-                  size={12}
-                  strokeWidth={2.5}
-                  className="text-zinc-400 group-hover/item:text-zinc-900 dark:group-hover/item:text-white group-hover/item:translate-x-0.5 transition-all"
-                />
-              </div>
-            </Link>
-          ))}
-          {categories.map((catName) => (
-            <Link
-              key={catName}
-              href={`/blog?category=${encodeURIComponent(catName)}`}
-              className="flex items-center justify-between gap-2 py-2 group/item hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 -mx-1.5 px-1.5 transition-colors"
-            >
-              <div className="flex items-center gap-2 min-w-0 flex-1">
-                <div className="p-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 group-hover/item:bg-zinc-900 group-hover/item:text-white dark:group-hover/item:bg-white dark:group-hover/item:text-zinc-950 transition-colors shrink-0">
-                  <AppIcon name={getCategoryIcon(catName)} size={13} strokeWidth={2.5} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover/item:text-zinc-950 dark:group-hover/item:white truncate block">
-                    {catName}
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center gap-1 shrink-0">
-                <span className="text-[9.5px] font-semibold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/80 px-1 py-0.2">
-                  글
-                </span>
-                <AppIcon
-                  name="chevron-right"
-                  size={12}
-                  strokeWidth={2.5}
-                  className="text-zinc-400 group-hover/item:text-zinc-900 dark:group-hover/item:text-white group-hover/item:translate-x-0.5 transition-all"
-                />
-              </div>
-            </Link>
-          ))}
+            );
+          })}
         </div>
       </PremiumCard>
 

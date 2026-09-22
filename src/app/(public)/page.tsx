@@ -2,13 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
-import HomePostList from '@/components/HomePostList';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import MiniMapPreview from '@/components/MiniMapPreview';
 import AppIcon from '@/components/ui/AppIcon';
 import PremiumCard from '@/components/ui/PremiumCard';
-import CivicCategoryGrid from '@/components/CivicCategoryGrid';
+import CivicCategorySection from '@/components/CivicCategorySection';
 import CivicPerformanceSchedule from '@/components/CivicPerformanceSchedule';
 
 interface LocalData {
@@ -77,10 +76,7 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 의정부시 공식 8대 시정 분야 퀵 허브 그리드 */}
-      <CivicCategoryGrid posts={posts} />
-
-      {/* 3. 핵심 공공서비스 퀵메뉴 (슬림 와이드 바) */}
+      {/* 2. 핵심 공공서비스 퀵메뉴 (슬림 와이드 바) */}
       <div className="w-full">
         <Link href="/services/emergency" className="group block w-full">
           <PremiumCard
@@ -115,11 +111,11 @@ export default async function Home() {
         </Link>
       </div>
 
-      {/* 4. 의정부예술의전당 2026 하반기 월별 공연·축제 인터랙티브 뷰어 */}
+      {/* 3. 의정부예술의전당 2026 하반기 월별 공연·축제 인터랙티브 뷰어 */}
       <CivicPerformanceSchedule />
 
-      {/* 5. 블로그 콘텐츠 큐레이션 리스트 */}
-      <HomePostList initialPosts={posts} />
+      {/* 4. 네이버형 분야별 대제목-하위탭-포스팅 허브 */}
+      <CivicCategorySection posts={posts} />
     </div>
   );
 }
