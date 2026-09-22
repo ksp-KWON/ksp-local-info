@@ -41,9 +41,26 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
     return { categoryPostsMap: catMap, subCategoryPostsMap: subMap };
   }, [posts]);
 
-  // 포스트가 등록된 카테고리를 우선으로 정렬하여 표시
+  // 카테고리 우선순위 정렬 (공연 관련 '문화·예술' 1순위 보장)
+  const CATEGORY_ORDER = [
+    '문화·예술',
+    '일자리·생활',
+    '복지·돌봄',
+    '교통·주차',
+    '기업경제·농업',
+    '청소·환경',
+    '주택·재개발',
+    '재난·민방위',
+    '체육·공원',
+  ];
+
+  // 포스트가 등록된 카테고리를 우선순위 순서대로 정렬하여 표시
   const activeCategories = useMemo(() => {
-    return UIJEONGBU_TAXONOMY.filter((cat) => (categoryPostsMap[cat.name] || []).length > 0);
+    return UIJEONGBU_TAXONOMY.filter((cat) => (categoryPostsMap[cat.name] || []).length > 0).sort((a, b) => {
+      const idxA = CATEGORY_ORDER.indexOf(a.name);
+      const idxB = CATEGORY_ORDER.indexOf(b.name);
+      return (idxA !== -1 ? idxA : 99) - (idxB !== -1 ? idxB : 99);
+    });
   }, [categoryPostsMap]);
 
   // 최신 발행 소식 상위 3건
@@ -129,11 +146,12 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
         const categoryPosts = categoryPostsMap[catDef.name] || [];
         const currentTab = activeTabs[catDef.name] || '전체';
 
-        // 현재 선택된 탭에 따라 노출할 포스트 결정
-        const displayPosts =
+        // 현재 선택된 탭에 따라 노출할 포스트 결정 (섹션별 2개 고정)
+        const displayPosts = (
           currentTab === '전체'
-            ? categoryPosts.slice(0, 4)
-            : subCategoryPostsMap[currentTab] || [];
+            ? categoryPosts
+            : subCategoryPostsMap[currentTab] || []
+        ).slice(0, 2);
 
         // 현재 선택된 하위 카테고리 정보
         const currentSubDef =
@@ -280,8 +298,8 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
               </PremiumCard>
             )}
 
-            {/* 4. 전체보기 추가 버튼 (카테고리에 포스트가 4개 초과이고 '전체' 탭일 때) */}
-            {currentTab === '전체' && categoryPosts.length > 4 && (
+            {/* 4. 전체보기 추가 버튼 (카테고리에 포스트가 2개 초과이고 '전체' 탭일 때) */}
+            {currentTab === '전체' && categoryPosts.length > 2 && (
               <div className="pt-1 flex justify-center">
                 <PremiumButton
                   href={`/blog?category=${encodeURIComponent(catDef.name)}`}
@@ -290,7 +308,7 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
                   icon="chevron-right"
                   iconPosition="right"
                 >
-                  ‘{catDef.name}’ 가이드 포스트 {categoryPosts.length - 4}건 더보기
+                  ‘{catDef.name}’ 가이드 포스트 {categoryPosts.length - 2}건 더보기
                 </PremiumButton>
               </div>
             )}

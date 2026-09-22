@@ -8,7 +8,6 @@ import MiniMapPreview from '@/components/MiniMapPreview';
 import AppIcon from '@/components/ui/AppIcon';
 import PremiumCard from '@/components/ui/PremiumCard';
 import CivicCategorySection from '@/components/CivicCategorySection';
-import CivicPerformanceSchedule from '@/components/CivicPerformanceSchedule';
 
 interface LocalData {
   lastUpdated: string;
@@ -76,7 +75,10 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 핵심 공공서비스 퀵메뉴 (슬림 와이드 바) */}
+      {/* 2. 네이버형 분야별 대제목-하위탭-포스팅 허브 (최상단 브리핑 + 1순위 공연 섹션) */}
+      <CivicCategorySection posts={posts} />
+
+      {/* 3. 핵심 공공서비스 퀵메뉴 (24시간 응급실 안내 슬림 와이드 바) */}
       <div className="w-full">
         <Link href="/services/emergency" className="group block w-full">
           <PremiumCard
@@ -110,12 +112,6 @@ export default async function Home() {
           </PremiumCard>
         </Link>
       </div>
-
-      {/* 3. 의정부예술의전당 2026 하반기 월별 공연·축제 인터랙티브 뷰어 */}
-      <CivicPerformanceSchedule />
-
-      {/* 4. 네이버형 분야별 대제목-하위탭-포스팅 허브 */}
-      <CivicCategorySection posts={posts} />
     </div>
   );
 }
