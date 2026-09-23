@@ -51,12 +51,12 @@ async function generateAndSavePost(targetItem, tierLabel) {
   return fileName;
 }
 
-// ── [Tier 1] 의정부시청 공식 RSS 5종 최우선 포스팅 ─────────────────────
+// ── [Tier 1] 의정부시청 공식 RSS 최우선 포스팅 ─────────────────────
 async function runTier1CityRss() {
   console.log('\n[Tier 1] 의정부시청 공식 RSS 미발행 항목 검색 중...');
   if (!fs.existsSync(CITY_RSS_PATH)) {
     console.log('  -> city-rss.json 파일이 없습니다.');
-    return null;
+    return [];
   }
 
   const existingSourceIds = getExistingSourceIds();
@@ -70,10 +70,25 @@ async function runTier1CityRss() {
 
   if (pending.length === 0) {
     console.log('  -> 시청 RSS에 미발행된 신규 소식이 없습니다.');
-    return null;
+    return [];
   }
 
-  return await generateAndSavePost(pending[0], 'Tier 1: 시청 공식 RSS');
+  console.log(`  -> 미발행 신규 소식 ${pending.length}건 발견. 전수 자동 생성 시작...`);
+  const published = [];
+  for (let i = 0; i < pending.length; i++) {
+    const item = pending[i];
+    try {
+      console.log(`\n[${i + 1}/${pending.length}] 글 작성 진행: "${item.title}"`);
+      const fileName = await generateAndSavePost(item, 'Tier 1: 시청 공식 RSS');
+      published.push(fileName);
+      existingSourceIds.add(item.sourceId || generateSourceId(item.title));
+      await sleep(2500); // Gemini API 레이트 리밋 방지 쾌적 대기
+    } catch (err) {
+      console.error(`  ❌ "${item.title}" 생성 실패:`, err.message);
+    }
+  }
+
+  return published;
 }
 
 // ── [Tier 2] 경기24 공공데이터(local-info.json) 보조 포스팅 ────────────
@@ -81,7 +96,7 @@ async function runTier2LocalInfo() {
   console.log('\n[Tier 2] 경기24 공공데이터 미발행 항목 검색 중...');
   if (!fs.existsSync(LOCAL_INFO_PATH)) {
     console.log('  -> local-info.json 파일이 없습니다.');
-    return null;
+    return [];
   }
 
   const existingSourceIds = getExistingSourceIds();
@@ -96,35 +111,47 @@ async function runTier2LocalInfo() {
 
   if (pending.length === 0) {
     console.log('  -> 경기24 공공데이터에 미발행된 신규 공고가 없습니다.');
-    return null;
+    return [];
   }
 
-  return await generateAndSavePost(pending[0], 'Tier 2: 경기24 공공데이터');
+  console.log(`  -> 미발행 경기24 공공데이터 ${pending.length}건 발견. 전수 자동 생성 시작...`);
+  const published = [];
+  for (let i = 0; i < pending.length; i++) {
+    const item = pending[i];
+    try {
+      console.log(`\n[${i + 1}/${pending.length}] 글 작성 진행: "${item.title}"`);
+      const fileName = await generateAndSavePost(item, 'Tier 2: 경기24 공공데이터');
+      published.push(fileName);
+      existingSourceIds.add(generateSourceId(item.title));
+      await sleep(2500);
+    } catch (err) {
+      console.error(`  ❌ "${item.title}" 생성 실패:`, err.message);
+    }
+  }
+
+  return published;
 }
 
 // ── [메인 실행 엔진] ───────────────────────────────────────────────
 async function main() {
   console.log('======================================================');
-  console.log('🚀 [의정부 포털] 오토 포스팅 엔진 시작');
+  console.log('🚀 [의정부 포털] 오토 포스팅 엔진 시작 (전수 일괄 발행 모드)');
   console.log('실행 시각:', new Date().toISOString());
   console.log('======================================================');
 
   try {
-    // 1순위: 의정부시청 공식 RSS 5종 피드
-    const tier1Result = await runTier1CityRss();
-    if (tier1Result) {
-      console.log(`\n🎉 [성공] 의정부시청 RSS 포스팅 완료: ${tier1Result}`);
-      return;
-    }
+    // 1순위: 의정부시청 공식 RSS 피드 전수 발행
+    const tier1Results = await runTier1CityRss();
 
-    // 2순위: 경기24 공공데이터
-    const tier2Result = await runTier2LocalInfo();
-    if (tier2Result) {
-      console.log(`\n🎉 [성공] 경기24 공공데이터 포스팅 완료: ${tier2Result}`);
-      return;
-    }
+    // 2순위: 경기24 공공데이터 전수 발행
+    const tier2Results = await runTier2LocalInfo();
 
-    console.log('\n⚠️ [알림] 금일 발행할 수 있는 새로운 이슈가 없습니다.');
+    const totalCount = (tier1Results?.length || 0) + (tier2Results?.length || 0);
+    if (totalCount > 0) {
+      console.log(`\n🎉 [성공] 총 ${totalCount}건의 신규 시정 가이드 자동 포스팅 완료!`);
+    } else {
+      console.log('\nℹ️ [알림] 현재 발행 대기 중인 새로운 이슈가 없습니다.');
+    }
   } catch (error) {
     console.error('\n❌ [치명적 오류] 오토 포스팅 엔진 실행 실패:', error.message);
     process.exit(1);

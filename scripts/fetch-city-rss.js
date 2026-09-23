@@ -18,7 +18,7 @@ const { safeFetch, sleep } = require('./pipeline-utils');
 
 const CITY_RSS_FILE = path.join(process.cwd(), 'public/data/city-rss.json');
 
-// ── 의정부시청 공식 RSS 5종 엔드포인트 및 직관형 카테고리 매핑 설정 ──
+// ── 의정부시청 공식 RSS 4종 엔드포인트 및 직관형 카테고리 매핑 설정 (단순입찰 피드 영구 제외) ──
 const RSS_CONFIGS = [
   {
     id: 'notice',
@@ -43,12 +43,6 @@ const RSS_CONFIGS = [
     name: '지역뉴스',
     category: '생활·민원',
     url: 'http://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000005',
-  },
-  {
-    id: 'bids',
-    name: '입찰정보',
-    category: '일자리·소상공인',
-    url: 'http://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000002',
   },
 ];
 
@@ -90,6 +84,21 @@ function isItemExpired(title, description) {
 }
 
 /**
+ * 저품질 단순 공고 및 시민 생활 무관 행정 내부잡무 배제 필터
+ */
+function isLowQualityNotice(title, description) {
+  const text = (title + ' ' + (description || '')).toLowerCase();
+  const lowQualityKeywords = [
+    '입찰', '견적제출', '소액수의', '청소용역', '관급자재', '폐기물', '단가계약', '취소공고',
+    '공사(', '용역(', '물품(', '재난관리기금', '장비임차', '매각 일반입찰', '공유재산',
+    '주요업무계획', '행정서비스 헌장', '공표', '군 훈련', '대대전술훈련', '합공방공훈련',
+    '사격훈련', '성인지 교육', '발대식', '환경정비', '다과세트 전달', '흙공 만들기', '원외재판부 유치', '정담회',
+    '추천도서', '종이접기', '안전점검의 날', '안병용'
+  ];
+  return lowQualityKeywords.some(kw => text.includes(kw));
+}
+
+/**
  * 초경량 XML 아이템 파서 (기한 만료 자동 배제)
  */
 function parseRssXml(xmlText, defaultCategory, feedName) {
@@ -115,6 +124,11 @@ function parseRssXml(xmlText, defaultCategory, feedName) {
 
     // ── 기한 만료 및 과거 정보 자동 배제 ──
     if (isItemExpired(title, description)) {
+      continue;
+    }
+
+    // ── 저품질 단순 공고 및 행정 내부잡무 배제 ──
+    if (isLowQualityNotice(title, description)) {
       continue;
     }
 
@@ -208,6 +222,7 @@ async function main() {
   for (const item of mergedQueue) {
     if (!item || !item.sourceId || recordedIds.has(item.sourceId)) continue;
     if (isItemExpired(item.title, item.description)) continue;
+    if (isLowQualityNotice(item.title, item.description)) continue;
     recordedIds.add(item.sourceId);
     finalQueue.push(item);
   }
