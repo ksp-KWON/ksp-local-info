@@ -263,10 +263,6 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
       {/* ── 게시글 핵심 키워드 태그 클라우드 ── */}
       {tags && tags.length > 0 && (
         <div className="my-8 pt-6 border-t border-gray-100 dark:border-zinc-800">
-          <div className="flex items-center gap-1.5 mb-3 text-xs font-extrabold text-zinc-500 dark:text-zinc-400">
-            <AppIcon name="pin" size={13} strokeWidth={2.5} />
-            <span>이 글의 핵심 키워드 태그</span>
-          </div>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <Link
