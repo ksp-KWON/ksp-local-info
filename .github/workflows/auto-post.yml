@@ -31,6 +31,13 @@ jobs:
       - name: 의존성 설치
         run: npm ci
 
+      # ── 의정부시청 공식 RSS 수집 ─────────────────────────────────────────
+      - name: 의정부시청 공식 RSS 수집
+        id: fetch_rss
+        run: |
+          echo "📡 의정부시청 공식 RSS 4종 수집 시작 (scripts/fetch-city-rss.js)"
+          node scripts/fetch-city-rss.js && echo "RSS_OK=true" >> $GITHUB_OUTPUT || echo "RSS_OK=false" >> $GITHUB_OUTPUT
+
       # ── 공공데이터 수집 (실패해도 다음 단계 진행) ──────────────────────
       - name: 공공데이터 수집
         id: fetch_data
@@ -41,7 +48,7 @@ jobs:
           echo "🔍 공공데이터 수집 시작 (scripts/fetch-public-data.js)"
           node scripts/fetch-public-data.js && echo "FETCH_OK=true" >> $GITHUB_OUTPUT || echo "FETCH_OK=false" >> $GITHUB_OUTPUT
 
-      # ── 블로그 글쓰기 (실패해도 커밋 단계 진행) ────────────────────────
+      # ── 블로그 글쓰기 (전수 자동 생성) ───────────────────────────────────
       - name: 블로그 자동글쓰기
         id: generate_post
         env:
@@ -50,18 +57,24 @@ jobs:
           echo "✍️ 블로그 글쓰기 시작 (scripts/generate-blog-post.js)"
           node scripts/generate-blog-post.js && echo "GENERATE_OK=true" >> $GITHUB_OUTPUT || echo "GENERATE_OK=false" >> $GITHUB_OUTPUT
 
+      # ── CQF 품질 전수 검증 ───────────────────────────────────────────────
+      - name: CQF 품질 검증
+        run: |
+          echo "🛡️ CQF 헌법 규격 자동 검증 시작"
+          npm run check-quality
+
       # ── 생성된 파일 커밋 & 푸시 ─────────────────────────────────────────
       - name: 변경사항 커밋 & 푸시
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # 자동 작성 결과물 스테이징
-          git add public/data/local-info.json src/content/posts/ || true
+          # 자동 작성 결과물 스테이징 (시청 RSS 대기열 + 공공데이터 + 마크다운 포스팅)
+          git add public/data/city-rss.json public/data/local-info.json src/content/posts/ || true
 
           # 변경사항이 있을 때만 커밋
           if ! git diff --cached --quiet; then
-            git commit -m "auto: 자동글쓰기 업데이트 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+            git commit -m "auto: 시정 새소식 자동 발행 업데이트 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
             git pull --rebase origin main
             git push origin main
             echo "✅ 커밋 & 푸시 완료"
@@ -74,5 +87,6 @@ jobs:
         if: always()
         run: |
           echo "📊 실행 결과 요약"
-          echo "  - 데이터 수집 : ${{ steps.fetch_data.outputs.FETCH_OK == 'true' && '✅ 성공' || '⚠️ 실패/데이터없음' }}"
-          echo "  - 블로그 글쓰기: ${{ steps.generate_post.outputs.GENERATE_OK == 'true' && '✅ 성공' || '⚠️ 실패/글없음' }}"
+          echo "  - 시청 RSS 수집 : ${{ steps.fetch_rss.outputs.RSS_OK == 'true' && '✅ 성공' || '⚠️ 실패' }}"
+          echo "  - 공공데이터 수집 : ${{ steps.fetch_data.outputs.FETCH_OK == 'true' && '✅ 성공' || '⚠️ 실패/데이터없음' }}"
+          echo "  - 블로그 글쓰기  : ${{ steps.generate_post.outputs.GENERATE_OK == 'true' && '✅ 성공' || '⚠️ 실패/글없음' }}"
