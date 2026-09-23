@@ -7,6 +7,7 @@ import CommonBox from './CommonBox';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import ShareButtons from './ShareButtons';
 import AppIcon from '@/components/ui/AppIcon';
+import EmergencyBanner from '@/components/emergency/EmergencyBanner';
 import { parseBlogPost } from '@/lib/blog-utils';
 
 const SCROLL_OFFSET = 140;
@@ -236,28 +237,13 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
         </div>
       )}
 
-      {/* ── [무기 7] 내 주변 생활 지도 퀵메뉴 ── */}
+      {/* ── [무기 7] 내 주변 생활 지도 퀵메뉴 (메인페이지 공유 풀 지도 배너) ── */}
       <div className="my-8 pt-6 border-t border-gray-200/80 dark:border-zinc-800">
         <div className="flex items-center gap-2 mb-3 text-xs font-bold text-zinc-600 dark:text-zinc-400">
           <AppIcon name="compass" size={15} strokeWidth={2.5} />
           <span>의정부 시민 내 주변 생활 지도 퀵메뉴</span>
         </div>
-        <div className="grid grid-cols-1 gap-3">
-          <Link
-            href="/services/emergency"
-            className="p-4 bg-white dark:bg-[#202124] border border-blue-200/90 dark:border-blue-900/50 hover:border-[var(--google-blue)] hover:shadow-[0_12px_40px_rgba(26,115,232,0.18)] transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 group flex flex-col justify-between min-h-[95px] rounded-none"
-          >
-            <div className="flex items-center gap-2 font-extrabold text-xs text-[var(--google-blue)] dark:text-[#8ab4f8]">
-              <AppIcon name="hospital" size={16} strokeWidth={2.5} className="text-[var(--google-blue)] dark:text-[#8ab4f8]" />
-              <span>응급실 안내</span>
-            </div>
-            <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 group-hover:text-[var(--google-blue)] dark:group-hover:text-[#8ab4f8] flex items-center justify-between mt-2 transition-colors">
-              <span>야간·휴일 응급의료</span>
-              <AppIcon name="chevron-right" size={12} strokeWidth={3} className="group-hover:translate-x-0.5 transition-transform" />
-            </span>
-          </Link>
-
-        </div>
+        <EmergencyBanner />
       </div>
 
       {/* ── 게시글 핵심 키워드 태그 클라우드 ── */}
