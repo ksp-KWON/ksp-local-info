@@ -87,7 +87,10 @@ export function parseBlogPost(content: string): ParsedBlogPost {
           if (currentQ) {
             result.faqItems.push({ q: currentQ, a: currentA.trim() });
           }
-          currentQ = rawText.replace(/^(?:[*_💬❓🗨️\s]*Q\d*[*_]*\s*[:.-]?\s*)/i, '').trim();
+          currentQ = rawText
+            .replace(/^(?:[*_💬❓🗨️\s]*Q\d*[*_]*\s*[:.-]?\s*)/i, '')
+            .replace(/^\*\*|\*\*$/g, '')
+            .trim();
           currentA = '';
           continue;
         }
@@ -218,13 +221,18 @@ export function parseBlogPost(content: string): ParsedBlogPost {
     if (currentSectionType === 'FAQ') {
       if (/^(?:#+\s*)?(?:[*_💬❓🗨️\s]*Q\d*[*_]*\s*[:.-]?\s*)/i.test(trimmed)) {
         if (currentQ) result.faqItems.push({ q: currentQ, a: currentA.trim() });
-        currentQ = trimmed.replace(/^(?:#+\s*)?(?:[*_💬❓🗨️\s]*Q\d*[*_]*\s*[:.-]?\s*)/i, '').trim();
+        currentQ = trimmed
+          .replace(/^(?:#+\s*)?(?:[*_💬❓🗨️\s]*Q\d*[*_]*\s*[:.-]?\s*)/i, '')
+          .replace(/^\*\*|\*\*$/g, '')
+          .trim();
         currentA = '';
         continue;
       }
       if (currentQ) {
         if (trimmed !== '---') {
-          const cleanLine = line.replace(/^\s*(?:[*_💬❓🗨️\s]*A\d*[*_]*\s*[:.-]?\s*)/i, '');
+          const cleanLine = line
+            .replace(/^\s*(?:\*\*|[*_💬❓🗨️\s])*A\d*(?:\*\*|[*_])*\s*[:.-]?\s*(?:\*\*)?\s*/i, '')
+            .replace(/\*\*$/g, '');
           currentA += cleanLine + '\n';
         }
         continue;
@@ -280,7 +288,10 @@ export function parseBlogPost(content: string): ParsedBlogPost {
   result.sections = result.sections.map(sanitizeMarkdownInline);
   result.keyPoints = result.keyPoints.map(sanitizeMarkdownInline);
   result.checklistItems = result.checklistItems.map(sanitizeMarkdownInline);
-  result.faqItems = result.faqItems.map(faq => ({ q: sanitizeMarkdownInline(faq.q), a: sanitizeMarkdownInline(faq.a) }));
+  result.faqItems = result.faqItems.map(faq => ({
+    q: sanitizeMarkdownInline(faq.q).replace(/^\*\*|\*\*$/g, '').trim(),
+    a: sanitizeMarkdownInline(faq.a).replace(/^\s*\*\*\s*/, '').replace(/\*\*$/g, '').trim(),
+  }));
 
   const groupRelatedLinks = (text: string) => {
     return text.replace(/(<calloutlink[^>]+>\s*<\/calloutlink>\s*)+/g, (match) => {

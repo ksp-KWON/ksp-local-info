@@ -2,6 +2,7 @@ import { getPostData, getSortedPostsData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import BlogPostClient from '@/components/blog/BlogPostClient';
+import { parseBlogPost } from '@/lib/blog-utils';
 import AppIcon from '@/components/ui/AppIcon';
 import Link from 'next/link';
 
@@ -94,25 +95,20 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     ],
   };
 
-  // 3. FAQPage 스키마 (구글 검색결과 FAQ 리치 스니펫)
-  const faqRegex = /(?:###\s*(?:[💡❓\s]*)?Q[.:]|\*\*Q[.:]\*\*|Q\s*[:：])\s*([\s\S]*?)\n+(?:A\s*[:：]|\*\*A[.:]\*\*|\s*[-*])\s*([\s\S]*?)(?=\n+(?:###\s*Q|Q\s*[:：]|\*\*Q)|$)/gi;
-  const faqMatches = [...post.content.matchAll(faqRegex)];
-  let faqSchema = null;
-
-  if (faqMatches.length > 0) {
-    faqSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqMatches.map((match) => ({
-        '@type': 'Question',
-        name: match[1].trim().replace(/\*\*/g, ''),
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: match[2].trim().replace(/\*\*/g, ''),
-        },
-      })),
-    };
-  }
+  // 3. FAQPage 스키마 (구글 검색결과 FAQ 리치 스니펫, 보상스쿨 SSOT 표준 일원화)
+  const { faqItems: faqs } = parseBlogPost(post.content);
+  const faqSchema = faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q.replace(/[*#_]/g, '').trim(),
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a.replace(/\*\*/g, '').replace(/<[^>]*>/g, '').trim(),
+      },
+    })),
+  } : null;
 
   // 카테고리별 테마 뱃지 스타일
   const getCategoryBadgeClass = (categoryName: string) => {
