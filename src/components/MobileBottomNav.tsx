@@ -32,6 +32,13 @@ function NavContent({ categories = [] }: { categories?: string[] }) {
       isActive: pathname === '/services/emergency',
       iconName: 'hospital' as const,
     },
+    {
+      id: 'learning',
+      label: '평생학습',
+      href: '/services/learning',
+      isActive: pathname === '/services/learning',
+      iconName: 'book' as const,
+    },
   ];
 
   return (

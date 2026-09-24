@@ -5,6 +5,7 @@ import { getSortedPostsData } from '@/lib/posts';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import EmergencyBanner from '@/components/emergency/EmergencyBanner';
+import LearningBanner from '@/components/learning/LearningBanner';
 import AppIcon from '@/components/ui/AppIcon';
 import PremiumCard from '@/components/ui/PremiumCard';
 import CivicCategorySection from '@/components/CivicCategorySection';
@@ -33,7 +34,7 @@ export default async function Home() {
   const posts = getSortedPostsData();
 
   return (
-    <div className="space-y-8 sm:space-y-10">
+    <div className="space-y-6 sm:space-y-8">
       {/* 1. 메인 인트로 헤더 (보상스쿨 Google Material 스타일) */}
       <div className="relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#202124] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-md p-6 sm:p-8 lg:p-10 group transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-blue-50/10 to-transparent dark:from-blue-950/20 dark:via-blue-950/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
@@ -48,14 +49,14 @@ export default async function Home() {
           <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#e8f0fe] text-[var(--google-blue)] dark:bg-[#174ea6]/20 dark:text-[#8ab4f8] text-xs font-bold uppercase tracking-wider mb-4 border border-[#d2e3fc]/60 dark:border-[#174ea6]/40 rounded-none shadow-xs">
               <AppIcon name="shield-check" size={14} strokeWidth={2} />
-              <span>의정부시 생활·의료 정보 포털</span>
+              <span>의정부시 생활·의료·교육 정보 포털</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2] text-[#202124] dark:text-white">
               의정부 <br className="hidden sm:block lg:hidden" />
               <span className="bg-gradient-to-r from-[#0d47a1] to-[#1a73e8] dark:from-[#8ab4f8] dark:to-[#aecbfa] bg-clip-text text-transparent">건강·생활 정보 포털</span>
             </h1>
             <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-normal break-keep max-w-xl leading-relaxed">
-              의정부 응급실 위치와 전화번호, 국가건강검진·민원 안내를 한눈에 확인하세요.
+              의정부 응급실 위치와 평생학습 실시간 강좌, 국가건강검진·민원 안내를 한눈에 확인하세요.
             </p>
           </div>
 
@@ -75,8 +76,11 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 2. 핵심 공공서비스 퀵메뉴 (의정부시 24시간 응급실 안내 - 풀 지도 배경 공통 컴포넌트) */}
-      <EmergencyBanner />
+      {/* 2. 핵심 공공서비스 퀵 배너 2종 (응급의료 지도 + 평생학습 실시간 강좌 지도) */}
+      <div className="grid grid-cols-1 gap-3 sm:gap-4">
+        <EmergencyBanner />
+        <LearningBanner />
+      </div>
 
       {/* 3. 네이버형 분야별 대제목-하위탭-포스팅 허브 (최상단 브리핑 + 1순위 공연 섹션) */}
       <CivicCategorySection posts={posts} />

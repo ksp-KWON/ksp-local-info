@@ -1,0 +1,233 @@
+/**
+ * 의정부시 평생학습 통합플랫폼(뉴런) 실시간 강좌 데이터 수집 및 캐싱 엔진
+ * 
+ * sugang.ull.or.kr에서 '접수중' 및 '접수예정' 활성 강좌를 안전하게 수집하여
+ * 정형화된 JSON 캐시 파일로 구축합니다.
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+// 의정부시 주요 평생학습 거점 및 행정동 좌표 딕셔너리
+const LOCATION_COORDINATES = {
+  '청소년수련관': { lat: 37.7475, lng: 127.0435, dong: '의정부2동', address: '의정부시 호국로 1315' },
+  '의정부시평생학습원': { lat: 37.7385, lng: 127.0465, dong: '의정부1동', address: '의정부시 평화로 540' },
+  '의정부정보도서관': { lat: 37.7348, lng: 127.0392, dong: '의정부2동', address: '의정부시 의정부2동 502' },
+  '의정부과학도서관': { lat: 37.7538, lng: 127.0705, dong: '신곡2동', address: '의정부시 신곡2동 442-1' },
+  '의정부미술도서관': { lat: 37.7408, lng: 127.0970, dong: '송산2동', address: '의정부시 민락동 880' },
+  '의정부음악도서관': { lat: 37.7285, lng: 127.0545, dong: '장암동', address: '의정부시 장암동 406' },
+  '의정부가재울도서관': { lat: 37.7512, lng: 127.0335, dong: '가능동', address: '의정부시 가능동 199-1' },
+  '민락노블랜드': { lat: 37.7412, lng: 127.0985, dong: '송산2동', address: '의정부시 용민로 374' },
+  '송산3동': { lat: 37.7455, lng: 127.0945, dong: '송산3동', address: '의정부시 민락동' },
+  '신곡1동': { lat: 37.7315, lng: 127.0555, dong: '신곡1동', address: '의정부시 신곡1동' },
+  '신곡2동': { lat: 37.7485, lng: 127.0685, dong: '신곡2동', address: '의정부시 신곡2동' },
+  '호원1동': { lat: 37.7125, lng: 127.0485, dong: '호원1동', address: '의정부시 호원1동' },
+  '호원2동': { lat: 37.7255, lng: 127.0425, dong: '호원2동', address: '의정부시 호원2동' },
+  '장암동': { lat: 37.7185, lng: 127.0535, dong: '장암동', address: '의정부시 장암동' },
+  '가능동': { lat: 37.7525, lng: 127.0345, dong: '가능동', address: '의정부시 가능동' },
+  '흥선동': { lat: 37.7435, lng: 127.0315, dong: '흥선동', address: '의정부시 흥선동' },
+  '녹양동': { lat: 37.7655, lng: 127.0385, dong: '녹양동', address: '의정부시 녹양동' },
+  '자금동': { lat: 37.7615, lng: 127.0725, dong: '자금동', address: '의정부시 자금동' },
+  '고산동': { lat: 37.7295, lng: 127.1085, dong: '고산동', address: '의정부시 고산동' },
+  '아띠미술': { lat: 37.7420, lng: 127.0650, dong: '신곡동', address: '의정부시 신곡동' },
+  '힐링센터': { lat: 37.7380, lng: 127.0450, dong: '의정부1동', address: '의정부시 평화로 540' },
+  '기본': { lat: 37.7381, lng: 127.0337, dong: '의정부동', address: '의정부시 시민로 1 (시청)' },
+};
+
+function inferLocationAndDong(title, org) {
+  const combined = `${title} ${org}`;
+  for (const [key, loc] of Object.entries(LOCATION_COORDINATES)) {
+    if (key !== '기본' && combined.includes(key)) {
+      return loc;
+    }
+  }
+
+  // 동네 이름 직접 매칭
+  const dongList = ['의정부1동', '의정부2동', '호원1동', '호원2동', '장암동', '신곡1동', '신곡2동', '송산1동', '송산2동', '송산3동', '자금동', '가능동', '흥선동', '녹양동', '고산동'];
+  for (const d of dongList) {
+    if (combined.includes(d)) {
+      return { ...LOCATION_COORDINATES['기본'], dong: d };
+    }
+  }
+
+  return LOCATION_COORDINATES['기본'];
+}
+
+function inferCategory(title) {
+  if (/로봇|과학|코딩|드론|ai|융합/i.test(title)) return '창의·IT·과학';
+  if (/미술|그림|공예|바느질|도예|가죽|소품|캘리/i.test(title)) return '문화·공예·예술';
+  if (/요가|필라테스|댄스|체육|운동|체조|수영/i.test(title)) return '건강·스포츠';
+  if (/영어|일본어|중국어|어학|회화|한자/i.test(title)) return '외국어·인문';
+  if (/자격증|직업|바리스타|제과|창업|취업/i.test(title)) return '직업·자격·실무';
+  if (/유아|어린이|그림책|놀이터|초등|청소년/i.test(title)) return '어린이·청소년';
+  return '교양·시민참여';
+}
+
+function inferTarget(title) {
+  if (/유아|초등|어린이/i.test(title)) return '유아·어린이';
+  if (/청소년|중등|고등/i.test(title)) return '청소년';
+  if (/시니어|어르신|실버|50\+/i.test(title)) return '어르신·50+';
+  if (/직장인|야간|퇴근/i.test(title)) return '직장인·청년';
+  return '시민 누구나';
+}
+
+function isWeekendOrNight(title, period) {
+  if (/토|일|주말|야간|저녁|19:|20:/i.test(title)) return true;
+  return false;
+}
+
+async function fetchPage(pageIndex, stateCode = '1') {
+  const url = 'https://sugang.ull.or.kr/ilms/learning/learningList.do';
+  const body = new URLSearchParams({
+    searchCondition: '1',
+    e_search_arr: stateCode,
+    pageUnit: '50',
+    pageIndex: String(pageIndex),
+  });
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    },
+    body: body.toString(),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch sugang list: ${res.status}`);
+  }
+
+  return await res.text();
+}
+
+function parseCourseRows(html) {
+  const courses = [];
+  const rows = [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)];
+
+  // 첫 번째 행은 thead
+  for (let i = 1; i < rows.length; i++) {
+    const rowHtml = rows[i][1];
+
+    // 번호
+    const numMatch = rowHtml.match(/<td>\s*([0-9]+)\s*<\/td>/i);
+    const idNum = numMatch ? numMatch[1].trim() : String(Date.now() + i);
+
+    // 제목 및 기관
+    const titMatch = rowHtml.match(/<span class="tit"[^>]*>([\s\S]*?)<\/span>/i);
+    if (!titMatch) continue;
+    let title = titMatch[1].replace(/<[^>]+>/g, '').replace(/&#039;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').trim();
+
+    const orgMatch = rowHtml.match(/<span class="org"[^>]*>([\s\S]*?)<\/span>/i);
+    const org = orgMatch ? orgMatch[1].replace(/<[^>]+>/g, '').trim() : '의정부시평생학습원';
+
+    // 교육기간
+    const eduPeriodMatch = rowHtml.match(/<em class="hidden">교육기간<\/em>\s*([0-9.~ \t\r\n]+)/i);
+    const eduPeriod = eduPeriodMatch ? eduPeriodMatch[1].replace(/\s+/g, ' ').trim() : '일정 공지 참조';
+
+    // 신청기간
+    const applyPeriodMatch = rowHtml.match(/<em class="hidden">일반 인터넷접수<\/em>\s*([0-9.~ \t\r\n]+)/i);
+    const applyPeriod = applyPeriodMatch ? applyPeriodMatch[1].replace(/\s+/g, ' ').trim() : '접수중';
+
+    // 모집인원
+    const capMatch = rowHtml.match(/<em class="hidden">인터넷 총모집인원<\/em>\s*([^<\r\n]+)/i);
+    const capacity = capMatch ? capMatch[1].trim() : '정원 마감 시까지';
+
+    // 상태
+    let status = '접수중';
+    if (rowHtml.includes('접수예정')) status = '접수예정';
+    else if (rowHtml.includes('접수마감')) status = '접수마감';
+
+    // 신청 링크 / learning_id
+    let applyUrl = 'https://sugang.ull.or.kr/ilms/learning/officeMainList.do';
+    const detailIdMatch = rowHtml.match(/fn_learning_detail\(['"]([^'"]+)['"]\)/);
+    const exUrlMatch = rowHtml.match(/fn_learning_ex_detail\(['"]([^'"]+)['"]\)/);
+
+    if (detailIdMatch && detailIdMatch[1]) {
+      applyUrl = `https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=${detailIdMatch[1]}`;
+    } else if (exUrlMatch && exUrlMatch[1]) {
+      applyUrl = exUrlMatch[1];
+    }
+
+    const loc = inferLocationAndDong(title, org);
+    const category = inferCategory(title);
+    const target = inferTarget(title);
+    const isNightWeekend = isWeekendOrNight(title, eduPeriod);
+    const isFree = !rowHtml.includes('유료') && !title.includes('유료');
+
+    courses.push({
+      id: `ujb-${idNum}`,
+      num: idNum,
+      title,
+      org,
+      dong: loc.dong,
+      address: loc.address,
+      lat: loc.lat,
+      lng: loc.lng,
+      eduPeriod,
+      applyPeriod,
+      capacity,
+      status,
+      category,
+      target,
+      isFree,
+      isNightWeekend,
+      applyUrl,
+    });
+  }
+
+  return courses;
+}
+
+async function main() {
+  console.log(' 의정부시 평생학습원 실시간 강좌 캐시 수집 시작...');
+  const allCourses = [];
+
+  try {
+    // 1~3페이지(최대 150건 접수중 강좌) 수집
+    for (let page = 1; page <= 3; page++) {
+      console.log(`📡 [페이지 ${page}] 데이터 수신 중...`);
+      const html = await fetchPage(page, '1'); // 접수중
+      const courses = parseCourseRows(html);
+      if (courses.length === 0) break;
+      allCourses.push(...courses);
+    }
+
+    // 중복 제거 (id 기준)
+    const uniqueMap = new Map();
+    for (const c of allCourses) {
+      if (!uniqueMap.has(c.id)) {
+        uniqueMap.set(c.id, c);
+      }
+    }
+    const finalCourses = Array.from(uniqueMap.values());
+
+    console.log(` 총 ${finalCourses.length}개의 활성 강좌 정제 완료!`);
+
+    const outputData = {
+      updatedAt: new Date().toISOString(),
+      source: '의정부도시교육재단 평생학습 통합플랫폼 (sugang.ull.or.kr)',
+      totalCount: finalCourses.length,
+      courses: finalCourses,
+    };
+
+    // 저장 디렉토리 보장
+    const srcDataDir = path.join(__dirname, '../src/data');
+    const publicDataDir = path.join(__dirname, '../public/data');
+    if (!fs.existsSync(srcDataDir)) fs.mkdirSync(srcDataDir, { recursive: true });
+    if (!fs.existsSync(publicDataDir)) fs.mkdirSync(publicDataDir, { recursive: true });
+
+    const srcPath = path.join(srcDataDir, 'learning-courses.json');
+    const publicPath = path.join(publicDataDir, 'learning-courses.json');
+
+    fs.writeFileSync(srcPath, JSON.stringify(outputData, null, 2), 'utf8');
+    fs.writeFileSync(publicPath, JSON.stringify(outputData, null, 2), 'utf8');
+
+    console.log(` 캐시 파일 생성 성공: ${srcPath} (${(fs.statSync(srcPath).size / 1024).toFixed(1)} KB)`);
+  } catch (error) {
+    console.error('❌ 강좌 데이터 수집 중 오류 발생:', error);
+    process.exit(1);
+  }
+}
+
+main();
