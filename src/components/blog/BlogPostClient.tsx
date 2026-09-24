@@ -8,6 +8,7 @@ import MarkdownRenderer from '@/components/MarkdownRenderer';
 import ShareButtons from './ShareButtons';
 import AppIcon from '@/components/ui/AppIcon';
 import EmergencyBanner from '@/components/emergency/EmergencyBanner';
+import LearningBanner from '@/components/learning/LearningBanner';
 import { parseBlogPost } from '@/lib/blog-utils';
 
 const SCROLL_OFFSET = 140;
@@ -243,7 +244,10 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
           <AppIcon name="compass" size={15} strokeWidth={2.5} />
           <span>의정부 시민 내 주변 생활 지도 퀵메뉴</span>
         </div>
-        <EmergencyBanner />
+        <div className="grid grid-cols-1 gap-3">
+          <EmergencyBanner />
+          <LearningBanner />
+        </div>
       </div>
 
       {/* ── 게시글 핵심 키워드 태그 클라우드 ── */}
