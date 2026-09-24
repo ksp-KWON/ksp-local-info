@@ -132,6 +132,68 @@ async function runTier2LocalInfo() {
   return published;
 }
 
+// ── [Tier 3] 의정부 평생학습 실시간 강좌(learning-courses.json) 자동 포스팅 ───
+const LEARNING_COURSES_PATH = path.join(process.cwd(), 'src/data/learning-courses.json');
+
+async function runTier3LifelongLearning() {
+  console.log('\n[Tier 3] 의정부 평생학습 실시간 강좌 미발행 항목 검색 중...');
+  if (!fs.existsSync(LEARNING_COURSES_PATH)) {
+    console.log('  -> learning-courses.json 파일이 없어 자동 수집을 실행합니다...');
+    try {
+      const { execSync } = require('child_process');
+      execSync('node scripts/build-learning-cache.js', { stdio: 'inherit' });
+    } catch (e) {
+      console.error('  ❌ 강좌 캐시 수집 실패:', e.message);
+      return [];
+    }
+  }
+
+  const existingSourceIds = getExistingSourceIds();
+  const learningData = JSON.parse(fs.readFileSync(LEARNING_COURSES_PATH, 'utf8'));
+  const courses = learningData.courses || [];
+
+  // 신규 미발행 접수중 강좌 탐색
+  const pending = courses.filter(item => {
+    if (!item.title) return false;
+    const sourceId = item.id || generateSourceId(item.title);
+    return !existingSourceIds.has(sourceId);
+  });
+
+  if (pending.length === 0) {
+    console.log('  -> 평생학습 강좌에 미발행된 신규 항목이 없습니다.');
+    return [];
+  }
+
+  // 양산형 페널티 방지를 위해 1회 배치당 최우선 알짜 강좌 최대 2건 선별 발행
+  const targetCourses = pending.slice(0, 2);
+  console.log(`  -> 미발행 평생학습 강좌 ${pending.length}건 중 엄선된 ${targetCourses.length}건 자동 생성 시작...`);
+
+  const published = [];
+  for (let i = 0; i < targetCourses.length; i++) {
+    const course = targetCourses[i];
+    const postItem = {
+      title: course.title,
+      content: `교육기관: ${course.org}, 교육장소: ${course.address} (${course.dong}), 교육기간: ${course.eduPeriod}, 신청기간: ${course.applyPeriod}, 모집정원: ${course.capacity}, 수강료: ${course.isFree ? '무료' : '유료'}, 주요대상: ${course.target}, 분야: ${course.category}. 의정부시 평생학습 통합플랫폼 뉴런 공식 온라인 접수.`,
+      link: course.applyUrl || 'https://sugang.ull.or.kr',
+      sourceId: course.id,
+      category: '교육·청소년',
+      department: course.org
+    };
+
+    try {
+      console.log(`\n[${i + 1}/${targetCourses.length}] 평생학습 글 작성 진행: "${course.title}"`);
+      const fileName = await generateAndSavePost(postItem, 'Tier 3: 의정부 평생학습 실시간 강좌');
+      published.push(fileName);
+      existingSourceIds.add(course.id);
+      await sleep(2500);
+    } catch (err) {
+      console.error(`  ❌ "${course.title}" 생성 실패:`, err.message);
+    }
+  }
+
+  return published;
+}
+
 // ── [메인 실행 엔진] ───────────────────────────────────────────────
 async function main() {
   console.log('======================================================');
@@ -146,7 +208,10 @@ async function main() {
     // 2순위: 경기24 공공데이터 전수 발행
     const tier2Results = await runTier2LocalInfo();
 
-    const totalCount = (tier1Results?.length || 0) + (tier2Results?.length || 0);
+    // 3순위: 의정부 평생학습 실시간 강좌 선별 발행
+    const tier3Results = await runTier3LifelongLearning();
+
+    const totalCount = (tier1Results?.length || 0) + (tier2Results?.length || 0) + (tier3Results?.length || 0);
     if (totalCount > 0) {
       console.log(`\n🎉 [성공] 총 ${totalCount}건의 신규 시정 가이드 자동 포스팅 완료!`);
     } else {
