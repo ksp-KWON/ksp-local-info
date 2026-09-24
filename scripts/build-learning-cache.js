@@ -2,7 +2,7 @@
  * 의정부시 평생학습 통합플랫폼(뉴런) 실시간 강좌 데이터 수집 및 캐싱 엔진
  * 
  * sugang.ull.or.kr에서 '접수중' 및 '접수예정' 활성 강좌를 안전하게 수집하여
- * 정형화된 JSON 캐시 파일로 구축합니다.
+ * 각 강좌별 상세 정보(소개글, 시간표, 수강료, 장소)를 포함한 정형화된 JSON 캐시 파일로 구축합니다.
  */
 
 const fs = require('fs');
@@ -42,7 +42,6 @@ function inferLocationAndDong(title, org) {
     }
   }
 
-  // 동네 이름 직접 매칭
   const dongList = ['의정부1동', '의정부2동', '호원1동', '호원2동', '장암동', '신곡1동', '신곡2동', '송산1동', '송산2동', '송산3동', '자금동', '가능동', '흥선동', '녹양동', '고산동'];
   for (const d of dongList) {
     if (combined.includes(d)) {
@@ -101,19 +100,54 @@ async function fetchPage(pageIndex, stateCode = '1') {
   return await res.text();
 }
 
+async function fetchCourseDetail(learningId) {
+  if (!learningId) return null;
+  try {
+    const res = await fetch('https://sugang.ull.or.kr/ilms/learning/learningDetail.do', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ learning_id: learningId }).toString()
+    });
+    const html = await res.text();
+
+    const dls = [...html.matchAll(/<dl[^>]*>([\s\S]*?)<\/dl>/gi)];
+    const detailData = {};
+    for (const dl of dls) {
+      const dtMatch = dl[1].match(/<dt[^>]*>([\s\S]*?)<\/dt>/i);
+      const ddMatch = dl[1].match(/<dd[^>]*>([\s\S]*?)<\/dd>/i);
+      if (dtMatch && ddMatch) {
+        const key = dtMatch[1].replace(/<[^>]+>/g, '').trim();
+        const val = ddMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        detailData[key] = val;
+      }
+    }
+
+    return {
+      time: detailData['교육시간'] || '',
+      fee: detailData['수강료'] || '',
+      materialFee: detailData['재료비'] || '',
+      placeDetail: detailData['교육장소상세'] || '',
+      tel: detailData['문의전화'] || '',
+      intro: detailData['강좌소개'] || '',
+      payMethod: detailData['결제방법'] || '',
+      targetGroup: detailData['교육대상'] || '',
+      turns: detailData['회차'] || '',
+    };
+  } catch (err) {
+    return null;
+  }
+}
+
 function parseCourseRows(html) {
   const courses = [];
   const rows = [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)];
 
-  // 첫 번째 행은 thead
   for (let i = 1; i < rows.length; i++) {
     const rowHtml = rows[i][1];
 
-    // 번호
     const numMatch = rowHtml.match(/<td>\s*([0-9]+)\s*<\/td>/i);
     const idNum = numMatch ? numMatch[1].trim() : String(Date.now() + i);
 
-    // 제목 및 기관
     const titMatch = rowHtml.match(/<span class="tit"[^>]*>([\s\S]*?)<\/span>/i);
     if (!titMatch) continue;
     let title = titMatch[1].replace(/<[^>]+>/g, '').replace(/&#039;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').trim();
@@ -121,29 +155,26 @@ function parseCourseRows(html) {
     const orgMatch = rowHtml.match(/<span class="org"[^>]*>([\s\S]*?)<\/span>/i);
     const org = orgMatch ? orgMatch[1].replace(/<[^>]+>/g, '').trim() : '의정부시평생학습원';
 
-    // 교육기간
     const eduPeriodMatch = rowHtml.match(/<em class="hidden">교육기간<\/em>\s*([0-9.~ \t\r\n]+)/i);
     const eduPeriod = eduPeriodMatch ? eduPeriodMatch[1].replace(/\s+/g, ' ').trim() : '일정 공지 참조';
 
-    // 신청기간
     const applyPeriodMatch = rowHtml.match(/<em class="hidden">일반 인터넷접수<\/em>\s*([0-9.~ \t\r\n]+)/i);
     const applyPeriod = applyPeriodMatch ? applyPeriodMatch[1].replace(/\s+/g, ' ').trim() : '접수중';
 
-    // 모집인원
     const capMatch = rowHtml.match(/<em class="hidden">인터넷 총모집인원<\/em>\s*([^<\r\n]+)/i);
     const capacity = capMatch ? capMatch[1].trim() : '정원 마감 시까지';
 
-    // 상태
     let status = '접수중';
     if (rowHtml.includes('접수예정')) status = '접수예정';
     else if (rowHtml.includes('접수마감')) status = '접수마감';
 
-    // 신청 링크 / learning_id
     let applyUrl = 'https://sugang.ull.or.kr/ilms/learning/officeMainList.do';
+    let learningId = null;
     const detailIdMatch = rowHtml.match(/fn_learning_detail\(['"]([^'"]+)['"]\)/);
     const exUrlMatch = rowHtml.match(/fn_learning_ex_detail\(['"]([^'"]+)['"]\)/);
 
     if (detailIdMatch && detailIdMatch[1]) {
+      learningId = detailIdMatch[1];
       applyUrl = `https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=${detailIdMatch[1]}`;
     } else if (exUrlMatch && exUrlMatch[1]) {
       applyUrl = exUrlMatch[1];
@@ -158,6 +189,7 @@ function parseCourseRows(html) {
     courses.push({
       id: `ujb-${idNum}`,
       num: idNum,
+      learningId,
       title,
       org,
       dong: loc.dong,
@@ -173,6 +205,11 @@ function parseCourseRows(html) {
       isFree,
       isNightWeekend,
       applyUrl,
+      time: '일정 공지 참조',
+      fee: isFree ? '무료' : '유료 (강의계획서 참조)',
+      materialFee: '강의계획서 참조',
+      tel: '031-826-9988',
+      intro: '',
     });
   }
 
@@ -184,16 +221,14 @@ async function main() {
   const allCourses = [];
 
   try {
-    // 1~3페이지(최대 150건 접수중 강좌) 수집
     for (let page = 1; page <= 3; page++) {
       console.log(`📡 [페이지 ${page}] 데이터 수신 중...`);
-      const html = await fetchPage(page, '1'); // 접수중
+      const html = await fetchPage(page, '1');
       const courses = parseCourseRows(html);
       if (courses.length === 0) break;
       allCourses.push(...courses);
     }
 
-    // 중복 제거 (id 기준)
     const uniqueMap = new Map();
     for (const c of allCourses) {
       if (!uniqueMap.has(c.id)) {
@@ -202,7 +237,27 @@ async function main() {
     }
     const finalCourses = Array.from(uniqueMap.values());
 
-    console.log(` 총 ${finalCourses.length}개의 활성 강좌 정제 완료!`);
+    console.log(` 총 ${finalCourses.length}개 강좌 목록 추출 완료! 상위 강좌 세부 커리큘럼 수집 중...`);
+
+    // 상위 30개 강좌의 상세 정보 병렬 수집
+    const detailTargets = finalCourses.filter(c => c.learningId).slice(0, 30);
+    const BATCH_SIZE = 5;
+    for (let i = 0; i < detailTargets.length; i += BATCH_SIZE) {
+      const chunk = detailTargets.slice(i, i + BATCH_SIZE);
+      await Promise.all(chunk.map(async (course) => {
+        const detail = await fetchCourseDetail(course.learningId);
+        if (detail) {
+          if (detail.time) course.time = detail.time;
+          if (detail.fee) course.fee = detail.fee;
+          if (detail.materialFee) course.materialFee = detail.materialFee;
+          if (detail.tel) course.tel = detail.tel;
+          if (detail.intro) course.intro = detail.intro;
+          if (detail.placeDetail) course.address = `${course.address} (${detail.placeDetail})`;
+        }
+      }));
+    }
+
+    console.log(` 세부 커리큘럼 및 수강료 동기화 완료!`);
 
     const outputData = {
       updatedAt: new Date().toISOString(),
@@ -211,7 +266,6 @@ async function main() {
       courses: finalCourses,
     };
 
-    // 저장 디렉토리 보장
     const srcDataDir = path.join(__dirname, '../src/data');
     const publicDataDir = path.join(__dirname, '../public/data');
     if (!fs.existsSync(srcDataDir)) fs.mkdirSync(srcDataDir, { recursive: true });

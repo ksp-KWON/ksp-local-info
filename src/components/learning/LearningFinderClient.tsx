@@ -331,8 +331,8 @@ export default function LearningFinderClient({ initialCourses, updatedAt }: Lear
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredCourses.map((course) => (
-              <PremiumCard key={course.id} borderColor="blue" className="p-5 flex flex-col justify-between h-full">
-                <div className="space-y-3">
+              <PremiumCard key={course.id} borderColor="blue" className="p-5 flex flex-col justify-between h-full group/box transition-all">
+                <Link href={`/services/learning/${course.id}`} className="block space-y-3 cursor-pointer">
                   {/* 상단 뱃지 라인 */}
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -346,8 +346,8 @@ export default function LearningFinderClient({ initialCourses, updatedAt }: Lear
                     <span className="text-[11px] text-zinc-400 font-mono">#{course.num}</span>
                   </div>
 
-                  {/* 강좌 제목 */}
-                  <h3 className="text-base font-bold text-[#202124] dark:text-white leading-snug line-clamp-2">
+                  {/* 강좌 제목 (클릭 시 상세페이지 이동) */}
+                  <h3 className="text-base font-bold text-[#202124] dark:text-white leading-snug line-clamp-2 group-hover/box:text-[var(--google-blue)] dark:group-hover/box:text-[#8ab4f8] transition-colors">
                     {course.title}
                   </h3>
 
@@ -370,17 +370,24 @@ export default function LearningFinderClient({ initialCourses, updatedAt }: Lear
                       <span className="font-bold text-[var(--google-blue)] dark:text-[#8ab4f8]">{course.capacity}</span>
                     </div>
                   </div>
-                </div>
+                </Link>
 
-                {/* 하단 신청 버튼 */}
-                <div className="pt-4 mt-3 border-t border-gray-100 dark:border-zinc-800">
+                {/* 하단 2중 액션 버튼: [상세보기 및 커리큘럼] + [바로 신청하기] */}
+                <div className="pt-4 mt-3 border-t border-gray-100 dark:border-zinc-800 flex items-center gap-2">
+                  <Link
+                    href={`/services/learning/${course.id}`}
+                    className="flex-1 inline-flex items-center justify-center gap-1 py-2 px-2.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-bold rounded-none transition-colors"
+                  >
+                    <AppIcon name="book" size={13} />
+                    <span>상세보기</span>
+                  </Link>
                   <a
                     href={course.applyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-4 bg-[var(--google-blue)] text-white text-xs font-bold rounded-none hover:bg-[#1557b0] transition-colors shadow-xs"
+                    className="flex-1 inline-flex items-center justify-center gap-1 py-2 px-2.5 bg-[var(--google-blue)] hover:bg-[#1557b0] text-white text-xs font-bold rounded-none transition-colors shadow-xs"
                   >
-                    <span>공식 사이트에서 수강신청하기</span>
+                    <span>공식 신청</span>
                     <AppIcon name="external-link" size={13} />
                   </a>
                 </div>

@@ -56,5 +56,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: post.updatedAt || post.date || SITE_LAUNCH_DATE,
   }));
 
-  return [...routes, ...emergencyPlaceRoutes, ...postRoutes];
+  // 4. 의정부 평생학습 실시간 강좌 상세 페이지 (140개 전수 색인)
+  let learningRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const lPath = path.join(process.cwd(), 'src/data/learning-courses.json');
+    if (fs.existsSync(lPath)) {
+      const lData = JSON.parse(fs.readFileSync(lPath, 'utf8'));
+      learningRoutes = (lData.courses || []).map((c: { id: string }) => ({
+        url: `${baseUrl}/services/learning/${c.id}`,
+        lastModified: SITE_LAUNCH_DATE,
+      }));
+    }
+  } catch (e) {
+    console.error('Failed to add learning routes to sitemap:', e);
+  }
+
+  return [...routes, ...emergencyPlaceRoutes, ...postRoutes, ...learningRoutes];
 }
