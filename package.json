@@ -7,7 +7,7 @@
     "build": "npm run check-quality && next build",
     "start": "next start",
     "lint": "eslint",
-    "check-quality": "tsx scripts/check-quality.js"
+    "check-quality": "node scripts/check-quality.js"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",

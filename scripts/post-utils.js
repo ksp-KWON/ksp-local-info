@@ -4,8 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const matter = require('gray-matter');
-
-const POSTS_DIR = path.join(process.cwd(), 'src/content/posts');
+const { POSTS_DIR } = require('./pipeline-utils');
+const { normalizePost } = require('../src/lib/markdown-standard');
 
 function generateSourceId(text) {
   return crypto.createHash('md5').update(text || '').digest('hex').slice(0, 12);
@@ -111,7 +111,6 @@ function saveMarkdownPost(arg1, arg2, arg3) {
     finalSlug = unique.slug;
   }
 
-  const { normalizePost } = require('../src/lib/markdown-standard');
   const rawFileContent = matter.stringify(content || '', frontmatter);
   const normalized = normalizePost(rawFileContent);
   fs.writeFileSync(filePath, normalized.fullContent, 'utf8');

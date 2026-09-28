@@ -1,38 +1,46 @@
 /**
- * src/lib/markdown-standard.ts
+ * src/lib/markdown-standard.js
  * 의정부 건강·생활 정보 포털 전사 단일 표준 마크다운 정규화 엔진 (Single Source of Truth)
  * 
- * [헌법 원칙 준수]
- * - 표준 · 범용 · 콤팩트 · 통합 · 공유 · 공통
+ * [헌법 원칙 준수: 표준 · 범용 · 콤팩트 · 통합 · 공유 · 공통]
+ * - 순수 Universal JavaScript + JSDoc 표준: Node.js CLI 및 Next.js 런타임 양방향 100% 호환
  * - 사후 땜질이 아닌 저장 직전(Pre-save) 원천 차단 및 사전 예방
  * - W3C 시맨틱 체계, GFM 순수 텍스트 미니멀리즘 준수
  */
 
-import matter from 'gray-matter';
+'use strict';
 
-export interface FrontmatterData {
-  title?: string;
-  date?: string;
-  category?: string | string[];
-  tags?: string[];
-  summary?: string;
-  sourceId?: string;
-  sourceLink?: string;
-  [key: string]: any;
-}
+const matter = require('gray-matter');
 
-export interface NormalizedPostResult {
-  data: FrontmatterData;
-  content: string;
-  fullContent: string;
-  isChanged: boolean;
-}
+/**
+ * @typedef {Object} FrontmatterData
+ * @property {string} [title]
+ * @property {string} [date]
+ * @property {string|string[]} [category]
+ * @property {string[]} [tags]
+ * @property {string} [summary]
+ * @property {string} [sourceId]
+ * @property {string} [sourceLink]
+ * @property {string} [updatedAt]
+ * @property {string} [subCategory]
+ * @property {boolean} [published]
+ */
+
+/**
+ * @typedef {Object} NormalizedPostResult
+ * @property {FrontmatterData} data
+ * @property {string} content
+ * @property {string} fullContent
+ * @property {boolean} isChanged
+ */
 
 /**
  * 1. 프론트매터 메타데이터 단일 표준 정규화
+ * @param {FrontmatterData} [data]
+ * @returns {FrontmatterData}
  */
-export function normalizeFrontmatter(data: FrontmatterData = {}): FrontmatterData {
-  const cleanData: FrontmatterData = { ...data };
+function normalizeFrontmatter(data = {}) {
+  const cleanData = { ...data };
 
   // 1-1. summary 정규화 (단일 문자열, 줄바꿈 제거, 따옴표 정리)
   if (cleanData.summary) {
@@ -72,7 +80,7 @@ export function normalizeFrontmatter(data: FrontmatterData = {}): FrontmatterDat
 
   // 1-3. tags 정규화 (string[] 표준)
   if (typeof cleanData.tags === 'string') {
-    cleanData.tags = (cleanData.tags as string).split(',').map((t) => t.trim()).filter(Boolean);
+    cleanData.tags = cleanData.tags.split(',').map((t) => t.trim()).filter(Boolean);
   } else if (!Array.isArray(cleanData.tags)) {
     cleanData.tags = [];
   }
@@ -83,9 +91,11 @@ export function normalizeFrontmatter(data: FrontmatterData = {}): FrontmatterDat
 /**
  * 2. 라인 단위 마크다운 볼드(**) 및 리스트 유착 정밀 복원 엔진
  * (개행을 절대 넘지 않고 1개 라인 내에서만 100% 안전하게 격리 처리)
+ * @param {string} line
+ * @returns {string}
  */
-export function repairLineBold(line: string): string {
-  if (line.startsWith('```') || line.startsWith('---')) return line;
+function repairLineBold(line) {
+  if (!line || line.startsWith('```') || line.startsWith('---')) return line;
 
   let text = line;
 
@@ -147,8 +157,10 @@ export function repairLineBold(line: string): string {
 
 /**
  * 3. 마크다운 본문 전사 단일 표준 정규화 엔진
+ * @param {string} rawBody
+ * @returns {string}
  */
-export function normalizeMarkdownBody(rawBody: string): string {
+function normalizeMarkdownBody(rawBody) {
   if (!rawBody) return '';
   let body = String(rawBody);
 
@@ -160,9 +172,9 @@ export function normalizeMarkdownBody(rawBody: string): string {
     (_m, head, bulletsBlock) => {
       const lines = bulletsBlock.split(/\r?\n/);
       const cleanBullets = lines
-        .map((l: string) => l.trim())
-        .filter((l: string) => /^>|[-*+]/.test(l))
-        .map((l: string) => {
+        .map((l) => l.trim())
+        .filter((l) => /^>|[-*+]/.test(l))
+        .map((l) => {
           let text = l.replace(/^(?:>\s*)?[-*+]\s*/, '').replace(/^>\s*/, '').trim();
           if (!text) return '';
           text = text.replace(/^[💡🎯📌⭐🛡️✅☑️✔]+\s*/, '');
@@ -177,7 +189,7 @@ export function normalizeMarkdownBody(rawBody: string): string {
     }
   );
 
-  // 3-2. 자주 묻는 질문 및 Q&A 표준화 (보상스쿨 W3C 시맨틱 표준)
+  // 3-2. 자주 묻는 질문 및 Q&A 표준화 (W3C 시맨틱 표준)
   body = body.replace(/##\s*(?:[1-9]\.\s*)?(?:자주\s*묻는\s*질문|FAQ|시민\s*FAQ|시민\s*자주\s*묻는\s*질문)[^\n]*/gi, '## 자주 묻는 질문');
 
   // FAQ 질문 정규화 (### Q : 질문내용)
@@ -230,9 +242,11 @@ export function normalizeMarkdownBody(rawBody: string): string {
 
 /**
  * 4. 포스트 전체(Frontmatter + Body) 통합 표준 정규화 (SSOT 진입점)
+ * @param {string} rawFileContent
+ * @returns {NormalizedPostResult}
  */
-export function normalizePost(rawFileContent: string): NormalizedPostResult {
-  let parsed: matter.GrayMatterFile<string>;
+function normalizePost(rawFileContent) {
+  let parsed;
   try {
     parsed = matter(rawFileContent);
   } catch (_e) {
@@ -243,7 +257,7 @@ export function normalizePost(rawFileContent: string): NormalizedPostResult {
     parsed = matter(rawFixed);
   }
 
-  const cleanData = normalizeFrontmatter(parsed.data as FrontmatterData);
+  const cleanData = normalizeFrontmatter(parsed.data);
   const cleanBody = normalizeMarkdownBody(parsed.content);
 
   const cleanContent = matter.stringify(cleanBody, cleanData);
@@ -255,12 +269,9 @@ export function normalizePost(rawFileContent: string): NormalizedPostResult {
   };
 }
 
-// CommonJS 호환 레이어 (Node CLI 스크립트 require 호환)
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    normalizeFrontmatter,
-    repairLineBold,
-    normalizeMarkdownBody,
-    normalizePost,
-  };
-}
+module.exports = {
+  normalizeFrontmatter,
+  repairLineBold,
+  normalizeMarkdownBody,
+  normalizePost,
+};

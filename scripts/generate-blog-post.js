@@ -56,7 +56,7 @@ async function runTier1CityRss() {
   console.log('\n[Tier 1] 의정부시청 공식 RSS 미발행 항목 검색 중...');
   if (!fs.existsSync(CITY_RSS_PATH)) {
     console.log('  -> city-rss.json 파일이 없습니다.');
-    return [];
+    return { attempted: 0, published: [] };
   }
 
   const existingSourceIds = getExistingSourceIds();
@@ -70,7 +70,7 @@ async function runTier1CityRss() {
 
   if (pending.length === 0) {
     console.log('  -> 시청 RSS에 미발행된 신규 소식이 없습니다.');
-    return [];
+    return { attempted: 0, published: [] };
   }
 
   console.log(`  -> 미발행 신규 소식 ${pending.length}건 발견. 전수 자동 생성 시작...`);
@@ -88,7 +88,7 @@ async function runTier1CityRss() {
     }
   }
 
-  return published;
+  return { attempted: pending.length, published };
 }
 
 // ── [Tier 2] 경기24 공공데이터(local-info.json) 보조 포스팅 ────────────
@@ -96,7 +96,7 @@ async function runTier2LocalInfo() {
   console.log('\n[Tier 2] 경기24 공공데이터 미발행 항목 검색 중...');
   if (!fs.existsSync(LOCAL_INFO_PATH)) {
     console.log('  -> local-info.json 파일이 없습니다.');
-    return [];
+    return { attempted: 0, published: [] };
   }
 
   const existingSourceIds = getExistingSourceIds();
@@ -111,7 +111,7 @@ async function runTier2LocalInfo() {
 
   if (pending.length === 0) {
     console.log('  -> 경기24 공공데이터에 미발행된 신규 공고가 없습니다.');
-    return [];
+    return { attempted: 0, published: [] };
   }
 
   console.log(`  -> 미발행 경기24 공공데이터 ${pending.length}건 발견. 전수 자동 생성 시작...`);
@@ -129,7 +129,7 @@ async function runTier2LocalInfo() {
     }
   }
 
-  return published;
+  return { attempted: pending.length, published };
 }
 
 // ── [Tier 3] 의정부 평생학습 실시간 강좌(learning-courses.json) 자동 포스팅 ───
@@ -169,7 +169,7 @@ async function runTier3LifelongLearning() {
       execSync('node scripts/build-learning-cache.js', { stdio: 'inherit' });
     } catch (e) {
       console.error('  ❌ 강좌 캐시 수집 실패:', e.message);
-      return [];
+      return { attempted: 0, published: [] };
     }
   }
 
@@ -190,7 +190,7 @@ async function runTier3LifelongLearning() {
 
   if (pending.length === 0) {
     console.log('  -> 평생학습 강좌 중 선별 기준(알짜 킬러 강좌)을 통과한 미발행 신규 항목이 없습니다.');
-    return [];
+    return { attempted: 0, published: [] };
   }
 
   // 대기열이 쌓이지 않도록 선별 기준을 통과한 신규 알짜 강좌 전수 일괄 자동 생성
@@ -220,7 +220,7 @@ async function runTier3LifelongLearning() {
     }
   }
 
-  return published;
+  return { attempted: pending.length, published };
 }
 
 // ── [메인 실행 엔진] ───────────────────────────────────────────────
@@ -232,17 +232,31 @@ async function main() {
 
   try {
     // 1순위: 의정부시청 공식 RSS 피드 전수 발행
-    const tier1Results = await runTier1CityRss();
+    const tier1 = await runTier1CityRss();
 
     // 2순위: 경기24 공공데이터 전수 발행
-    const tier2Results = await runTier2LocalInfo();
+    const tier2 = await runTier2LocalInfo();
 
     // 3순위: 의정부 평생학습 실시간 강좌 선별 발행
-    const tier3Results = await runTier3LifelongLearning();
+    const tier3 = await runTier3LifelongLearning();
 
-    const totalCount = (tier1Results?.length || 0) + (tier2Results?.length || 0) + (tier3Results?.length || 0);
-    if (totalCount > 0) {
-      console.log(`\n🎉 [성공] 총 ${totalCount}건의 신규 시정 가이드 자동 포스팅 완료!`);
+    const totalAttempted = (tier1.attempted || 0) + (tier2.attempted || 0) + (tier3.attempted || 0);
+    const totalPublished = (tier1.published?.length || 0) + (tier2.published?.length || 0) + (tier3.published?.length || 0);
+    const totalFailed = totalAttempted - totalPublished;
+
+    console.log('\n======================================================');
+    console.log(`📊 [발행 집계] 총 대상: ${totalAttempted}건 | 성공: ${totalPublished}건 | 실패: ${totalFailed}건`);
+    console.log('======================================================');
+
+    if (totalAttempted > 0 && totalPublished === 0) {
+      console.error(`\n❌ [발행 전수 실패] 대상 ${totalAttempted}건 중 성공 0건. 파이프라인 무결성 오류로 프로세스를 중단합니다.`);
+      process.exit(1);
+    }
+
+    if (totalFailed > 0) {
+      console.warn(`\n⚠️ [부분 실패] 총 ${totalAttempted}건 중 ${totalPublished}건 성공, ${totalFailed}건 실패.`);
+    } else if (totalPublished > 0) {
+      console.log(`\n🎉 [성공] 총 ${totalPublished}건의 신규 시정 가이드 자동 포스팅 무결 발행 완료!`);
     } else {
       console.log('\nℹ️ [알림] 현재 발행 대기 중인 새로운 이슈가 없습니다.');
     }
