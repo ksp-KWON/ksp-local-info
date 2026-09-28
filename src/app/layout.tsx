@@ -86,6 +86,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full antialiased overflow-x-hidden" suppressHydrationWarning>
       <head>
+        <meta name="naver-site-verification" content="17d7828ffa44b9ac00d06745104e11c4c0deb69f" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(globalJsonLd) }}
