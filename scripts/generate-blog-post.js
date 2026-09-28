@@ -135,6 +135,31 @@ async function runTier2LocalInfo() {
 // ── [Tier 3] 의정부 평생학습 실시간 강좌(learning-courses.json) 자동 포스팅 ───
 const LEARNING_COURSES_PATH = path.join(process.cwd(), 'src/data/learning-courses.json');
 
+/**
+ * 평생학습 강좌 질적 선별 필터 (CQF 헌법 준수)
+ * - 커리큘럼(intro) 100자 이상 완비된 강좌만 선별
+ * - 자잘한 사설 공예/소품 만들기(곱창밴드, 키친크로스 등) 및 단순 회차 배제
+ * - 단순 분반(A반, B반) 및 온라인 신청 폼(수어노래방 등) 배제
+ */
+function isQualityCivicCourse(course) {
+  if (!course || !course.title) return false;
+
+  // 1. 상세 교육계획서(intro)가 최소 100자 이상 충실하게 작성된 강좌만 허용
+  if (!course.intro || course.intro.trim().length < 100) return false;
+
+  // 2. 자잘한 일일 취미 소품 만들기 및 단순 신청폼 배제
+  const lowQualityKeywords = [
+    '곱창밴드', '손바느질', '키친크로스', '도시락보자기', '패브릭 포스터',
+    '가방만들기', '종이접기', '수어노래방', '우쿨렐레'
+  ];
+  if (lowQualityKeywords.some(kw => course.title.includes(kw))) return false;
+
+  // 3. 단순 요일/분반 쪼개기 강좌 배제
+  if (/-[A-Z]반|\b[0-9]반\b|화목반|월수반|금요반|토요반/.test(course.title)) return false;
+
+  return true;
+}
+
 async function runTier3LifelongLearning() {
   console.log('\n[Tier 3] 의정부 평생학습 실시간 강좌 미발행 항목 검색 중...');
   if (!fs.existsSync(LEARNING_COURSES_PATH)) {
@@ -149,31 +174,35 @@ async function runTier3LifelongLearning() {
   }
 
   const existingSourceIds = getExistingSourceIds();
+  // 기발행된 작은도서관 창의융합 놀이터 강좌 ID 명시적 제외
+  existingSourceIds.add('ujb-139');
+
   const learningData = JSON.parse(fs.readFileSync(LEARNING_COURSES_PATH, 'utf8'));
   const courses = learningData.courses || [];
 
-  // 신규 미발행 접수중 강좌 탐색
+  // 대표님 선별 기준(isQualityCivicCourse)에 부합하는 고품질 미발행 강좌만 엄선
   const pending = courses.filter(item => {
     if (!item.title) return false;
     const sourceId = item.id || generateSourceId(item.title);
-    return !existingSourceIds.has(sourceId);
+    if (existingSourceIds.has(sourceId)) return false;
+    return isQualityCivicCourse(item);
   });
 
   if (pending.length === 0) {
-    console.log('  -> 평생학습 강좌에 미발행된 신규 항목이 없습니다.');
+    console.log('  -> 평생학습 강좌 중 선별 기준(알짜 킬러 강좌)을 통과한 미발행 신규 항목이 없습니다.');
     return [];
   }
 
   // 양산형 페널티 방지를 위해 1회 배치당 최우선 알짜 강좌 최대 2건 선별 발행
   const targetCourses = pending.slice(0, 2);
-  console.log(`  -> 미발행 평생학습 강좌 ${pending.length}건 중 엄선된 ${targetCourses.length}건 자동 생성 시작...`);
+  console.log(`  -> 선별 기준을 통과한 알짜 강좌 ${pending.length}건 중 최우선 ${targetCourses.length}건 자동 생성 시작...`);
 
   const published = [];
   for (let i = 0; i < targetCourses.length; i++) {
     const course = targetCourses[i];
     const postItem = {
       title: course.title,
-      content: `교육기관: ${course.org}, 교육장소: ${course.address} (${course.dong}), 교육기간: ${course.eduPeriod}, 신청기간: ${course.applyPeriod}, 모집정원: ${course.capacity}, 수강료: ${course.isFree ? '무료' : '유료'}, 주요대상: ${course.target}, 분야: ${course.category}. 의정부시 평생학습 통합플랫폼 뉴런 공식 온라인 접수.`,
+      content: `교육기관: ${course.org}, 교육장소: ${course.address} (${course.dong}), 교육기간: ${course.eduPeriod}, 신청기간: ${course.applyPeriod}, 모집정원: ${course.capacity}, 수강료: ${course.isFree ? '무료' : '유료'} (${course.fee || ''}), 주요대상: ${course.target}, 분야: ${course.category}. 상세 교육내용 및 강의계획: ${course.intro}. 의정부시 평생학습 통합플랫폼 뉴런 공식 온라인 접수.`,
       link: course.applyUrl || 'https://sugang.ull.or.kr',
       sourceId: course.id,
       category: '교육·청소년',
