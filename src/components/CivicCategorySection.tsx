@@ -8,11 +8,24 @@ import PremiumCard from '@/components/ui/PremiumCard';
 import PremiumButton from '@/components/ui/PremiumButton';
 import PostCard from '@/components/ui/PostCard';
 import { PostData, PostMeta } from '@/lib/types';
-import { UIJEONGBU_TAXONOMY, CivicCategoryDefinition, CivicSubCategory } from '@/data/uijeongbu-taxonomy';
+import { UIJEONGBU_TAXONOMY } from '@/data/uijeongbu-taxonomy';
 
 interface CivicCategorySectionProps {
   posts: (PostMeta | PostData)[];
 }
+
+// 카테고리 우선순위 정렬 (공연 관련 '문화·예술' 1순위 보장)
+const CATEGORY_ORDER = [
+  '문화·예술',
+  '일자리·생활',
+  '복지·돌봄',
+  '교통·주차',
+  '기업경제·농업',
+  '청소·환경',
+  '주택·재개발',
+  '재난·민방위',
+  '체육·공원',
+];
 
 export default function CivicCategorySection({ posts }: CivicCategorySectionProps) {
   // 카테고리별 활성 하위 탭 상태 (기본값: '전체')
@@ -40,19 +53,6 @@ export default function CivicCategorySection({ posts }: CivicCategorySectionProp
 
     return { categoryPostsMap: catMap, subCategoryPostsMap: subMap };
   }, [posts]);
-
-  // 카테고리 우선순위 정렬 (공연 관련 '문화·예술' 1순위 보장)
-  const CATEGORY_ORDER = [
-    '문화·예술',
-    '일자리·생활',
-    '복지·돌봄',
-    '교통·주차',
-    '기업경제·농업',
-    '청소·환경',
-    '주택·재개발',
-    '재난·민방위',
-    '체육·공원',
-  ];
 
   // 포스트가 등록된 카테고리를 우선순위 순서대로 정렬하여 표시
   const activeCategories = useMemo(() => {

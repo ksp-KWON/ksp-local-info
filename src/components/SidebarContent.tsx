@@ -13,8 +13,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import SidebarTagMore from './SidebarTagMore';
 import PremiumCard from '@/components/ui/PremiumCard';
-import AppIcon, { type AppIconName } from '@/components/ui/AppIcon';
-import { getCategoryIcon } from '@/lib/constants';
+import AppIcon from '@/components/ui/AppIcon';
 import { UIJEONGBU_TAXONOMY } from '@/data/uijeongbu-taxonomy';
 import { PostData, PostMeta } from '@/lib/types';
 
@@ -26,7 +25,7 @@ interface SidebarContentProps {
 
 const INITIAL_TAG_COUNT = 6;
 
-export default function SidebarContent({ tags = [], recentPosts = [], categories = [] }: SidebarContentProps) {
+export default function SidebarContent({ tags = [], recentPosts = [] }: SidebarContentProps) {
   const visibleTags = tags.slice(0, INITIAL_TAG_COUNT);
   const hiddenTags = tags.slice(INITIAL_TAG_COUNT);
 

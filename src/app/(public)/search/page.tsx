@@ -17,17 +17,20 @@ function SearchResults() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!q) {
-      setResults([]);
-      return;
-    }
+    let ignore = false;
 
     const fetchPosts = async () => {
+      if (!q) {
+        setResults([]);
+        return;
+      }
+
       setIsLoading(true);
       try {
         const res = await fetch('/api/posts');
         if (!res.ok) throw new Error('Failed to fetch');
         const allPosts: PostData[] = await res.json();
+        if (ignore) return;
 
         const query = q.toLowerCase().trim();
         const filtered = allPosts.filter((post) => {
@@ -43,13 +46,17 @@ function SearchResults() {
         setResults(filtered);
       } catch (e) {
         console.error(e);
-        setResults([]);
+        if (!ignore) setResults([]);
       } finally {
-        setIsLoading(false);
+        if (!ignore) setIsLoading(false);
       }
     };
 
     fetchPosts();
+
+    return () => {
+      ignore = true;
+    };
   }, [q]);
 
   const popularKeywords = ['응급실', '병원', '건강검진', '민원'];

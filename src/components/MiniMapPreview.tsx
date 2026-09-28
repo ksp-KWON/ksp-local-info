@@ -2,11 +2,7 @@
 
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
 
-interface MiniMapPreviewProps {
-  type: 'emergency';
-}
-
-export default function MiniMapPreview({ type }: MiniMapPreviewProps) {
+export default function MiniMapPreview() {
   // 카카오맵 SDK 로드 (비동기 처리)
   const [loading, error] = useKakaoLoader({
     appkey: "c60e479ca3c78009474b748414de3a1b",

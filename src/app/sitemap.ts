@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { MetadataRoute } from 'next';
 import { getSortedPostsData } from '@/lib/posts';
 import { EMERGENCY_PLACES } from '@/lib/data/emergency-places';
@@ -60,8 +62,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 4. 의정부 평생학습 실시간 강좌 상세 페이지 (140개 전수 색인)
   let learningRoutes: MetadataRoute.Sitemap = [];
   try {
-    const fs = require('fs');
-    const path = require('path');
     const lPath = path.join(process.cwd(), 'src/data/learning-courses.json');
     if (fs.existsSync(lPath)) {
       const lData = JSON.parse(fs.readFileSync(lPath, 'utf8'));

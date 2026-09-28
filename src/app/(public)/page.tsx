@@ -1,27 +1,10 @@
-import fs from 'fs';
-import path from 'path';
-import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import EmergencyBanner from '@/components/emergency/EmergencyBanner';
 import LearningBanner from '@/components/learning/LearningBanner';
 import AppIcon from '@/components/ui/AppIcon';
-import PremiumCard from '@/components/ui/PremiumCard';
 import CivicCategorySection from '@/components/CivicCategorySection';
-
-interface LocalData {
-  lastUpdated: string;
-}
-
-async function getLocalData(): Promise<LocalData> {
-  const filePath = path.join(process.cwd(), 'public/data/local-info.json');
-  if (!fs.existsSync(filePath)) {
-    return { lastUpdated: '' };
-  }
-  const fileContents = fs.readFileSync(filePath, 'utf8');
-  return JSON.parse(fileContents);
-}
 
 export const metadata: Metadata = {
   alternates: {
@@ -30,7 +13,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const data = await getLocalData();
   const posts = getSortedPostsData();
 
   return (
