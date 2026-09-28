@@ -30,9 +30,9 @@ async function generateAndSavePost(targetItem, tierLabel) {
   console.log(`  -> [${tierLabel}] 타깃 선정: "${targetItem.title}" (Source ID: ${sourceId})`);
 
   const angle = getRandomAngle();
-  const plan = await callGemini(buildPlanPrompt(targetItem), PLAN_SCHEMA);
+  const plan = await callGemini(buildPlanPrompt(targetItem), PLAN_SCHEMA, 'lite');
   await sleep(2000);
-  const content = await callGemini(buildContentPrompt(targetItem, plan, angle), CONTENT_SCHEMA);
+  const content = await callGemini(buildContentPrompt(targetItem, plan, angle), CONTENT_SCHEMA, 'flash');
 
   const today = getKSTDateString();
   const slug = makeSlug(plan.frontmatter.title || targetItem.title);
