@@ -24,25 +24,25 @@ const RSS_CONFIGS = [
     id: 'notice',
     name: '시정소식',
     category: '복지·지원금',
-    url: 'http://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000001',
+    url: 'https://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000001',
   },
   {
     id: 'events',
     name: '행사안내',
     category: '축제·나들이',
-    url: 'http://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000004',
+    url: 'https://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000004',
   },
   {
     id: 'press',
     name: '보도자료',
     category: '생활·민원',
-    url: 'http://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000003',
+    url: 'https://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000003',
   },
   {
     id: 'news',
     name: '지역뉴스',
     category: '생활·민원',
-    url: 'http://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000005',
+    url: 'https://www.ui4u.go.kr/portal/rssservice/RssServiceDetail.do?rssId=10000000000000000005',
   },
 ];
 
