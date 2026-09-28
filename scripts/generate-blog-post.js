@@ -193,9 +193,9 @@ async function runTier3LifelongLearning() {
     return [];
   }
 
-  // 양산형 페널티 방지를 위해 1회 배치당 최우선 알짜 강좌 최대 2건 선별 발행
-  const targetCourses = pending.slice(0, 2);
-  console.log(`  -> 선별 기준을 통과한 알짜 강좌 ${pending.length}건 중 최우선 ${targetCourses.length}건 자동 생성 시작...`);
+  // 대기열이 쌓이지 않도록 선별 기준을 통과한 신규 알짜 강좌 전수 일괄 자동 생성
+  const targetCourses = pending;
+  console.log(`  -> 선별 기준을 통과한 신규 알짜 강좌 ${pending.length}건 전수 자동 생성 시작...`);
 
   const published = [];
   for (let i = 0; i < targetCourses.length; i++) {
