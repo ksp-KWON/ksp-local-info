@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SITE_URL, SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ksp-local-info-edg.pages.dev"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "의정부 건강·생활 정보 포털 | 응급실·건강·생활 안내",
     template: "%s | 의정부 건강·생활 정보 포털",
   },
   description: "의정부시 응급실 위치·전화 안내와 국가건강검진, 민원 등 생활 가이드를 정리합니다.",
-  keywords: ["의정부", "의정부응급실", "의정부건강검진", "의정부민원"],
-  authors: [{ name: "의정부 건강·생활 정보 포털", url: "https://ksp-local-info-edg.pages.dev/about" }],
-  creator: "의정부 건강·생활 정보 포털",
-  publisher: "의정부 건강·생활 정보 포털",
+  keywords: ["의정부", "의정부응급실", "의정부건강검진", "의정부민원", "의정부심"],
+  authors: [{ name: SITE_NAME, url: `${SITE_URL}/about` }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   robots: {
     index: true,
     follow: true,
@@ -24,13 +25,13 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://ksp-local-info-edg.pages.dev",
+    canonical: SITE_URL,
   },
   openGraph: {
     title: "의정부 건강·생활 정보 포털 | 응급실·건강·생활 안내",
     description: "의정부시 응급실 위치·전화 안내와 국가건강검진, 민원 등 생활 가이드를 정리합니다.",
-    url: "https://ksp-local-info-edg.pages.dev",
-    siteName: "의정부 건강·생활 정보 포털",
+    url: SITE_URL,
+    siteName: SITE_NAME,
     locale: "ko_KR",
     type: "website",
   },
@@ -52,29 +53,29 @@ export default function RootLayout({
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://ksp-local-info-edg.pages.dev/#organization",
-        "name": "의정부 건강·생활 정보 포털",
-        "url": "https://ksp-local-info-edg.pages.dev",
+        "@id": `${SITE_URL}/#organization`,
+        "name": SITE_NAME,
+        "url": SITE_URL,
         "logo": {
           "@type": "ImageObject",
-          "url": "https://ksp-local-info-edg.pages.dev/images/uijeongbu-logo.png",
+          "url": `${SITE_URL}/images/uijeongbu-logo.png`,
         },
         "description": "의정부시 시민을 위한 공공 건강·생활 정보 및 혜택 종합 포털",
       },
       {
         "@type": "WebSite",
-        "@id": "https://ksp-local-info-edg.pages.dev/#website",
-        "url": "https://ksp-local-info-edg.pages.dev",
-        "name": "의정부 건강·생활 정보 포털",
+        "@id": `${SITE_URL}/#website`,
+        "url": SITE_URL,
+        "name": SITE_NAME,
         "publisher": {
-          "@id": "https://ksp-local-info-edg.pages.dev/#organization",
+          "@id": `${SITE_URL}/#organization`,
         },
         "inLanguage": "ko-KR",
         "potentialAction": {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://ksp-local-info-edg.pages.dev/search?q={search_term_string}",
+            "urlTemplate": `${SITE_URL}/search?q={search_term_string}`,
           },
           "query-input": "required name=search_term_string",
         },

@@ -113,7 +113,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             }}
           >
             <div style={{ fontSize: '18px', fontWeight: '800', color: '#18181b' }}>
-              ksp-local-info-edg.pages.dev
+              uijeongbusim.com
             </div>
             <div style={{ fontSize: '16px', fontWeight: '600', color: '#047857' }}>
               의정부 생활·의료 안내

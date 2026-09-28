@@ -1,16 +1,17 @@
 import { NextResponse } from 'next/server';
 import { getSortedPostsData } from '@/lib/posts';
+import { SITE_URL, SITE_NAME } from '@/lib/constants';
 
 export const dynamic = 'force-static';
 
 export async function GET() {
-  const siteUrl = 'https://ksp-local-info-edg.pages.dev';
+  const siteUrl = SITE_URL;
   const posts = getSortedPostsData();
 
   let rssXml = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>의정부 건강·생활 정보 포털</title>
+  <title>${SITE_NAME}</title>
   <link>${siteUrl}</link>
   <description>의정부 시민들을 위한 응급실·건강검진·민원 등 생활 정보 가이드</description>
   <language>ko-KR</language>

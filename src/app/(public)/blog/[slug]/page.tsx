@@ -5,6 +5,7 @@ import BlogPostClient from '@/components/blog/BlogPostClient';
 import { parseBlogPost } from '@/lib/blog-utils';
 import AppIcon from '@/components/ui/AppIcon';
 import Link from 'next/link';
+import { SITE_URL, SITE_NAME } from '@/lib/constants';
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: post.title,
     description: post.summary || `${post.title}에 관한 상세 안내입니다.`,
     alternates: {
-      canonical: `https://ksp-local-info-edg.pages.dev/blog/${slug}`,
+      canonical: `${SITE_URL}/blog/${slug}`,
     },
   };
 }
@@ -52,20 +53,20 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     dateModified: post.date,
     author: {
       '@type': 'Organization',
-      name: '의정부 건강·생활 정보 포털',
-      url: 'https://ksp-local-info-edg.pages.dev',
+      name: SITE_NAME,
+      url: SITE_URL,
     },
     publisher: {
       '@type': 'Organization',
-      name: '의정부 건강·생활 정보 포털',
+      name: SITE_NAME,
       logo: {
         '@type': 'ImageObject',
-        url: 'https://ksp-local-info-edg.pages.dev/icon.png',
+        url: `${SITE_URL}/icon.png`,
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://ksp-local-info-edg.pages.dev/blog/${slug}`,
+      '@id': `${SITE_URL}/blog/${slug}`,
     },
   };
 
@@ -78,19 +79,19 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         '@type': 'ListItem',
         position: 1,
         name: '홈',
-        item: 'https://ksp-local-info-edg.pages.dev',
+        item: SITE_URL,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: '생활 소식 및 혜택',
-        item: 'https://ksp-local-info-edg.pages.dev/blog',
+        item: `${SITE_URL}/blog`,
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: post.title,
-        item: `https://ksp-local-info-edg.pages.dev/blog/${slug}`,
+        item: `${SITE_URL}/blog/${slug}`,
       },
     ],
   };

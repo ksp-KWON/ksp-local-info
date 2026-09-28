@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/constants';
 
 export const dynamic = 'force-static';
 
@@ -11,7 +12,7 @@ export const dynamic = 'force-static';
  *   /*opengraph-image* - 동적 OG 이미지 생성 엔드포인트 원시 호출 차단
  */
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://ksp-local-info-edg.pages.dev';
+  const baseUrl = SITE_URL;
 
   return {
     rules: {

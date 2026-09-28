@@ -9,6 +9,7 @@ import CommonBox from '@/components/blog/CommonBox';
 import PremiumButton from '@/components/ui/PremiumButton';
 import HighlightBadge from '@/components/ui/HighlightBadge';
 import AppIcon from '@/components/ui/AppIcon';
+import { SITE_URL } from '@/lib/constants';
 
 interface CourseDetail {
   id: string;
@@ -75,12 +76,12 @@ export async function generateMetadata({ params }: CoursePageProps): Promise<Met
     title: `${course.title} - 수강신청·교육일정·장소 안내 | 의정부 건강·생활 정보 포털`,
     description: `${course.org}(${course.dong})에서 진행되는 ${course.title} 강좌의 교육기간(${course.eduPeriod}), 수강료(${course.fee || '무료'}), 모집인원(${course.capacity}), 주차별 커리큘럼 및 신청 방법입니다.`,
     alternates: {
-      canonical: `/services/learning/${course.id}`,
+      canonical: `${SITE_URL}/services/learning/${course.id}`,
     },
     openGraph: {
       title: `${course.title} | 의정부시 평생학습 실시간 강좌`,
       description: `${course.org} · ${course.eduPeriod} · 신청기간: ${course.applyPeriod}`,
-      url: `https://ksp-local-info.pages.dev/services/learning/${course.id}`,
+      url: `${SITE_URL}/services/learning/${course.id}`,
       type: 'article',
     },
   };

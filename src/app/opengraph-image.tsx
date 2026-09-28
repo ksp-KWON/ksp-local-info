@@ -103,7 +103,7 @@ export default async function Image() {
             }}
           >
             <div style={{ fontSize: '20px', fontWeight: '800', color: '#18181b' }}>
-              ksp-local-info-edg.pages.dev
+              uijeongbusim.com
             </div>
             <div style={{ fontSize: '18px', fontWeight: '600', color: '#71717a' }}>
               의정부시 생활·의료 정보 안내

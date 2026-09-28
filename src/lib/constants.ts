@@ -1,5 +1,9 @@
 import { AppIconName } from '@/components/ui/AppIcon';
 
+export const SITE_URL = 'https://uijeongbusim.com';
+export const SITE_DOMAIN = 'uijeongbusim.com';
+export const SITE_NAME = '의정부심 (의정부 건강·생활 정보 포털)';
+
 export const CIVIC_CATEGORIES = [
   '일자리·생활',
   '교통·주차',

@@ -1,19 +1,20 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getSortedPostsData } from '@/lib/posts';
+import { SITE_URL, SITE_NAME } from '@/lib/constants';
 import BlogClient from './BlogClient';
 
 export const metadata: Metadata = {
   title: '의정부 생활 가이드',
   description: '응급실 안내와 국가건강검진, 민원 등 의정부 생활 가이드를 전해드립니다.',
   alternates: {
-    canonical: 'https://ksp-local-info-edg.pages.dev/blog',
+    canonical: `${SITE_URL}/blog`,
   },
   openGraph: {
     title: '의정부 생활 가이드 | 의정부 건강·생활 포털',
     description: '응급실 안내와 국가건강검진, 민원 등 의정부 생활 가이드를 전해드립니다.',
-    url: 'https://ksp-local-info-edg.pages.dev/blog',
-    siteName: '의정부 건강·생활 정보 포털',
+    url: `${SITE_URL}/blog`,
+    siteName: SITE_NAME,
     locale: 'ko_KR',
     type: 'website',
   },

@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getSortedPostsData } from '@/lib/posts';
 import { EMERGENCY_PLACES } from '@/lib/data/emergency-places';
+import { SITE_URL } from '@/lib/constants';
 
 export const dynamic = 'force-static';
 
@@ -8,7 +9,7 @@ export const dynamic = 'force-static';
 const SITE_LAUNCH_DATE = '2026-01-01';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://ksp-local-info-edg.pages.dev';
+  const baseUrl = SITE_URL;
 
   // 1. 핵심 서비스 및 공공 안내 정적 라우트
   const routes: MetadataRoute.Sitemap = [
