@@ -24,6 +24,8 @@ const {
 const CITY_RSS_PATH = path.join(process.cwd(), 'public/data/city-rss.json');
 const LOCAL_INFO_PATH = path.join(process.cwd(), 'public/data/local-info.json');
 
+const MAX_POSTS_PER_RUN = 2;
+
 // ── 공통 포스팅 생성 및 마크다운 저장 엔진 ─────────────────────────────
 async function generateAndSavePost(targetItem, tierLabel) {
   const sourceId = targetItem.sourceId || generateSourceId(targetItem.title);
@@ -52,7 +54,8 @@ async function generateAndSavePost(targetItem, tierLabel) {
 }
 
 // ── [Tier 1] 의정부시청 공식 RSS 최우선 포스팅 ─────────────────────
-async function runTier1CityRss() {
+async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
+  if (limit <= 0) return { attempted: 0, published: [] };
   console.log('\n[Tier 1] 의정부시청 공식 RSS 미발행 항목 검색 중...');
   if (!fs.existsSync(CITY_RSS_PATH)) {
     console.log('  -> city-rss.json 파일이 없습니다.');
@@ -66,14 +69,14 @@ async function runTier1CityRss() {
     if (!item.title) return false;
     const sourceId = item.sourceId || generateSourceId(item.title);
     return !existingSourceIds.has(sourceId);
-  });
+  }).slice(0, limit);
 
   if (pending.length === 0) {
     console.log('  -> 시청 RSS에 미발행된 신규 소식이 없습니다.');
     return { attempted: 0, published: [] };
   }
 
-  console.log(`  -> 미발행 신규 소식 ${pending.length}건 발견. 전수 자동 생성 시작...`);
+  console.log(`  -> 미발행 신규 소식 ${pending.length}건 배정 (최대 ${limit}건). 생성 시작...`);
   const published = [];
   for (let i = 0; i < pending.length; i++) {
     const item = pending[i];
@@ -92,7 +95,8 @@ async function runTier1CityRss() {
 }
 
 // ── [Tier 2] 경기24 공공데이터(local-info.json) 보조 포스팅 ────────────
-async function runTier2LocalInfo() {
+async function runTier2LocalInfo(limit = MAX_POSTS_PER_RUN) {
+  if (limit <= 0) return { attempted: 0, published: [] };
   console.log('\n[Tier 2] 경기24 공공데이터 미발행 항목 검색 중...');
   if (!fs.existsSync(LOCAL_INFO_PATH)) {
     console.log('  -> local-info.json 파일이 없습니다.');
@@ -107,14 +111,14 @@ async function runTier2LocalInfo() {
     if (!item.title) return false;
     const sourceId = generateSourceId(item.title);
     return !existingSourceIds.has(sourceId);
-  });
+  }).slice(0, limit);
 
   if (pending.length === 0) {
     console.log('  -> 경기24 공공데이터에 미발행된 신규 공고가 없습니다.');
     return { attempted: 0, published: [] };
   }
 
-  console.log(`  -> 미발행 경기24 공공데이터 ${pending.length}건 발견. 전수 자동 생성 시작...`);
+  console.log(`  -> 미발행 경기24 공공데이터 ${pending.length}건 배정 (최대 ${limit}건). 생성 시작...`);
   const published = [];
   for (let i = 0; i < pending.length; i++) {
     const item = pending[i];
@@ -160,7 +164,8 @@ function isQualityCivicCourse(course) {
   return true;
 }
 
-async function runTier3LifelongLearning() {
+async function runTier3LifelongLearning(limit = MAX_POSTS_PER_RUN) {
+  if (limit <= 0) return { attempted: 0, published: [] };
   console.log('\n[Tier 3] 의정부 평생학습 실시간 강좌 미발행 항목 검색 중...');
   if (!fs.existsSync(LEARNING_COURSES_PATH)) {
     console.log('  -> learning-courses.json 파일이 없어 자동 수집을 실행합니다...');
@@ -174,35 +179,32 @@ async function runTier3LifelongLearning() {
   }
 
   const existingSourceIds = getExistingSourceIds();
-  // 기발행된 작은도서관 창의융합 놀이터 강좌 ID 명시적 제외
   existingSourceIds.add('ujb-139');
 
   const learningData = JSON.parse(fs.readFileSync(LEARNING_COURSES_PATH, 'utf8'));
   const courses = learningData.courses || [];
 
-  // 대표님 선별 기준(isQualityCivicCourse)에 부합하는 고품질 미발행 강좌만 엄선
   const pending = courses.filter(item => {
     if (!item.title) return false;
     const sourceId = item.id || generateSourceId(item.title);
     if (existingSourceIds.has(sourceId)) return false;
     return isQualityCivicCourse(item);
-  });
+  }).slice(0, limit);
 
   if (pending.length === 0) {
-    console.log('  -> 평생학습 강좌 중 선별 기준(알짜 킬러 강좌)을 통과한 미발행 신규 항목이 없습니다.');
+    console.log('  -> 평생학습 강좌 중 선별 기준을 통과한 미발행 신규 항목이 없습니다.');
     return { attempted: 0, published: [] };
   }
 
-  // 대기열이 쌓이지 않도록 선별 기준을 통과한 신규 알짜 강좌 전수 일괄 자동 생성
-  const targetCourses = pending;
-  console.log(`  -> 선별 기준을 통과한 신규 알짜 강좌 ${pending.length}건 전수 자동 생성 시작...`);
+  console.log(`  -> 선별 기준을 통과한 알짜 강좌 ${pending.length}건 배정 (최대 ${limit}건). 생성 시작...`);
 
   const published = [];
-  for (let i = 0; i < targetCourses.length; i++) {
-    const course = targetCourses[i];
+  for (let i = 0; i < pending.length; i++) {
+    const course = pending[i];
+    const feeText = course.isFree ? '무료' : (course.fee ? `${course.fee}` : '유료 (강의계획서 참조)');
     const postItem = {
       title: course.title,
-      content: `교육기관: ${course.org}, 교육장소: ${course.address} (${course.dong}), 교육기간: ${course.eduPeriod}, 신청기간: ${course.applyPeriod}, 모집정원: ${course.capacity}, 수강료: ${course.isFree ? '무료' : '유료'} (${course.fee || ''}), 주요대상: ${course.target}, 분야: ${course.category}. 상세 교육내용 및 강의계획: ${course.intro}. 의정부시 평생학습 통합플랫폼 뉴런 공식 온라인 접수.`,
+      content: `교육기관: ${course.org}, 교육장소: ${course.address} (${course.dong}), 교육기간: ${course.eduPeriod}, 신청기간: ${course.applyPeriod}, 모집정원: ${course.capacity}, 수강료: ${feeText}, 주요대상: ${course.target}, 분야: ${course.category}. 상세 교육내용 및 강의계획: ${course.intro}. 의정부시 평생학습 통합플랫폼 뉴런 공식 온라인 접수.`,
       link: course.applyUrl || 'https://sugang.ull.or.kr',
       sourceId: course.id,
       category: '교육·청소년',
@@ -210,7 +212,7 @@ async function runTier3LifelongLearning() {
     };
 
     try {
-      console.log(`\n[${i + 1}/${targetCourses.length}] 평생학습 글 작성 진행: "${course.title}"`);
+      console.log(`\n[${i + 1}/${pending.length}] 평생학습 글 작성 진행: "${course.title}"`);
       const fileName = await generateAndSavePost(postItem, 'Tier 3: 의정부 평생학습 실시간 강좌');
       published.push(fileName);
       existingSourceIds.add(course.id);
@@ -226,19 +228,23 @@ async function runTier3LifelongLearning() {
 // ── [메인 실행 엔진] ───────────────────────────────────────────────
 async function main() {
   console.log('======================================================');
-  console.log('🚀 [의정부 포털] 오토 포스팅 엔진 시작 (전수 일괄 발행 모드)');
+  console.log(`🚀 [의정부 포털] 오토 포스팅 엔진 시작 (안전 콤팩트 모드: 최대 ${MAX_POSTS_PER_RUN}건/회)`);
   console.log('실행 시각:', new Date().toISOString());
   console.log('======================================================');
 
   try {
-    // 1순위: 의정부시청 공식 RSS 피드 전수 발행
-    const tier1 = await runTier1CityRss();
+    let remaining = MAX_POSTS_PER_RUN;
 
-    // 2순위: 경기24 공공데이터 전수 발행
-    const tier2 = await runTier2LocalInfo();
+    // 1순위: 의정부시청 공식 RSS 피드
+    const tier1 = await runTier1CityRss(remaining);
+    remaining -= (tier1.published?.length || 0);
 
-    // 3순위: 의정부 평생학습 실시간 강좌 선별 발행
-    const tier3 = await runTier3LifelongLearning();
+    // 2순위: 경기24 공공데이터
+    const tier2 = await runTier2LocalInfo(remaining);
+    remaining -= (tier2.published?.length || 0);
+
+    // 3순위: 의정부 평생학습 실시간 강좌
+    const tier3 = await runTier3LifelongLearning(remaining);
 
     const totalAttempted = (tier1.attempted || 0) + (tier2.attempted || 0) + (tier3.attempted || 0);
     const totalPublished = (tier1.published?.length || 0) + (tier2.published?.length || 0) + (tier3.published?.length || 0);

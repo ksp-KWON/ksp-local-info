@@ -248,7 +248,11 @@ async function main() {
         const detail = await fetchCourseDetail(course.learningId);
         if (detail) {
           if (detail.time) course.time = detail.time;
-          if (detail.fee) course.fee = detail.fee;
+          if (detail.fee) {
+            course.fee = detail.fee;
+            const hasNumericFee = /[1-9]/.test(detail.fee);
+            course.isFree = !hasNumericFee && (detail.fee.includes('무료') || detail.fee.includes('0원'));
+          }
           if (detail.materialFee) course.materialFee = detail.materialFee;
           if (detail.tel) course.tel = detail.tel;
           if (detail.intro) course.intro = detail.intro;
