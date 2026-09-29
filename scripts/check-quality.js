@@ -39,10 +39,34 @@ function processPost(filePath) {
   return false;
 }
 
+const KOREAN_DAYS = ['일', '월', '화', '수', '목', '금', '토'];
+
+function validateCalendarDays(filePath) {
+  const content = fs.readFileSync(filePath, 'utf8');
+  const dateMatch = content.match(/date:\s*['"]?(\d{4})-\d{2}-\d{2}/);
+  const defaultYear = dateMatch ? parseInt(dateMatch[1], 10) : 2026;
+
+  const regex = /(?:(20\d{2})년\s*)?(\d{1,2})월\s*(\d{1,2})일\s*\(([일월화수목금토])\)/g;
+  let m;
+  const errors = [];
+  while ((m = regex.exec(content)) !== null) {
+    const year = m[1] ? parseInt(m[1], 10) : defaultYear;
+    const month = parseInt(m[2], 10);
+    const day = parseInt(m[3], 10);
+    const claimedDay = m[4];
+    const actualDay = KOREAN_DAYS[new Date(year, month - 1, day).getDay()];
+    if (actualDay !== claimedDay) {
+      errors.push(`${month}월 ${day}일(${claimedDay}) -> 실제 달력: (${actualDay})`);
+    }
+  }
+  return errors;
+}
+
 function main() {
   if (!fs.existsSync(POSTS_DIR)) return;
   const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md'));
   let modifiedCount = 0;
+  let calendarErrors = [];
 
   files.forEach((f) => {
     let fullPath = path.join(POSTS_DIR, f);
@@ -56,11 +80,24 @@ function main() {
     if (processPost(fullPath)) {
       modifiedCount++;
     }
+    const dayErrors = validateCalendarDays(fullPath);
+    if (dayErrors.length > 0) {
+      calendarErrors.push({ file: f, errors: dayErrors });
+    }
   });
 
   if (modifiedCount > 0) {
     console.log('🛠️ CQF 의정부 품질 검증 엔진 자동 교정 완료 (적용 파일: ' + modifiedCount + '개).');
   }
+
+  if (calendarErrors.length > 0) {
+    console.error('❌ [CQF 달력 요일 불일치 오류]');
+    calendarErrors.forEach((ce) => {
+      console.error(`  - ${ce.file}: ${ce.errors.join(', ')}`);
+    });
+    process.exit(1);
+  }
+
   console.log('✅ All Uijeongbu blog posts passed quality checks (Rock-Solid Verified).');
 }
 

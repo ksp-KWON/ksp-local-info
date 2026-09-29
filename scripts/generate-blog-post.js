@@ -161,6 +161,29 @@ function isQualityCivicCourse(course) {
   // 3. 단순 요일/분반 쪼개기 강좌 배제
   if (/-[A-Z]반|\b[0-9]반\b|화목반|월수반|금요반|토요반/.test(course.title)) return false;
 
+  // 4. 신청 마감일 필터 (종료일이 오늘(KST)보다 이전이면 제외, 파싱 실패 시 제외 및 로그)
+  const applyPeriod = course.applyPeriod;
+  if (!applyPeriod || typeof applyPeriod !== 'string') {
+    console.warn(`  [마감 필터 제외] "${course.title}" 신청기간 데이터 없음: "${applyPeriod}"`);
+    return false;
+  }
+  const parts = applyPeriod.split('~');
+  if (parts.length < 2) {
+    console.warn(`  [마감 필터 제외] "${course.title}" 신청기간 구분자(~) 없음: "${applyPeriod}"`);
+    return false;
+  }
+  const endStr = parts[1].trim();
+  const match = endStr.match(/^(\d{2})\.(\d{2})\.(\d{2})$/);
+  if (!match) {
+    console.warn(`  [마감 필터 제외] "${course.title}" 종료일 형식 불일치 ("${endStr}"): "${applyPeriod}"`);
+    return false;
+  }
+  const endFormatted = `20${match[1]}-${match[2]}-${match[3]}`;
+  const today = getKSTDateString();
+  if (endFormatted < today) {
+    return false;
+  }
+
   return true;
 }
 
