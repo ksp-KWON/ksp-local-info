@@ -40,7 +40,7 @@ async function generateAndSavePost(targetItem, tierLabel) {
   const slug = makeSlug(plan.frontmatter.title || targetItem.title);
   const fileName = `${today}-${slug}.md`;
 
-  saveMarkdownPost(fileName, {
+  const saved = saveMarkdownPost(fileName, {
     title: plan.frontmatter.title,
     date: getKSTDateString() + 'T09:00:00+09:00',
     summary: plan.frontmatter.summary,
@@ -50,7 +50,7 @@ async function generateAndSavePost(targetItem, tierLabel) {
     sourceLink: targetItem.link || 'https://www.ui4u.go.kr'
   }, content.markdownContent);
 
-  return fileName;
+  return saved && saved.filePath ? saved.filePath : fileName;
 }
 
 // ── [Tier 1] 의정부시청 공식 RSS 최우선 포스팅 ─────────────────────
@@ -269,8 +269,14 @@ async function main() {
     // 3순위: 의정부 평생학습 실시간 강좌
     const tier3 = await runTier3LifelongLearning(remaining);
 
+    const allPublishedFiles = new Set([
+      ...(tier1.published || []),
+      ...(tier2.published || []),
+      ...(tier3.published || [])
+    ]);
+
     const totalAttempted = (tier1.attempted || 0) + (tier2.attempted || 0) + (tier3.attempted || 0);
-    const totalPublished = (tier1.published?.length || 0) + (tier2.published?.length || 0) + (tier3.published?.length || 0);
+    const totalPublished = allPublishedFiles.size;
     const totalFailed = totalAttempted - totalPublished;
 
     console.log('\n======================================================');

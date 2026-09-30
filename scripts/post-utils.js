@@ -111,6 +111,23 @@ function saveMarkdownPost(arg1, arg2, arg3) {
     finalSlug = unique.slug;
   }
 
+  if (fs.existsSync(filePath)) {
+    try {
+      const existingRaw = fs.readFileSync(filePath, 'utf8');
+      const existingParsed = matter(existingRaw);
+      const existingSourceId = existingParsed.data && existingParsed.data.sourceId;
+      const currentSourceId = frontmatter && frontmatter.sourceId;
+
+      if (currentSourceId && existingSourceId !== currentSourceId) {
+        const idSuffix = String(currentSourceId).slice(0, 8);
+        finalSlug = `${finalSlug}-${idSuffix}`;
+        filePath = path.join(POSTS_DIR, `${finalSlug}.md`);
+      }
+    } catch {
+      // Ignore reading/parsing error
+    }
+  }
+
   const rawFileContent = matter.stringify(content || '', frontmatter);
   const normalized = normalizePost(rawFileContent);
   fs.writeFileSync(filePath, normalized.fullContent, 'utf8');
