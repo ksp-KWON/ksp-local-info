@@ -5,6 +5,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+  workflow_run:
+    workflows: ["로컬인포 자동글쓰기"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -15,6 +18,7 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
