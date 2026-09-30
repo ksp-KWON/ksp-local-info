@@ -14,10 +14,13 @@ import HighlightBadge, { getKeywordHighlightVariant } from '@/components/ui/High
 
 const SCROLL_OFFSET = 140;
 
-const extractTextFromNode = (n: any): string => {
+const extractTextFromNode = (n: React.ReactNode): string => {
   if (typeof n === 'string') return n;
+  if (typeof n === 'number') return String(n);
   if (Array.isArray(n)) return n.map(extractTextFromNode).join('');
-  if (n?.props?.children) return extractTextFromNode(n.props.children);
+  if (React.isValidElement<{ children?: React.ReactNode }>(n) && n.props?.children) {
+    return extractTextFromNode(n.props.children);
+  }
   return '';
 };
 
@@ -89,7 +92,7 @@ const UnifiedHeadingRenderer = ({ level, children, id }: { level: 1|2|3|4|5|6, c
   );
 };
 
-export const sharedComponents: Components & Record<string, any> = {
+export const sharedComponents: Components & Record<string, React.ComponentType<{ children?: React.ReactNode; [key: string]: unknown }>> = {
   h1: ({ children, id }) => (
     <PremiumHeading level={1} id={id} style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}>
       {children}
@@ -132,7 +135,7 @@ export const sharedComponents: Components & Record<string, any> = {
     return <HighlightBadge variant={variant}>{children}</HighlightBadge>;
   },
 
-  blockquote: ({ children }: any) => {
+  blockquote: ({ children }: { children?: React.ReactNode }) => {
     const childArray = React.Children.toArray(children);
 
     const firstChild = childArray[0];
@@ -143,7 +146,7 @@ export const sharedComponents: Components & Record<string, any> = {
       /^h[1-6]$/i.test(firstChild.type);
 
     if (isFirstChildHeading) {
-      const headingElement = firstChild as React.ReactElement<any>;
+      const headingElement = firstChild as React.ReactElement<{ children?: React.ReactNode }>;
       const headingText = extractTextFromNode(headingElement.props.children);
       const bodyElements = childArray.slice(1);
 
@@ -156,7 +159,7 @@ export const sharedComponents: Components & Record<string, any> = {
       else if (/신청|절차|서류/.test(headingText)) boxTone = 'teal';
       else if (/꿀팁|노하우|인사이트/.test(headingText)) boxTone = 'yellow';
 
-      const iconMap: Record<string, any> = {
+      const iconMap: Record<string, React.ReactNode> = {
         yellow: <AppIcon name="compass" size={18} strokeWidth={2.5} />,
         red: <AppIcon name="shield-alert" size={18} strokeWidth={2.5} />,
         green: <AppIcon name="shield-check" size={18} strokeWidth={2.5} />,
@@ -184,7 +187,7 @@ export const sharedComponents: Components & Record<string, any> = {
     );
   },
 
-  table: ({ children }: any) => (
+  table: ({ children }: { children?: React.ReactNode }) => (
     <div className="not-prose my-8 border border-gray-200/90 dark:border-zinc-800 bg-white dark:bg-[#202124] shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] overflow-hidden">
       {/* 📱 모바일 전용 좌우 스크롤 안내 가이드 바 (보상스쿨 UX 표준) */}
       <div className="flex sm:hidden items-center justify-between px-3 py-1.5 bg-blue-50/70 dark:bg-blue-950/30 border-b border-blue-100 dark:border-blue-900/40 text-[11px] font-bold text-[var(--google-blue)] dark:text-[#8ab4f8] select-none">
@@ -201,13 +204,13 @@ export const sharedComponents: Components & Record<string, any> = {
       </div>
     </div>
   ),
-  thead: ({ children }: any) => (
+  thead: ({ children }: { children?: React.ReactNode }) => (
     <thead className="bg-gray-50 dark:bg-[#303134] border-b border-gray-200/90 dark:border-zinc-700">{children}</thead>
   ),
-  tbody: ({ children }: any) => (
+  tbody: ({ children }: { children?: React.ReactNode }) => (
     <tbody className="divide-y divide-gray-100 dark:divide-zinc-800/80">{children}</tbody>
   ),
-  th: ({ children, style, ...props }: any) => (
+  th: ({ children, style, ...props }: React.ComponentPropsWithoutRef<'th'>) => (
     <th
       style={style}
       className="p-3 sm:p-3.5 font-bold text-zinc-900 dark:text-zinc-100 tracking-tight whitespace-nowrap text-center bg-gray-50/90 dark:bg-[#303134]"
@@ -216,7 +219,7 @@ export const sharedComponents: Components & Record<string, any> = {
       {children}
     </th>
   ),
-  td: ({ children, style, ...props }: any) => (
+  td: ({ children, style, ...props }: React.ComponentPropsWithoutRef<'td'>) => (
     <td
       style={style}
       className="p-3 sm:p-3.5 align-middle text-zinc-700 dark:text-zinc-300 leading-relaxed text-left font-normal break-keep"
@@ -225,7 +228,7 @@ export const sharedComponents: Components & Record<string, any> = {
       {children}
     </td>
   ),
-  tr: ({ children }: any) => (
+  tr: ({ children }: { children?: React.ReactNode }) => (
     <tr className="hover:bg-zinc-50/70 dark:hover:bg-zinc-800/30 transition-colors">{children}</tr>
   ),
 
@@ -253,7 +256,7 @@ export const sharedComponents: Components & Record<string, any> = {
     </pre>
   ),
 
-  code: ({ children, className }: any) => {
+  code: ({ children, className }: React.ComponentPropsWithoutRef<'code'>) => {
     const isInline = !className;
     if (isInline) {
       return (
@@ -272,7 +275,7 @@ export const sharedComponents: Components & Record<string, any> = {
   blue: ({ children }: { children?: React.ReactNode }) => <strong className="text-[#1A73E8] dark:text-[#8ab4f8] bg-blue-50 dark:bg-blue-900/20 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
   purple: ({ children }: { children?: React.ReactNode }) => <strong className="text-[#9333ea] dark:text-[#c084fc] bg-purple-50 dark:bg-purple-900/20 px-1.5 py-0.5 mx-0.5 rounded-none font-bold">{children}</strong>,
 
-  relatedbox: ({ children }: any) => (
+  relatedbox: ({ children }: { children?: React.ReactNode }) => (
     <PremiumCard borderColor="charcoal" hoverEffect={true} className="my-10 group">
       <div className="relative z-10">
         <div className="border-b border-gray-200/80 dark:border-zinc-800 pb-3 mb-4">
@@ -287,9 +290,9 @@ export const sharedComponents: Components & Record<string, any> = {
     </PremiumCard>
   ),
 
-  calloutlink: ({ ...props }: any) => {
-    const href = props.href || '';
-    const text = props.text || '';
+  calloutlink: ({ ...props }: { href?: string; text?: string; [key: string]: unknown }) => {
+    const href = typeof props.href === 'string' ? props.href : '';
+    const text = typeof props.text === 'string' ? props.text : '';
     return (
       <li className="flex items-start gap-2.5 group">
         <span className="text-zinc-900 dark:text-zinc-100 mt-0.5 font-bold shrink-0">
