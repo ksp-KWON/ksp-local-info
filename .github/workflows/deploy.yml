@@ -1,52 +1,67 @@
-name: Deploy to Cloudflare Pages
+name: 로컬인포 통합 자동화 파이프라인
 
 on:
+  schedule:
+    # 매일 오전 8시 (KST) = UTC 23:00 전날
+    - cron: '0 23 * * *'
   push:
     branches:
       - main
   workflow_dispatch:
-  workflow_run:
-    workflows: ["로컬인포 자동글쓰기"]
-    types: [completed]
 
-permissions:
-  contents: read
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  # ── [1단계] 자동 글쓰기 (schedule / workflow_dispatch 트리거 시만 실행) ──
+  generate:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    outputs:
+      new_posts_count: ${{ steps.extract_posts.outputs.new_posts_count }}
+      subject: ${{ steps.extract_posts.outputs.subject }}
+      html_body: ${{ steps.extract_posts.outputs.html_body }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v7.0.1
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v4
+      - name: Node.js 24 설정
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: '24'
+          cache: 'npm'
 
-      - name: Install dependencies
+      - name: 의존성 설치
         run: npm ci
 
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy out --project-name=ksp-local-info --branch=main
+      - name: 의정부시청 공식 RSS 수집
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          NODE_EXTRA_CA_CERTS: ${{ github.workspace }}/scripts/certs/ui4u-intermediate.pem
+        run: node scripts/fetch-city-rss.js
 
-      # ── 신규 글 목록 및 메타데이터 추출 ─────────────────────────────────
-      - name: 신규 발행 글 추출
-        id: extract_new_posts
+      - name: 공공데이터 수집
         env:
-          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          PUBLIC_DATA_API_KEY: ${{ secrets.PUBLIC_DATA_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/fetch-public-data.js || true
+
+      - name: 블로그 자동글쓰기
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/generate-blog-post.js
+
+      - name: 변경사항 스테이징
+        run: |
+          git add public/data/city-rss.json public/data/local-info.json src/content/posts/ || true
+
+      - name: 신규 발행 글 추출 및 메타데이터 구성
+        id: extract_posts
         run: |
           node -e '
           const { execSync } = require("child_process");
@@ -54,21 +69,17 @@ jobs:
           const path = require("path");
           const matter = require("gray-matter");
 
-          const headSha = process.env.HEAD_SHA;
           let addedFiles = [];
-
-          if (headSha) {
-            try {
-              const diffOutput = execSync(`git diff --name-status --diff-filter=A "${headSha}"..HEAD -- src/content/posts`, { encoding: "utf8" });
-              addedFiles = diffOutput
-                .split("\n")
-                .map(line => line.trim())
-                .filter(line => line.startsWith("A\t") || line.startsWith("A "))
-                .map(line => line.replace(/^A\s+/, ""))
-                .filter(file => file.endsWith(".md"));
-            } catch (err) {
-              console.error("git diff 실행 오류:", err.message);
-            }
+          try {
+            const diff = execSync("git diff --cached --name-status --diff-filter=A -- src/content/posts", { encoding: "utf8" });
+            addedFiles = diff
+              .split("\n")
+              .map(l => l.trim())
+              .filter(l => l.startsWith("A\t") || l.startsWith("A "))
+              .map(l => l.replace(/^A\s+/, ""))
+              .filter(f => f.endsWith(".md"));
+          } catch (e) {
+            console.error("git diff 실행 오류:", e.message);
           }
 
           const count = addedFiles.length;
@@ -82,10 +93,11 @@ jobs:
               const parsed = matter(content);
               const title = parsed.data?.title || path.basename(file, ".md");
               const slug = path.basename(file, ".md");
-              const link = `https://uijeongbusim.com/blog/${slug}`;
-              posts.push({ title, link });
-            } catch (err) {
-              console.error(`파일 읽기 오류 (${file}):`, err.message);
+              const siteLink = `https://uijeongbusim.com/blog/${slug}`;
+              const sourceLink = parsed.data?.sourceLink || "https://www.ui4u.go.kr";
+              posts.push({ title, siteLink, sourceLink });
+            } catch (e) {
+              console.error(`파일 읽기 오류 (${file}):`, e.message);
             }
           }
 
@@ -94,7 +106,8 @@ jobs:
           const itemsHtml = posts.map(p =>
             `<div style="background-color: #f9fafb; padding: 16px; border-left: 4px solid #111; margin-bottom: 12px; border-radius: 4px;">` +
             `<h3 style="margin: 0 0 8px 0; color: #111; font-size: 16px;">${p.title}</h3>` +
-            `<a href="${p.link}" style="color: #2563eb; text-decoration: underline; font-size: 14px; word-break: break-all;">${p.link}</a>` +
+            `<div style="margin-bottom: 6px;"><span style="font-size: 13px; color: #6b7280; font-weight: bold;">사이트 링크 : </span><a href="${p.siteLink}" style="color: #2563eb; text-decoration: underline; font-size: 14px; word-break: break-all;">${p.siteLink}</a></div>` +
+            `<div><span style="font-size: 13px; color: #6b7280; font-weight: bold;">원천 링크 : </span><a href="${p.sourceLink}" style="color: #4b5563; text-decoration: underline; font-size: 13px; word-break: break-all;">${p.sourceLink}</a></div>` +
             `</div>`
           ).join("");
 
@@ -108,24 +121,71 @@ jobs:
             `</div></div>`;
 
           if (process.env.GITHUB_OUTPUT) {
-            fs.appendFileSync(process.env.GITHUB_OUTPUT, `count=${count}\n`);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `new_posts_count=${count}\n`);
             fs.appendFileSync(process.env.GITHUB_OUTPUT, `subject=${subject}\n`);
             fs.appendFileSync(process.env.GITHUB_OUTPUT, `html_body<<EOF_BODY\n${htmlBody}\nEOF_BODY\n`);
           }
           '
 
-      # ── 배포 완료 브리핑 이메일 발송 ─────────────────────────────────────
+      - name: 변경사항 커밋 & 푸시
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if ! git diff --cached --quiet; then
+            git commit -m "auto: 시정 새소식 자동 발행 업데이트 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+            git pull --rebase origin main
+            git push origin main
+            echo "✅ 커밋 & 푸시 완료"
+          else
+            echo "ℹ️ 변경사항 없음 — 커밋 건너뜀"
+          fi
+
+  # ── [2단계] 빌드 & 배포 & 이메일 발송 ─────────────────────────────────────
+  deploy:
+    needs: [generate]
+    if: |
+      always() &&
+      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'cancelled') &&
+      (github.event_name == 'push' || needs.generate.outputs.new_posts_count > 0)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+
+      - name: Node.js 24 설정
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: 프로젝트 빌드
+        run: npm run build
+
+      - name: Cloudflare Pages 배포
+        run: npx wrangler pages deploy out --project-name=ksp-local-info --branch=main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: 배포 완료 브리핑 이메일 발송
-        if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && steps.extract_new_posts.outputs.count > 0
+        if: needs.generate.outputs.new_posts_count > 0
         continue-on-error: true
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@67ce3558d613188179559c61d3565140cf389968 # v22
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: ${{ steps.extract_new_posts.outputs.subject }}
+          subject: ${{ needs.generate.outputs.subject }}
           to: ${{ secrets.GMAIL_USER }}
           from: 의정부심 포털 <${{ secrets.GMAIL_USER }}>
-          html_body: ${{ steps.extract_new_posts.outputs.html_body }}
-
+          html_body: ${{ needs.generate.outputs.html_body }}
