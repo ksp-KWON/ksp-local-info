@@ -19,7 +19,8 @@ const PRIMARY_MODEL  = 'gemini-flash-latest';
 const FALLBACK_MODEL = 'gemini-flash-lite-latest';
 
 // 프로세스 실행 중 일일 한도(PerDay)가 소진된 모델을 기억하여 중복 호출 차단
-const exhaustedModels = new Set();
+const perDayExhaustedModels = new Set();
+const unavailableModels = new Set();
 
 const RETRY_CONFIG = {
   maxRetries: 2,
@@ -44,10 +45,16 @@ async function callGemini(prompt, schema = null, targetTier = 'auto') {
     ? [FALLBACK_MODEL, PRIMARY_MODEL]
     : [PRIMARY_MODEL, FALLBACK_MODEL];
 
-  // 이미 당일 한도가 소진된 모델 제외
-  const activeModels = candidateModels.filter(m => !exhaustedModels.has(m));
+  // 이미 당일 한도 소진 또는 비정상 모델 제외
+  const activeModels = candidateModels.filter(m => !perDayExhaustedModels.has(m) && !unavailableModels.has(m));
   if (activeModels.length === 0) {
-    throw new Error('모든 Gemini 모델의 당일 사용 한도(PerDay Quota)가 소진되었습니다.');
+    if (candidateModels.every(m => perDayExhaustedModels.has(m))) {
+      const err = new Error('모든 Gemini 모델의 당일 사용 한도(PerDay Quota)가 소진되었습니다.');
+      err.code = 'QUOTA_EXHAUSTED';
+      err.isPerDayQuota = true;
+      throw err;
+    }
+    throw new Error('사용 가능한 Gemini 모델이 없습니다.');
   }
 
   const baseConfig = {
@@ -103,7 +110,7 @@ async function callGemini(prompt, schema = null, targetTier = 'auto') {
           const isPerDay = /PerDay/i.test(errorText);
           if (isPerDay) {
             console.warn(`  [할당량 초과] ${model} 일일 한도(PerDay) 소진 확인 -> 당해 프로세스 호출 목록에서 즉시 영구 배제.`);
-            exhaustedModels.add(model);
+            perDayExhaustedModels.add(model);
           } else {
             console.warn(`  [할당량 초과] ${model} 일시적 Rate Limit (분당/동시 한도) -> 쿨다운 후 차선책 모델 전환.`);
           }
@@ -114,7 +121,7 @@ async function callGemini(prompt, schema = null, targetTier = 'auto') {
         // 404 모델 중단 처리
         if (res.status === 404) {
           console.warn(`  [모델 미지원] ${model} 404 발생 -> 차선책 모델로 즉시 전환.`);
-          exhaustedModels.add(model);
+          unavailableModels.add(model);
           continue modelLoop;
         }
 
@@ -171,7 +178,17 @@ async function callGemini(prompt, schema = null, targetTier = 'auto') {
     }
   }
 
-  throw new Error(`모든 Gemini 모델 통신에 실패했습니다. (마지막 에러: ${lastError})`);
+  const err = new Error(`모든 Gemini 모델 통신에 실패했습니다. (마지막 에러: ${lastError})`);
+  if (isAllQuotaExhausted()) {
+    err.code = 'QUOTA_EXHAUSTED';
+    err.isPerDayQuota = true;
+  }
+  throw err;
+}
+
+function isAllQuotaExhausted() {
+  const allModels = [PRIMARY_MODEL, FALLBACK_MODEL];
+  return allModels.length > 0 && allModels.every(m => perDayExhaustedModels.has(m));
 }
 
 async function discoverModels() {
@@ -184,6 +201,11 @@ async function discoverModels() {
 module.exports = {
   callGemini,
   discoverModels,
+  isAllQuotaExhausted,
+  exhaustedModels: perDayExhaustedModels,
+  perDayExhaustedModels,
+  unavailableModels,
   PRIMARY_MODEL,
   FALLBACK_MODEL,
+  RETRY_CONFIG,
 };

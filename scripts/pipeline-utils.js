@@ -24,6 +24,26 @@ if (fs.existsSync(envPath)) {
 const POSTS_DIR = path.join(process.cwd(), 'src/content/posts');
 const MIN_SOURCE_CHARS = 100;
 
+// ── 공통 원천 분량 판정 유틸 ────────────────────────────────────────────────
+function getCleanSourceText(item) {
+  if (!item) return '';
+  if (typeof item === 'string') return item.replace(/<[^>]+>/g, '').replace(/\s+/g, '');
+  const raw = item.intro || item.description || item.content || [
+    item.summary,
+    item.target,
+    item.location,
+    item.서비스목적요약,
+    item.지원내용,
+    item.지원대상,
+    item.선정기준
+  ].filter(Boolean).join(' ');
+  return String(raw).replace(/<[^>]+>/g, '').replace(/\s+/g, '');
+}
+
+function isSourceSufficient(item) {
+  return getCleanSourceText(item).length >= MIN_SOURCE_CHARS;
+}
+
 // ── 공통 유틸 ────────────────────────────────────────────────────────────────
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -42,5 +62,12 @@ async function safeFetch(url, options = {}, timeoutMs = 10000) {
   }
 }
 
-module.exports = { POSTS_DIR, MIN_SOURCE_CHARS, sleep, safeFetch };
+module.exports = {
+  POSTS_DIR,
+  MIN_SOURCE_CHARS,
+  getCleanSourceText,
+  isSourceSufficient,
+  sleep,
+  safeFetch
+};
 

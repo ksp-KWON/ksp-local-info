@@ -11,7 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const { generateSourceId, getExistingSourceIds } = require('./post-utils');
-const { safeFetch, sleep, MIN_SOURCE_CHARS } = require('./pipeline-utils');
+const { safeFetch, sleep } = require('./pipeline-utils');
 
 const CITY_RSS_FILE = path.join(process.cwd(), 'public/data/city-rss.json');
 
@@ -126,13 +126,6 @@ function parseRssXml(xmlText, defaultCategory, feedName) {
 
     // ── 저품질 단순 공고 및 행정 내부잡무 배제 ──
     if (isLowQualityNotice(title, description)) {
-      continue;
-    }
-
-    // ── 원천 분량 미달(얇은 원천) 사전 배제 ──
-    const cleanSourceChars = description.replace(/<[^>]+>/g, '').replace(/\s+/g, '');
-    if (cleanSourceChars.length < MIN_SOURCE_CHARS) {
-      console.log(`  [분량 미달 제외] "${title}" (원천 글자수: ${cleanSourceChars.length}자 < ${MIN_SOURCE_CHARS}자)`);
       continue;
     }
 

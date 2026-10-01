@@ -10,8 +10,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const { callGemini } = require('./gemini-helper');
-const { sleep, MIN_SOURCE_CHARS } = require('./pipeline-utils');
+const { callGemini, isAllQuotaExhausted } = require('./gemini-helper');
+const { sleep, MIN_SOURCE_CHARS, getCleanSourceText, isSourceSufficient } = require('./pipeline-utils');
 const { generateSourceId, getExistingSourceIds, saveMarkdownPost, makeSlug, getKSTDateString } = require('./post-utils');
 const {
   PLAN_SCHEMA,
@@ -53,6 +53,21 @@ async function generateAndSavePost(targetItem, tierLabel) {
   return saved && saved.filePath ? saved.filePath : fileName;
 }
 
+/**
+ * Tier 1 RSS 후보 선별 필터 (원천 분량 100자 이상 검증)
+ */
+function filterTier1Candidates(queue) {
+  return (queue || []).filter(item => {
+    if (!item || !item.title) return false;
+    if (!isSourceSufficient(item)) {
+      const cleanLen = getCleanSourceText(item).length;
+      console.log(`  [분량 미달 제외] "${item.title}" (원천 글자수: ${cleanLen}자 < ${MIN_SOURCE_CHARS}자)`);
+      return false;
+    }
+    return true;
+  });
+}
+
 // ── [Tier 1] 의정부시청 공식 RSS 최우선 포스팅 ─────────────────────
 async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
   if (limit <= 0) return { attempted: 0, published: [] };
@@ -65,8 +80,8 @@ async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
   const existingSourceIds = getExistingSourceIds();
   const rssQueue = JSON.parse(fs.readFileSync(CITY_RSS_PATH, 'utf8'));
 
-  const pending = rssQueue.filter(item => {
-    if (!item.title) return false;
+  const qualified = filterTier1Candidates(rssQueue);
+  const pending = qualified.filter(item => {
     const sourceId = item.sourceId || generateSourceId(item.title);
     return !existingSourceIds.has(sourceId);
   }).slice(0, limit);
@@ -79,6 +94,7 @@ async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
   console.log(`  -> 미발행 신규 소식 ${pending.length}건 배정 (최대 ${limit}건). 생성 시작...`);
   const published = [];
   for (let i = 0; i < pending.length; i++) {
+    if (isAllQuotaExhausted()) break;
     const item = pending[i];
     try {
       console.log(`\n[${i + 1}/${pending.length}] 글 작성 진행: "${item.title}"`);
@@ -88,10 +104,26 @@ async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
       await sleep(2500); // Gemini API 레이트 리밋 방지 쾌적 대기
     } catch (err) {
       console.error(`  ❌ "${item.title}" 생성 실패:`, err.message);
+      if (err.code === 'QUOTA_EXHAUSTED' || isAllQuotaExhausted()) break;
     }
   }
 
   return { attempted: pending.length, published };
+}
+
+/**
+ * Tier 2 공공데이터 후보 선별 필터 (원천 분량 100자 이상 검증)
+ */
+function filterTier2Candidates(items) {
+  return (items || []).filter(item => {
+    if (!item || !item.title) return false;
+    if (!isSourceSufficient(item)) {
+      const cleanLen = getCleanSourceText(item).length;
+      console.log(`  [분량 미달 제외] "${item.title}" (원천 글자수: ${cleanLen}자 < ${MIN_SOURCE_CHARS}자)`);
+      return false;
+    }
+    return true;
+  });
 }
 
 // ── [Tier 2] 경기24 공공데이터(local-info.json) 보조 포스팅 ────────────
@@ -107,8 +139,8 @@ async function runTier2LocalInfo(limit = MAX_POSTS_PER_RUN) {
   const localInfo = JSON.parse(fs.readFileSync(LOCAL_INFO_PATH, 'utf8'));
   const allItems = [...(localInfo.events || []), ...(localInfo.benefits || [])];
 
-  const pending = allItems.filter(item => {
-    if (!item.title) return false;
+  const qualified = filterTier2Candidates(allItems);
+  const pending = qualified.filter(item => {
     const sourceId = generateSourceId(item.title);
     return !existingSourceIds.has(sourceId);
   }).slice(0, limit);
@@ -121,6 +153,7 @@ async function runTier2LocalInfo(limit = MAX_POSTS_PER_RUN) {
   console.log(`  -> 미발행 경기24 공공데이터 ${pending.length}건 배정 (최대 ${limit}건). 생성 시작...`);
   const published = [];
   for (let i = 0; i < pending.length; i++) {
+    if (isAllQuotaExhausted()) break;
     const item = pending[i];
     try {
       console.log(`\n[${i + 1}/${pending.length}] 글 작성 진행: "${item.title}"`);
@@ -130,6 +163,7 @@ async function runTier2LocalInfo(limit = MAX_POSTS_PER_RUN) {
       await sleep(2500);
     } catch (err) {
       console.error(`  ❌ "${item.title}" 생성 실패:`, err.message);
+      if (err.code === 'QUOTA_EXHAUSTED' || isAllQuotaExhausted()) break;
     }
   }
 
@@ -149,8 +183,11 @@ function isQualityCivicCourse(course) {
   if (!course || !course.title) return false;
 
   // 1. 상세 교육계획서(intro)가 최소 MIN_SOURCE_CHARS자 이상 충실하게 작성된 강좌만 허용
-  const cleanIntro = (course.intro || '').replace(/<[^>]+>/g, '').replace(/\s+/g, '');
-  if (cleanIntro.length < MIN_SOURCE_CHARS) return false;
+  if (!isSourceSufficient(course)) {
+    const cleanLen = getCleanSourceText(course).length;
+    console.log(`  [분량 미달 제외] "${course.title}" (원천 글자수: ${cleanLen}자 < ${MIN_SOURCE_CHARS}자)`);
+    return false;
+  }
 
   // 2. 자잘한 일일 취미 소품 만들기 및 단순 신청폼 배제
   const lowQualityKeywords = [
@@ -224,6 +261,7 @@ async function runTier3LifelongLearning(limit = MAX_POSTS_PER_RUN) {
 
   const published = [];
   for (let i = 0; i < pending.length; i++) {
+    if (isAllQuotaExhausted()) break;
     const course = pending[i];
     const feeText = course.isFree ? '무료' : (course.fee ? `${course.fee}` : '유료 (강의계획서 참조)');
     const postItem = {
@@ -243,6 +281,7 @@ async function runTier3LifelongLearning(limit = MAX_POSTS_PER_RUN) {
       await sleep(2500);
     } catch (err) {
       console.error(`  ❌ "${course.title}" 생성 실패:`, err.message);
+      if (err.code === 'QUOTA_EXHAUSTED' || isAllQuotaExhausted()) break;
     }
   }
 
@@ -285,8 +324,14 @@ async function main() {
     console.log('======================================================');
 
     if (totalAttempted > 0 && totalPublished === 0) {
+      if (isAllQuotaExhausted()) {
+        console.warn('\nℹ️ [할당량 소진] 모든 Gemini 모델의 당일 사용 한도(PerDay Quota)가 소진되었습니다. 다음 슬롯에서 자동 재시도됩니다. (발행 0건, 정상 종료 exit 0)');
+        process.exit(0);
+        return;
+      }
       console.error(`\n❌ [발행 전수 실패] 대상 ${totalAttempted}건 중 성공 0건. 파이프라인 무결성 오류로 프로세스를 중단합니다.`);
       process.exit(1);
+      return;
     }
 
     if (totalFailed > 0) {
@@ -297,9 +342,24 @@ async function main() {
       console.log('\nℹ️ [알림] 현재 발행 대기 중인 새로운 이슈가 없습니다.');
     }
   } catch (error) {
+    if (error.code === 'QUOTA_EXHAUSTED' || error.isPerDayQuota || isAllQuotaExhausted()) {
+      console.warn('\nℹ️ [할당량 소진] 모든 Gemini 모델의 당일 사용 한도(PerDay Quota)가 소진되었습니다. 다음 슬롯에서 자동 재시도됩니다. (발행 0건, 정상 종료 exit 0)');
+      process.exit(0);
+      return;
+    }
     console.error('\n❌ [치명적 오류] 오토 포스팅 엔진 실행 실패:', error.message);
     process.exit(1);
+    return;
   }
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  main,
+  filterTier1Candidates,
+  filterTier2Candidates,
+  isQualityCivicCourse,
+};
