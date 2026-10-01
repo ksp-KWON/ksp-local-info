@@ -42,36 +42,90 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      # ── 최신 글 메타데이터 추출 ─────────────────────────────────────────
-      - name: 최신 글 정보 추출
-        if: success()
-        run: node scripts/extract-latest-post.js
+      # ── 신규 글 목록 및 메타데이터 추출 ─────────────────────────────────
+      - name: 신규 발행 글 추출
+        id: extract_new_posts
+        env:
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          node -e '
+          const { execSync } = require("child_process");
+          const fs = require("fs");
+          const path = require("path");
+          const matter = require("gray-matter");
+
+          const headSha = process.env.HEAD_SHA;
+          let addedFiles = [];
+
+          if (headSha) {
+            try {
+              const diffOutput = execSync(`git diff --name-status --diff-filter=A "${headSha}"..HEAD -- src/content/posts`, { encoding: "utf8" });
+              addedFiles = diffOutput
+                .split("\n")
+                .map(line => line.trim())
+                .filter(line => line.startsWith("A\t") || line.startsWith("A "))
+                .map(line => line.replace(/^A\s+/, ""))
+                .filter(file => file.endsWith(".md"));
+            } catch (err) {
+              console.error("git diff 실행 오류:", err.message);
+            }
+          }
+
+          const count = addedFiles.length;
+          console.log(`신규 발행 글 수: ${count}`);
+
+          const posts = [];
+          for (const file of addedFiles) {
+            try {
+              const fullPath = path.resolve(file);
+              const content = fs.readFileSync(fullPath, "utf8");
+              const parsed = matter(content);
+              const title = parsed.data?.title || path.basename(file, ".md");
+              const slug = path.basename(file, ".md");
+              const link = `https://uijeongbusim.com/blog/${slug}`;
+              posts.push({ title, link });
+            } catch (err) {
+              console.error(`파일 읽기 오류 (${file}):`, err.message);
+            }
+          }
+
+          const subject = `[의정부심] 신규 발행 ${count}건`;
+
+          const itemsHtml = posts.map(p =>
+            `<div style="background-color: #f9fafb; padding: 16px; border-left: 4px solid #111; margin-bottom: 12px; border-radius: 4px;">` +
+            `<h3 style="margin: 0 0 8px 0; color: #111; font-size: 16px;">${p.title}</h3>` +
+            `<a href="${p.link}" style="color: #2563eb; text-decoration: underline; font-size: 14px; word-break: break-all;">${p.link}</a>` +
+            `</div>`
+          ).join("");
+
+          const htmlBody = `<div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; line-height: 1.6; color: #222; max-width: 580px; margin: 0 auto; padding: 24px; border: 1px solid #e5e7eb; border-radius: 8px;">` +
+            `<h2 style="color: #111; margin-top: 0; font-size: 20px; border-bottom: 2px solid #111; padding-bottom: 12px;">🏛️ 의정부심 신규 포스팅 발행 안내</h2>` +
+            `<p style="font-size: 15px; color: #4b5563;">신규 포스팅이 성공적으로 발행되었습니다. (총 ${count}건)</p>` +
+            `<div style="margin: 20px 0;">${itemsHtml}</div>` +
+            `<div style="border-top: 1px solid #e5e7eb; padding-top: 14px; font-size: 12px; color: #9ca3af;">` +
+            `<p style="margin: 0;">포털 주소: <a href="https://uijeongbusim.com" style="color: #4b5563; text-decoration: underline;">uijeongbusim.com</a></p>` +
+            `<p style="margin: 4px 0 0 0;">본 메일은 의정부 건강·생활 정보 포털 GitHub Actions에서 자동 발송되었습니다.</p>` +
+            `</div></div>`;
+
+          if (process.env.GITHUB_OUTPUT) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `count=${count}\n`);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `subject=${subject}\n`);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `html_body<<EOF_BODY\n${htmlBody}\nEOF_BODY\n`);
+          }
+          '
 
       # ── 배포 완료 브리핑 이메일 발송 ─────────────────────────────────────
       - name: 배포 완료 브리핑 이메일 발송
-        if: success()
+        if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && steps.extract_new_posts.outputs.count > 0
+        continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "[의정부심] 자동 발행 & 배포 완료: ${{ env.POST_TITLE }}"
+          subject: ${{ steps.extract_new_posts.outputs.subject }}
           to: ${{ secrets.GMAIL_USER }}
           from: 의정부심 포털 <${{ secrets.GMAIL_USER }}>
-          html_body: |
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #222; max-width: 580px; margin: 0 auto; padding: 24px; border: 1px solid #e5e7eb; border-radius: 8px;">
-              <h2 style="color: #111; margin-top: 0; font-size: 20px; border-bottom: 2px solid #111; padding-bottom: 12px;">🏛️ 의정부심 데일리 글쓰기 & 배포 완료</h2>
-              <p style="font-size: 15px; color: #4b5563;">오늘자 신규 시정 안내 포스팅과 웹사이트 배포가 성공적으로 완료되었습니다.</p>
-              
-              <div style="background-color: #f9fafb; padding: 18px; border-left: 4px solid #111; margin: 20px 0; border-radius: 4px;">
-                <p style="font-size: 13px; color: #6b7280; margin: 0 0 6px 0; font-weight: bold;">오늘 발행된 포스팅</p>
-                <h3 style="margin: 0 0 14px 0; color: #111; font-size: 17px;">${{ env.POST_TITLE }}</h3>
-                <a href="https://uijeongbusim.com/blog/${{ env.POST_SLUG }}" style="display: inline-block; padding: 10px 18px; background-color: #111; color: #fff; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: bold;">웹사이트에서 바로 확인하기 →</a>
-              </div>
+          html_body: ${{ steps.extract_new_posts.outputs.html_body }}
 
-              <div style="border-top: 1px solid #e5e7eb; padding-top: 14px; font-size: 12px; color: #9ca3af;">
-                <p style="margin: 0;">포털 주소: <a href="https://uijeongbusim.com" style="color: #4b5563; text-decoration: underline;">uijeongbusim.com</a></p>
-                <p style="margin: 4px 0 0 0;">본 메일은 의정부 건강·생활 정보 포털 GitHub Actions에서 자동 발송되었습니다.</p>
-              </div>
-            </div>
