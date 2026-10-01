@@ -14,7 +14,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { callGemini } = require('./gemini-helper');
-const { sleep, safeFetch } = require('./pipeline-utils');
+const { sleep, safeFetch, MIN_SOURCE_CHARS } = require('./pipeline-utils');
 
 // ── 필터링 상수 ─────────────────────────────────────────────────────────────
 // 1순위: 의정부 키워드
@@ -99,11 +99,20 @@ async function main() {
     ...localInfo.benefits.map(b => b.title),
   ]);
 
-  // 아직 처리되지 않은 신규 항목 1개 탐색
-  const newItem = filtered.find(item => !existingNames.has(item.서비스명));
+  // 아직 처리되지 않은 신규 항목 탐색 (원천 분량 미달 사전 배제)
+  const newItem = filtered.find(item => {
+    if (existingNames.has(item.서비스명)) return false;
+    const rawBody = [(item.서비스목적요약 || ''), (item.지원내용 || ''), (item.지원대상 || ''), (item.선정기준 || '')].join(' ');
+    const cleanChars = rawBody.replace(/<[^>]+>/g, '').replace(/\s+/g, '');
+    if (cleanChars.length < MIN_SOURCE_CHARS) {
+      console.log(`  [분량 미달 제외] "${item.서비스명}" (원천 글자수: ${cleanChars.length}자 < ${MIN_SOURCE_CHARS}자)`);
+      return false;
+    }
+    return true;
+  });
 
   if (!newItem) {
-    console.log('새로운 데이터가 없습니다 (모두 이미 수집된 항목)');
+    console.log('새로운 데이터가 없습니다 (모두 이미 수집되었거나 원천 분량 미달)');
     return;
   }
 

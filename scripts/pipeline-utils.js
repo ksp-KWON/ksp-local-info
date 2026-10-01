@@ -22,6 +22,7 @@ if (fs.existsSync(envPath)) {
 
 // ── 공통 상수 ────────────────────────────────────────────────────────────────
 const POSTS_DIR = path.join(process.cwd(), 'src/content/posts');
+const MIN_SOURCE_CHARS = 100;
 
 // ── 공통 유틸 ────────────────────────────────────────────────────────────────
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -41,5 +42,5 @@ async function safeFetch(url, options = {}, timeoutMs = 10000) {
   }
 }
 
-module.exports = { POSTS_DIR, sleep, safeFetch };
+module.exports = { POSTS_DIR, MIN_SOURCE_CHARS, sleep, safeFetch };
 

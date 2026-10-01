@@ -11,7 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const { callGemini } = require('./gemini-helper');
-const { sleep } = require('./pipeline-utils');
+const { sleep, MIN_SOURCE_CHARS } = require('./pipeline-utils');
 const { generateSourceId, getExistingSourceIds, saveMarkdownPost, makeSlug, getKSTDateString } = require('./post-utils');
 const {
   PLAN_SCHEMA,
@@ -148,8 +148,9 @@ const LEARNING_COURSES_PATH = path.join(process.cwd(), 'src/data/learning-course
 function isQualityCivicCourse(course) {
   if (!course || !course.title) return false;
 
-  // 1. 상세 교육계획서(intro)가 최소 100자 이상 충실하게 작성된 강좌만 허용
-  if (!course.intro || course.intro.trim().length < 100) return false;
+  // 1. 상세 교육계획서(intro)가 최소 MIN_SOURCE_CHARS자 이상 충실하게 작성된 강좌만 허용
+  const cleanIntro = (course.intro || '').replace(/<[^>]+>/g, '').replace(/\s+/g, '');
+  if (cleanIntro.length < MIN_SOURCE_CHARS) return false;
 
   // 2. 자잘한 일일 취미 소품 만들기 및 단순 신청폼 배제
   const lowQualityKeywords = [
