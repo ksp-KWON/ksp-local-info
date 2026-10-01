@@ -56,6 +56,9 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/generate-blog-post.js
 
+      - name: CQF 품질 검증 게이트
+        run: node scripts/check-quality.js
+
       - name: 변경사항 스테이징
         run: |
           git add public/data/city-rss.json public/data/local-info.json src/content/posts/ || true
