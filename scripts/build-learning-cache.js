@@ -70,9 +70,8 @@ function inferTarget(title) {
   return '시민 누구나';
 }
 
-function isWeekendOrNight(title, period) {
-  if (/토|일|주말|야간|저녁|19:|20:/i.test(title)) return true;
-  return false;
+function isWeekendOrNight(title, period = '') {
+  return /토|일|주말|야간|저녁|19:|20:/i.test(`${title} ${period}`);
 }
 
 async function fetchPage(pageIndex, stateCode = '1') {
@@ -133,7 +132,7 @@ async function fetchCourseDetail(learningId) {
       targetGroup: detailData['교육대상'] || '',
       turns: detailData['회차'] || '',
     };
-  } catch (err) {
+  } catch {
     return null;
   }
 }
