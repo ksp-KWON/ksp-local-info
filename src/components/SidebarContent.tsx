@@ -25,6 +25,49 @@ interface SidebarContentProps {
 
 const INITIAL_TAG_COUNT = 6;
 
+const EXTERNAL_QUICK_LINKS = [
+  {
+    href: 'https://www.ui4u.go.kr/tour/main.do',
+    title: '문화관광 포털',
+    badge: '축제·명소',
+    icon: 'compass' as const,
+    containerClass: 'flex items-center justify-between gap-2 p-2 bg-indigo-50/80 hover:bg-indigo-100/80 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/50 border border-indigo-200/80 dark:border-indigo-800/80 transition-colors group/tour',
+    iconBoxClass: 'bg-indigo-600 text-white',
+    titleClass: 'text-indigo-950 dark:text-indigo-200',
+    badgeClass: 'text-indigo-700 dark:text-indigo-300 bg-indigo-100/70 dark:bg-indigo-900/50',
+  },
+  {
+    href: 'https://www.ui4u.go.kr/health/main.do',
+    title: '의정부시 보건소',
+    badge: '예방·진료',
+    icon: 'heart' as const,
+    containerClass: 'flex items-center justify-between gap-2 p-2 bg-rose-50/80 hover:bg-rose-100/80 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 border border-rose-200/80 dark:border-rose-800/80 transition-colors group/health',
+    iconBoxClass: 'bg-rose-600 text-white',
+    titleClass: 'text-rose-950 dark:text-rose-200',
+    badgeClass: 'text-rose-700 dark:text-rose-300 bg-rose-100/70 dark:bg-rose-900/50',
+  },
+  {
+    href: 'https://www.ui4u.go.kr/cscportal/main.do',
+    title: '동 행정복지센터',
+    badge: '생활민원',
+    icon: 'landmark' as const,
+    containerClass: 'flex items-center justify-between gap-2 p-2 bg-sky-50/80 hover:bg-sky-100/80 dark:bg-sky-950/40 dark:hover:bg-sky-900/50 border border-sky-200/80 dark:border-sky-800/80 transition-colors group/csc',
+    iconBoxClass: 'bg-sky-600 text-white',
+    titleClass: 'text-sky-950 dark:text-sky-200',
+    badgeClass: 'text-sky-700 dark:text-sky-300 bg-sky-100/70 dark:bg-sky-900/50',
+  },
+  {
+    href: 'https://www.ull.or.kr/lifeedu/index.do',
+    title: '평생학습포털',
+    badge: '시민강좌',
+    icon: 'book' as const,
+    containerClass: 'flex items-center justify-between gap-2 p-2 bg-amber-50/80 hover:bg-amber-100/80 dark:bg-amber-950/40 dark:hover:bg-amber-900/50 border border-amber-200/80 dark:border-amber-800/80 transition-colors group/edu',
+    iconBoxClass: 'bg-amber-600 text-white',
+    titleClass: 'text-amber-950 dark:text-amber-200',
+    badgeClass: 'text-amber-700 dark:text-amber-400 bg-amber-100/70 dark:bg-amber-900/50',
+  },
+];
+
 export default function SidebarContent({ tags = [], recentPosts = [] }: SidebarContentProps) {
   const visibleTags = tags.slice(0, INITIAL_TAG_COUNT);
   const hiddenTags = tags.slice(INITIAL_TAG_COUNT);
@@ -74,89 +117,28 @@ export default function SidebarContent({ tags = [], recentPosts = [] }: SidebarC
             </span>
           </Link>
 
-          {/* 2. 문화관광 포털 (인디고) */}
-          <a
-            href="https://www.ui4u.go.kr/tour/main.do"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-between gap-2 p-2 bg-indigo-50/80 hover:bg-indigo-100/80 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/50 border border-indigo-200/80 dark:border-indigo-800/80 transition-colors group/tour"
-          >
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="p-1 bg-indigo-600 text-white rounded-none shrink-0">
-                <AppIcon name="compass" size={13} strokeWidth={2.5} />
+          {EXTERNAL_QUICK_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={link.containerClass}
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <div className={`p-1 ${link.iconBoxClass} rounded-none shrink-0`}>
+                  <AppIcon name={link.icon} size={13} strokeWidth={2.5} />
+                </div>
+                <span className={`text-xs font-bold ${link.titleClass} truncate`}>
+                  {link.title}
+                </span>
               </div>
-              <span className="text-xs font-bold text-indigo-950 dark:text-indigo-200 truncate">
-                문화관광 포털
+              <span className={`text-[10px] font-medium ${link.badgeClass} px-1.5 py-0.5 shrink-0 flex items-center gap-0.5`}>
+                <span>{link.badge}</span>
+                <AppIcon name="external-link" size={9} strokeWidth={2} />
               </span>
-            </div>
-            <span className="text-[10px] font-medium text-indigo-700 dark:text-indigo-300 bg-indigo-100/70 dark:bg-indigo-900/50 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
-              <span>축제·명소</span>
-              <AppIcon name="external-link" size={9} strokeWidth={2} />
-            </span>
-          </a>
-
-          {/* 3. 의정부시 보건소 (로즈) */}
-          <a
-            href="https://www.ui4u.go.kr/health/main.do"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-between gap-2 p-2 bg-rose-50/80 hover:bg-rose-100/80 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 border border-rose-200/80 dark:border-rose-800/80 transition-colors group/health"
-          >
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="p-1 bg-rose-600 text-white rounded-none shrink-0">
-                <AppIcon name="heart" size={13} strokeWidth={2.5} />
-              </div>
-              <span className="text-xs font-bold text-rose-950 dark:text-rose-200 truncate">
-                의정부시 보건소
-              </span>
-            </div>
-            <span className="text-[10px] font-medium text-rose-700 dark:text-rose-300 bg-rose-100/70 dark:bg-rose-900/50 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
-              <span>예방·진료</span>
-              <AppIcon name="external-link" size={9} strokeWidth={2} />
-            </span>
-          </a>
-
-          {/* 4. 동 행정복지센터 (스카이) */}
-          <a
-            href="https://www.ui4u.go.kr/cscportal/main.do"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-between gap-2 p-2 bg-sky-50/80 hover:bg-sky-100/80 dark:bg-sky-950/40 dark:hover:bg-sky-900/50 border border-sky-200/80 dark:border-sky-800/80 transition-colors group/csc"
-          >
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="p-1 bg-sky-600 text-white rounded-none shrink-0">
-                <AppIcon name="landmark" size={13} strokeWidth={2.5} />
-              </div>
-              <span className="text-xs font-bold text-sky-950 dark:text-sky-200 truncate">
-                동 행정복지센터
-              </span>
-            </div>
-            <span className="text-[10px] font-medium text-sky-700 dark:text-sky-300 bg-sky-100/70 dark:bg-sky-900/50 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
-              <span>생활민원</span>
-              <AppIcon name="external-link" size={9} strokeWidth={2} />
-            </span>
-          </a>
-
-          {/* 5. 평생학습포털 (앰버) */}
-          <a
-            href="https://www.ull.or.kr/lifeedu/index.do"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-between gap-2 p-2 bg-amber-50/80 hover:bg-amber-100/80 dark:bg-amber-950/40 dark:hover:bg-amber-900/50 border border-amber-200/80 dark:border-amber-800/80 transition-colors group/edu"
-          >
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="p-1 bg-amber-600 text-white rounded-none shrink-0">
-                <AppIcon name="book" size={13} strokeWidth={2.5} />
-              </div>
-              <span className="text-xs font-bold text-amber-950 dark:text-amber-200 truncate">
-                평생학습포털
-              </span>
-            </div>
-            <span className="text-[10px] font-medium text-amber-700 dark:text-amber-400 bg-amber-100/70 dark:bg-amber-900/50 px-1.5 py-0.5 shrink-0 flex items-center gap-0.5">
-              <span>시민강좌</span>
-              <AppIcon name="external-link" size={9} strokeWidth={2} />
-            </span>
-          </a>
+            </a>
+          ))}
         </div>
 
         {/* 9대 행정 분야 아코디언 리스트 */}
