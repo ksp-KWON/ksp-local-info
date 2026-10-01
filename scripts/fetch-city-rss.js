@@ -8,9 +8,6 @@
 
 'use strict';
 
-// 공공기관(GPKI) 사설 인증서 체인 오류 방지 (Node.js 내장 trust store 보완)
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 const fs = require('fs');
 const path = require('path');
 const { generateSourceId, getExistingSourceIds } = require('./post-utils');
