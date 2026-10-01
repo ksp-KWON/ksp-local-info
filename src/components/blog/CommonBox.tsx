@@ -63,7 +63,7 @@ export default function CommonBox({
 
   return (
     <div
-      className={`my-8 bg-white dark:bg-[#202124] p-5 sm:p-6 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-all duration-300 relative overflow-hidden group border rounded-none ${boxHoverBorders[resolvedTone]} ${className}`}
+      className={`my-10 bg-white dark:bg-[#202124] p-5 sm:p-6 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-all duration-300 relative overflow-hidden group border rounded-none ${boxHoverBorders[resolvedTone]} ${className}`}
     >
       {topElement}
 

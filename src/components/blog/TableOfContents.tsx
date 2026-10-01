@@ -31,7 +31,7 @@ export default function TableOfContents({
       icon={icon}
       headerRight={headerRight}
     >
-      <ul className="space-y-1.5 text-xs sm:text-sm">
+      <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm">
         {toc.map((item, idx) => {
           const isActive = activeId === item.id;
           return (
@@ -39,7 +39,7 @@ export default function TableOfContents({
               <a
                 href={`#${item.id}`}
                 onClick={(e) => onItemClick(e, item.id)}
-                className={`flex items-start gap-2 py-1.5 px-2.5 rounded-none transition-all ${
+                className={`flex items-start gap-2.5 py-2 px-3 rounded-none transition-all ${
                   isActive
                     ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-white font-bold border-l-2 border-zinc-900 dark:border-zinc-100 pl-3'
                     : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 hover:text-zinc-950 dark:hover:text-white font-medium'

@@ -88,7 +88,7 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
 
       {/* ── 오프닝 서술 문단 (보상스쿨 표준: 순수 커스텀 마크다운 렌더링) ── */}
       {opening && (
-        <div className="my-5 text-zinc-800 dark:text-zinc-200 text-[15px] sm:text-[15.5px] leading-[1.85] [&>p]:mb-4 [&>p:last-child]:!mb-0">
+        <div className="my-7 text-zinc-800 dark:text-zinc-200 text-[15px] sm:text-[15.5px] leading-[1.85] [&>p]:mb-4 [&>p:last-child]:!mb-0">
           <MarkdownRenderer content={opening} />
         </div>
       )}

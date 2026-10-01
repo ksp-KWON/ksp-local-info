@@ -77,6 +77,15 @@ const UnifiedHeadingRenderer = ({ level, children, id }: { level: 1|2|3|4|5|6, c
   const text = extractTextFromNode(children);
   const { tone, iconName } = getHeadingToneAndIcon(level, text);
 
+  // 보상스쿨 표준 챕터/제목 호흡 및 시각적 개방감 규격 동기화
+  const headingSpacing: Record<number, string> = {
+    2: '!mt-14 !mb-6 !py-3',
+    3: '!mt-10 !mb-5 !py-2.5',
+    4: '!mt-8 !mb-4 !py-2',
+    5: '!mt-6 !mb-3 !py-1.5',
+    6: '!mt-6 !mb-3 !py-2',
+  };
+
   return (
     <PremiumHeading 
       level={level} 
@@ -85,7 +94,7 @@ const UnifiedHeadingRenderer = ({ level, children, id }: { level: 1|2|3|4|5|6, c
       strip={level === 2}
       icon={iconName ? <AppIcon name={iconName} size={level === 2 ? 18 : 15} strokeWidth={2.5} /> : undefined}
       style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}
-      className={level === 2 ? '!my-6' : level === 3 ? '!my-5' : '!my-4'}
+      className={headingSpacing[level] || '!my-4'}
     >
       {children}
     </PremiumHeading>
@@ -94,7 +103,7 @@ const UnifiedHeadingRenderer = ({ level, children, id }: { level: 1|2|3|4|5|6, c
 
 export const sharedComponents: Components & Record<string, React.ComponentType<{ children?: React.ReactNode; [key: string]: unknown }>> = {
   h1: ({ children, id }) => (
-    <PremiumHeading level={1} id={id} style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }}>
+    <PremiumHeading level={1} id={id} style={{ scrollMarginTop: `${SCROLL_OFFSET}px` }} className="!mt-16 !mb-8 !pb-4">
       {children}
     </PremiumHeading>
   ),
@@ -111,12 +120,12 @@ export const sharedComponents: Components & Record<string, React.ComponentType<{
   ),
 
   ul: ({ children }) => (
-    <ul className="list-none ml-0 pl-0 my-4 space-y-2.5 text-[15px] sm:text-[15.5px] text-zinc-800 dark:text-zinc-200">
+    <ul className="list-none ml-0 pl-0 my-5 space-y-2.5 text-[15px] sm:text-[15.5px] text-zinc-800 dark:text-zinc-200">
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="list-decimal ml-5 sm:ml-6 my-4 space-y-2 text-[15px] sm:text-[15.5px] text-zinc-800 dark:text-zinc-200 marker:font-bold marker:text-zinc-600 dark:marker:text-zinc-400">
+    <ol className="list-decimal ml-5 sm:ml-6 my-5 space-y-2.5 text-[15px] sm:text-[15.5px] text-zinc-800 dark:text-zinc-200 marker:font-bold marker:text-zinc-600 dark:marker:text-zinc-400">
       {children}
     </ol>
   ),
@@ -173,7 +182,7 @@ export const sharedComponents: Components & Record<string, React.ComponentType<{
           title={headingText}
           tone={boxTone}
           icon={iconMap[boxTone]}
-          className="my-6"
+          className="my-8"
         >
           {bodyElements}
         </CommonBox>
@@ -181,7 +190,7 @@ export const sharedComponents: Components & Record<string, React.ComponentType<{
     }
 
     return (
-      <blockquote className="my-6 border-l-4 border-[var(--google-blue)] pl-4 py-2 bg-blue-50/40 dark:bg-blue-950/20 text-zinc-800 dark:text-zinc-200 text-sm sm:text-base leading-relaxed not-italic">
+      <blockquote className="my-8 border-l-4 border-[var(--google-blue)] pl-4 py-2 bg-blue-50/40 dark:bg-blue-950/20 text-zinc-800 dark:text-zinc-200 text-sm sm:text-base leading-relaxed not-italic">
         {children}
       </blockquote>
     );
@@ -245,7 +254,7 @@ export const sharedComponents: Components & Record<string, React.ComponentType<{
   ),
 
   hr: () => (
-    <div className="my-12 flex justify-center">
+    <div className="my-14 flex justify-center">
       <div className="w-full h-px bg-gray-200 dark:bg-zinc-800" />
     </div>
   ),
