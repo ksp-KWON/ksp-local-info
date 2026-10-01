@@ -70,8 +70,9 @@ function inferTarget(title) {
   return '시민 누구나';
 }
 
-function isWeekendOrNight(title, period = '') {
-  return /토|일|주말|야간|저녁|19:|20:/i.test(`${title} ${period}`);
+function isWeekendOrNight(title) {
+  if (/토|일|주말|야간|저녁|19:|20:/i.test(title)) return true;
+  return false;
 }
 
 async function fetchPage(pageIndex, stateCode = '1') {
@@ -182,7 +183,7 @@ function parseCourseRows(html) {
     const loc = inferLocationAndDong(title, org);
     const category = inferCategory(title);
     const target = inferTarget(title);
-    const isNightWeekend = isWeekendOrNight(title, eduPeriod);
+    const isNightWeekend = isWeekendOrNight(title);
     const isFree = !rowHtml.includes('유료') && !title.includes('유료');
 
     courses.push({
