@@ -10,7 +10,7 @@
     "check-quality": "node scripts/check-quality.js"
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/typography": "^0.5.20",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "next": "16.3.8",
