@@ -24,7 +24,7 @@ const {
 const CITY_RSS_PATH = path.join(process.cwd(), 'public/data/city-rss.json');
 const LOCAL_INFO_PATH = path.join(process.cwd(), 'public/data/local-info.json');
 
-const MAX_POSTS_PER_RUN = 2;
+const MAX_POSTS_PER_RUN = 1;
 
 // ── 공통 포스팅 생성 및 마크다운 저장 엔진 ─────────────────────────────
 async function generateAndSavePost(targetItem, tierLabel) {
