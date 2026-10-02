@@ -1,5 +1,6 @@
 import React from 'react';
 import AppIcon, { type AppIconName } from './AppIcon';
+import TopGradientLine from './TopGradientLine';
 
 export type BorderColor = 'red' | 'rose' | 'blue' | 'cyan' | 'green' | 'teal' | 'orange' | 'purple' | 'indigo' | 'yellow' | 'charcoal' | 'ink' | 'default';
 
@@ -8,6 +9,7 @@ export interface PremiumCardProps extends React.HTMLAttributes<HTMLDivElement> {
   hoverEffect?: boolean;
   watermarkEmoji?: string;
   watermarkIcon?: AppIconName;
+  topLine?: boolean;
 }
 
 export default function PremiumCard({
@@ -17,6 +19,7 @@ export default function PremiumCard({
   hoverEffect = true,
   watermarkEmoji,
   watermarkIcon,
+  topLine = false,
   ...props
 }: PremiumCardProps) {
   // 기본 상태(모바일 포함)에서 라인감을 보장하는 정밀한 네온풍 테두리
@@ -91,6 +94,9 @@ export default function PremiumCard({
 
   return (
     <div className={baseClass} {...props}>
+      {/* 상단 1px 심볼 그라데이션 라인 (선택적 활성화) */}
+      {topLine && <TopGradientLine color={borderColor} />}
+
       {/* 호버 시 은은한 테마 네온 그라데이션 & 좌측 라인 바 */}
       {hoverEffect && (
         <>

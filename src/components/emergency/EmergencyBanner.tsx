@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import AppIcon from '@/components/ui/AppIcon';
+import TopGradientLine from '@/components/ui/TopGradientLine';
 
 interface EmergencyBannerProps {
   className?: string;
@@ -13,6 +14,9 @@ export default function EmergencyBanner({ className = '' }: EmergencyBannerProps
     <div className={`w-full ${className}`}>
       <Link href="/services/emergency" className="group block w-full select-none">
         <div className="relative overflow-hidden rounded-none border border-gray-200/90 dark:border-zinc-800 shadow-[0_0_20px_rgba(0,0,0,0.08)] dark:shadow-[0_0_20px_rgba(0,0,0,0.50)] hover:shadow-[0_0_40px_rgba(0,0,0,0.18),0_0_15px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_0_40px_rgba(0,0,0,0.70),0_0_15px_rgba(0,0,0,0.50)] hover:-translate-y-1 hover:border-zinc-800 dark:hover:border-zinc-200 transition-all duration-300">
+          {/* ── 0. 상단 심볼 에메랄드 그라데이션 공통 라인 ── */}
+          <TopGradientLine color="green" />
+
           {/* ── 1. 박스 외곽 테두리 끝(0px)까지 100% 꽉 채우는 풀 블리드 의정부 정밀 실측 지도 배경 ── */}
           <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none transition-transform duration-700 group-hover:scale-105">
             {/* 라이트 모드 실측 지도 (성모병원 레드 핀, 을지대병원 에메랄드 핀 포함) */}
