@@ -150,6 +150,8 @@ async function callGemini(prompt, schema = null, targetTier = 'auto') {
         continue modelLoop;
       }
 
+      console.log(`  [API 응답] model: ${model} | modelVersion: ${data?.modelVersion || 'unknown'}`);
+
       const candidate    = data?.candidates?.[0];
       const finishReason = candidate?.finishReason;
 
