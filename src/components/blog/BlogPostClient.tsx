@@ -250,9 +250,12 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
         </div>
       </div>
 
-      {/* ── 게시글 핵심 키워드 태그 클라우드 ── */}
+      {/* ── 원클릭 공유 & 링크 복사 바 ── */}
+      <ShareButtons title={title} />
+
+      {/* ── 게시글 핵심 키워드 태그 클라우드 (공유 박스 바로 아래 배치) ── */}
       {tags && tags.length > 0 && (
-        <div className="my-8 pt-6 border-t border-gray-100 dark:border-zinc-800">
+        <div className="my-6 pt-6 border-t border-gray-100 dark:border-zinc-800">
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <Link
@@ -267,9 +270,6 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
           </div>
         </div>
       )}
-
-      {/* ── 원클릭 공유 & 링크 복사 바 ── */}
-      <ShareButtons title={title} />
     </div>
   );
 }
