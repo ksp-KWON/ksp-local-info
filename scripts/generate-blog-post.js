@@ -11,7 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const { callGemini, isAllQuotaExhausted } = require('./gemini-helper');
-const { sleep, MIN_SOURCE_CHARS, getCleanSourceText, isSourceSufficient } = require('./pipeline-utils');
+const { sleep, MIN_SOURCE_CHARS, getCleanSourceText, isSourceSufficient, validateSourceNumbers } = require('./pipeline-utils');
 const { generateSourceId, getExistingSourceIds, saveMarkdownPost, makeSlug, getKSTDateString } = require('./post-utils');
 const {
   PLAN_SCHEMA,
@@ -25,16 +25,32 @@ const CITY_RSS_PATH = path.join(process.cwd(), 'public/data/city-rss.json');
 const LOCAL_INFO_PATH = path.join(process.cwd(), 'public/data/local-info.json');
 
 const MAX_POSTS_PER_RUN = 1;
+const MAX_CONTENT_CALLS_PER_RUN = 2;
+let totalContentCalls = 0;
 
 // ── 공통 포스팅 생성 및 마크다운 저장 엔진 ─────────────────────────────
 async function generateAndSavePost(targetItem, tierLabel) {
+  if (totalContentCalls >= MAX_CONTENT_CALLS_PER_RUN) {
+    console.log(`  -> 실행당 최대 본문 생성 횟수(${MAX_CONTENT_CALLS_PER_RUN}회)에 도달하여 추가 생성을 건너뜁니다.`);
+    return null;
+  }
+
   const sourceId = targetItem.sourceId || generateSourceId(targetItem.title);
   console.log(`  -> [${tierLabel}] 타깃 선정: "${targetItem.title}" (Source ID: ${sourceId})`);
 
   const angle = getRandomAngle();
   const plan = await callGemini(buildPlanPrompt(targetItem), PLAN_SCHEMA, 'lite');
   await sleep(2000);
+
+  totalContentCalls++;
   const content = await callGemini(buildContentPrompt(targetItem, plan, angle), CONTENT_SCHEMA, 'flash');
+
+  // 원천 팩트 숫자 토큰 무결성 검증 (저장 전 수행)
+  const violations = validateSourceNumbers(content.markdownContent, targetItem);
+  if (violations.length > 0) {
+    console.warn(`  ❌ [원천 팩트 숫자 위반] "${targetItem.title}" 원천 미존재 토큰: ${violations.join(', ')} -> 포스팅 스킵`);
+    return null;
+  }
 
   const today = getKSTDateString();
   const slug = makeSlug(plan.frontmatter.title || targetItem.title);
@@ -70,7 +86,7 @@ function filterTier1Candidates(queue) {
 
 // ── [Tier 1] 의정부시청 공식 RSS 최우선 포스팅 ─────────────────────
 async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
-  if (limit <= 0) return { attempted: 0, published: [] };
+  if (limit <= 0 || totalContentCalls >= MAX_CONTENT_CALLS_PER_RUN) return { attempted: 0, published: [] };
   console.log('\n[Tier 1] 의정부시청 공식 RSS 미발행 항목 검색 중...');
   if (!fs.existsSync(CITY_RSS_PATH)) {
     console.log('  -> city-rss.json 파일이 없습니다.');
@@ -84,24 +100,28 @@ async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
   const pending = qualified.filter(item => {
     const sourceId = item.sourceId || generateSourceId(item.title);
     return !existingSourceIds.has(sourceId);
-  }).slice(0, limit);
+  }).slice(0, MAX_CONTENT_CALLS_PER_RUN);
 
   if (pending.length === 0) {
     console.log('  -> 시청 RSS에 미발행된 신규 소식이 없습니다.');
     return { attempted: 0, published: [] };
   }
 
-  console.log(`  -> 미발행 신규 소식 ${pending.length}건 배정 (최대 ${limit}건). 생성 시작...`);
+  console.log(`  -> 미발행 신규 소식 ${pending.length}건 배정 (최대 ${limit}건 발행 목표). 생성 시작...`);
   const published = [];
   for (let i = 0; i < pending.length; i++) {
+    if (published.length >= limit) break;
+    if (totalContentCalls >= MAX_CONTENT_CALLS_PER_RUN) break;
     if (isAllQuotaExhausted()) break;
     const item = pending[i];
     try {
       console.log(`\n[${i + 1}/${pending.length}] 글 작성 진행: "${item.title}"`);
       const fileName = await generateAndSavePost(item, 'Tier 1: 시청 공식 RSS');
-      published.push(fileName);
-      existingSourceIds.add(item.sourceId || generateSourceId(item.title));
-      await sleep(2500); // Gemini API 레이트 리밋 방지 쾌적 대기
+      if (fileName) {
+        published.push(fileName);
+        existingSourceIds.add(item.sourceId || generateSourceId(item.title));
+        await sleep(2500); // Gemini API 레이트 리밋 방지 쾌적 대기
+      }
     } catch (err) {
       console.error(`  ❌ "${item.title}" 생성 실패:`, err.message);
       if (err.code === 'QUOTA_EXHAUSTED' || isAllQuotaExhausted()) break;
@@ -153,14 +173,18 @@ async function runTier2LocalInfo(limit = MAX_POSTS_PER_RUN) {
   console.log(`  -> 미발행 경기24 공공데이터 ${pending.length}건 배정 (최대 ${limit}건). 생성 시작...`);
   const published = [];
   for (let i = 0; i < pending.length; i++) {
+    if (published.length >= limit) break;
+    if (totalContentCalls >= MAX_CONTENT_CALLS_PER_RUN) break;
     if (isAllQuotaExhausted()) break;
     const item = pending[i];
     try {
       console.log(`\n[${i + 1}/${pending.length}] 글 작성 진행: "${item.title}"`);
       const fileName = await generateAndSavePost(item, 'Tier 2: 경기24 공공데이터');
-      published.push(fileName);
-      existingSourceIds.add(generateSourceId(item.title));
-      await sleep(2500);
+      if (fileName) {
+        published.push(fileName);
+        existingSourceIds.add(generateSourceId(item.title));
+        await sleep(2500);
+      }
     } catch (err) {
       console.error(`  ❌ "${item.title}" 생성 실패:`, err.message);
       if (err.code === 'QUOTA_EXHAUSTED' || isAllQuotaExhausted()) break;
@@ -261,6 +285,8 @@ async function runTier3LifelongLearning(limit = MAX_POSTS_PER_RUN) {
 
   const published = [];
   for (let i = 0; i < pending.length; i++) {
+    if (published.length >= limit) break;
+    if (totalContentCalls >= MAX_CONTENT_CALLS_PER_RUN) break;
     if (isAllQuotaExhausted()) break;
     const course = pending[i];
     const feeText = course.isFree ? '무료' : (course.fee ? `${course.fee}` : '유료 (강의계획서 참조)');
@@ -276,9 +302,11 @@ async function runTier3LifelongLearning(limit = MAX_POSTS_PER_RUN) {
     try {
       console.log(`\n[${i + 1}/${pending.length}] 평생학습 글 작성 진행: "${course.title}"`);
       const fileName = await generateAndSavePost(postItem, 'Tier 3: 의정부 평생학습 실시간 강좌');
-      published.push(fileName);
-      existingSourceIds.add(course.id);
-      await sleep(2500);
+      if (fileName) {
+        published.push(fileName);
+        existingSourceIds.add(course.id);
+        await sleep(2500);
+      }
     } catch (err) {
       console.error(`  ❌ "${course.title}" 생성 실패:`, err.message);
       if (err.code === 'QUOTA_EXHAUSTED' || isAllQuotaExhausted()) break;
@@ -329,8 +357,8 @@ async function main() {
         process.exit(0);
         return;
       }
-      console.error(`\n❌ [발행 전수 실패] 대상 ${totalAttempted}건 중 성공 0건. 파이프라인 무결성 오류로 프로세스를 중단합니다.`);
-      process.exit(1);
+      console.warn(`\nℹ️ [원천 검증 미통과/발행 0건] 대상 ${totalAttempted}건 중 유효 통과 건수가 없어 0건으로 정상 종료합니다 (exit 0).`);
+      process.exit(0);
       return;
     }
 

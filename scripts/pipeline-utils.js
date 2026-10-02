@@ -62,12 +62,77 @@ async function safeFetch(url, options = {}, timeoutMs = 10000) {
   }
 }
 
+// ── 원천 팩트 숫자 토큰 추출 및 검증기 ──────────────────────────────────────────
+function extractSourceTokens(sourceRaw) {
+  const text = typeof sourceRaw === 'string' ? sourceRaw : JSON.stringify(sourceRaw);
+  const clean = text.replace(/,/g, '');
+  const tokens = new Set();
+
+  // 1) HH:MM (시간 및 분 분해)
+  const timeMatches = clean.match(/\b\d{1,2}\s*:\s*\d{2}\b/g) || [];
+  timeMatches.forEach(t => {
+    const norm = t.replace(/\s+/g, '');
+    tokens.add(norm);
+    const [hh, mm] = norm.split(':');
+    tokens.add(`${parseInt(hh, 10)}시`);
+    if (mm !== '00') {
+      tokens.add(`${parseInt(mm, 10)}분`);
+    }
+  });
+
+  // 2) 숫자 + 단위 쌍 (시·분·명·석·원·번·호·층·매·가구)
+  const unitMatches = clean.match(/(\d+)\s*(시(?![\w가-힣])|분|명|석|원|번|호|층|매|가구)/g) || [];
+  unitMatches.forEach(u => {
+    tokens.add(u.replace(/\s+/g, ''));
+  });
+
+  return { tokens, compactText: clean.replace(/\s+/g, '') };
+}
+
+function validateSourceNumbers(markdownBody, sourceRaw) {
+  const bodyOnly = markdownBody.replace(/^---[\s\S]*?---\s*/, '');
+  const { tokens: validTokens, compactText } = extractSourceTokens(sourceRaw);
+
+  const violations = [];
+
+  // 1) HH:MM 검사
+  const timeRegex = /\b(\d{1,2})\s*:\s*(\d{2})\b/g;
+  let tm;
+  while ((tm = timeRegex.exec(bodyOnly)) !== null) {
+    const rawTime = tm[0];
+    const normTime = rawTime.replace(/\s+/g, '');
+    if (!validTokens.has(normTime) && !compactText.includes(normTime)) {
+      violations.push(rawTime.trim());
+    }
+  }
+
+  // 2) 숫자 + 단위 쌍 (시·분·명·석·원·번·호·층·매·가구)
+  // 연·월·일·부·회·차는 정규식 자체에 미포함되어 자동 제외
+  const unitRegex = /(\d+[\d,]*)\s*(시(?![\w가-힣])|분|명|석|원|번|호|층|매|가구)/g;
+  let um;
+  while ((um = unitRegex.exec(bodyOnly)) !== null) {
+    const rawToken = um[0];
+    const num = um[1].replace(/,/g, '').replace(/\s+/g, '');
+    const unit = um[2];
+    const normToken = `${num}${unit}`;
+
+    if (!validTokens.has(normToken) && !compactText.includes(normToken)) {
+      violations.push(rawToken.trim());
+    }
+  }
+
+  return Array.from(new Set(violations));
+}
+
 module.exports = {
   POSTS_DIR,
   MIN_SOURCE_CHARS,
   getCleanSourceText,
   isSourceSufficient,
   sleep,
-  safeFetch
+  safeFetch,
+  extractSourceTokens,
+  validateSourceNumbers
 };
+
 
