@@ -31,10 +31,10 @@ export default function ExpiredNoticeBanner({ expiresAt, sourceLink }: ExpiredNo
         <AppIcon name="warning" size={18} className="text-zinc-500 shrink-0 mt-0.5" />
         <div className="flex-1 space-y-1">
           <p className="font-semibold text-zinc-900 dark:text-zinc-100">
-            이 안내는 신청(또는 행사)이 마감되었습니다.
+            이 안내의 기한이 지났습니다.
           </p>
           <p className="text-xs text-zinc-600 dark:text-zinc-400">
-            최신 소식은 공식 출처를 확인하세요.
+            최신 내용은 의정부시 공식 포털에서 확인하세요.
             {sourceLink && (
               <a
                 href={sourceLink}
