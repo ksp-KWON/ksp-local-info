@@ -6,7 +6,7 @@ import { SITE_URL, SITE_NAME } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: '의정부시 평생학습 강좌 지도 & 수강신청 파인더 | 의정부 건강·생활 정보 포털',
-  description: '의정부시 평생학습 통합플랫폼(뉴런) 공식 연동! 도서관, 주민센터, 청소년수련관의 실시간 접수중 강좌 140개를 지도와 1초 필터로 바로 검색하고 신청하세요.',
+  description: '의정부시 평생학습 통합플랫폼(뉴런) 공식 연동! 도서관, 주민센터, 청소년수련관의 실시간 접수중 강좌를 지도와 1초 필터로 바로 검색하고 신청하세요.',
   alternates: {
     canonical: `${SITE_URL}/services/learning`,
   },

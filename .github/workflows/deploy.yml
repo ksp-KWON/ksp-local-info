@@ -17,7 +17,7 @@ jobs:
   # ── [1단계] 자동 글쓰기 (schedule / workflow_dispatch 트리거 시만 실행) ──
   generate:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
       contents: write
@@ -25,6 +25,7 @@ jobs:
       new_posts_count: ${{ steps.extract_posts.outputs.new_posts_count }}
       subject: ${{ steps.extract_posts.outputs.subject }}
       html_body: ${{ steps.extract_posts.outputs.html_body }}
+      cache_changed: ${{ steps.cache_check.outputs.cache_changed }}
     steps:
       - name: 저장소 체크아웃
         uses: actions/checkout@v7.0.1
@@ -51,6 +52,16 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/fetch-public-data.js || true
 
+      - name: 평생학습 강좌 캐시 갱신 (KST 08~09시 슬롯·수동 실행만)
+        continue-on-error: true
+        run: |
+          H=$(TZ=Asia/Seoul date +%H)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$H" = "08" ] || [ "$H" = "09" ]; then
+            node scripts/build-learning-cache.js
+          else
+            echo "캐시 갱신 시간대 아님 (KST ${H}시) — 건너뜀"
+          fi
+
       - name: 블로그 자동글쓰기
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -61,7 +72,16 @@ jobs:
 
       - name: 변경사항 스테이징
         run: |
-          git add public/data/city-rss.json public/data/local-info.json src/content/posts/ || true
+          git add public/data/city-rss.json public/data/local-info.json public/data/learning-courses.json src/data/learning-courses.json src/content/posts/ || true
+
+      - name: 캐시 변경 여부
+        id: cache_check
+        run: |
+          if git diff --cached --quiet -- src/data/learning-courses.json public/data/learning-courses.json; then
+            echo "cache_changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "cache_changed=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: 신규 발행 글 추출 및 메타데이터 구성
         id: extract_posts
@@ -142,8 +162,8 @@ jobs:
       always() &&
       !contains(needs.*.result, 'failure') &&
       !contains(needs.*.result, 'cancelled') &&
-      (github.event_name == 'push' || needs.generate.outputs.new_posts_count > 0)
-    runs-on: ubuntu-latest
+      (github.event_name == 'push' || needs.generate.outputs.new_posts_count > 0 || needs.generate.outputs.cache_changed == 'true')
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
