@@ -222,6 +222,20 @@ function parseCourseRows(html) {
 
 async function main() {
   console.log(' 의정부시 평생학습원 실시간 강좌 캐시 수집 시작...');
+  const prevPath = path.join(__dirname, '../src/data/learning-courses.json');
+  const prevById = new Map();
+  try {
+    if (fs.existsSync(prevPath)) {
+      const prevData = JSON.parse(fs.readFileSync(prevPath, 'utf8'));
+      if (Array.isArray(prevData.courses)) {
+        for (const c of prevData.courses) {
+          if (c && c.id) prevById.set(c.id, c);
+        }
+      }
+    }
+  } catch {
+    // 파싱 실패 시 빈 Map 유지
+  }
   const allCourses = [];
 
   try {
@@ -286,6 +300,23 @@ async function main() {
     }
 
     console.log(` 세부 커리큘럼 및 수강료 동기화 완료!`);
+
+    let preservedCount = 0;
+    const detailFields = ['time', 'fee', 'isFree', 'materialFee', 'tel', 'intro', 'address'];
+    for (const c of finalCourses) {
+      if (!c.intro) {
+        const prev = prevById.get(c.id);
+        if (prev && prev.intro) {
+          for (const k of detailFields) {
+            if (prev[k] !== undefined) c[k] = prev[k];
+          }
+          preservedCount++;
+        }
+      }
+    }
+    if (preservedCount > 0) {
+      console.log(`ℹ️ 상세 정보 누락 방지: 이전 캐시에서 ${preservedCount}건의 상세 정보를 보존했습니다.`);
+    }
 
     if (finalCourses.length === 0) {
       console.error('❌ 유효한 강좌 데이터가 0건입니다. 파일 쓰기를 중단합니다.');
