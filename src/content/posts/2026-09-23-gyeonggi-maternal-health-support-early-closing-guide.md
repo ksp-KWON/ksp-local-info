@@ -16,6 +16,7 @@ tags:
   - 임신출산지원금
 sourceId: 692aa6106818
 sourceLink: 'https://www.ui4u.go.kr/portal/bbs/view.do?mId=0301010000&ptIdx=35&bIdx=367938'
+expiresAt: '2026-09-30'
 ---
 임신과 출산을 준비 중인 의정부 예비 부모님들께서 반드시 사전에 확인하셔야 할 중대한 행정 변경 사항이 공지되었습니다.
 

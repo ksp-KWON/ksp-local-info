@@ -16,6 +16,7 @@ tags:
   - 달빛어린이병원
 sourceId: 091ed7e0fb5a
 sourceLink: 'https://www.ui4u.go.kr/portal/bbs/view.do?mId=0301010000&ptIdx=35&bIdx=368011'
+expiresAt: '2026-09-27'
 ---
 명절 연휴 중 가족이나 아이가 갑자기 열이 나거나 아플 때 가장 당황스러운 것이 바로 문을 연 병의원과 약국을 찾는 일입니다.
 

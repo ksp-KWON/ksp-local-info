@@ -14,6 +14,7 @@ tags:
 sourceId: ujb-small-lib-creative-2026
 sourceLink: >-
   https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=LEARNING_00665822
+expiresAt: '2026-10-11'
 ---
 의정부시 민락노블랜드 작은도서관에서 시민을 위한 **2026 모두의 캠퍼스 그림책 융합 놀이터** 프로그램을 운영합니다.
 

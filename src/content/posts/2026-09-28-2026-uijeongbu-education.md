@@ -15,6 +15,7 @@ tags:
 sourceId: ujb-89
 sourceLink: >-
   https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=LEARNING_00636830
+expiresAt: '2026-10-11'
 ---
 디지털 시대가 일상화되면서 스마트폰은 단순한 통신 수단을 넘어 금융, 행정, 소통의 필수 도구가 되었습니다. 하지만 여전히 화면 글씨가 작거나 각종 앱 사용이 낯설어 불편을 겪는 시민들이 많습니다. 의정부시와 의정부YWCA 평생교육원이 주관하는 스마트폰 교실 초급반은 이러한 디지털 장벽을 허물고 누구나 스마트폰을 자유롭게 활용할 수 있도록 돕는 실속형 평생학습 프로그램입니다.
 

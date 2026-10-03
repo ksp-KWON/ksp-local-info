@@ -16,6 +16,7 @@ tags:
   - 의정부주민노래자랑
 sourceId: e7860b33002b
 sourceLink: 'https://www.ui4u.go.kr/portal/eventNoti/view.do?mId=0301170000&idx=2017'
+expiresAt: '2026-10-17'
 ---
 가을의 정취가 무르익는 10월, 민락2지구 중심 로데오거리가 이웃과 함께 웃고 즐기는 신명 나는 축제의 장으로 변신합니다.
 

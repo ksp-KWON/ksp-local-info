@@ -14,6 +14,7 @@ tags:
   - 경로효친
 sourceId: 7623de1e651e
 sourceLink: 'https://www.ui4u.go.kr/portal/eventNoti/view.do?mId=0301170000&idx=2022'
+expiresAt: '2026-10-07'
 ---
 의정부시가 제30회 노인의 날(10.2.)을 맞아 어르신들의 노고에 대한 감사와 경로효친사상의 확산을 위해 「제30회 노인의 날 기념행사」를 개최합니다.
 
