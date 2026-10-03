@@ -13,7 +13,7 @@ tags:
   - 의정부나들이
 sourceId: e5818cd02b71
 sourceLink: 'https://www.ui4u.go.kr/portal/eventNoti/view.do?mId=0301170000&idx=2021'
-expiresAt: '2026-10-24'
+expiresAt: '2026-10-25'
 ---
 ## 시정 핵심 요약
 
