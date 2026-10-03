@@ -31,20 +31,28 @@ let totalContentCalls = 0;
 // ── 마감일자 결정적 추출 헬퍼 (LLM 개입 배제) ──────────────────────────
 function extractExpiryDate(text) {
   if (!text || typeof text !== 'string') return undefined;
-  const cleaned = text.replace(/\([월화수목금토일]\)/g, ' ');
-  const fullDateRegex = /(?:(\d{4})|(\d{2}))\s*[.\-/년]\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?/g;
+  let cleaned = text.replace(/\([월화수목금토일]\)/g, ' ');
+  cleaned = cleaned.replace(/\d{1,2}\s*:\s*\d{2}/g, ' ').replace(/\d{1,2}시(\s*\d{1,2}분)?/g, ' ');
+  const fullDateRegex = /(?<!\d)(?:(\d{4})|(\d{2}))\s*[.\-/년]\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?/g;
   const dates = [];
   let m;
   let firstYear = null;
+  let lastFullYear = null;
+  let lastFullMonth = null;
   let lastMatchEnd = 0;
 
   while ((m = fullDateRegex.exec(cleaned)) !== null) {
+    const mNum = parseInt(m[3], 10);
+    const dNum = parseInt(m[4], 10);
+    if (mNum < 1 || mNum > 12 || dNum < 1 || dNum > 31) continue;
     const rawYear = m[1] || m[2];
     const year = rawYear.length === 2 ? ('20' + rawYear) : rawYear;
     const month = m[3].padStart(2, '0');
     const day = m[4].padStart(2, '0');
     dates.push({ str: `${year}-${month}-${day}` });
     if (!firstYear) firstYear = year;
+    lastFullYear = year;
+    lastFullMonth = month;
     lastMatchEnd = fullDateRegex.lastIndex;
   }
 
@@ -53,9 +61,23 @@ function extractExpiryDate(text) {
     const partialDateRegex = /(?:[~～,]|\s+至\s*|\s*~\s*)\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?/g;
     let pm;
     while ((pm = partialDateRegex.exec(afterText)) !== null) {
+      const pmNum = parseInt(pm[1], 10);
+      const pdNum = parseInt(pm[2], 10);
+      if (pmNum < 1 || pmNum > 12 || pdNum < 1 || pdNum > 31) continue;
       const month = pm[1].padStart(2, '0');
       const day = pm[2].padStart(2, '0');
       dates.push({ str: `${firstYear}-${month}-${day}` });
+    }
+
+    if (lastFullYear && lastFullMonth) {
+      const dayOnlyRegex = /(?:[~～,]|\s+至\s*|\s*~\s*)\s*(\d{1,2})\s*일/g;
+      let dm;
+      while ((dm = dayOnlyRegex.exec(afterText)) !== null) {
+        const ddNum = parseInt(dm[1], 10);
+        if (ddNum < 1 || ddNum > 31) continue;
+        const day = dm[1].padStart(2, '0');
+        dates.push({ str: `${lastFullYear}-${lastFullMonth}-${day}` });
+      }
     }
   }
 
