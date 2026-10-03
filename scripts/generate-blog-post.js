@@ -302,7 +302,6 @@ async function runTier3LifelongLearning(limit = MAX_POSTS_PER_RUN) {
   }
 
   const existingSourceIds = getExistingSourceIds();
-  existingSourceIds.add('ujb-139');
 
   const learningData = JSON.parse(fs.readFileSync(LEARNING_COURSES_PATH, 'utf8'));
   const courses = learningData.courses || [];

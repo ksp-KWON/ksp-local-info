@@ -12,7 +12,7 @@ tags:
   - 의정부YWCA
   - 시니어교육
   - 디지털역량교육
-sourceId: ujb-89
+sourceId: ujb-learning_00636830
 sourceLink: >-
   https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=LEARNING_00636830
 expiresAt: '2026-10-11'

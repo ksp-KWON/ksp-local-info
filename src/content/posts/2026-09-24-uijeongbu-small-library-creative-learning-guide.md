@@ -11,7 +11,7 @@ tags:
   - 민락노블랜드작은도서관
   - 그림책융합놀이터
   - 모두의캠퍼스
-sourceId: ujb-small-lib-creative-2026
+sourceId: ujb-learning_00665822
 sourceLink: >-
   https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=LEARNING_00665822
 expiresAt: '2026-10-11'

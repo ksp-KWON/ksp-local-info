@@ -7,6 +7,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+
+function sha1(str) {
+  return crypto.createHash('sha1').update(str).digest('hex');
+}
 
 // 의정부시 주요 평생학습 거점 및 행정동 좌표 딕셔너리
 const LOCATION_COORDINATES = {
@@ -187,7 +192,6 @@ function parseCourseRows(html) {
     const isFree = !rowHtml.includes('유료') && !title.includes('유료');
 
     courses.push({
-      id: `ujb-${idNum}`,
       num: idNum,
       learningId,
       title,
@@ -229,13 +233,33 @@ async function main() {
       allCourses.push(...courses);
     }
 
-    const uniqueMap = new Map();
-    for (const c of allCourses) {
-      if (!uniqueMap.has(c.id)) {
-        uniqueMap.set(c.id, c);
+    const seenLearningIds = new Set();
+    const usedIds = new Set();
+    const finalCourses = [];
+
+    for (const raw of allCourses) {
+      if (raw.learningId) {
+        if (seenLearningIds.has(raw.learningId)) {
+          console.warn(`[중복 learningId 제외] "${raw.title}" (${raw.learningId})`);
+          continue;
+        }
+        seenLearningIds.add(raw.learningId);
+        const id = `ujb-${raw.learningId.toLowerCase()}`;
+        usedIds.add(id);
+        finalCourses.push({ id, ...raw });
+      } else {
+        const base = `ujb-x-${sha1(`${raw.title}|${raw.org}|${raw.eduPeriod}`).slice(0, 10)}`;
+        let candidateId = base;
+        let suffix = 2;
+        while (usedIds.has(candidateId)) {
+          console.warn(`[ID 충돌 접미 처리] "${raw.title}" (${candidateId} -> ${base}-${suffix})`);
+          candidateId = `${base}-${suffix}`;
+          suffix++;
+        }
+        usedIds.add(candidateId);
+        finalCourses.push({ id: candidateId, ...raw });
       }
     }
-    const finalCourses = Array.from(uniqueMap.values());
 
     console.log(` 총 ${finalCourses.length}개 강좌 목록 추출 완료! 상위 강좌 세부 커리큘럼 수집 중...`);
 
@@ -263,12 +287,10 @@ async function main() {
 
     console.log(` 세부 커리큘럼 및 수강료 동기화 완료!`);
 
-    const outputData = {
-      updatedAt: new Date().toISOString(),
-      source: '의정부도시교육재단 평생학습 통합플랫폼 (sugang.ull.or.kr)',
-      totalCount: finalCourses.length,
-      courses: finalCourses,
-    };
+    if (finalCourses.length === 0) {
+      console.error('❌ 유효한 강좌 데이터가 0건입니다. 파일 쓰기를 중단합니다.');
+      process.exit(1);
+    }
 
     const srcDataDir = path.join(__dirname, '../src/data');
     const publicDataDir = path.join(__dirname, '../public/data');
@@ -277,6 +299,25 @@ async function main() {
 
     const srcPath = path.join(srcDataDir, 'learning-courses.json');
     const publicPath = path.join(publicDataDir, 'learning-courses.json');
+
+    if (fs.existsSync(srcPath)) {
+      try {
+        const existingData = JSON.parse(fs.readFileSync(srcPath, 'utf8'));
+        if (JSON.stringify(existingData.courses) === JSON.stringify(finalCourses)) {
+          console.log('ℹ️ 기존 강좌 캐시와 내용이 완전히 동일합니다. (쓰기 생략)');
+          return;
+        }
+      } catch {
+        // 기존 파일 파싱 실패 시 새로 쓰기 계속
+      }
+    }
+
+    const outputData = {
+      updatedAt: new Date().toISOString(),
+      source: '의정부도시교육재단 평생학습 통합플랫폼 (sugang.ull.or.kr)',
+      totalCount: finalCourses.length,
+      courses: finalCourses,
+    };
 
     fs.writeFileSync(srcPath, JSON.stringify(outputData, null, 2), 'utf8');
     fs.writeFileSync(publicPath, JSON.stringify(outputData, null, 2), 'utf8');
