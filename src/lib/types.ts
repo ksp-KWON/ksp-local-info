@@ -10,6 +10,7 @@ export type PostData = {
   sourceLink?: string;
   content: string;
   published?: boolean;
+  expiresAt?: string;
 };
 
 export type PostMeta = Omit<PostData, 'content'>;

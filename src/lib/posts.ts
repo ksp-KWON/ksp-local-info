@@ -37,6 +37,7 @@ let cachedPosts: PostData[] | null = null;
 function parsePostMetadata(slug: string, matterResult: matter.GrayMatterFile<string>): PostData {
   const dateStr = formatDate(matterResult.data.date);
   const updatedAtStr = matterResult.data.updatedAt ? formatDate(matterResult.data.updatedAt) : undefined;
+  const expiresAtStr = matterResult.data.expiresAt ? formatDate(matterResult.data.expiresAt) : undefined;
 
   let categoryArray: string[] = [];
   if (matterResult.data.category) {
@@ -61,6 +62,7 @@ function parsePostMetadata(slug: string, matterResult: matter.GrayMatterFile<str
     sourceLink: matterResult.data.sourceLink || '',
     published: matterResult.data.published !== false,
     content: matterResult.content,
+    expiresAt: expiresAtStr,
   };
 }
 
@@ -112,6 +114,7 @@ export function getSortedPostsData(includeUnpublished = false): PostMeta[] {
       tags: post.tags,
       sourceLink: post.sourceLink,
       published: post.published,
+      expiresAt: post.expiresAt,
     }));
 
   return allPostsData.sort((a, b) => {

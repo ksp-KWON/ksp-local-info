@@ -28,6 +28,42 @@ const MAX_POSTS_PER_RUN = 1;
 const MAX_CONTENT_CALLS_PER_RUN = 2;
 let totalContentCalls = 0;
 
+// ── 마감일자 결정적 추출 헬퍼 (LLM 개입 배제) ──────────────────────────
+function extractExpiryDate(text) {
+  if (!text || typeof text !== 'string') return undefined;
+  const cleaned = text.replace(/\([월화수목금토일]\)/g, ' ');
+  const fullDateRegex = /(?:(\d{4})|(\d{2}))\s*[.\-/년]\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?/g;
+  const dates = [];
+  let m;
+  let firstYear = null;
+  let lastMatchEnd = 0;
+
+  while ((m = fullDateRegex.exec(cleaned)) !== null) {
+    const rawYear = m[1] || m[2];
+    const year = rawYear.length === 2 ? ('20' + rawYear) : rawYear;
+    const month = m[3].padStart(2, '0');
+    const day = m[4].padStart(2, '0');
+    dates.push({ str: `${year}-${month}-${day}` });
+    if (!firstYear) firstYear = year;
+    lastMatchEnd = fullDateRegex.lastIndex;
+  }
+
+  if (firstYear) {
+    const afterText = cleaned.slice(lastMatchEnd);
+    const partialDateRegex = /(?:[~～,]|\s+至\s*|\s*~\s*)\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?/g;
+    let pm;
+    while ((pm = partialDateRegex.exec(afterText)) !== null) {
+      const month = pm[1].padStart(2, '0');
+      const day = pm[2].padStart(2, '0');
+      dates.push({ str: `${firstYear}-${month}-${day}` });
+    }
+  }
+
+  if (dates.length === 0) return undefined;
+  dates.sort((a, b) => a.str.localeCompare(b.str));
+  return dates[dates.length - 1].str;
+}
+
 // ── 공통 포스팅 생성 및 마크다운 저장 엔진 ─────────────────────────────
 async function generateAndSavePost(targetItem, tierLabel) {
   if (totalContentCalls >= MAX_CONTENT_CALLS_PER_RUN) {
@@ -63,7 +99,8 @@ async function generateAndSavePost(targetItem, tierLabel) {
     category: plan.frontmatter.category,
     tags: plan.frontmatter.tags,
     sourceId: sourceId,
-    sourceLink: targetItem.link || 'https://www.ui4u.go.kr'
+    sourceLink: targetItem.link || 'https://www.ui4u.go.kr',
+    ...(targetItem.expiresAt ? { expiresAt: targetItem.expiresAt } : {})
   }, content.markdownContent);
 
   return saved && saved.filePath ? saved.filePath : fileName;
@@ -114,6 +151,7 @@ async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
     if (totalContentCalls >= MAX_CONTENT_CALLS_PER_RUN) break;
     if (isAllQuotaExhausted()) break;
     const item = pending[i];
+    item.expiresAt = extractExpiryDate(item.description);
     try {
       console.log(`\n[${i + 1}/${pending.length}] 글 작성 진행: "${item.title}"`);
       const fileName = await generateAndSavePost(item, 'Tier 1: 시청 공식 RSS');
@@ -295,6 +333,7 @@ async function runTier3LifelongLearning(limit = MAX_POSTS_PER_RUN) {
       content: `교육기관: ${course.org}, 교육장소: ${course.address} (${course.dong}), 교육기간: ${course.eduPeriod}, 신청기간: ${course.applyPeriod}, 모집정원: ${course.capacity}, 수강료: ${feeText}, 주요대상: ${course.target}, 분야: ${course.category}. 상세 교육내용 및 강의계획: ${course.intro}. 의정부시 평생학습 통합플랫폼 뉴런 공식 온라인 접수.`,
       link: course.applyUrl || 'https://sugang.ull.or.kr',
       sourceId: course.id,
+      expiresAt: extractExpiryDate(course.applyPeriod),
       category: '교육·청소년',
       department: course.org
     };
