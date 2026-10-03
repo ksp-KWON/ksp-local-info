@@ -39,6 +39,7 @@ function extractExpiryDate(text) {
   let firstYear = null;
   let lastFullYear = null;
   let lastFullMonth = null;
+  let lastFullDay = null;
   let lastMatchEnd = 0;
 
   while ((m = fullDateRegex.exec(cleaned)) !== null) {
@@ -53,12 +54,14 @@ function extractExpiryDate(text) {
     if (!firstYear) firstYear = year;
     lastFullYear = year;
     lastFullMonth = month;
+    lastFullDay = dNum;
     lastMatchEnd = fullDateRegex.lastIndex;
   }
 
   if (firstYear) {
     const afterText = cleaned.slice(lastMatchEnd);
-    const partialDateRegex = /(?:[~～,]|\s+至\s*|\s*~\s*)\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?/g;
+    let matchedPartial = false;
+    const partialDateRegex = /(?:[~～∼\-–—,]|\s+至\s*)\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?/g;
     let pm;
     while ((pm = partialDateRegex.exec(afterText)) !== null) {
       const pmNum = parseInt(pm[1], 10);
@@ -67,16 +70,18 @@ function extractExpiryDate(text) {
       const month = pm[1].padStart(2, '0');
       const day = pm[2].padStart(2, '0');
       dates.push({ str: `${firstYear}-${month}-${day}` });
+      matchedPartial = true;
     }
 
-    if (lastFullYear && lastFullMonth) {
-      const dayOnlyRegex = /(?:[~～,]|\s+至\s*|\s*~\s*)\s*(\d{1,2})\s*일/g;
-      let dm;
-      while ((dm = dayOnlyRegex.exec(afterText)) !== null) {
+    if (!matchedPartial && lastFullYear && lastFullMonth) {
+      const dayOnlyRegex = /^\s*\.?\s*(?:[~～∼\-–—,]|\s+至\s*)\s*(\d{1,2})(?:\s*일|\.(?!\d)|(?=\s|$))/;
+      const dm = afterText.match(dayOnlyRegex);
+      if (dm) {
         const ddNum = parseInt(dm[1], 10);
-        if (ddNum < 1 || ddNum > 31) continue;
-        const day = dm[1].padStart(2, '0');
-        dates.push({ str: `${lastFullYear}-${lastFullMonth}-${day}` });
+        if (ddNum >= 1 && ddNum <= 31 && (!lastFullDay || ddNum >= lastFullDay)) {
+          const day = dm[1].padStart(2, '0');
+          dates.push({ str: `${lastFullYear}-${lastFullMonth}-${day}` });
+        }
       }
     }
   }
