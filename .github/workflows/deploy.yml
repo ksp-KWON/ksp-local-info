@@ -52,16 +52,10 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/fetch-public-data.js || true
 
-      - name: 평생학습 강좌 캐시 갱신 (KST 08~09시 슬롯·수동 실행만)
+      - name: 평생학습 강좌 캐시 갱신
         timeout-minutes: 5
         continue-on-error: true
-        run: |
-          H=$(TZ=Asia/Seoul date +%H)
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$H" = "08" ] || [ "$H" = "09" ]; then
-            node scripts/build-learning-cache.js
-          else
-            echo "캐시 갱신 시간대 아님 (KST ${H}시) — 건너뜀"
-          fi
+        run: node scripts/build-learning-cache.js
 
       - name: 블로그 자동글쓰기
         env:
