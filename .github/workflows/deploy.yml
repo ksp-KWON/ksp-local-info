@@ -180,7 +180,12 @@ jobs:
         run: npm run build
 
       - name: Cloudflare Pages 배포
-        run: npx wrangler pages deploy out --project-name=ksp-local-info --branch=main
+        run: |
+          for i in 1 2 3; do
+            npx wrangler pages deploy out --project-name=ksp-local-info --branch=main && exit 0
+            sleep 15
+          done
+          exit 1
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
