@@ -68,7 +68,7 @@ function getExistingSourceLinks() {
   return sourceLinks;
 }
 
-function isDuplicatePost(item, existingSet, existingLinksSet) {
+function isDuplicatePost(item, existingSet) {
   if (!item) return false;
   const sid = item.sourceId || (item.title ? generateSourceId(item.title) : '');
   const link = item.link && typeof item.link === 'string' ? item.link.trim() : '';
@@ -78,9 +78,6 @@ function isDuplicatePost(item, existingSet, existingLinksSet) {
   }
 
   if (link && !isFallbackOrEmptyUrl(link)) {
-    if (existingLinksSet && existingLinksSet.has(link)) {
-      return true;
-    }
     if (existingSet && existingSet.has(link)) {
       return true;
     }
