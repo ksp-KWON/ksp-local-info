@@ -38,7 +38,8 @@ const STRICT_RULES = `
 
 ## 6. 사족 배제 및 원천 팩트 절대 준수
 - 상식적인 단어 풀이(억지 인라인 용어 사전)나 기계적 체크박스 채우기 등 독자의 흐름을 끊는 사족을 전면 금지합니다.
-- **원천 외 정보 완전 금지** : 원천에 없는 일시, 장소 세부규격, 수용 인원, 버스 번호, 지하철 출구 번호, 이동 시간, 신청 절차, 구비 서류, FAQ 답변 등을 지어내지 마십시오. 확인되지 않은 문의 및 접수는 공식 출처 링크로 안내하십시오.
+- **원천 외 정보 완전 금지** : 원천에 없는 일시, 장소 세부규격, 수용 인원, 버스 번호, 지하철 출구 번호, 이동 시간, 신청 절차, 구비 서류, FAQ 답변 등을 지어내지 마십시오. 확인되지 않은 문의 및 접수는 글 하단의 공식 접수처 박스에서 확인하도록만 안내하십시오.
+- 본문에 공식 접수처·원천 링크의 URL이나 '공식 출처' 줄을 쓰지 마십시오. 공식 접수처 링크는 글 하단 박스가 대신합니다.
 
 ## 7. 궁극의 전문가 휴머나이징(Humanizing) 및 번역투 완전 제거
 - **조사 남발 금지** : "~에 대해(서)", "~를 통해(서)", "~에 있어(서)" 등은 "~를", "~로", "~해서"로 직접 치환하십시오.
@@ -107,13 +108,12 @@ const CONTENT_SCHEMA = {
 };
 
 function buildPlanPrompt(item) {
-  const sourceLink = item.link && item.link !== '#' ? item.link : 'https://www.ui4u.go.kr';
+  const { link: _link, ...cleanItem } = item;
   return `당신은 "의정부 건강·생활 정보 포털"의 수석 에디터입니다.
 주어진 공공 데이터를 바탕으로 구글 SEO 최적화된 블로그 포스트의 기획안(메타데이터)을 작성하십시오.
 
 [공공 데이터 정보]
-${JSON.stringify(item, null, 2)}
-공식 출처 : ${sourceLink}
+${JSON.stringify(cleanItem, null, 2)}
 
 [기획 원칙]
 단순히 정보를 나열하지 말고, 의정부 시민이 검색을 통해 이 글을 발견했을 때 "의정부 생활에 꼭 필요한 핵심 혜택"임을 즉시 알 수 있도록 명확하고 신뢰성 높은 제목과 요약을 기획하세요. 원천에 없는 가공의 사실이나 혜택을 유추하여 제목이나 요약에 포함하지 마십시오.
@@ -122,7 +122,7 @@ ${JSON.stringify(item, null, 2)}
 }
 
 function buildContentPrompt(item, plan, angle) {
-  const sourceLink = item.link && item.link !== '#' ? item.link : 'https://www.ui4u.go.kr';
+  const { link: _link, ...cleanItem } = item;
   return `# Role
 당신은 의정부시의 시정 정책, 복지 지원금, 응급의료, 문화 행사를 사실에 입각하여 시민들에게 정확하게 전달하는 전문 공공 에디터입니다.
 
@@ -139,8 +139,7 @@ function buildContentPrompt(item, plan, angle) {
 ${STRICT_RULES}
 
 [원본 공공 데이터]
-${JSON.stringify(item, null, 2)}
-공식 출처 : ${sourceLink}
+${JSON.stringify(cleanItem, null, 2)}
 
 [기획안]
 * 제목 : ${plan.frontmatter.title}
