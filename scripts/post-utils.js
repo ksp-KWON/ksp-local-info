@@ -7,6 +7,16 @@ const matter = require('gray-matter');
 const { POSTS_DIR } = require('./pipeline-utils');
 const { normalizePost } = require('../src/lib/markdown-standard');
 
+const FALLBACK_HOME_URL = 'https://www.ui4u.go.kr';
+
+function isFallbackOrEmptyUrl(url) {
+  if (!url || typeof url !== 'string') return true;
+  const trimmed = url.trim();
+  if (!trimmed || trimmed === '#') return true;
+  const normalized = trimmed.replace(/\/+$/, '');
+  return normalized === FALLBACK_HOME_URL;
+}
+
 function generateSourceId(text) {
   return crypto.createHash('md5').update(text || '').digest('hex').slice(0, 12);
 }
@@ -32,6 +42,51 @@ function getExistingSourceIds() {
     }
   }
   return sourceIds;
+}
+
+function getExistingSourceLinks() {
+  const sourceLinks = new Set();
+  if (!fs.existsSync(POSTS_DIR)) {
+    fs.mkdirSync(POSTS_DIR, { recursive: true });
+    return sourceLinks;
+  }
+
+  const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'));
+  for (const file of files) {
+    try {
+      const filePath = path.join(POSTS_DIR, file);
+      const content = fs.readFileSync(filePath, 'utf8');
+      const parsed = matter(content);
+      const link = parsed.data.sourceLink;
+      if (link && !isFallbackOrEmptyUrl(link)) {
+        sourceLinks.add(link.trim());
+      }
+    } catch {
+      // Ignore parsing errors
+    }
+  }
+  return sourceLinks;
+}
+
+function isDuplicatePost(item, existingSet, existingLinksSet) {
+  if (!item) return false;
+  const sid = item.sourceId || (item.title ? generateSourceId(item.title) : '');
+  const link = item.link && typeof item.link === 'string' ? item.link.trim() : '';
+
+  if (sid && existingSet && existingSet.has(sid)) {
+    return true;
+  }
+
+  if (link && !isFallbackOrEmptyUrl(link)) {
+    if (existingLinksSet && existingLinksSet.has(link)) {
+      return true;
+    }
+    if (existingSet && existingSet.has(link)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function makeSlug(title, date, seq = 1) {
@@ -149,8 +204,12 @@ function getKSTDateString(date) {
 
 module.exports = {
   POSTS_DIR,
+  FALLBACK_HOME_URL,
+  isFallbackOrEmptyUrl,
   generateSourceId,
   getExistingSourceIds,
+  getExistingSourceLinks,
+  isDuplicatePost,
   makeSlug,
   saveMarkdownPost,
   getKSTDateString

@@ -10,7 +10,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { generateSourceId, getExistingSourceIds } = require('./post-utils');
+const { generateSourceId, getExistingSourceIds, getExistingSourceLinks, isDuplicatePost, isFallbackOrEmptyUrl } = require('./post-utils');
 const { safeFetch, sleep } = require('./pipeline-utils');
 
 const CITY_RSS_FILE = path.join(process.cwd(), 'public/data/city-rss.json');
@@ -162,7 +162,8 @@ async function main() {
   console.log('======================================================\n');
 
   const existingSourceIds = getExistingSourceIds();
-  console.log(`기발행 게시글 Source ID: ${existingSourceIds.size}개 확인됨.`);
+  const existingSourceLinks = getExistingSourceLinks();
+  console.log(`기발행 게시글: ID ${existingSourceIds.size}개, Link ${existingSourceLinks.size}개 확인됨.`);
 
   // 기존 city-rss.json이 있으면 로드
   let existingRssQueue = [];
@@ -174,8 +175,11 @@ async function main() {
     }
   }
 
-  const seenSourceIds = new Set(existingSourceIds);
-  existingRssQueue.forEach(item => seenSourceIds.add(item.sourceId));
+  const seenSet = new Set([...existingSourceIds, ...existingSourceLinks]);
+  existingRssQueue.forEach(item => {
+    if (item.sourceId) seenSet.add(item.sourceId);
+    if (item.link && !isFallbackOrEmptyUrl(item.link)) seenSet.add(item.link.trim());
+  });
 
   const allCollectedItems = [];
   let newCollectedCount = 0;
@@ -199,8 +203,9 @@ async function main() {
       console.log(`  -> 원본 ${parsedItems.length}개 아이템 파싱 완료.`);
 
       for (const item of parsedItems) {
-        if (!seenSourceIds.has(item.sourceId)) {
-          seenSourceIds.add(item.sourceId);
+        if (!isDuplicatePost(item, seenSet)) {
+          if (item.sourceId) seenSet.add(item.sourceId);
+          if (item.link && !isFallbackOrEmptyUrl(item.link)) seenSet.add(item.link.trim());
           allCollectedItems.push(item);
           newCollectedCount++;
         }
@@ -214,13 +219,14 @@ async function main() {
   // 큐 병합 및 만료 데이터 전면 정화 (신규 수집 항목 + 기존 미발행 항목 중 유효한 것만 유지)
   const mergedQueue = [...allCollectedItems, ...existingRssQueue];
   const finalQueue = [];
-  const recordedIds = new Set(existingSourceIds);
+  const recordedSet = new Set([...existingSourceIds, ...existingSourceLinks]);
 
   for (const item of mergedQueue) {
-    if (!item || !item.sourceId || recordedIds.has(item.sourceId)) continue;
+    if (!item || isDuplicatePost(item, recordedSet)) continue;
     if (isItemExpired(item.title, item.description)) continue;
     if (isLowQualityNotice(item.title, item.description)) continue;
-    recordedIds.add(item.sourceId);
+    if (item.sourceId) recordedSet.add(item.sourceId);
+    if (item.link && !isFallbackOrEmptyUrl(item.link)) recordedSet.add(item.link.trim());
     finalQueue.push(item);
   }
 
