@@ -18,9 +18,10 @@ interface BlogPostClientProps {
   title: string;
   sourceLink?: string;
   tags?: string[];
+  totalCourses: number;
 }
 
-export default function BlogPostClient({ content, title, sourceLink, tags = [] }: BlogPostClientProps) {
+export default function BlogPostClient({ content, title, sourceLink, tags = [], totalCourses }: BlogPostClientProps) {
   const [activeId, setActiveId] = useState('');
   const { opening, keyPoints, keyPointsTitle, checklistItems, checklistTitle, faqItems, toc, sections } = parseBlogPost(content);
 
@@ -246,7 +247,7 @@ export default function BlogPostClient({ content, title, sourceLink, tags = [] }
         </div>
         <div className="grid grid-cols-1 gap-3">
           <EmergencyBanner />
-          <LearningBanner />
+          <LearningBanner totalCourses={totalCourses} />
         </div>
       </div>
 

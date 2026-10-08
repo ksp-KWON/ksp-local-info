@@ -5,10 +5,10 @@ import CivicServiceBanner from '@/components/ui/CivicServiceBanner';
 
 interface LearningBannerProps {
   className?: string;
-  totalCourses?: number;
+  totalCourses: number;
 }
 
-export default function LearningBanner({ className = '', totalCourses = 140 }: LearningBannerProps) {
+export default function LearningBanner({ className = '', totalCourses }: LearningBannerProps) {
   return (
     <CivicServiceBanner
       href="/services/learning"

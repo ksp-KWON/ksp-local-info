@@ -59,7 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: post.updatedAt || post.date || SITE_LAUNCH_DATE,
   }));
 
-  // 4. 의정부 평생학습 실시간 강좌 상세 페이지 (140개 전수 색인)
+  // 4. 의정부 평생학습 실시간 강좌 상세 페이지 (전수 색인)
   let learningRoutes: MetadataRoute.Sitemap = [];
   try {
     const lPath = path.join(process.cwd(), 'src/data/learning-courses.json');

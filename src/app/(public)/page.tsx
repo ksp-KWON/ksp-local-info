@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { getSortedPostsData } from '@/lib/posts';
 import { Metadata } from 'next';
 import Image from 'next/image';
@@ -14,6 +16,13 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const posts = getSortedPostsData();
+  let totalCourses = 0;
+  try {
+    const lPath = path.join(process.cwd(), 'src/data/learning-courses.json');
+    if (fs.existsSync(lPath)) {
+      totalCourses = JSON.parse(fs.readFileSync(lPath, 'utf8')).totalCount || 0;
+    }
+  } catch {}
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -61,7 +70,7 @@ export default async function Home() {
       {/* 2. 핵심 공공서비스 퀵 배너 2종 (응급의료 지도 + 평생학습 실시간 강좌 지도) */}
       <div className="grid grid-cols-1 gap-3 sm:gap-4">
         <EmergencyBanner />
-        <LearningBanner />
+        <LearningBanner totalCourses={totalCourses} />
       </div>
 
       {/* 3. 네이버형 분야별 대제목-하위탭-포스팅 허브 (최상단 브리핑 + 1순위 공연 섹션) */}

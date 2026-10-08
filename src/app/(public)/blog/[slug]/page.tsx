@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { getPostData, getSortedPostsData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -43,6 +45,14 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   }
 
   const sourceLink = post.sourceLink || '';
+
+  let totalCourses = 0;
+  try {
+    const lPath = path.join(process.cwd(), 'src/data/learning-courses.json');
+    if (fs.existsSync(lPath)) {
+      totalCourses = JSON.parse(fs.readFileSync(lPath, 'utf8')).totalCount || 0;
+    }
+  } catch {}
 
   // 1. Google E-E-A-T BlogPosting & GovernmentService 스키마
   const blogSchema = {
@@ -200,7 +210,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </header>
 
           {/* 블로그 본문 (TOC & Markdown & ShareButtons & Tags 일체화) */}
-          <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} tags={post.tags} />
+          <BlogPostClient content={post.content} title={post.title} sourceLink={sourceLink} tags={post.tags} totalCourses={totalCourses} />
         </div>
       </article>
     </div>
