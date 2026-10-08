@@ -55,7 +55,7 @@ export default async function Home() {
           <div className="shrink-0 order-1 lg:order-2 relative">
             <div className="relative w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center">
               <Image
-                src="/images/uijeongbu-logo.png"
+                src="/images/uijeongbu-logo.svg"
                 alt="의정부시 로고"
                 fill
                 className="object-contain p-2"
