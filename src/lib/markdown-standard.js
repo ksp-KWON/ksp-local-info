@@ -160,7 +160,7 @@ function repairLineBold(line) {
  * @param {string} rawBody
  * @returns {string}
  */
-function normalizeMarkdownBody(rawBody) {
+function normalizeMarkdownBody(rawBody, sourceLink = '') {
   if (!rawBody) return '';
   let body = String(rawBody);
 
@@ -234,7 +234,26 @@ function normalizeMarkdownBody(rawBody) {
   // 3-9. 인용구 내부 볼드 콜론 간격 표준화
   body = body.replace(/^>\s*\*\*([^*:\n]+)\*\s*:/gm, '> **$1** :');
 
-  // 3-10. 다중 빈 줄 정리
+  // 3-10. frontmatter sourceLink 중복 출처 라벨 라인 정돈 (유형 A 전용, 멱등 보장)
+  if (sourceLink && typeof sourceLink === 'string' && sourceLink.trim()) {
+    const sUrl = sourceLink.trim();
+    const labelRegex = /^(공식출처|공식안내처|공식접수처|출처|링크|공식출처링크)$/;
+    body = body
+      .split(/\r?\n/)
+      .filter((line) => {
+        if (!line.includes(sUrl)) return true;
+        const stripped = line
+          .split(sUrl).join('')
+          .replace(/\[[^\]]*\]/g, '')
+          .replace(/[<>()`'"]/g, '')
+          .replace(/^[\s\-*>+]+/g, '')
+          .replace(/[\*_:~\s-]/g, '');
+        return !labelRegex.test(stripped);
+      })
+      .join('\n');
+  }
+
+  // 3-11. 다중 빈 줄 정리
   body = body.replace(/(?:\r?\n){3,}/g, '\n\n').trim();
 
   return body;
@@ -258,7 +277,7 @@ function normalizePost(rawFileContent) {
   }
 
   const cleanData = normalizeFrontmatter(parsed.data);
-  const cleanBody = normalizeMarkdownBody(parsed.content);
+  const cleanBody = normalizeMarkdownBody(parsed.content, cleanData.sourceLink);
 
   const cleanContent = matter.stringify(cleanBody, cleanData);
   return {
