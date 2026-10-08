@@ -16,3 +16,6 @@
 /feed                                /rss.xml                     301
 /rss                                 /rss.xml                     301
 /sitemap                             /sitemap.xml                 301
+
+# [Rule 4] Duplicate Post Consolidation (301 Permanent Redirect)
+/blog/2026-10-08-2026-uijeongbu-employment /blog/2026-10-06-2026-uijeongbu-employment 301
