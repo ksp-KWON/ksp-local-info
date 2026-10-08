@@ -1,8 +1,7 @@
-import fs from 'fs';
-import path from 'path';
 import { Metadata } from 'next';
-import LearningFinderClient, { CourseItem } from '@/components/learning/LearningFinderClient';
+import LearningFinderClient from '@/components/learning/LearningFinderClient';
 import { SITE_URL, SITE_NAME } from '@/lib/constants';
+import { getLearningData } from '@/lib/learning';
 
 export const metadata: Metadata = {
   title: '의정부시 평생학습 강좌 지도 & 수강신청 파인더 | 의정부 건강·생활 정보 포털',
@@ -19,25 +18,6 @@ export const metadata: Metadata = {
     type: 'website',
   },
 };
-
-interface LearningData {
-  updatedAt: string;
-  totalCount: number;
-  courses: CourseItem[];
-}
-
-function getLearningData(): LearningData {
-  try {
-    const filePath = path.join(process.cwd(), 'src/data/learning-courses.json');
-    if (fs.existsSync(filePath)) {
-      const content = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(content);
-    }
-  } catch (e) {
-    console.error('Failed to load learning courses data:', e);
-  }
-  return { updatedAt: '', totalCount: 0, courses: [] };
-}
 
 export default function LearningPage() {
   const data = getLearningData();

@@ -15,7 +15,7 @@ export default function LearningBanner({ className = '', totalCourses }: Learnin
       themeColor="blue"
       icon="book"
       categoryBadge="배움·평생교육"
-      statusBadge={`실시간 접수중 ${totalCourses}개`}
+      statusBadge={totalCourses > 0 ? `실시간 접수중 ${totalCourses}개` : '실시간 접수중'}
       statusPulse
       title="의정부시 실시간 평생학습 강좌 지도"
       description="도서관·주민센터·청소년수련관 무료 강좌 및 야간·주말 배움을 한눈에 찾으세요."

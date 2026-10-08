@@ -1,6 +1,5 @@
-import fs from 'fs';
-import path from 'path';
 import { Metadata } from 'next';
+import { getLearningData } from '@/lib/learning';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
@@ -42,16 +41,7 @@ interface CoursePageProps {
 }
 
 function getAllCourses(): CourseDetail[] {
-  try {
-    const filePath = path.join(process.cwd(), 'src/data/learning-courses.json');
-    if (fs.existsSync(filePath)) {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      return data.courses || [];
-    }
-  } catch (e) {
-    console.error('Failed to read courses for detail page:', e);
-  }
-  return [];
+  return getLearningData<CourseDetail>().courses;
 }
 
 export async function generateStaticParams() {
