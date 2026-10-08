@@ -27,11 +27,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  const title = post.title;
+  const description = post.summary || `${post.title}에 관한 상세 안내입니다.`;
+  const url = `${SITE_URL}/blog/${slug}`;
+
   return {
-    title: post.title,
-    description: post.summary || `${post.title}에 관한 상세 안내입니다.`,
+    title,
+    description,
     alternates: {
-      canonical: `${SITE_URL}/blog/${slug}`,
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: SITE_NAME,
+      locale: 'ko_KR',
+      type: 'article',
+      ...(post.date ? { publishedTime: post.date } : {}),
+    },
+    twitter: {
+      title,
+      description,
     },
   };
 }
