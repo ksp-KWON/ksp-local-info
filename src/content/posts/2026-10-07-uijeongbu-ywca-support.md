@@ -43,5 +43,3 @@ expiresAt: '2026-10-26'
 ## 신청 방법 및 안내
 
 참여를 희망하는 시민은 의정부시 평생학습 통합플랫폼 뉴런 공식 온라인 접수 페이지를 통해 신청할 수 있습니다. 자세한 자격증 관련 문의는 교육기관으로 연락하시기 바랍니다.
-
-공식 출처 : [의정부시 평생학습 통합플랫폼 뉴런](https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=LEARNING_00672224)

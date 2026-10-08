@@ -19,7 +19,6 @@ sourceLink: 'https://www.ui4u.go.kr/portal/bbs/view.do?mId=0301010000&ptIdx=35&b
 
 - **대상** : 주방용 오물분쇄기를 사용하는 일반 가정 시민
 - **핵심 내용** : 인증받은 제품 사용 필수 및 불법 제품 사용 시 과태료 처분
-- **공식 출처** : [의정부시 공식 포털](https://www.ui4u.go.kr/portal/bbs/view.do?mId=0301010000&ptIdx=35&bIdx=368588)
 
 ## 주방용 오물분쇄기 사용 기준
 
