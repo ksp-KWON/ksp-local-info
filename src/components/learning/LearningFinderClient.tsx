@@ -7,6 +7,7 @@ import PageHeaderBanner from '@/components/ui/PageHeaderBanner';
 import PremiumCard from '@/components/ui/PremiumCard';
 import HighlightBadge from '@/components/ui/HighlightBadge';
 import AppIcon from '@/components/ui/AppIcon';
+import { KAKAO_MAP_CLIENT_KEY } from '@/lib/constants';
 
 export interface CourseItem {
   id: string;
@@ -61,7 +62,7 @@ export default function LearningFinderClient({ initialCourses, updatedAt }: Lear
 
   // 카카오맵 SDK 로더
   const [loading, error] = useKakaoLoader({
-    appkey: 'c60e479ca3c78009474b748414de3a1b',
+    appkey: KAKAO_MAP_CLIENT_KEY,
     libraries: ['services', 'clusterer'],
   });
 
