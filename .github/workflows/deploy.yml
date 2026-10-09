@@ -13,6 +13,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   # ── [1단계] 자동 글쓰기 (schedule / workflow_dispatch 트리거 시만 실행) ──
   generate:
@@ -28,12 +31,12 @@ jobs:
       cache_changed: ${{ steps.cache_check.outputs.cache_changed }}
     steps:
       - name: 저장소 체크아웃
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
       - name: Node.js 24 설정
-        uses: actions/setup-node@v7.0.0
+        uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: 'npm'
@@ -163,12 +166,12 @@ jobs:
       contents: read
     steps:
       - name: 저장소 체크아웃
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v4
         with:
           ref: main
 
       - name: Node.js 24 설정
-        uses: actions/setup-node@v7.0.0
+        uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: 'npm'
@@ -191,7 +194,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: 배포 완료 브리핑 이메일 발송
-        if: needs.generate.outputs.new_posts_count > 0
+        if: needs.generate.outputs.new_posts_count > 0 && env.GMAIL_USER != ''
         continue-on-error: true
         uses: dawidd6/action-send-mail@67ce3558d613188179559c61d3565140cf389968 # v22
         with:
@@ -203,3 +206,5 @@ jobs:
           to: ${{ secrets.GMAIL_USER }}
           from: 의정부심 포털 <${{ secrets.GMAIL_USER }}>
           html_body: ${{ needs.generate.outputs.html_body }}
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
