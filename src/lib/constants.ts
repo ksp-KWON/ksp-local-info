@@ -4,6 +4,7 @@ export const SITE_URL = 'https://uijeongbusim.com';
 export const SITE_DOMAIN = 'uijeongbusim.com';
 export const SITE_NAME = '의정부심 (의정부 건강·생활 정보 포털)';
 export const GA_MEASUREMENT_ID = 'G-11X7FX7P1Q';
+export const NAVER_SITE_VERIFICATION = '17d7828ffa44b9ac00d06745104e11c4c0deb69f';
 
 export const CIVIC_CATEGORIES = [
   '일자리·생활',
