@@ -218,8 +218,8 @@ async function crawlSourceBody(url) {
 
     const html = await res.text();
 
-    // alert 등으로 삭제/존재하지 않는 페이지 처리
-    if (html.includes("alert('게시판이 삭제되었거나 존재하지 않습니다')") || html.includes('alert("게시판이 삭제되었거나')) {
+    // alert 등으로 삭제/존재하지 않거나 권한 없는 페이지 처리
+    if (html.includes("alert('게시판이 삭제되었거나 존재하지 않습니다')") || html.includes('alert("게시판이 삭제되었거나') || html.includes('alert("권한이 없습니다') || html.includes("alert('권한이 없습니다")) {
       return { text: '', imageCount: 0, attachments: [] };
     }
 
