@@ -57,6 +57,18 @@ export default function PrivacyPage() {
             </p>
           </section>
 
+          <section className="space-y-2">
+            <PremiumHeading level={3} showLeftBorder={false} className="!mt-4 !mb-2">
+              5. 제3자 광고 사업자(Google AdSense)의 쿠키 운용 및 맞춤형 광고 안내
+            </PremiumHeading>
+            <p>
+              1. 본 사이트는 지속 가능한 무료 공공정보 제공 및 서비스 유지를 위하여 Google을 포함한 제3자 광고 사업자의 광고(Google AdSense)를 게재할 수 있습니다.<br />
+              2. Google 및 제3자 제공업체는 쿠키(Cookie)를 사용하여 이용자가 본 사이트 및 인터넷상의 다른 웹사이트를 방문한 기록을 바탕으로 광고를 게재합니다.<br />
+              3. Google의 광고 쿠키 사용으로 인해 이용자의 본 사이트 및 다른 사이트 방문 기록에 기반한 맞춤형 광고가 노출될 수 있습니다.<br />
+              4. 이용자는 언제든지 <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-[var(--google-blue)] dark:text-[#8ab4f8] underline hover:opacity-80">Google 광고 설정</a> 또는 <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" className="text-[var(--google-blue)] dark:text-[#8ab4f8] underline hover:opacity-80">aboutads.info</a>를 방문하여 개인 맞춤형 광고 게재에 사용되는 쿠키를 직접 선택 해제(Opt-out)할 수 있습니다.
+            </p>
+          </section>
+
       <div className="mt-8 text-xs text-zinc-400 dark:text-zinc-500 border-t border-gray-100 dark:border-zinc-800 pt-4">
         본 개인정보처리방침은 사이트 개설일부터 적용됩니다.
       </div>
