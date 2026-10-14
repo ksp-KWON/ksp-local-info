@@ -27,7 +27,9 @@ if (fs.existsSync(certPath)) {
         ca: [...tls.rootCertificates, pem]
       }
     });
-  } catch {}
+  } catch (err) {
+    console.warn('[pipeline-utils] ui4u TLS intermediate agent creation failed:', err && err.message ? err.message : String(err));
+  }
 }
 
 // ── .env.local 로드 (파이프라인 전역 1회만 실행) ─────────────────────────────
@@ -142,9 +144,26 @@ function extractSourceTokens(sourceRaw) {
   });
 
   // 2) 숫자 + 단위 쌍 (시·분·명·석·원·번·호·층·매·가구)
-  const unitMatches = clean.match(/(\d+)\s*(시(?![\w가-힣])|분|명|석|원|번|호|층|매|가구)/g) || [];
+  const unitRegex = /(\d+[\d,]*)\s*(만\s*원|만원|천\s*원|천원|억\s*원|억원|%|시(?![\w가-힣])|분|명|석|원|번|호|층|매|가구)/g;
+  const unitMatches = clean.match(unitRegex) || [];
   unitMatches.forEach(u => {
-    tokens.add(u.replace(/\s+/g, ''));
+    const compact = u.replace(/\s+/g, '');
+    tokens.add(compact);
+    const mMan = compact.match(/^(\d+)만원$/);
+    if (mMan) {
+      const num = parseInt(mMan[1], 10);
+      const won = num * 10000;
+      tokens.add(`${won}원`);
+      tokens.add(`${won.toLocaleString()}원`);
+    }
+    const mWon = compact.match(/^(\d+)원$/);
+    if (mWon) {
+      const num = parseInt(mWon[1], 10);
+      if (num >= 10000 && num % 10000 === 0) {
+        tokens.add(`${num / 10000}만원`);
+        tokens.add(`${num / 10000}만 원`);
+      }
+    }
   });
 
   return { tokens, compactText: clean.replace(/\s+/g, '') };
@@ -169,13 +188,13 @@ function validateSourceNumbers(markdownBody, sourceRaw) {
 
   // 2) 숫자 + 단위 쌍 (시·분·명·석·원·번·호·층·매·가구)
   // 연·월·일·부·회·차는 정규식 자체에 미포함되어 자동 제외
-  const unitRegex = /(\d+[\d,]*)\s*(시(?![\w가-힣])|분|명|석|원|번|호|층|매|가구)/g;
+  const unitRegex = /(\d+[\d,]*)\s*(만\s*원|만원|천\s*원|천원|억\s*원|억원|%|시(?![\w가-힣])|분|명|석|원|번|호|층|매|가구)/g;
   let um;
   while ((um = unitRegex.exec(bodyOnly)) !== null) {
     const rawToken = um[0];
     const num = um[1].replace(/,/g, '').replace(/\s+/g, '');
     const unit = um[2];
-    const normToken = `${num}${unit}`;
+    const normToken = `${num}${unit.replace(/\s+/g, '')}`;
 
     if (!validTokens.has(normToken) && !compactText.includes(normToken)) {
       violations.push(rawToken.trim());
@@ -256,7 +275,7 @@ async function crawlSourceBody(url) {
 
     // 본문 컨테이너 추출 (네이버 블로그 및 일반 HTML)
     let container = '';
-    if (targetUrl.includes('blog.naver.com')) {
+    if (targetUrl.includes('blog.naver.com') || html.includes('class="se-main-container"') || html.includes('id="postViewArea"')) {
       const startIdx = html.indexOf('class="se-main-container"');
       const viewIdx = html.indexOf('id="postViewArea"');
       const chosenStart = startIdx !== -1 ? startIdx : viewIdx;
