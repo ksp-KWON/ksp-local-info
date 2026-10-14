@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { SITE_URL, SITE_NAME, GA_MEASUREMENT_ID, NAVER_SITE_VERIFICATION } from "@/lib/constants";
+import { SITE_URL, SITE_NAME, GA_MEASUREMENT_ID, NAVER_SITE_VERIFICATION, GOOGLE_ADSENSE_ID } from "@/lib/constants";
 
 export const viewport: Viewport = {
   themeColor: [
@@ -107,6 +107,13 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         {NAVER_SITE_VERIFICATION && (
           <meta name="naver-site-verification" content={NAVER_SITE_VERIFICATION} />
+        )}
+        {GOOGLE_ADSENSE_ID && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${GOOGLE_ADSENSE_ID}`}
+            crossOrigin="anonymous"
+          />
         )}
         <script
           type="application/ld+json"
