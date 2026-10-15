@@ -115,7 +115,7 @@ async function generateAndSavePost(targetItem, tierLabel) {
   if (targetItem.link) {
     const crawled = await crawlSourceBody(targetItem.link);
     // 조건부 트리거: HWPX 텍스트가 없거나 200자 미만이고, 유효 이미지가 1장 이상이며, 본문 텍스트가 1200자 미만일 때만 Vision 판독 호출
-    if ((!crawled.hwpxText || crawled.hwpxText.length < 200) && crawled.validImages && crawled.validImages.length >= 1 && (crawled.text || '').length < 1200) {
+    if ((!crawled.hwpxText || crawled.hwpxText.length < 200) && crawled.validImages && crawled.validImages.length >= 1 && (crawled.rawBodyText || crawled.text || '').length < 1200) {
       const ocrText = await transcribeImagesWithGemini(crawled.validImages);
       if (ocrText && ocrText.trim()) {
         console.log(`  -> [카드뉴스/포스터 판독 성공] ${ocrText.trim().length}자 텍스트 결합`);
@@ -144,17 +144,32 @@ async function generateAndSavePost(targetItem, tierLabel) {
     : targetItem;
 
   const angle = getRandomAngle();
-  const plan = await callGemini(buildPlanPrompt(promptItem), PLAN_SCHEMA, 'lite');
-  await sleep(2000);
+  let plan = null;
+  let content = null;
+  let attempts = 0;
+  const MAX_REWRITES = 3;
 
-  totalContentCalls++;
-  const content = await callGemini(buildContentPrompt(promptItem, plan, angle), CONTENT_SCHEMA, 'flash');
+  while (attempts < MAX_REWRITES) {
+    attempts++;
+    plan = await callGemini(buildPlanPrompt(promptItem), PLAN_SCHEMA, 'lite');
+    await sleep(2000);
 
-  // 원천 팩트 숫자 토큰 무결성 검증 (저장 전 수행)
-  const violations = validateSourceNumbers(content.markdownContent, validationSource);
-  if (violations.length > 0) {
-    console.warn(`  ❌ [원천 팩트 숫자 위반] "${targetItem.title}" 원천 미존재 토큰: ${violations.join(', ')} -> 포스팅 스킵`);
-    return null;
+    totalContentCalls++;
+    content = await callGemini(buildContentPrompt(promptItem, plan, angle), CONTENT_SCHEMA, 'flash');
+
+    // 원천 팩트 숫자 토큰 무결성 검증 (제목·요약·본문 전역 사전예방 게이트)
+    const fullTextToValidate = `${plan?.frontmatter?.title || ''} ${plan?.frontmatter?.summary || ''} ${content?.markdownContent || ''}`;
+    const violations = validateSourceNumbers(fullTextToValidate, validationSource);
+    if (violations.length === 0) {
+      break;
+    }
+
+    console.warn(`  ⚠️ [원천 팩트 숫자 위반 (${attempts}/${MAX_REWRITES}회)] "${targetItem.title}" 원천 미존재 토큰: ${violations.join(', ')} -> 재집필 시도`);
+    if (attempts >= MAX_REWRITES) {
+      console.error(`  ❌ [원천 팩트 숫자 게이트 최종 차단] "${targetItem.title}" 3회 재집필 초과 -> 포스팅 발행 거부`);
+      return null;
+    }
+    await sleep(2000);
   }
 
   const today = getKSTDateString();
@@ -208,6 +223,7 @@ async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
 
   const qualified = filterTier1Candidates(rssQueue);
   const pending = [];
+  const MAX_CANDIDATE_ATTEMPTS = 5;
   for (const item of qualified) {
     if (!isDuplicatePost(item, existingSet)) {
       pending.push(item);
@@ -216,7 +232,7 @@ async function runTier1CityRss(limit = MAX_POSTS_PER_RUN) {
       if (item.link && !isFallbackOrEmptyUrl(item.link)) {
         existingSet.add(item.link.trim());
       }
-      if (pending.length >= MAX_CONTENT_CALLS_PER_RUN) break;
+      if (pending.length >= MAX_CANDIDATE_ATTEMPTS) break;
     }
   }
 
