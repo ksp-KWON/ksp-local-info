@@ -114,8 +114,12 @@ async function generateAndSavePost(targetItem, tierLabel) {
   let sourceBody = '';
   if (targetItem.link) {
     const crawled = await crawlSourceBody(targetItem.link);
-    // 조건부 트리거: HWPX 텍스트가 없거나 200자 미만이고, 유효 이미지가 1장 이상이며, 본문 텍스트가 1200자 미만일 때만 Vision 판독 호출
-    if ((!crawled.hwpxText || crawled.hwpxText.length < 200) && crawled.validImages && crawled.validImages.length >= 1 && (crawled.rawBodyText || crawled.text || '').length < 1200) {
+    // [3단계 조건부 트리거] hwpxText < 200 && validImages >= 1 && sourceText < 1200 일 때만 Vision 1회 호출
+    const hwpxLen = (crawled.hwpxText || '').length;
+    const validImgCount = (crawled.validImages || []).length;
+    const srcTextLen = (crawled.rawBodyText || crawled.text || '').length;
+
+    if (hwpxLen < 200 && validImgCount >= 1 && srcTextLen < 1200) {
       const ocrText = await transcribeImagesWithGemini(crawled.validImages);
       if (ocrText && ocrText.trim()) {
         console.log(`  -> [카드뉴스/포스터 판독 성공] ${ocrText.trim().length}자 텍스트 결합`);
@@ -130,11 +134,11 @@ async function generateAndSavePost(targetItem, tierLabel) {
     }
   }
 
-  // 최종 합산된 crawled.text 기준 원천 분량 게이트 (100자 이상)
+  // [3단계 사후 분량 게이트(Post-OCR Check)] HWPX 및 이미지 판독 텍스트를 합산한 최종 길이가 MIN_SOURCE_CHARS(100자) 미만이면 스킵
   const combinedItem = { ...targetItem, sourceBody };
-  if (!isSourceSufficient(combinedItem)) {
-    const cleanLen = getCleanSourceText(combinedItem).length;
-    console.warn(`  ❌ [원천 분량 부족] "${targetItem.title}" (${cleanLen}자 < ${MIN_SOURCE_CHARS}자) -> 포스팅 스킵`);
+  const totalCleanLen = getCleanSourceText(combinedItem).length;
+  if (!isSourceSufficient(combinedItem) || totalCleanLen < MIN_SOURCE_CHARS) {
+    console.warn(`  ❌ [사후 원천 분량 게이트] "${targetItem.title}" (${totalCleanLen}자 < ${MIN_SOURCE_CHARS}자) -> 포스팅 스킵`);
     return null;
   }
 
