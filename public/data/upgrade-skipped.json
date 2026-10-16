@@ -20,28 +20,8 @@
     "skippedAt": "2026-10-17"
   },
   {
-    "file": "2026-10-16-je22hoe-uijeongbu-si-hoeryong-senior-sinieojeonsihoe-gaechoe.md",
-    "reason": "REGRESSION_GUARD_TRIGGERED",
-    "skippedAt": "2026-10-17"
-  },
-  {
     "file": "2026-10-13-2027nyeon-mingangeonchukmul-naejinseongneungpyeongga-biyong.md",
     "reason": "INSUFFICIENT_NEW_MATERIAL",
-    "skippedAt": "2026-10-17"
-  },
-  {
-    "file": "2026-10-06-2026-uijeongbu.md",
-    "reason": "REGRESSION_GUARD_TRIGGERED",
-    "skippedAt": "2026-10-17"
-  },
-  {
-    "file": "2026-10-06-2026-uijeongbu-employment.md",
-    "reason": "REGRESSION_GUARD_TRIGGERED",
-    "skippedAt": "2026-10-17"
-  },
-  {
-    "file": "2026-10-07-uijeongbu-ywca-support.md",
-    "reason": "REGRESSION_GUARD_TRIGGERED",
     "skippedAt": "2026-10-17"
   }
 ]
