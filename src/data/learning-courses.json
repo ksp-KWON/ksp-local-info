@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T16:25:49.104Z",
+  "updatedAt": "2026-10-24T19:12:37.100Z",
   "source": "의정부도시교육재단 평생학습 통합플랫폼 (sugang.ull.or.kr)",
   "totalCount": 69,
   "courses": [
@@ -1210,7 +1210,7 @@
       "title": "음악난타(초)",
       "org": "의정부문화원",
       "dong": "의정부동",
-      "address": "의정부시 시민로 1 (시청)",
+      "address": "의정부시 시민로 1 (시청) (B01호)",
       "lat": 37.7381,
       "lng": 127.0337,
       "eduPeriod": "26.01.08 ~ 26.12.31",
@@ -1219,14 +1219,14 @@
       "status": "접수중",
       "category": "교양·시민참여",
       "target": "시민 누구나",
-      "isFree": true,
+      "isFree": false,
       "isNightWeekend": false,
       "applyUrl": "https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=LEARNING_00437310",
-      "time": "일정 공지 참조",
-      "fee": "무료",
+      "time": "목 14:10 ~ 17:10",
+      "fee": "20,000원",
       "materialFee": "강의계획서 참조",
-      "tel": "031-826-9988",
-      "intro": ""
+      "tel": "031-872-5678",
+      "intro": "난타를 통해 스트레스를 풀고 몸과 마음을 치유한다."
     },
     {
       "id": "ujb-learning_00437272",
