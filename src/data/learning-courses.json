@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T16:47:39.826Z",
+  "updatedAt": "2026-11-04T22:23:29.888Z",
   "source": "의정부도시교육재단 평생학습 통합플랫폼 (sugang.ull.or.kr)",
   "totalCount": 70,
   "courses": [
@@ -190,7 +190,7 @@
       "lng": 127.0435,
       "eduPeriod": "26.11.14 ~ 26.11.14",
       "applyPeriod": "26.10.29 ~ 26.11.14",
-      "capacity": "24명",
+      "capacity": "23명",
       "status": "접수중",
       "category": "교양·시민참여",
       "target": "시민 누구나",
@@ -464,7 +464,7 @@
       "lat": 37.7475,
       "lng": 127.0435,
       "eduPeriod": "26.11.14 ~ 26.11.14",
-      "applyPeriod": "26.10.20 ~ 26.11.13",
+      "applyPeriod": "26.10.20 ~ 26.11.06",
       "capacity": "12명",
       "status": "접수중",
       "category": "교양·시민참여",
