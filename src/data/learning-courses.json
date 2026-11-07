@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T15:35:35.707Z",
+  "updatedAt": "2026-11-07T01:32:53.650Z",
   "source": "의정부도시교육재단 평생학습 통합플랫폼 (sugang.ull.or.kr)",
   "totalCount": 64,
   "courses": [
@@ -1160,7 +1160,7 @@
       "title": "요가2반",
       "org": "의정부문화원",
       "dong": "의정부동",
-      "address": "의정부시 시민로 1 (시청)",
+      "address": "의정부시 시민로 1 (시청) (204호)",
       "lat": 37.7381,
       "lng": 127.0337,
       "eduPeriod": "26.01.06 ~ 26.12.31",
@@ -1169,13 +1169,13 @@
       "status": "접수중",
       "category": "건강·스포츠",
       "target": "시민 누구나",
-      "isFree": true,
+      "isFree": false,
       "isNightWeekend": false,
       "applyUrl": "https://sugang.ull.or.kr/ilms/learning/learningDetail.do?learning_id=LEARNING_00437263",
-      "time": "일정 공지 참조",
-      "fee": "무료",
+      "time": "화 11:00 ~ 12:30 목 11:00 ~ 12:30",
+      "fee": "20,000원",
       "materialFee": "강의계획서 참조",
-      "tel": "031-826-9988",
+      "tel": "031-872-5678",
       "intro": ""
     },
     {
