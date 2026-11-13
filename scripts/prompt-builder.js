@@ -68,6 +68,97 @@ const ANGLES = [
   }
 ];
 
+// ── 카테고리 성격별 4대 맞춤형 에디토리얼 아키텍처 (획일적 템플릿 배제) ──────────────
+const CATEGORY_EDITORIAL_GUIDES = {
+  BENEFIT: {
+    name: '혜택·지원금·일자리·융자 맞춤형 가이드',
+    structure: [
+      '1. 도입 및 시정 핵심 요약 (3줄 브리핑)',
+      '2. 사업 추진 배경 및 지원 대상·자격 요건 상세 해설',
+      '3. 세부 지원 내용·한도·조건 비교 마크다운 표',
+      '4. 온·오프라인 신청 방법, 필수 구비 서류 및 담당 문의처 안내'
+    ]
+  },
+  CULTURE: {
+    name: '문화·공연·교육·체육·나들이 맞춤형 큐레이션',
+    structure: [
+      '1. 도입 및 행사·프로그램 핵심 요약 (3줄 브리핑)',
+      '2. 프로그램·공연·강좌 기획 취지 및 주요 관람·참여 포인트',
+      '3. 운영 일시·장소·대상·참가비(관람료) 상세 정리 마크다운 표',
+      '4. 사전 예약·접수 절차 및 현장 참여 시 유의사항 안내'
+    ]
+  },
+  INFRA: {
+    name: '교통·주차·환경·주택·생활제도 맞춤형 안내',
+    structure: [
+      '1. 도입 및 제도·인프라 핵심 요약 (3줄 브리핑)',
+      '2. 시행 배경 및 기존 대비 달라지는 핵심 사항 해설',
+      '3. 세부 운영 기준·구역·일정·요금 정리 마크다운 표',
+      '4. 시민 실생활 이용 요령, 준수 사항 및 관련 부서 안내'
+    ]
+  },
+  SAFETY: {
+    name: '의료·보건·재난안전·시설이용 맞춤형 가이드',
+    structure: [
+      '1. 도입 및 보건·안전 핵심 요약 (3줄 브리핑)',
+      '2. 검진·진료·안전 대책의 취지 및 대상자 안내',
+      '3. 운영 시간·장소·세부 검진/지원 항목 마크다운 표',
+      '4. 방문 전 준비사항(신분증·사전예약 등) 및 담당 기관 문의처'
+    ]
+  }
+};
+
+function getEditorialGuideByCategory(category) {
+  const cat = String(category || '');
+  if (cat.includes('문화') || cat.includes('예술') || cat.includes('체육') || cat.includes('공원')) {
+    return CATEGORY_EDITORIAL_GUIDES.CULTURE;
+  }
+  if (cat.includes('교통') || cat.includes('주차') || cat.includes('청소') || cat.includes('환경') || cat.includes('주택') || cat.includes('재개발')) {
+    return CATEGORY_EDITORIAL_GUIDES.INFRA;
+  }
+  if (cat.includes('재난') || cat.includes('민방위')) {
+    return CATEGORY_EDITORIAL_GUIDES.SAFETY;
+  }
+  return CATEGORY_EDITORIAL_GUIDES.BENEFIT;
+}
+
+// ── 의정부시 주요 공공기관·인프라 공식 검증 레퍼런스 DB (환각 없는 배경지식 보강) ──────────
+const VERIFIED_LOCAL_CONTEXT_DB = [
+  {
+    keywords: ['예술의전당', '문화관광재단'],
+    fact: '의정부예술의전당(의정부문화관광재단)은 의정부시 의정로 1에 위치한 복합문화예술 공간으로, 공식 누리집(uac.or.kr)을 통해 공연·전시 정보 확인 및 온라인 예매가 가능합니다.'
+  },
+  {
+    keywords: ['문화역 이음', '문화역이음'],
+    fact: '의정부문화역 이음은 신세계백화점 의정부점 건물(평화로 525) 내 위치한 도심형 문화예술 거점 공간으로, 전시·공연·문화 커뮤니티 프로그램을 운영합니다.'
+  },
+  {
+    keywords: ['보건소', '동부보건과', '치매안심센터'],
+    fact: '의정부시보건소(범골로 131)는 시민 건강증진, 예방접종, 국가건강검진 및 치매안심센터 사업을 수행하는 공공 보건의료 기관입니다.'
+  },
+  {
+    keywords: ['정보도서관', '미술도서관', '음악도서관', '과학도서관', '가재울도서관'],
+    fact: '의정부시 도서관(정보·미술·음악·과학·가재울도서관)의 독서·문화 프로그램은 의정부시도서관 공식 누리집(edu.uilib.go.kr) 책문화프로그램 메뉴에서 접수 및 확인이 진행됩니다.'
+  },
+  {
+    keywords: ['평생학습원', '도시교육재단', '모두의 캠퍼스'],
+    fact: '의정부도시교육재단 평생학습원 프로그램은 평생학습 통합플랫폼(sugang.ull.or.kr)을 통해 온라인 수강신청 및 강좌 일정 확인이 이루어집니다.'
+  },
+  {
+    keywords: ['의정부사랑카드', '지역화폐'],
+    fact: '의정부사랑카드는 경기지역화폐 모바일 앱을 통해 충전·발급 및 인센티브 혜택 확인이 가능한 의정부시 공식 충전식 선불카드형 지역화폐입니다.'
+  }
+];
+
+function getVerifiedLocalContext(item) {
+  const fullText = `${item?.title || ''} ${item?.description || ''} ${item?.sourceBody || ''}`;
+  const matched = VERIFIED_LOCAL_CONTEXT_DB.filter(entry =>
+    entry.keywords.some(kw => fullText.includes(kw))
+  );
+  if (matched.length === 0) return '';
+  return matched.map(m => `- ${m.fact}`).join('\n');
+}
+
 function getRandomAngle() {
   const randomIndex = Math.floor(Math.random() * ANGLES.length);
   return ANGLES[randomIndex];
@@ -125,6 +216,12 @@ ${JSON.stringify(cleanItem, null, 2)}
 
 function buildContentPrompt(item, plan, angle) {
   const { link: _link, ...cleanItem } = item;
+  const editorialGuide = getEditorialGuideByCategory(plan?.frontmatter?.category || item?.category);
+  const localContext = getVerifiedLocalContext(item);
+  const localContextBlock = localContext
+    ? `\n[검증된 의정부 기관 공식 참고 배경지식]\n${localContext}\n`
+    : '';
+
   return `# Role
 당신은 의정부시의 시정 정책, 복지 지원금, 응급의료, 문화 행사를 사실에 입각하여 시민들에게 정확하게 전달하는 전문 공공 에디터입니다.
 
@@ -134,7 +231,9 @@ function buildContentPrompt(item, plan, angle) {
 ## 작성 원칙
 - **전문 에디터 톤**: 정중하고 신뢰할 수 있는 어조(~합니다, ~안내해 드립니다).
 - **이모지 전면 배제**: 구글 E-E-A-T 신뢰도를 위해 본문에 유니코드 이모지/특수문자를 절대 사용하지 마세요. (시스템 렌더러가 SVG를 결합합니다)
-- **원천 데이터 범위 내 작성** : 분량을 억지로 늘리기 위해 메인 섹션을 억지로 만들거나 가공의 사실을 추가하지 마십시오. 원천에 존재하는 팩트만으로 간결하고 정확하게 작성하십시오.
+- **카테고리 맞춤형 전개 (${editorialGuide.name})**: 획일적인 기계적 템플릿(억지 자가진단 체크리스트 등)을 지양하고, 본 주제의 성격에 맞춰 아래 흐름으로 자연스럽고 깊이 있게 서술하십시오:
+  ${editorialGuide.structure.join('\n  ')}
+- **원천 데이터 범위 내 심층 해설** : 분량을 억지로 늘리기 위해 가공의 사실을 지어내지 마되, 원천에 존재하는 팩트와 기관 공식 참고 배경지식을 바탕으로 시민이 궁금해하는 배경, 세부 요건, 신청·참여 절차를 친절하고 자세하게 풀어서 설명하십시오.
 - **미포함 섹션 제외** : 원천에 근거가 없는 '생활 꿀팁', '대중교통 연계', '자주 묻는 질문(FAQ)' 섹션은 작성하지 마십시오.
 
 아래 소스 본문에 명시된 사실만 사용합니다. 소스 본문에 명시된 신청자 실무 정보(문의 전화·담당 부서, 신청·접수 방법, 필수 동의서·보호자 동의, 안전·보험·면책 안내, 결제·환불, 주차, 중복 신청 제한)를 해당할 때 누락 없이 포함하되, 소스 문장을 그대로 복사하지 말고 구조화해 재구성하여 설명합니다. 소스에 없는 대상 제한이나 포괄 표현('관내', '누구나', '시민' 한정, '모두')을 쓰지 않고, 확인되지 않는 항목은 '자세한 내용은 공식 공고에서 확인하세요'로 안내합니다. 이미지에만 있을 수 있는 정보는 추측하지 않습니다.
@@ -144,7 +243,7 @@ ${STRICT_RULES}
 
 [원본 공공 데이터]
 ${JSON.stringify(cleanItem, null, 2)}
-
+${localContextBlock}
 [기획안]
 * 제목 : ${plan.frontmatter.title}
 * 카테고리 : ${plan.frontmatter.category}
@@ -162,6 +261,8 @@ module.exports = {
   PLAN_SCHEMA,
   CONTENT_SCHEMA,
   getRandomAngle,
+  getEditorialGuideByCategory,
+  getVerifiedLocalContext,
   buildPlanPrompt,
   buildContentPrompt
 };

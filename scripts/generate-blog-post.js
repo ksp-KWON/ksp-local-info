@@ -27,6 +27,7 @@ const {
   PLAN_SCHEMA,
   CONTENT_SCHEMA,
   getRandomAngle,
+  getVerifiedLocalContext,
   buildPlanPrompt,
   buildContentPrompt
 } = require('./prompt-builder');
@@ -186,9 +187,8 @@ async function generateAndSavePost(targetItem, tierLabel) {
   }
 
   const promptItem = sourceBody ? { ...targetItem, sourceBody } : targetItem;
-  const validationSource = sourceBody
-    ? `${targetItem.title || ''} ${targetItem.description || ''} ${sourceBody}`
-    : targetItem;
+  const localContext = getVerifiedLocalContext(promptItem);
+  const validationSource = `${targetItem.title || ''} ${targetItem.description || ''} ${sourceBody || ''} ${localContext || ''}`;
 
   const angle = getRandomAngle();
   let plan = null;

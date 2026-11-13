@@ -43,6 +43,7 @@ const MIN_INDEXABLE_BODY_CHARS = 1200;
 const PHOTO_OP_KEYWORDS = [
   '김장', '기탁', '성금', '전달식', '자매결연', '새마을부녀회',
   '바자회', '일일찻집', '사랑릴레이', '이불 기부', '고추장', '군사훈련',
+  '개최 결과', '본선 결과', '성황리에', '초청 방문', '첫 방문', '전달 결과',
 ];
 
 export function isIndexablePost(title: string, content: string): boolean {
