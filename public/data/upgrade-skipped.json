@@ -278,5 +278,30 @@
     "file": "2026-11-09-uijeongbu-si-gimjangcheol-eumsikmulsseuregi-baechul-bangbeop.md",
     "reason": "INSUFFICIENT_NEW_MATERIAL",
     "skippedAt": "2026-11-16"
+  },
+  {
+    "file": "2026-10-22-uijeongbu-si-singyu-gongmuwon-daesang-jeokeung-support-onbod.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-17"
+  },
+  {
+    "file": "2026-11-12-uijeongbu-si-gosandong-jamaegyeolyeonji-yanggueup-cheos-bang.md",
+    "reason": "REGRESSION_GUARD_TRIGGERED",
+    "skippedAt": "2026-11-17"
+  },
+  {
+    "file": "2026-10-27-2026-rokeol-seutateueop-chaelrinji-uijeongbu-tujasa-bijeunis.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-17"
+  },
+  {
+    "file": "2026-10-23-uijeongbu-si-gosandong-jiyeoksahoebojanghyeopuiche-godoksa-y.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-17"
+  },
+  {
+    "file": "2026-11-10-2026nyeon-11wol-uijeongbu-si-chomisemeonji-bisangjeogamjochi.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-17"
   }
 ]
