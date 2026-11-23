@@ -448,5 +448,30 @@
     "file": "2026-10-23-uijeongbu-si-howon2dong-yeojusi-daesinmyeongwa-donong-sangsa.md",
     "reason": "INSUFFICIENT_NEW_MATERIAL",
     "skippedAt": "2026-11-23"
+  },
+  {
+    "file": "2026-10-19-2026nyeon-je9hoe-uijeongbu-beolmalmaeul-festival-saengsaeng.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-11-04-uijeongbu-2dong-cheongsonyeonjidohyeopuihoe-cheongsonyeon-sa.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-11-12-uijeongbu-1dong-juminjachihoe-iusbapsang-hamkkehaeyo-gimjang.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-11-02-uijeongbu-darakwon-gonggongjutaekjigu-daeeunghoeui-gaechoe-m.md",
+    "reason": "LLM_GENERATION_FAILED",
+    "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-11-08-uijeongbu-cheonmundae-gonggongdijain-peseutibeol-2026-geojeo.md",
+    "reason": "LLM_GENERATION_FAILED",
+    "skippedAt": "2026-11-24"
   }
 ]
