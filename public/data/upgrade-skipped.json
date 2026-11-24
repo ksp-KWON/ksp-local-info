@@ -473,5 +473,30 @@
     "file": "2026-11-08-uijeongbu-cheonmundae-gonggongdijain-peseutibeol-2026-geojeo.md",
     "reason": "LLM_GENERATION_FAILED",
     "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-10-10-2026-gyeonggi-jujo-jeontongju-ipmunban-sugangsaeng-mojip-jeo.md",
+    "reason": "REGRESSION_GUARD_TRIGGERED",
+    "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-11-01-uijeongbu-si-howon2dong-welfare-sagakjidae-balgul-mich-sseud.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-10-03-2026-culture-festival.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-10-08-2026-uijeongbu.md",
+    "reason": "LLM_GENERATION_FAILED",
+    "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-10-20-uijeongbu-sijeongsin-health-welfare-senteo-bumo-janyeo-jipda.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-24"
   }
 ]
