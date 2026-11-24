@@ -498,5 +498,30 @@
     "file": "2026-10-20-uijeongbu-sijeongsin-health-welfare-senteo-bumo-janyeo-jipda.md",
     "reason": "INSUFFICIENT_NEW_MATERIAL",
     "skippedAt": "2026-11-24"
+  },
+  {
+    "file": "2026-10-28-uijeongbu-si-jungguk-rinisi-mich-wihaesi-bangmunhae-cheomdan.md",
+    "reason": "LLM_GENERATION_FAILED",
+    "skippedAt": "2026-11-25"
+  },
+  {
+    "file": "2026-10-20-uijeongbu-si-singok1dong-je29hoe-gimsasgas-culture-je-maja-j.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-25"
+  },
+  {
+    "file": "2026-10-31-uijeongbu-si-jihacheol-7hoseon-jangamyeok-10wol-31ilbuteo-un.md",
+    "reason": "LLM_GENERATION_FAILED",
+    "skippedAt": "2026-11-25"
+  },
+  {
+    "file": "2026-10-19-2026-uijeongbu-eumak-library-gonggongdijain-peseutibeol-haes.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-25"
+  },
+  {
+    "file": "2026-11-10-dahamkke-wageulwageul-haengbokro-geori-festival-gaechoe-gyeo.md",
+    "reason": "LLM_GENERATION_FAILED",
+    "skippedAt": "2026-11-25"
   }
 ]
