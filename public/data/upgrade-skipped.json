@@ -523,5 +523,10 @@
     "file": "2026-11-10-dahamkke-wageulwageul-haengbokro-geori-festival-gaechoe-gyeo.md",
     "reason": "LLM_GENERATION_FAILED",
     "skippedAt": "2026-11-25"
+  },
+  {
+    "file": "2026-11-02-uijeongbu-si-chimaeansimsenteo-hoeryongyeok-chimae-insik-gae.md",
+    "reason": "INSUFFICIENT_NEW_MATERIAL",
+    "skippedAt": "2026-11-25"
   }
 ]
